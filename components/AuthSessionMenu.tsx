@@ -34,7 +34,6 @@ type SessionPayload = {
 
 function providerLabel(provider?: string | null) {
   if (!provider) return 'Email';
-  if (provider === 'github') return 'GitHub';
   if (provider === 'google') return 'Google';
   return provider.charAt(0).toUpperCase() + provider.slice(1);
 }
@@ -57,7 +56,6 @@ function initialsFor(name?: string | null, email?: string | null) {
 }
 
 function ProviderMark({ provider }: { provider?: string | null }) {
-  if (provider === 'github') return <GitHubMark />;
   if (provider === 'google') return <span className="text-[11px] font-black">G</span>;
   return <UserCircle2 className="h-3.5 w-3.5" />;
 }
@@ -356,10 +354,3 @@ export default function AuthSessionMenu({ theme = 'light' }: { theme?: 'light' |
   );
 }
 
-function GitHubMark() {
-  return (
-    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-      <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.72c-2.78.6-3.37-1.18-3.37-1.18a2.65 2.65 0 0 0-1.11-1.47c-.91-.62.07-.61.07-.61a2.1 2.1 0 0 1 1.53 1.03 2.13 2.13 0 0 0 2.91.83 2.12 2.12 0 0 1 .63-1.34c-2.22-.25-4.56-1.11-4.56-4.95a3.88 3.88 0 0 1 1.03-2.69 3.6 3.6 0 0 1 .1-2.65s.84-.27 2.75 1.03a9.46 9.46 0 0 1 5 0c1.91-1.3 2.75-1.03 2.75-1.03.37.85.41 1.82.1 2.65a3.87 3.87 0 0 1 1.03 2.69c0 3.85-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
-    </svg>
-  );
-}

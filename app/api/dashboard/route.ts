@@ -11,21 +11,20 @@ export const runtime = 'nodejs';
 const REGISTRY_OWNER = process.env.NEXT_PUBLIC_QSENTIA_REPO_OWNER || 'QSentia-com';
 const REGISTRY_REPO = process.env.NEXT_PUBLIC_QSENTIA_REPO_NAME || 'qsentia-investor-site';
 const REGISTRY_BRANCH = process.env.NEXT_PUBLIC_QSENTIA_BRANCH || 'main';
-const GITHUB_READ_TOKEN_CANDIDATES = [
-  ['GITHUB_READ_TOKEN', process.env.GITHUB_READ_TOKEN],
-  ['QSENTIA_GITHUB_READ_TOKEN', process.env.QSENTIA_GITHUB_READ_TOKEN],
-  ['QSENTIA_GITHUB_TOKEN', process.env.QSENTIA_GITHUB_TOKEN],
-  ['GITHUB_TOKEN', process.env.GITHUB_TOKEN],
+const REPO_READ_TOKEN_CANDIDATES = [
+  ['QSENTIA_REPO_READ_TOKEN', process.env.QSENTIA_REPO_READ_TOKEN],
+  ['QSENTIA_REPO_TOKEN', process.env.QSENTIA_REPO_TOKEN],
+  ['QSENTIA_GH_TOKEN', process.env.QSENTIA_GH_TOKEN],
   ['GH_TOKEN', process.env.GH_TOKEN],
-  ['VERCEL_GITHUB_TOKEN', process.env.VERCEL_GITHUB_TOKEN],
-  ['NEXT_PUBLIC_GITHUB_READ_TOKEN', process.env.NEXT_PUBLIC_GITHUB_READ_TOKEN],
+  ['VERCEL_GH_TOKEN', process.env.VERCEL_GH_TOKEN],
+  ['NEXT_PUBLIC_QSENTIA_REPO_READ_TOKEN', process.env.NEXT_PUBLIC_QSENTIA_REPO_READ_TOKEN],
 ] as const;
-const ACTIVE_GITHUB_READ_TOKEN = GITHUB_READ_TOKEN_CANDIDATES.map(([name, value]) => ({
+const ACTIVE_REPO_READ_TOKEN = REPO_READ_TOKEN_CANDIDATES.map(([name, value]) => ({
   name,
   value: normalizeGitHubToken(value),
 })).find((candidate) => candidate.value);
-const GITHUB_READ_TOKEN = ACTIVE_GITHUB_READ_TOKEN?.value || '';
-const GITHUB_READ_TOKEN_ENV_NAME = ACTIVE_GITHUB_READ_TOKEN?.name || null;
+const REPO_READ_TOKEN = ACTIVE_REPO_READ_TOKEN?.value || '';
+const REPO_READ_TOKEN_ENV_NAME = ACTIVE_REPO_READ_TOKEN?.name || null;
 const CRYPTO_SENTIMENT_MLP_MODEL_ID = 'crypto_sentiment_mlp';
 const ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID = 'qsentia_eth_micro_futures_sentiment_alpha';
 const ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID = 'qsentia_eth_leveraged_etf_sentiment_alpha';
@@ -305,8 +304,8 @@ function decodeGitHubContentJson(text: string) {
 }
 
 async function fetchTextFromRaw(repoFullName: string, branch: string, path: string) {
-  if (GITHUB_READ_TOKEN) {
-    const authorizationValues = [`Bearer ${GITHUB_READ_TOKEN}`, `token ${GITHUB_READ_TOKEN}`];
+  if (REPO_READ_TOKEN) {
+    const authorizationValues = [`Bearer ${REPO_READ_TOKEN}`, `token ${REPO_READ_TOKEN}`];
     const acceptValues = ['application/vnd.github.raw', 'application/vnd.github+json'];
 
     for (const authorization of authorizationValues) {
@@ -1414,7 +1413,7 @@ export async function GET(request: Request) {
         debug: {
           summaryOnly: true,
           dataSource: {
-            githubTokenPresent: Boolean(GITHUB_READ_TOKEN),
+            githubTokenPresent: Boolean(REPO_READ_TOKEN),
             lastGoodCachePath: '.qsentia-cache/dashboard-last-good.json',
             mode: 'local-github-fallback',
             upstreamFetch: lastUpstreamDashboardFetchReport,
@@ -1744,15 +1743,15 @@ export async function GET(request: Request) {
     debug: {
       requestedModel,
       selectedModel,
-      privateGitHubTokenConfigured: Boolean(GITHUB_READ_TOKEN),
-      privateGitHubTokenEnvName: GITHUB_READ_TOKEN_ENV_NAME,
+      privateGitHubTokenConfigured: Boolean(REPO_READ_TOKEN),
+      privateGitHubTokenEnvName: REPO_READ_TOKEN_ENV_NAME,
       benchmarkStartDate,
       dataSource: {
         benchmarkCurvePoints: benchmarks.reduce(
           (sum, benchmark) => sum + (Array.isArray(benchmark.points) ? benchmark.points.length : 0),
           0
         ),
-        githubTokenPresent: Boolean(GITHUB_READ_TOKEN),
+        githubTokenPresent: Boolean(REPO_READ_TOKEN),
         lastGoodCachePath: '.qsentia-cache/dashboard-last-good.json',
         mode: 'local-github-fallback',
         modelCurvePoints: modelComparison.reduce(

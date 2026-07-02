@@ -254,7 +254,11 @@ export async function createModelSubmission(input: unknown) {
 }
 
 function githubHeaders() {
-  const token = process.env.GITHUB_READ_TOKEN || process.env.QSENTIA_GITHUB_READ_TOKEN || process.env.GITHUB_TOKEN;
+  const token =
+    process.env.QSENTIA_REPO_READ_TOKEN ||
+    process.env.QSENTIA_REPO_TOKEN ||
+    process.env.QSENTIA_GH_TOKEN ||
+    process.env.GH_TOKEN;
   return {
     Accept: 'application/vnd.github+json',
     'User-Agent': 'QSentia-Model-Onboarding',

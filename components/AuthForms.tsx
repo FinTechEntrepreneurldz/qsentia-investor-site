@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { authConfigMissingMessage, getSupabaseBrowserClient } from "@/lib/supabaseClient";
 
-type OAuthProvider = "google" | "github";
+type OAuthProvider = "google";
 
 function callbackUrl(nextPath: string) {
   const callback = new URL("/auth/callback", window.location.origin);
@@ -79,7 +79,7 @@ export function SignInForm() {
       provider,
       options: {
         redirectTo: callbackUrl(nextPathFromLocation()),
-        queryParams: provider === "google" ? { prompt: "select_account" } : undefined,
+        queryParams: { prompt: "select_account" },
       },
     });
 
@@ -91,20 +91,13 @@ export function SignInForm() {
 
   return (
     <div className="mt-6 grid gap-5">
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3">
         <ProviderButton
           provider="google"
           label="Continue with Google"
           loading={providerLoading === "google"}
           disabled={Boolean(providerLoading) || loading}
           onClick={() => handleOAuth("google")}
-        />
-        <ProviderButton
-          provider="github"
-          label="Continue with GitHub"
-          loading={providerLoading === "github"}
-          disabled={Boolean(providerLoading) || loading}
-          onClick={() => handleOAuth("github")}
         />
       </div>
 
@@ -239,7 +232,7 @@ export function CreateAccountForm() {
       provider,
       options: {
         redirectTo: callbackUrl(nextPathFromLocation()),
-        queryParams: provider === "google" ? { prompt: "select_account" } : undefined,
+        queryParams: { prompt: "select_account" },
       },
     });
 
@@ -251,20 +244,13 @@ export function CreateAccountForm() {
 
   return (
     <div className="mt-6 grid gap-5">
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3">
         <ProviderButton
           provider="google"
           label="Sign up with Google"
           loading={providerLoading === "google"}
           disabled={Boolean(providerLoading) || loading}
           onClick={() => handleOAuth("google")}
-        />
-        <ProviderButton
-          provider="github"
-          label="Sign up with GitHub"
-          loading={providerLoading === "github"}
-          disabled={Boolean(providerLoading) || loading}
-          onClick={() => handleOAuth("github")}
         />
       </div>
 
@@ -384,20 +370,10 @@ function ProviderButton({
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin" />
-      ) : provider === "github" ? (
-        <GitHubMark />
       ) : (
         <span className="flex h-4 w-4 items-center justify-center rounded-full text-sm font-black text-[#3d52da]">G</span>
       )}
       {label}
     </button>
-  );
-}
-
-function GitHubMark() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-      <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.72c-2.78.6-3.37-1.18-3.37-1.18a2.65 2.65 0 0 0-1.11-1.47c-.91-.62.07-.61.07-.61a2.1 2.1 0 0 1 1.53 1.03 2.13 2.13 0 0 0 2.91.83 2.12 2.12 0 0 1 .63-1.34c-2.22-.25-4.56-1.11-4.56-4.95a3.88 3.88 0 0 1 1.03-2.69 3.6 3.6 0 0 1 .1-2.65s.84-.27 2.75 1.03a9.46 9.46 0 0 1 5 0c1.91-1.3 2.75-1.03 2.75-1.03.37.85.41 1.82.1 2.65a3.87 3.87 0 0 1 1.03 2.69c0 3.85-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
-    </svg>
   );
 }
