@@ -23,7 +23,7 @@ type IconLink = FooterLink & {
 
 const socialLinks: IconLink[] = [
   {
-    href: "https://www.linkedin.com/company/qsentia.com/",
+    href: "https://www.linkedin.com/company/qsentia-com",
     label: "LinkedIn",
     icon: LinkedInMark,
     external: true,
