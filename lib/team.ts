@@ -190,23 +190,26 @@ export const teamMembers: TeamMember[] = [
       "Implementation support, product workflows, and platform delivery.",
   },
   {
-    slug: "ashutosh-pathak",
-    fullName: "Ashutosh Pathak",
-    designation: "Software Development",
-    role: "Software Development",
-    initials: "AP",
-    summary:
-      "Ashutosh Pathak contributes to platform implementation, product support, and engineering delivery.",
-    biography: [
-      "Ashutosh Pathak contributes to QSentia's software development work across platform implementation, product support, and engineering delivery.",
-      "His work supports the technical execution needed to maintain and improve QSentia's website, dashboard, and platform workflows.",
-    ],
-    focus:
-      "Platform implementation, product support, and engineering delivery.",
-    imageSrc: "/team/Ashutosh_pathak1.png",
-    imageAlt: "Ashutosh Pathak",
-    imagePosition: "center 24%",
-  },
+  slug: "ashutosh-pathak",
+  fullName: "Ashutosh Pathak",
+  designation: "Software Development",
+  role: "Software Development",
+  initials: "AP",
+  summary:
+    "Ashutosh Pathak contributes to platform implementation, product support, and engineering delivery.",
+  biography: [
+    "Ashutosh Pathak contributes to QSentia's software development work across platform implementation, product support, and engineering delivery.",
+    "His work supports the technical execution needed to maintain and improve QSentia's website, dashboard, and platform workflows.",
+  ],
+  qualifications:
+    "B.E. in Computer Engineering (Expected 2028), University of Mumbai.",
+  focus:
+    "Platform implementation, product support, and engineering delivery.", // ← Keep ONLY this one
+  emailAddress: "luckypathak527@gmail.com",
+  imageSrc: "/team/Ashutosh_pathak1.png",
+  imageAlt: "Ashutosh Pathak",
+  imagePosition: "center 24%",
+},
 ];
 
 export function getTeamMember(slug: string) {
