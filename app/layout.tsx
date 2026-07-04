@@ -3,8 +3,9 @@ import "./globals.css";
 import PublicChrome from "@/components/PublicChrome";
 
 export const metadata: Metadata = {
-  title: "Qsentia - Investor Intelligence Platform",
-  description: "Advanced research and analytics platform for investor insights",
+  title: "QSentia - Systematic Investment Management",
+  description:
+    "QSentia is a systematic investment-management firm developing machine-learning equity strategies for qualified investors, supported by source-backed research infrastructure.",
 };
 
 export default function RootLayout({

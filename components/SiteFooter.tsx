@@ -43,9 +43,9 @@ const resourceLinks: IconLink[] = [
 
 const footerColumns: Array<{ title: string; links: FooterLink[] }> = [
   {
-    title: "Investors",
+    title: "Fund",
     links: [
-      { href: "/strategies", label: "Investment strategies" },
+      { href: "/strategies", label: "Fund mandate" },
       { href: "/performance", label: "Performance center" },
       { href: "/risk-management", label: "Risk management" },
       { href: "/data-room", label: "Investor data room" },
@@ -65,10 +65,10 @@ const footerColumns: Array<{ title: string; links: FooterLink[] }> = [
     ],
   },
   {
-    title: "Company",
+    title: "Firm",
     links: [
       { href: "/", label: "About QSentia" },
-      { href: "/firm", label: "Firm" },
+      { href: "/firm", label: "Investment manager" },
       { href: "/team", label: "Team" },
       { href: "/problem-solution", label: "Problem & solution" },
       { href: "/careers", label: "Careers" },
@@ -90,7 +90,6 @@ const footerColumns: Array<{ title: string; links: FooterLink[] }> = [
       { href: "/acceptable-use-policy", label: "Acceptable use" },
       { href: "/terms-and-conditions", label: "Terms & conditions" },
       { href: "/refund-cancellation-policy", label: "Billing & cancellation" },
-      { href: "/shipping-policy", label: "Shipping policy" },
     ],
   },
 ];
@@ -110,10 +109,10 @@ export default function SiteFooter() {
         <div className="mb-10 grid gap-4 rounded-[10px] border border-[#dfe5f2] bg-[#f8faff] p-5 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-[#3046c8]">
-              Institutional access
+              Investment-management access
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-normal text-[#06130c]">
-              Review strategy evidence, risk controls, and operating readiness.
+              Review the fund mandate, risk controls, and investor materials.
             </h2>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">
@@ -149,9 +148,9 @@ export default function SiteFooter() {
               />
             </Link>
             <p className="mt-5 text-sm leading-6 text-[#4d5870]">
-              Source-backed model telemetry, investor diligence workflows, and
-              API surfaces for systematic strategy review, benchmark context,
-              risk controls, and execution monitoring.
+              QSentia is a systematic, machine-learning-driven investment-management
+              firm developing quantitative equity strategies for qualified investors,
+              supported by the research platform that powers source-backed transparency.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-2">
@@ -191,9 +190,10 @@ export default function SiteFooter() {
               <ShieldCheck className="h-4 w-4" />
             </span>
             <p>
-              Quantitative trading systems involve risk. Historical or
-              paper-trading information does not guarantee future results. Data
-              shown only reflects returned source logs.
+              Investment strategies involve risk, including possible loss of
+              capital. Historical, paper-trading, or model information does not
+              guarantee future results. Fund materials are intended for qualified
+              investors only and require review.
             </p>
           </div>
 

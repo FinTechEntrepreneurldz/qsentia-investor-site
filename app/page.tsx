@@ -202,22 +202,23 @@ export default function HomePage() {
         <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.08fr_0.82fr] lg:items-center lg:py-20">
           <div>
             <p className="text-sm font-bold uppercase tracking-wide text-[#3046c8]">
-              QSentia for allocators and systematic investors
+              Systematic investment management
             </p>
             <h1 className="mt-5 max-w-3xl text-[48px] font-semibold leading-[1.03] tracking-normal text-[#06130c] sm:text-[68px] lg:text-[82px]">
-              More alpha. Less unmanaged risk.
+              More alpha. Less risk.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-[#46554b] sm:text-lg">
-              QSentia gives investors a disciplined way to review machine-learning
-              strategies through source-backed telemetry, benchmark context, risk controls,
-              and execution readiness.
+              QSentia is a systematic investment-management firm developing
+              quantitative equity strategies for qualified investors. Its platform
+              keeps strategy evidence, benchmark context, risk controls, and
+              operating readiness visible before allocator decisions.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/performance"
+                href="/strategies"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5]"
               >
-                Review performance
+                View the fund
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
@@ -227,6 +228,25 @@ export default function HomePage() {
                 Request investor materials
                 <ShieldCheck className="h-4 w-4" />
               </Link>
+            </div>
+            <div className="mt-7 grid gap-2 sm:grid-cols-3">
+              {[
+                ['Type', 'Systematic investment manager'],
+                ['Strategy', 'ML equity strategies'],
+                ['Access', 'Qualified investors'],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="rounded-md border-t-2 border-[#b7892f] bg-white/78 px-4 py-3 shadow-sm"
+                >
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-wide text-[#8b6a1f]">
+                    {label}
+                  </div>
+                  <div className="mt-1 text-sm font-semibold text-[#06130c]">
+                    {value}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -341,15 +361,15 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
           <div className="mb-8 max-w-3xl">
             <p className="text-sm font-bold uppercase tracking-wide text-[#3046c8]">
-              Investor diligence
+              Fund diligence
             </p>
             <h2 className="mt-3 text-4xl font-semibold leading-tight tracking-normal text-[#06130c]">
-              The core materials investors expect before a serious review.
+              The materials allocators expect before a serious fund review.
             </h2>
             <p className="mt-4 text-base leading-7 text-[#5a685f]">
-              Move from a high-level introduction into the evidence investors need:
-              strategy scope, performance quality, risk controls, methodology, and
-              controlled access to diligence materials.
+              QSentia presents its investment mandate, performance basis, risk framework,
+              methodology, and data-room path in one route so investors can move from
+              first review to formal diligence without guessing.
             </p>
           </div>
 
@@ -378,15 +398,15 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="text-sm font-bold uppercase tracking-wide text-[#3046c8]">
-              Platform lane
+              Platform infrastructure
             </p>
             <h2 className="mt-3 max-w-xl text-4xl font-semibold leading-tight tracking-normal text-[#06130c]">
-              Research validation, API access, and operating evidence in one workflow.
+              The technology layer behind the investment manager.
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-7 text-[#5a685f]">
-              QSentia is built for teams that need more than a dashboard. It connects
-              model discovery, telemetry review, entitlement controls, and broker-readiness
-              checks before live operation.
+              Alongside the investment-management business, the QSentia Platform
+              connects model discovery, telemetry review, entitlement controls, and
+              broker-readiness checks for approved partners and internal research teams.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link

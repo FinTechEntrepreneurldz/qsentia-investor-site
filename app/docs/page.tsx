@@ -4,8 +4,8 @@ import { ArrowRight, KeyRound, ShieldCheck, Workflow } from 'lucide-react';
 import { Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
 
 export const metadata: Metadata = {
-  title: 'Docs | Qsentia API Integration Guide',
-  description: 'Professional guide for integrating Qsentia APIs, model endpoints, and implementation workflow.',
+  title: 'Platform Docs | Qsentia API Integration Guide',
+  description: 'Professional guide for integrating Qsentia Platform APIs, model endpoints, telemetry routes, and implementation workflow.',
 };
 
 const quickSteps = [
@@ -28,13 +28,14 @@ export default function DocsPage() {
     <PageShell active="/docs">
       <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
-          <Eyebrow>Integration guide</Eyebrow>
+          <Eyebrow>Platform integration guide</Eyebrow>
           <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Qsentia API docs
+            Qsentia Platform API docs
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Integrate the current live endpoints, structure a production-safe workflow, and keep
-            preview and telemetry routes within operational limits.
+            Integrate the current platform endpoints, structure a production-safe workflow, and keep
+            preview and telemetry routes within operational limits. These APIs support platform
+            review and operating evidence; they are not a route to invest in the fund.
           </p>
         </div>
       </section>
@@ -62,7 +63,7 @@ export default function DocsPage() {
           </div>
           <div className="mt-5 space-y-4 text-sm leading-7 text-[#5a685f]">
             <p>
-              These site endpoints are served on the same origin for platform use. If private API
+              These site endpoints are served on the same origin for QSentia Platform use. If private API
               credentials are enabled, inject keys server-side and forward requests through your backend.
             </p>
             <p>
@@ -116,7 +117,7 @@ export default function DocsPage() {
           </ul>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white hover:bg-[#2437b5]">
-              Request support
+              Request platform support
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/marketplace" className="inline-flex items-center justify-center rounded-md border border-[#cbd5ff] px-5 py-3 text-sm font-bold text-[#172554] hover:bg-[#f7f8ff]">

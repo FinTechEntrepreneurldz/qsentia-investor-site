@@ -13,7 +13,7 @@ import { PageShell, TechnicalBackdrop } from "@/components/PageChrome";
 export const metadata: Metadata = {
   title: "Compliance Centre | QSentia",
   description:
-    "QSentia privacy, cookie, acceptable-use, and commercial policy centre.",
+    "QSentia privacy, cookie, acceptable-use, investment risk, and commercial policy centre.",
 };
 
 const policies = [
@@ -47,6 +47,12 @@ const policies = [
     body: "Trials, renewals, cancellations, refunds, invoices, and enterprise terms.",
     icon: CheckCircle2,
   },
+  {
+    href: "/disclaimer",
+    title: "Investment Risk Disclaimer",
+    body: "Qualified-investor, no-offer, performance, regulatory-status, and capital-at-risk language.",
+    icon: Scale,
+  },
 ];
 
 const programme = [
@@ -71,6 +77,11 @@ const programme = [
     "Supabase authentication, protected routes, session visibility, and provider-based sign-in.",
   ],
   [
+    "Fund marketing review",
+    "Counsel review required",
+    "Entity details, regulatory status, qualified-investor gates, offering language, and performance labels must be approved before live fund marketing.",
+  ],
+  [
     "Production legal review",
     "Required",
     "Entity details, vendor contracts, launch jurisdictions, and final operating procedures require counsel review.",
@@ -90,8 +101,8 @@ export default function CompliancePage() {
             Compliance Centre
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            QSentia&apos;s public policy set for privacy, security, consent,
-            platform conduct, billing, and digital service delivery.
+            QSentia&apos;s public policy set for investment-management positioning,
+            privacy, security, consent, platform conduct, billing, and digital service delivery.
           </p>
         </div>
       </section>

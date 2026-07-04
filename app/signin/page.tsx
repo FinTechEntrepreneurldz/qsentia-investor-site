@@ -6,7 +6,7 @@ import { Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
 
 export const metadata: Metadata = {
   title: 'Sign In | Qsentia',
-  description: 'Secure account sign-in portal for Qsentia users.',
+  description: 'Secure account sign-in portal for Qsentia platform, dashboard, and investor data-room users.',
 };
 
 export default function SignInPage() {
@@ -17,10 +17,11 @@ export default function SignInPage() {
           <div>
             <Eyebrow>Access portal</Eyebrow>
             <h1 className="mt-6 text-5xl font-semibold leading-[1.04] text-[#06130c] md:text-7xl">
-              Sign in to Qsentia
+              Sign in to Qsentia access
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-[#46554b] md:text-lg">
-              Access dashboards, model registry workflows, and telemetry views through a protected account.
+              Access dashboards, model registry workflows, platform settings, and approved investor
+              data-room materials through a protected account. Signing in does not open an investment account.
             </p>
           </div>
 
@@ -48,11 +49,11 @@ export default function SignInPage() {
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-2">
-        <SecurityCard icon={<ShieldCheck className="h-5 w-5" />} title="Protected authentication">
+        <SecurityCard icon={<ShieldCheck className="h-5 w-5" />} title="Protected platform and data-room access">
           Use your approved account identity only. Avoid sharing credentials across teams.
         </SecurityCard>
         <SecurityCard icon={<User className="h-5 w-5" />} title="Institutional onboarding">
-          If your organization needs access setup, start from account creation and route verification details there.
+          If your organization needs fund materials or platform setup, start from account creation and route verification details there.
         </SecurityCard>
       </section>
     </PageShell>

@@ -6,13 +6,13 @@ import { Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
 
 export const metadata: Metadata = {
   title: 'Create Account | Qsentia',
-  description: 'Create a Qsentia account for platform access and institutional onboarding.',
+  description: 'Create a Qsentia account for platform access, investor data-room requests, and institutional onboarding.',
 };
 
 const onboardingSteps = [
   'Submit your professional identity and organization details.',
-  'Provide intended use case and platform area of interest.',
-  'Complete verification and receive access confirmation.',
+  'Provide intended use case: investor data room, platform access, or model review.',
+  'Complete verification and receive the appropriate access confirmation.',
 ];
 
 export default function CreateAccountPage() {
@@ -23,10 +23,11 @@ export default function CreateAccountPage() {
           <div>
             <Eyebrow>New account request</Eyebrow>
             <h1 className="mt-6 text-5xl font-semibold leading-[1.04] text-[#06130c] md:text-7xl">
-              Create your Qsentia account
+              Request Qsentia access
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-[#46554b] md:text-lg">
-              Register for platform access, live dashboards, and model workflows with professional onboarding context.
+              Register for platform access, live dashboards, model workflows, or investor data-room
+              review with professional onboarding context. This is not an investment account opening flow.
             </p>
           </div>
 
@@ -36,7 +37,7 @@ export default function CreateAccountPage() {
                 <FileCheck2 className="h-5 w-5" />
               </span>
               <div>
-                <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Account details</div>
+            <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Access request details</div>
                 <h2 className="text-xl font-semibold text-[#06130c]">Professional profile</h2>
               </div>
             </div>

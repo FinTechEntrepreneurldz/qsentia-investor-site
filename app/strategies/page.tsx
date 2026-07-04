@@ -3,5 +3,5 @@ import StrategyDirectory from '@/components/StrategyDirectory';
 import { PageIntro } from '@/components/InstitutionalShell';
 import { PageShell } from '@/components/PageChrome';
 
-export const metadata: Metadata = { title:'Investment Strategies | QSentia', description:'Published QSentia systematic strategies and source-backed performance fields.' };
-export default function StrategiesPage(){return <PageShell active="/strategies"><PageIntro eyebrow="Investor lane" title="Investment strategies" body="Review each published strategy through its objective, instrument context, operating status, and currently reported performance evidence."/><section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><StrategyDirectory/></section></PageShell>}
+export const metadata: Metadata = { title:'Fund Mandate & Strategies | QSentia', description:'QSentia systematic investment strategies, mandate context, risk controls, and source-backed performance fields.' };
+export default function StrategiesPage(){return <PageShell active="/strategies"><PageIntro eyebrow="Fund & strategies" title="The fund mandate and published strategies" body="Review QSentia's systematic investment-management program through strategy objectives, instrument context, operating status, capacity context, and currently reported performance evidence. Fund terms and detailed materials are available through investor relations after qualification."/><section className="mx-auto max-w-7xl px-4 py-12 sm:px-6"><StrategyDirectory/></section></PageShell>}

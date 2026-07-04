@@ -188,8 +188,8 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
                 <BarChart3 className="h-5 w-5" />
               </span>
               <div>
-                <h2 className="text-xl font-semibold text-[#06130c]">Performance metrics</h2>
-                <p className="text-sm text-[#5a685f]">Values are sourced from model detail telemetry.</p>
+                <h2 className="text-xl font-semibold text-[#06130c]">Platform model metrics</h2>
+                <p className="text-sm text-[#5a685f]">Values are sourced from model detail telemetry and are not a fund offering document.</p>
               </div>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -250,7 +250,7 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
             <dl className="mt-5 divide-y divide-[#e2e7fb] text-sm">
               <InfoRow label="Repository" value={model.repo || 'Not available'} />
               <InfoRow label="Logs path" value={model.logsPath || 'Not available'} />
-              <InfoRow label="Pricing" value={model.pricing || 'Contact sales'} />
+              <InfoRow label="Platform pricing" value={model.pricing || 'Contact sales'} />
               <InfoRow label="Access status" value={commercialConfigured ? accessLabel(model.accessStatus) : 'Not configured'} />
               <InfoRow label="Billing interval" value={commercialConfigured ? accessLabel(model.billingInterval) : 'Not configured'} />
               <InfoRow label="Minimum capital" value={model.minimumCapital || 'Not configured'} />
@@ -260,10 +260,10 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
 
           <SectionCard className="p-6">
             <ShieldCheck className="h-5 w-5 text-[#3d52da]" />
-            <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Access</h2>
+            <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Platform access</h2>
             <p className="mt-3 text-sm leading-6 text-[#5a685f]">
-              Commercial terms are controlled from the QSentia back office and published through the
-              model API. Request access for eligibility, onboarding, and execution details.
+              Commercial platform terms are controlled from the QSentia back office and published through the
+              model API. Fund investment access is handled separately through investor relations and the data room.
             </p>
             {model.onboardingNotes && (
               <div className="mt-4 rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-3 text-sm leading-6 text-[#46554b]">
@@ -274,7 +274,7 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
               href="/contact"
               className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white hover:bg-[#2437b5]"
             >
-              Request access
+              Request platform access
               <ArrowRight className="h-4 w-4" />
             </Link>
             <TrialRequestForm modelId={model.id} modelName={model.name} />

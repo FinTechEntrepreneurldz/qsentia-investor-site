@@ -27,9 +27,9 @@ export default function InsightsPage() {
   return (
     <PageShell active="/insights">
       <PageIntro
-        eyebrow="Research"
-        title="Monthly letters and market research"
-        body="Firm-approved commentary and research will be published with a named author, publication date, review period, and relevant disclosures."
+        eyebrow="Investor letters"
+        title="Monthly letters and firm research"
+        body="Firm-approved investor commentary and research will be published with a named author, publication date, review period, and relevant disclosures."
       />
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         <div className="grid gap-5 md:grid-cols-3">

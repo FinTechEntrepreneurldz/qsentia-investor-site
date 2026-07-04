@@ -6,13 +6,13 @@ import { Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
 
 export const metadata: Metadata = {
   title: 'Contact Us | Qsentia',
-  description: 'Institutional contact page for Qsentia research, platform access, due diligence, and partnership inquiries.',
+  description: 'Institutional contact page for Qsentia investor relations, fund diligence, platform access, and partnership inquiries.',
 };
 
 const inquiryTracks = [
   {
-    title: 'Institutional access',
-    text: 'Allocator introductions, platform walkthroughs, diligence review, and general institutional outreach.',
+    title: 'Investor relations',
+    text: 'Allocator introductions, fund diligence, data-room requests, qualification review, and meeting coordination.',
     icon: Building2,
   },
   {
@@ -29,8 +29,8 @@ const inquiryTracks = [
 
 const prepItems = [
   'Organization name and professional email',
-  'Area of interest: dashboard, marketplace, research, or integration',
-  'Models or workflows you want to review',
+  'Area of interest: fund diligence, platform access, marketplace, research, or integration',
+  'Fund strategies, models, or workflows you want to review',
   'Target evaluation or deployment timeline',
   'Relevant compliance or operational constraints',
 ];
@@ -45,8 +45,8 @@ export default function ContactPage() {
             Contact Qsentia
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Use the published inbox for institutional access, model licensing, diligence coordination,
-            and research-related outreach. Only currently published channels are listed here.
+            Use the published inbox for investor relations, fund diligence coordination,
+            platform licensing, and research-related outreach. Only currently published channels are listed here.
           </p>
         </div>
       </section>
@@ -72,7 +72,7 @@ export default function ContactPage() {
               inquiries@qsentia.com
             </a>
             <p className="mt-3 text-sm leading-6 text-[#5a685f]">
-              If your request involves diligence, secure materials, or commercial review, initiate
+              If your request involves fund diligence, secure materials, or commercial review, initiate
               from your institutional email address.
             </p>
           </div>
@@ -100,7 +100,7 @@ export default function ContactPage() {
           <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Before you contact us</div>
           <h2 className="mt-2 text-2xl font-semibold text-[#06130c]">Include operational context</h2>
           <p className="mt-3 text-sm leading-6 text-[#5a685f]">
-            Clear initial context speeds up routing and keeps the conversation relevant to your review process.
+            Clear initial context speeds up routing to investor relations, platform licensing, or research review.
           </p>
           <ul className="mt-6 space-y-3">
             {prepItems.map((item) => (

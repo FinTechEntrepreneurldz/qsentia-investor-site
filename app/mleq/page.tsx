@@ -318,12 +318,13 @@ export default function MleqPage() {
                     Machine Learning Equity Quant
                   </h1>
                   <p className="mt-3 font-mono text-sm uppercase tracking-[0.22em] text-[#8b93ff]">
-                    MLEQ research system
+                    QSentia core strategy engine
                   </p>
                   <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600">
-                    A source-audited quant research layer for model telemetry,
-                    benchmark discipline, and execution review. Every figure on
-                    this page is derived from the live dashboard API.
+                    A source-audited quantitative research layer for the firm&apos;s
+                    machine-learning equity strategies, benchmark discipline, and
+                    execution review. Every figure on this page is derived from
+                    the live dashboard API.
                   </p>
                 </div>
 

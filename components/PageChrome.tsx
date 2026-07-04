@@ -9,14 +9,44 @@ import AuthSessionMenu from "@/components/AuthSessionMenu";
 
 const navItems = [
   {
+    href: "/firm",
+    label: "Firm",
+    children: [
+      {
+        href: "/firm",
+        label: "Firm overview",
+        description:
+          "QSentia's investment-management mandate, operating model, and governance posture.",
+      },
+      {
+        href: "/team",
+        label: "Team",
+        description:
+          "Investment, quantitative research, and platform leadership.",
+      },
+      {
+        href: "/careers",
+        label: "Careers",
+        description:
+          "Roles at a quantitative investment-management and technology firm.",
+      },
+      {
+        href: "/compliance",
+        label: "Compliance centre",
+        description:
+          "Risk, privacy, security, and regulatory disclosures for review.",
+      },
+    ],
+  },
+  {
     href: "/strategies",
-    label: "Investors",
+    label: "Fund & Strategies",
     children: [
       {
         href: "/strategies",
-        label: "Investment strategies",
+        label: "Fund mandate",
         description:
-          "Objectives, operating status, and published model evidence.",
+          "Strategy objective, operating status, published evidence, and mandate context.",
       },
       {
         href: "/performance",
@@ -26,34 +56,39 @@ const navItems = [
       {
         href: "/risk-management",
         label: "Risk management",
-        description: "Signal gates, limits, reconciliation, and controls.",
-      },
-      {
-        href: "/data-room",
-        label: "Investor data room",
-        description: "Qualification and controlled diligence materials.",
+        description: "The risk framework protecting investor capital before deployment.",
       },
       {
         href: "/methodology",
-        label: "Methodology",
-        description: "The process from inputs through monitored execution.",
+        label: "Investment methodology",
+        description: "How the firm turns inputs into signals, sizing, execution, and monitoring.",
       },
+    ],
+  },
+  {
+    href: "/data-room",
+    label: "Investors",
+    children: [
       {
-        href: "/firm",
-        label: "Firm",
-        description:
-          "Research philosophy and institutional operating model.",
-      },
-      {
-        href: "/team",
-        label: "Team",
-        description:
-          "Leadership, software development, and quantitative research.",
+        href: "/data-room",
+        label: "Investor data room",
+        description: "Qualified access to fund materials, tear sheets, and diligence records.",
       },
       {
         href: "/insights",
         label: "Letters & research",
-        description: "Firm-approved commentary and methodology updates.",
+        description: "Investor letters, firm commentary, and methodology updates.",
+      },
+      {
+        href: "/contact",
+        label: "Investor relations",
+        description: "Route allocator introductions, qualification, and meeting requests.",
+      },
+      {
+        href: "/faq",
+        label: "Investor FAQ",
+        description:
+          "How to review QSentia, request materials, and distinguish fund from platform access.",
       },
     ],
   },
@@ -65,7 +100,7 @@ const navItems = [
         href: "/platform",
         label: "Platform overview",
         description:
-          "Telemetry, validation, broker readiness, and audit trails.",
+          "The technology layer used by QSentia and licensed to approved partners.",
       },
       {
         href: "/marketplace",
@@ -111,7 +146,6 @@ const navItems = [
       },
     ],
   },
-  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -133,6 +167,33 @@ export function SiteHeader({
           : "border-[#e2e7fb] bg-white/95"
       }`}
     >
+      <div
+        className={`hidden border-b text-xs font-semibold lg:block ${
+          dark
+            ? "border-[#18233f] bg-[#070b19] text-[#aeb9d1]"
+            : "border-[#e2e7fb] bg-[#f8faff] text-[#46554b]"
+        }`}
+      >
+        <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+          <div className="flex min-w-0 items-center gap-2">
+            <span className={dark ? "text-[#d7b56d]" : "text-[#8b6a1f]"}>
+              QSentia
+            </span>
+            <span aria-hidden>·</span>
+            <span>Systematic investment management</span>
+            <span aria-hidden>·</span>
+            <span>Qualified investor materials require review</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/signin" className="hover:text-[#3046c8]">
+              Investor login
+            </Link>
+            <Link href="/data-room" className="hover:text-[#3046c8]">
+              Request data room
+            </Link>
+          </div>
+        </div>
+      </div>
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"

@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import { CheckCircle2, Database, GitBranch, Waypoints } from "lucide-react";
 import { PageIntro } from "@/components/InstitutionalShell";
 import { PageShell, SectionCard } from "@/components/PageChrome";
-export const metadata: Metadata = { title: "Integrations | QSentia" };
+
+export const metadata: Metadata = {
+  title: "Platform Integrations | QSentia",
+  description:
+    "QSentia Platform integrations supporting systematic investment research, telemetry, authentication, and broker-readiness workflows.",
+};
+
 const connected = [
   [
     "GitHub model logs",
-    "Repository registry and source-backed telemetry ingestion.",
+    "Repository registry and source-backed telemetry ingestion for strategy review.",
     GitBranch,
   ],
   [
@@ -16,25 +22,26 @@ const connected = [
   ],
   [
     "IBKR",
-    "Broker/account fields are present in registered model telemetry.",
+    "Broker/account fields are present in registered model telemetry where source rows exist.",
     Waypoints,
   ],
   [
     "Alpaca",
-    "Registered strategies include Alpaca-routed model implementations.",
+    "Registered strategies include Alpaca-routed implementations for paper or live-readiness review.",
     Waypoints,
   ],
 ];
+
 export default function IntegrationsPage() {
   return (
     <PageShell active="/integrations">
       <PageIntro
-        eyebrow="Integrations"
-        title="Connected where evidence exists"
-        body="Integration status reflects this application’s current code and model registry. Planned connectors are never presented as live."
+        eyebrow="Platform integrations"
+        title="Connected where operating evidence exists"
+        body="Integration status reflects this application's current code and model registry. These connections support QSentia's investment-management workflow and approved platform deployments. Planned connectors are never presented as live."
       />
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-2">
-        <div className="lg:col-span-2 mx-auto w-full max-w-2xl">
+        <div className="mx-auto w-full max-w-2xl lg:col-span-2">
           <h2 className="text-2xl font-semibold text-[#06130c]">
             Connected or represented
           </h2>

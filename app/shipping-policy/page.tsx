@@ -4,20 +4,20 @@ import { ArrowRight, Clock3, Cloud, FileCheck2, Mail, ShieldCheck } from 'lucide
 import { PageShell, SectionCard } from '@/components/PageChrome';
 
 export const metadata: Metadata = {
-  title: 'Shipping Policy | Qsentia',
+  title: 'Digital Service Delivery | Qsentia',
   description:
-    'Qsentia shipping and digital service delivery policy for platform access, onboarding, support, and service availability.',
+    'Qsentia digital service delivery policy for platform access, data-room onboarding, support, and service availability.',
 };
 
 const deliveryItems = [
   {
     title: 'Digital delivery only',
-    body: 'Qsentia is a digital software and research platform. We do not ship physical products, printed materials, devices, or hardware as part of standard service access.',
+    body: 'Qsentia provides digital platform and investor-relations access. We do not ship physical products, printed materials, devices, or hardware as part of standard service access.',
     icon: Cloud,
   },
   {
     title: 'Account access',
-    body: 'Access is delivered electronically through the website, authenticated account flows, API endpoints, and approved institutional onboarding channels.',
+    body: 'Access is delivered electronically through the website, authenticated account flows, API endpoints, data-room workflows, and approved institutional onboarding channels.',
     icon: ShieldCheck,
   },
   {
@@ -30,7 +30,7 @@ const deliveryItems = [
 const sections = [
   [
     'Service delivery method',
-    'Qsentia services are delivered digitally. Platform access, documentation, dashboards, research pages, and API surfaces are made available through the website and related electronic channels.',
+    'Qsentia services are delivered digitally. Platform access, documentation, dashboards, data-room materials, research pages, and API surfaces are made available through the website and related electronic channels.',
   ],
   [
     'No physical shipping',
@@ -38,7 +38,7 @@ const sections = [
   ],
   [
     'Access confirmation',
-    'When account access or institutional review access is approved, users may receive login instructions, documentation, or support communications electronically. Users are responsible for providing accurate contact information.',
+    'When account access, platform access, or institutional investor-review access is approved, users may receive login instructions, documentation, data-room access, or support communications electronically. Users are responsible for providing accurate contact information.',
   ],
   [
     'Enterprise onboarding',
@@ -64,11 +64,12 @@ export default function ShippingPolicyPage() {
             Digital service delivery
           </div>
           <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Shipping Policy
+            Digital Service Delivery
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Qsentia provides digital platform access, API documentation, research tools, and related
-            service workflows. This policy explains how service delivery works for a software-based offering.
+            Qsentia provides digital platform access, API documentation, investor-relations workflows,
+            data-room access, research tools, and related service workflows. This policy explains how
+            service delivery works for a digital offering.
           </p>
         </div>
       </section>

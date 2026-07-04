@@ -97,13 +97,14 @@ export default function MarketplacePage() {
     <PageShell active="/marketplace">
       <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
-          <Eyebrow>Model registry</Eyebrow>
+          <Eyebrow>Platform product line</Eyebrow>
           <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Trading model products, sourced from live telemetry
+            Model access for approved platform partners
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Browse registered strategies with source-backed metrics. Missing performance values remain
-            unavailable until repository logs publish the required observations.
+            Browse registered strategies and model cards supported by source-backed metrics.
+            This marketplace is for platform licensing and research access; investing in the
+            QSentia fund is handled separately through investor relations and the data room.
           </p>
         </div>
       </section>
@@ -204,7 +205,7 @@ export default function MarketplacePage() {
                   </div>
 
                   <div className="mt-auto border-t border-[#e2e7fb] pt-5">
-                    <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Access</div>
+                    <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Platform access</div>
                     <div className="mt-1 text-sm font-semibold text-[#06130c]">
                       {model.pricing || 'Contact sales'}
                     </div>
@@ -228,7 +229,7 @@ export default function MarketplacePage() {
             Performance values remain unavailable until the model has enough source observations.
           </InfoCard>
           <InfoCard icon={<ShieldCheck className="h-5 w-5" />} title="Audit context">
-            Detail pages preserve source, status, and latest telemetry fields for review.
+            Detail pages preserve source, status, and latest telemetry fields for approved platform review.
           </InfoCard>
         </div>
       </section>

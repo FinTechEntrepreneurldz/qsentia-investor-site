@@ -13,7 +13,7 @@ import { Eyebrow, PageShell, SectionCard, TechnicalBackdrop } from '@/components
 
 export const metadata: Metadata = {
   title: 'Careers | QSentia',
-  description: 'Open QSentia roles and career application intake.',
+  description: 'Open QSentia roles at a systematic investment-management and quant platform firm.',
 };
 
 const candidateRequirements = [
@@ -66,12 +66,13 @@ export default function CareersPage() {
           <div>
           <Eyebrow>Careers</Eyebrow>
           <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Build the operating layer for systematic investment models
+            Build at a systematic investment-management firm
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
             QSentia hires across quantitative research, software engineering, investor operations,
-            and model infrastructure. Open roles are published from the back-office career board,
-            and every application is routed through one controlled intake workflow.
+            and model infrastructure for a machine-learning driven investment manager. Open roles
+            are published from the back-office career board, and every application is routed
+            through one controlled intake workflow.
           </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link

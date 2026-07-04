@@ -15,13 +15,13 @@ export default function ResearchPage() {
     <PageShell active="/research">
       <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
         <div className="mx-auto max-w-7xl px-4 py-14 text-left sm:px-6 lg:py-20">
-          <Eyebrow>Research overview</Eyebrow>
+          <Eyebrow>Firm research workspace</Eyebrow>
           <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Model research, grounded in published telemetry
+            Fund research, grounded in published telemetry
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Qsentia presents systematic model context, benchmark comparison, and auditability in a
-            focused research workspace for institutional review.
+            Qsentia presents systematic strategy context, benchmark comparison, risk evidence,
+            and auditability in a focused research workspace for institutional fund review.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white hover:bg-[#2437b5]">
@@ -50,13 +50,13 @@ export default function ResearchPage() {
       <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-3">
           <ResearchCard icon={<Database className="h-5 w-5" />} title="Repository-backed">
-            Model cards and dashboard rows cite repository, branch, and log-path context whenever available.
+            Strategy cards and dashboard rows cite repository, branch, and log-path context whenever available.
           </ResearchCard>
           <ResearchCard icon={<BarChart3 className="h-5 w-5" />} title="Metrics with status">
             Partial and insufficient histories are labeled directly instead of being hidden behind polished charts.
           </ResearchCard>
           <ResearchCard icon={<Workflow className="h-5 w-5" />} title="Operational review">
-            The dashboard keeps decisions, orders, positions, and signals inspectable as structured tables.
+            The dashboard keeps decisions, orders, positions, and signals inspectable as structured fund operating tables.
           </ResearchCard>
         </div>
       </section>

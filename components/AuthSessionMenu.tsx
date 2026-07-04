@@ -347,7 +347,7 @@ export default function AuthSessionMenu({ theme = 'light' }: { theme?: 'light' |
           dark ? 'bg-white text-[#050714] hover:bg-[#dce2ff]' : 'bg-[#172554] text-white hover:bg-[#2437b5]'
         }`}
       >
-        Request access
+        Request account access
         <Building2 className="h-4 w-4" />
       </Link>
     </div>

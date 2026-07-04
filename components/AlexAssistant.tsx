@@ -80,8 +80,8 @@ const sitePages = [
   {
     href: '/',
     label: 'Overview',
-    keywords: ['home', 'overview', 'platform', 'product'],
-    summary: 'The homepage summarizes QSentia, live registry telemetry, model status, API preview, and source-backed platform modules.',
+    keywords: ['home', 'overview', 'platform', 'product', 'fund', 'hedge fund', 'investment manager'],
+    summary: 'The homepage positions QSentia as a systematic investment-management firm developing machine-learning equity strategies, with the QSentia Platform as the source-backed transparency layer.',
   },
   {
     href: '/dashboard',
@@ -105,7 +105,7 @@ const sitePages = [
     href: '/marketplace',
     label: 'Marketplace',
     keywords: ['marketplace', 'models', 'products', 'strategies', 'registry'],
-    summary: 'The marketplace lists live dashboard-backed model products, categories, performance metrics, tags, and model profile links.',
+    summary: 'The marketplace lists dashboard-backed model cards for approved platform licensing and research access; fund investment access is handled through investor relations and the data room.',
   },
   {
     href: '/docs',
@@ -117,7 +117,7 @@ const sitePages = [
     href: '/contact',
     label: 'Contact',
     keywords: ['contact', 'sales', 'access', 'pricing', 'support', 'help'],
-    summary: 'Contact is the route for access requests, support, institutional onboarding, pricing, and questions about model use.',
+    summary: 'Contact is the route for investor relations, fund diligence, platform access requests, support, institutional onboarding, pricing, and questions about model use.',
   },
   {
     href: '/signin',
@@ -256,7 +256,7 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: `Hi${name ? ` ${name}` : ''}, I'm Alex. I can help with QSentia pages, MLEQ, dashboards, models, API docs, account access, and live telemetry values.`,
+      body: `Hi${name ? ` ${name}` : ''}, I'm Alex. I can help with QSentia's investment-management pages, fund diligence, MLEQ, dashboards, models, API docs, account access, and live telemetry values.`,
       links: [
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/research', label: 'Research terminal' },
@@ -341,7 +341,7 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: 'For access, pricing, support, and institutional onboarding, use the Contact page. The account pages can capture a local profile for personalization, but access still routes through QSentia contact/onboarding.',
+      body: 'For investor relations, fund diligence, platform access, pricing, support, and institutional onboarding, use the Contact page. The account pages can capture a local profile for personalization, but investment materials still route through QSentia qualification and onboarding.',
       links: [
         { href: '/contact', label: 'Contact' },
         { href: '/create-account', label: 'Create account' },
@@ -353,7 +353,7 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: 'QSentia presents telemetry and research workflows, not investment advice. The legal pages cover risk, privacy, terms, and limitations of paper-trading or historical information.',
+      body: 'QSentia presents systematic investment-management positioning, fund research, and platform telemetry, but the public site is not investment advice or an offer. The legal pages cover risk, privacy, terms, qualified-investor access, and limitations of paper-trading or historical information.',
       links: [
         { href: '/disclaimer', label: 'Disclaimer' },
         { href: '/privacy-policy', label: 'Privacy' },
@@ -388,7 +388,7 @@ function answerQuestion({
   return {
     id: crypto.randomUUID(),
     role: 'alex',
-    body: 'I can help with the QSentia website, live dashboard values, model registry, Research terminal, MLEQ engine, API docs, account access, and risk/legal pages. Try asking "summarize live performance" or "where is MLEQ?"',
+    body: 'I can help with the QSentia website, fund diligence pages, live dashboard values, model registry, Research terminal, MLEQ engine, API docs, account access, and risk/legal pages. Try asking "summarize live performance" or "where is MLEQ?"',
     links: [
       { href: '/dashboard', label: 'Dashboard' },
       { href: '/marketplace', label: 'Marketplace' },
@@ -458,7 +458,7 @@ export default function AlexAssistant() {
     () => ({
       id: 'alex-opening-message',
       role: 'alex',
-      body: `Hi${greetingName ? ` ${greetingName}` : ''}, I'm Alex. Ask me about QSentia pages, live model data, MLEQ, docs, or account access.`,
+      body: `Hi${greetingName ? ` ${greetingName}` : ''}, I'm Alex. Ask me about QSentia's fund pages, live model data, MLEQ, docs, or account access.`,
     }),
     [greetingName]
   );

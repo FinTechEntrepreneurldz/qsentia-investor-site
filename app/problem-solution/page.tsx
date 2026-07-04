@@ -6,7 +6,7 @@ import { Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
 export const metadata: Metadata = {
   title: 'Problem & Solution | Qsentia',
   description:
-    'Qsentia problem statement and solution overview for systematic model diligence, telemetry, and investor research workflows.',
+    'Qsentia problem statement and solution overview for systematic investment management, fund transparency, telemetry, and investor research workflows.',
 };
 
 const problemPoints = [
@@ -16,7 +16,7 @@ const problemPoints = [
   ],
   [
     'Unclear model readiness',
-    'Investors need to know whether a strategy is producing current observations, whether paper execution is active, and whether outputs are backed by source rows.',
+    'Investors need to know whether a fund strategy is producing current observations, whether execution is active, and whether outputs are backed by source rows.',
   ],
   [
     'Weak comparison workflows',
@@ -27,12 +27,12 @@ const problemPoints = [
 const solutionCards = [
   {
     title: 'Source-connected telemetry',
-    body: 'Qsentia connects model registry metadata, portfolio observations, execution rows, health status, and benchmark data into one review surface.',
+    body: 'Qsentia connects fund strategy metadata, portfolio observations, execution rows, health status, and benchmark data into one review surface.',
     icon: Workflow,
   },
   {
     title: 'Diligence-ready research',
-    body: 'The platform gives investors a structured path to compare strategies, inspect model state, and understand when data is present or unavailable.',
+    body: 'The firm gives investors a structured path to compare strategies, inspect model state, and understand when data is present or unavailable.',
     icon: SearchCheck,
   },
   {
@@ -56,11 +56,12 @@ export default function ProblemSolutionPage() {
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
           <Eyebrow>Problem & solution</Eyebrow>
           <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Systematic strategy diligence needs better evidence.
+            Systematic fund diligence needs better evidence.
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Qsentia helps investors move from fragmented model claims to structured telemetry,
-            benchmark context, and audit-ready research workflows.
+            Qsentia helps investors move from fragmented model claims to a systematically
+            managed investment program with structured telemetry, benchmark context, and
+            audit-ready research workflows.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -88,9 +89,9 @@ export default function ProblemSolutionPage() {
           </div>
           <h2 className="mt-4 text-3xl font-semibold text-[#06130c]">Model performance is difficult to trust when evidence is scattered.</h2>
           <p className="mt-4 text-sm leading-7 text-[#5a685f]">
-            Investors evaluating quantitative and machine-learning strategies need more than a return
+            Investors evaluating a quantitative investment manager need more than a return
             number. They need the model source, the telemetry trail, the benchmark context, and the
-            current operating state in one professional review workflow.
+            current operating state in one professional fund review workflow.
           </p>
         </SectionCard>
 
@@ -110,8 +111,8 @@ export default function ProblemSolutionPage() {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#aebcff]">Qsentia solution</p>
             <h2 className="mt-3 text-4xl font-semibold tracking-normal">A single intelligence layer for model diligence.</h2>
             <p className="mt-4 text-sm leading-7 text-[#b8c2e8]">
-              Qsentia organizes live model telemetry, API-backed research views, strategy context,
-              and compliance-aware disclosures so investors can evaluate systems with discipline.
+            Qsentia organizes live model telemetry, API-backed research views, strategy context,
+            and compliance-aware disclosures so investors can evaluate the fund&apos;s systems with discipline.
             </p>
           </div>
 

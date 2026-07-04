@@ -14,7 +14,7 @@ import { PageShell, SectionCard, TechnicalBackdrop } from "@/components/PageChro
 export const metadata: Metadata = {
   title: "FAQ | QSentia",
   description:
-    "Frequently asked questions about QSentia investors, platform access, APIs, billing, security, and careers.",
+    "Frequently asked questions about QSentia's investment-management firm, fund diligence, platform access, APIs, billing, security, and careers.",
 };
 
 const faqGroups = [
@@ -23,9 +23,24 @@ const faqGroups = [
     icon: Scale,
     items: [
       {
+        question: "Is QSentia a hedge fund or a software platform?",
+        answer:
+          "QSentia should be understood first as a systematic investment-management firm developing machine-learning equity strategies for qualified investors. The QSentia Platform is the technology layer that supports research evidence, telemetry, risk controls, and partner licensing workflows.",
+      },
+      {
+        question: "How do investors review the fund?",
+        answer:
+          "Investors should start with the fund mandate, performance center, risk management page, and investor data room request. Detailed fund materials, terms, and performance support require qualification and investor-relations review.",
+      },
+      {
+        question: "Who can invest?",
+        answer:
+          "Fund materials are intended for qualified, professional, accredited, or otherwise eligible investors depending on the applicable jurisdiction and final legal structure. QSentia does not publish investor eligibility conclusions until reviewed through the data-room process.",
+      },
+      {
         question: "What does QSentia help investors evaluate?",
         answer:
-          "QSentia helps investors review machine-learning strategy evidence, normalized performance, benchmark context, drawdown controls, and execution-readiness signals before making capital or diligence decisions.",
+          "QSentia helps investors evaluate the firm's machine-learning strategy evidence, normalized performance, benchmark context, drawdown controls, and execution-readiness signals before making allocation or diligence decisions.",
       },
       {
         question: "Is the performance data live or manually entered?",
