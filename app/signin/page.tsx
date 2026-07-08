@@ -5,8 +5,8 @@ import { SignInForm } from '@/components/AuthForms';
 import { Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
 
 export const metadata: Metadata = {
-  title: 'Sign In | Qsentia',
-  description: 'Secure account sign-in portal for Qsentia platform, dashboard, and investor data-room users.',
+  title: 'Sign In | QSentia',
+  description: 'Secure account sign-in portal for QSentia platform, dashboard, and investor data-room users.',
 };
 
 export default function SignInPage() {
