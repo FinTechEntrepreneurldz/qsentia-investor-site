@@ -89,13 +89,32 @@ export const teamMembers: TeamMember[] = [
     role: "Quantitative Research",
     initials: "JC",
     summary:
-      "Janet supports model evidence, analytical review, and research workflow coordination for investor and platform materials.",
+      "Janet focuses on systematic investing, factor research, machine learning, and data-driven quantitative research for financial markets.",
     biography: [
-      "Janet Chen supports the quantitative research function with a focus on model evidence, analytical review, and research workflow coordination.",
-      "She contributes to the structure and review of research materials used across investor-facing diligence, internal research processes, and platform documentation.",
+      "Janet Chen is a quantitative researcher with strong interests in systematic investing, factor research, and machine learning.",
+      "She focuses on quantitative research for financial markets, developing predictive factors and systematic investment strategies through data-driven analysis. Her work covers the full quantitative research process, from data engineering and feature construction to model development, factor validation, and backtesting.",
+      "Janet has a strong technical foundation in quantitative finance, statistics, and machine learning. She has worked on equity factor research, quantitative modeling, and financial data analysis, and enjoys applying statistical methods and machine learning techniques to better understand market behavior and support systematic investment research.",
     ],
     focus:
-      "Analytical review, research coordination, and model evidence workflows.",
+      "Systematic investing, factor research, machine learning, quantitative modeling, feature construction, factor validation, and backtesting.",
+  },
+  {
+    slug: "ravi-shankar-prasand",
+    fullName: "Ravi Shankar Prasand",
+    designation: "Software Development",
+    role: "Software Development",
+    initials: "RP",
+    summary:
+      "Ravi contributes to QSentia's software development work across product implementation, platform workflows, and engineering support.",
+    biography: [
+      "Ravi Shankar Prasand contributes to QSentia's software development function, supporting product implementation, platform workflows, and engineering delivery.",
+      "His work supports the software systems behind QSentia's investor, customer, and internal operating surfaces.",
+    ],
+    focus:
+      "Product implementation, platform workflows, and engineering support.",
+    imageSrc: "/team/ravi-shankar-prasand.png",
+    imageAlt: "Ravi Shankar Prasand",
+    imagePosition: "center 28%",
   },
   {
     slug: "debasish-mishra",
