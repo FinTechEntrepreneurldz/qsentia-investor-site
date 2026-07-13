@@ -148,8 +148,8 @@ export default function SiteFooter() {
               />
             </Link>
             <p className="mt-5 text-sm leading-6 text-[#4d5870]">
-              QSentia is a systematic, machine-learning-driven investment-management
-              firm developing quantitative equity strategies for qualified investors,
+              QSentia LLC is a systematic, machine-learning-driven investment-management
+              firm developing quantitative equity strategies for investor review,
               supported by the research platform that powers source-backed transparency.
             </p>
 
@@ -192,13 +192,14 @@ export default function SiteFooter() {
             <p>
               Investment strategies involve risk, including possible loss of
               capital. Historical, paper-trading, or model information does not
-              guarantee future results. Fund materials are intended for qualified
-              investors only and require review.
+              guarantee future results. QSentia LLC materials may be reviewed by
+              accredited and non-accredited users where permitted; fund offering
+              materials, if any, require eligibility and compliance review.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold text-[#4d5870] lg:justify-end">
-            <span className="text-[#06130c]">Copyright 2026 QSentia</span>
+            <span className="text-[#06130c]">© 2026 QSentia LLC</span>
             {legalLinks.map((link) => (
               <Link
                 key={link.href}

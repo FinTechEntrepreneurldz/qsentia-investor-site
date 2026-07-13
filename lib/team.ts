@@ -123,7 +123,7 @@ export const teamMembers: TeamMember[] = [
     emailAddress: "seshadri.ananth@gmail.com",
     imageSrc: "/team/ananth-seshadri.png",
     imageAlt: "Ananth Seshadri",
-    imagePosition: "center 24%",
+    imagePosition: "center 10%",
   },
   {
     slug: "ravi-shankar-prasad",
@@ -146,7 +146,7 @@ export const teamMembers: TeamMember[] = [
     emailAddress: "exptoipiplusone@gmail.com",
     imageSrc: "/team/ravi-shankar-prasad.png",
     imageAlt: "Ravi Shankar Prasad",
-    imagePosition: "center 28%",
+    imagePosition: "center 12%",
   },
   {
     slug: "debasish-mishra",
@@ -169,21 +169,6 @@ export const teamMembers: TeamMember[] = [
     imageSrc: "/team/debashish-mishra-v2.png",
     imageAlt: "Debasish Mishra",
     imagePosition: "center 24%",
-  },
-  {
-    slug: "nidhish-gautam",
-    fullName: "Nidhish Gautam",
-    designation: "Software Development",
-    role: "Software Development",
-    initials: "NG",
-    summary:
-      "Nidhish supports product implementation, system interfaces, and customer workflow readiness for QSentia.",
-    biography: [
-      "Nidhish Gautam contributes to QSentia's software development function across product implementation, system interfaces, and customer workflow readiness.",
-      "His work supports the software layer needed for model access, operational dashboards, and platform delivery.",
-    ],
-    focus:
-      "Product implementation, system interfaces, and software workflow delivery.",
   },
   {
     slug: "shlok-chauhan",
