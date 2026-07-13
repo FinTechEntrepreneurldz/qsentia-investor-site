@@ -95,25 +95,57 @@ export const teamMembers: TeamMember[] = [
       "She focuses on quantitative research for financial markets, developing predictive factors and systematic investment strategies through data-driven analysis. Her work covers the full quantitative research process, from data engineering and feature construction to model development, factor validation, and backtesting.",
       "Janet has a strong technical foundation in quantitative finance, statistics, and machine learning. She has worked on equity factor research, quantitative modeling, and financial data analysis, and enjoys applying statistical methods and machine learning techniques to better understand market behavior and support systematic investment research.",
     ],
+    qualifications: "Columbia University.",
     focus:
       "Systematic investing, factor research, machine learning, quantitative modeling, feature construction, factor validation, and backtesting.",
+    emailAddress: "zc2874@columbia.edu",
+    imageSrc: "/team/janet-chen.png",
+    imageAlt: "Janet Chen",
+    imagePosition: "center 34%",
   },
   {
-    slug: "ravi-shankar-prasand",
-    fullName: "Ravi Shankar Prasand",
-    designation: "Software Development",
-    role: "Software Development",
+    slug: "ananth-seshadri",
+    fullName: "Ananth Seshadri",
+    designation: "Quantitative Research",
+    role: "Quantitative Research",
+    initials: "AS",
+    summary:
+      "Ananth focuses on quantitative finance, financial analytics, Python, statistics, and data-driven investment research.",
+    biography: [
+      "Ananth Seshadri is a Managerial Economics student at the University of California, Davis, with interests in quantitative finance and financial analytics.",
+      "He enjoys applying Python, statistics, and data analysis to solve investment and business problems, with recent projects focused on quantitative trading and financial modeling.",
+      "At QSentia, Ananth is excited to contribute to AI-powered investment intelligence while continuing to develop expertise at the intersection of finance, technology, and data science.",
+    ],
+    qualifications:
+      "Managerial Economics, University of California, Davis.",
+    focus:
+      "Quantitative finance, financial analytics, Python, statistics, data analysis, quantitative trading, and financial modeling.",
+    emailAddress: "seshadri.ananth@gmail.com",
+    imageSrc: "/team/ananth-seshadri.png",
+    imageAlt: "Ananth Seshadri",
+    imagePosition: "center 24%",
+  },
+  {
+    slug: "ravi-shankar-prasad",
+    fullName: "Ravi Shankar Prasad",
+    designation: "Quantitative Researcher",
+    role: "Quantitative Research",
     initials: "RP",
     summary:
-      "Ravi contributes to QSentia's software development work across product implementation, platform workflows, and engineering support.",
+      "Ravi brings deep experience in speech AI, NLP, biomedical signal processing, LLM systems, RAG architectures, and production-grade MLOps.",
     biography: [
-      "Ravi Shankar Prasand contributes to QSentia's software development function, supporting product implementation, platform workflows, and engineering delivery.",
-      "His work supports the software systems behind QSentia's investor, customer, and internal operating surfaces.",
+      "Ravi Shankar Prasad is a strategic AI product leader and researcher with extensive experience architecting and delivering high-impact solutions across speech, biomedical signal processing, and natural language processing domains.",
+      "He has built enterprise-grade conversational AI systems for BFSI and e-commerce use cases, using modern ASR, TTS, LLM, RAG, agentic workflow, and prompt-engineering architectures to turn complex requirements into production-ready systems.",
+      "Ravi's technical background spans Python, database systems, model development, fine-tuning, quantization, CI/CD, versioning, cloud deployment, and end-to-end MLOps across AWS, GCP, and RunPod.",
+      "His research background includes postdoctoral work at Idiap Research Institute, a PhD from IIIT Hyderabad focused on speech signal processing, and published work across Interspeech, ICASSP, Speech Communication, and Computer Speech & Language.",
     ],
+    qualifications:
+      "PhD in Speech Signal Processing, International Institute of Information Technology Hyderabad. B.Tech (Hons.) in Electronics and Communication Engineering, Gurukula Kangri University.",
     focus:
-      "Product implementation, platform workflows, and engineering support.",
-    imageSrc: "/team/ravi-shankar-prasand.png",
-    imageAlt: "Ravi Shankar Prasand",
+      "Speech AI, biomedical signal processing, NLP, LLM systems, RAG pipelines, agentic frameworks, MLOps, ASR, TTS, model fine-tuning, quantization, and cloud deployment.",
+    emailAddress: "exptoipiplusone@gmail.com",
+    imageSrc: "/team/ravi-shankar-prasad.png",
+    imageAlt: "Ravi Shankar Prasad",
     imagePosition: "center 28%",
   },
   {
@@ -155,20 +187,25 @@ export const teamMembers: TeamMember[] = [
   },
   {
     slug: "shlok-chauhan",
-    fullName: "Shlok Chauhan",
+    fullName: "Shlok Pratap Chauhan",
     designation: "Software Development",
     role: "Software Development",
     initials: "SC",
     summary:
-      "Shlok Chauhan works across the public website, dashboard experience, customer workflows, and operational tooling.",
+      "Shlok works across software development, machine learning, data science, research workflows, and QSentia's investor-facing product surfaces.",
     biography: [
-      "Shlok Chauhan contributes to QSentia's software development and product execution across the public website, dashboard experience, customer workflows, and operational tooling.",
-      "His work focuses on making the platform experience clearer for investors, customers, and internal operators as QSentia expands its model access and API workflow surfaces.",
+      "Shlok Pratap Chauhan contributes to QSentia's software development and product execution across the public website, dashboard experience, customer workflows, and operational tooling.",
+      "His work combines machine learning, data science, and software engineering, with experience across Python, C++, C#, SQL, HTML, CSS, .NET, MS SQL Server, Git, Scikit-learn, XGBoost, Pandas, and NumPy.",
+      "Shlok's research work includes a student dropout prediction project using machine learning on large-scale behavioural learning analytics data, with Random Forest and XGBoost models presented at the Ignite Pune 2025 IEEE Conference.",
+      "At QSentia, Shlok focuses on making the platform experience clearer for investors, customers, and internal operators as the company expands its model access, dashboard, and API workflow surfaces.",
     ],
+    qualifications:
+      "B.Sc. Computer Science, Somaiya School of Basic and Applied Sciences, Somaiya Vidyavihar University.",
     focus:
-      "Frontend implementation, dashboard workflows, customer portal experience, and product operations.",
+      "Machine learning, data science, software development, frontend implementation, dashboard workflows, customer portal experience, and product operations.",
+    emailAddress: "shlokpratap.c@somaiya.edu",
     imageSrc: "/team/shlok-chauhan-v2.png",
-    imageAlt: "Shlok Chauhan",
+    imageAlt: "Shlok Pratap Chauhan",
     imagePosition: "center 30%",
   },
   {
