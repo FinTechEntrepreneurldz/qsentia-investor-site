@@ -494,14 +494,22 @@ export default function MleqPage() {
                         }`}
                       >
                         <div className="flex items-start gap-3">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">
+                          <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] border transition ${
+                            isActive
+                              ? "border-zinc-800 bg-zinc-900 text-white dark:border-zinc-200 dark:bg-zinc-100 dark:text-black"
+                              : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white"
+                          }`}>
                             <Icon className="h-4 w-4" />
                           </span>
                           <div>
-                            <h3 className="font-mono text-sm font-bold tracking-wider uppercase text-zinc-950 dark:text-white leading-none mt-1">
+                            <h3 className={`font-mono text-sm font-bold tracking-wider uppercase leading-none mt-1 transition-colors ${
+                              isActive ? "text-white dark:text-black" : "text-zinc-950 dark:text-white"
+                            }`}>
                               {row.label}
                             </h3>
-                            <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-450">
+                            <p className={`mt-2.5 text-xs sm:text-sm leading-relaxed transition-colors ${
+                              isActive ? "text-zinc-200 dark:text-zinc-700" : "text-zinc-650 dark:text-zinc-450"
+                            }`}>
                               {
                                 workflowCopy[
                                   row.label as keyof typeof workflowCopy
