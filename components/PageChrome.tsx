@@ -1,71 +1,24 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { ChevronDown, Loader2, Menu, X } from "lucide-react";
+import { Loader2, Menu, X } from "lucide-react";
 import AuthSessionMenu from "@/components/AuthSessionMenu";
+import { useTheme } from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+
+
 
 const navItems = [
   {
     href: "/strategies",
-    label: "Investors",
+    label: "MODELS",
     children: [
       {
         href: "/strategies",
         label: "Investment strategies",
-        description:
-          "Objectives, operating status, and published model evidence.",
-      },
-      {
-        href: "/performance",
-        label: "Performance center",
-        description: "Returns, benchmarks, rolling risk, and methodology.",
-      },
-      {
-        href: "/risk-management",
-        label: "Risk management",
-        description: "Signal gates, limits, reconciliation, and controls.",
-      },
-      {
-        href: "/data-room",
-        label: "Investor data room",
-        description: "Qualification and controlled diligence materials.",
-      },
-      {
-        href: "/methodology",
-        label: "Methodology",
-        description: "The process from inputs through monitored execution.",
-      },
-      {
-        href: "/firm",
-        label: "Firm",
-        description:
-          "Research philosophy and institutional operating model.",
-      },
-      {
-        href: "/team",
-        label: "Team",
-        description:
-          "Leadership, software development, and quantitative research.",
-      },
-      {
-        href: "/insights",
-        label: "Letters & research",
-        description: "Firm-approved commentary and methodology updates.",
-      },
-    ],
-  },
-  {
-    href: "/platform",
-    label: "Platform",
-    children: [
-      {
-        href: "/platform",
-        label: "Platform overview",
-        description:
-          "Telemetry, validation, broker readiness, and audit trails.",
+        description: "Objectives, operating status, and published model evidence.",
       },
       {
         href: "/marketplace",
@@ -73,10 +26,9 @@ const navItems = [
         description: "Published model cards and commercial access.",
       },
       {
-        href: "/pricing",
-        label: "Plans",
-        description:
-          "Research, marketplace, monitoring, and enterprise packaging.",
+        href: "/platform",
+        label: "Platform overview",
+        description: "Telemetry, validation, broker readiness, and audit trails.",
       },
       {
         href: "/demo",
@@ -88,16 +40,32 @@ const navItems = [
         label: "Integrations",
         description: "Current connectivity and planned connector status.",
       },
+    ],
+  },
+  {
+    href: "/performance",
+    label: "PERFORMANCE",
+    children: [
       {
-        href: "/developers",
-        label: "Developer center",
-        description: "API contracts, keys, schemas, and OpenAPI.",
+        href: "/performance",
+        label: "Performance center",
+        description: "Returns, benchmarks, rolling risk, and methodology.",
+      },
+      {
+        href: "/risk-management",
+        label: "Risk management",
+        description: "Signal gates, limits, reconciliation, and controls.",
+      },
+      {
+        href: "/methodology",
+        label: "Methodology",
+        description: "The process from inputs through monitored execution.",
       },
     ],
   },
   {
     href: "/research",
-    label: "Research",
+    label: "RESEARCH",
     children: [
       {
         href: "/research",
@@ -109,110 +77,146 @@ const navItems = [
         label: "MLEQ engine",
         description: "Machine Learning Equity Quant system overview.",
       },
+      {
+        href: "/insights",
+        label: "Letters & research",
+        description: "Firm-approved commentary and methodology updates.",
+      },
     ],
   },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
+  {
+    href: "/pricing",
+    label: "PRICING",
+    children: [
+      {
+        href: "/pricing",
+        label: "Plans",
+        description: "Research, marketplace, monitoring, and enterprise packaging.",
+      },
+      {
+        href: "/contact",
+        label: "Contact",
+        description: "Reach out to QSentia for inquiries.",
+      },
+    ],
+  },
+  {
+    href: "/developers",
+    label: "DOCS",
+    children: [
+      {
+        href: "/developers",
+        label: "Developer center",
+        description: "API contracts, keys, schemas, and OpenAPI.",
+      },
+      {
+        href: "/data-room",
+        label: "Investor data room",
+        description: "Qualification and controlled diligence materials.",
+      },
+      {
+        href: "/firm",
+        label: "Firm",
+        description: "Research philosophy and institutional operating model.",
+      },
+      {
+        href: "/team",
+        label: "Team",
+        description: "Leadership, software development, and quantitative research.",
+      },
+      {
+        href: "/faq",
+        label: "FAQ",
+        description: "Frequently asked questions.",
+      },
+    ],
+  },
 ];
 
 export function SiteHeader({
   active,
-  theme = "light",
 }: {
   active?: string;
   theme?: "light" | "dark";
 }) {
-  const dark = theme === "dark";
+  const { resolvedTheme } = useTheme();
+  const dark = resolvedTheme === "dark";
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b backdrop-blur ${
-        dark
-          ? "border-[#18233f] bg-[#050714]/94"
-          : "border-[#e2e7fb] bg-white/95"
-      }`}
-    >
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
+    <header className={`sticky top-0 z-50 border-b transition-colors ${
+      dark
+        ? "border-zinc-900 bg-black/95"
+        : "border-zinc-200 bg-white/95"
+    } backdrop-blur-md`}>
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
-          className="flex items-center gap-3"
+          className={`flex items-center font-mono text-[13px] font-bold tracking-[0.4em] transition hover:opacity-90 ${
+            dark ? "text-white" : "text-zinc-950"
+          }`}
           aria-label="Qsentia home"
         >
-          <Image
-            src="/logo/qsentia-primary.png"
-            alt="Qsentia"
-            width={138}
-            height={34}
-            priority
-            className={`h-7 w-auto ${dark ? "brightness-0 invert" : ""}`}
-          />
+          QSENTIA
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
+        <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
           {navItems.map((item) => {
             const isActive =
               active === item.href ||
               item.children?.some((child) => child.href === active);
 
-            if (item.children) {
-              const isWideMenu = item.children.length > 4;
-
-              return (
-                <div key={item.href} className="group relative">
-                  <Link
-                    href={item.href}
-                    className={`inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold transition ${
-                      isActive
-                        ? dark
-                          ? "bg-[#10172b] text-[#b7c5ff]"
-                          : "bg-[#eef2ff] text-[#3d52da]"
-                        : dark
-                          ? "text-[#d7dfed] hover:bg-[#10172b]"
-                          : "text-[#26352c] hover:bg-[#eef2ff]"
-                    }`}
-                    aria-haspopup="menu"
-                  >
-                    {item.label}
-                    <ChevronDown className="h-3.5 w-3.5" />
-                  </Link>
-                  <div
-                    className={`pointer-events-none absolute left-0 top-full z-50 translate-y-2 pt-2 opacity-0 transition group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${
-                      isWideMenu ? "w-[560px]" : "w-[340px]"
-                    }`}
-                  >
+            return (
+              <div key={item.href} className="group relative">
+                <Link
+                  href={item.href}
+                  className={`inline-flex items-center font-mono text-[11px] font-bold tracking-widest uppercase transition ${
+                    isActive
+                      ? dark
+                        ? "text-white"
+                        : "text-zinc-950"
+                      : dark
+                        ? "text-zinc-400 hover:text-white"
+                        : "text-zinc-500 hover:text-zinc-950"
+                  }`}
+                  aria-haspopup="menu"
+                >
+                  {item.label}
+                </Link>
+                {item.children && (
+                  <div className="pointer-events-none absolute left-1/2 top-full z-50 w-[340px] -translate-x-1/2 translate-y-2 pt-2 opacity-0 transition group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
                     <div
-                      className={`rounded-[10px] border p-2 shadow-[0_18px_50px_rgba(15,31,22,0.14)] ${
+                      className={`rounded-[4px] border p-2 shadow-lg dark:shadow-[0_18px_50px_rgba(0,0,0,0.6)] ${
                         dark
-                          ? "border-[#18233f] bg-[#070b19]"
-                          : "border-[#e2e7fb] bg-white"
+                          ? "border-zinc-800 bg-[#09090b]"
+                          : "border-zinc-200 bg-white"
                       }`}
                       role="menu"
                     >
-                      <div className={`grid ${isWideMenu ? "grid-cols-2 gap-1" : "gap-1"}`}>
+                      <div className="grid gap-1">
                         {item.children.map((child) => (
                           <Link
                             key={child.href}
                             href={child.href}
-                            className={`block rounded-md px-3 py-3 transition ${
+                            className={`block rounded px-3 py-2 transition ${
                               active === child.href
                                 ? dark
-                                  ? "bg-[#10172b]"
-                                  : "bg-[#eef2ff]"
+                                  ? "bg-zinc-900 text-white"
+                                  : "bg-zinc-100 text-zinc-900"
                                 : dark
-                                  ? "hover:bg-[#10172b]"
-                                  : "hover:bg-[#f8faff]"
+                                  ? "hover:bg-zinc-900/50 text-zinc-300 hover:text-white"
+                                  : "hover:bg-zinc-50 text-zinc-600 hover:text-zinc-900"
                             }`}
                             role="menuitem"
                           >
-                            <span
-                              className={`block text-sm font-semibold ${dark ? "text-white" : "text-[#06130c]"}`}
-                            >
-                              {child.label}
+                            <span className={`block text-xs font-semibold font-mono tracking-wider ${
+                              dark ? "text-zinc-200" : "text-zinc-800"
+                            }`}>
+                              {child.label.toUpperCase()}
                             </span>
-                            <span
-                              className={`mt-1 block text-xs leading-5 ${dark ? "text-[#8d98b5]" : "text-[#647269]"}`}
-                            >
+                            <span className={`mt-0.5 block text-[10px] leading-relaxed ${
+                              dark ? "text-zinc-500" : "text-zinc-400"
+                            }`}>
                               {child.description}
                             </span>
                           </Link>
@@ -220,78 +224,78 @@ export function SiteHeader({
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            }
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
-                  isActive
-                    ? dark
-                      ? "bg-[#10172b] text-[#b7c5ff]"
-                      : "bg-[#eef2ff] text-[#3d52da]"
-                    : dark
-                      ? "text-[#d7dfed] hover:bg-[#10172b]"
-                      : "text-[#26352c] hover:bg-[#eef2ff]"
-                }`}
-              >
-                {item.label}
-              </Link>
+                )}
+              </div>
             );
           })}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
-          <AuthSessionMenu theme={theme} />
+        <div className="hidden items-center gap-4 lg:flex">
+          <ThemeSwitcher />
+          <AuthSessionMenu />
         </div>
         <button
           type="button"
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((value) => !value)}
-          className={`flex h-10 w-10 items-center justify-center rounded-md border lg:hidden ${dark ? "border-[#24304d] text-white" : "border-[#dbe3ff] text-[#172554]"}`}
+          className={`flex h-10 w-10 items-center justify-center rounded-none border lg:hidden transition ${
+            dark
+              ? "border-zinc-800 text-white hover:border-zinc-500"
+              : "border-zinc-300 text-zinc-950 hover:border-zinc-400"
+          }`}
         >
-          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {menuOpen ? <X className="h-4 w-4" strokeWidth={1.5} /> : <Menu className="h-4 w-4" strokeWidth={1.5} />}
         </button>
       </div>
       {menuOpen ? (
         <nav
-          className={`border-t px-4 py-4 lg:hidden ${dark ? "border-[#18233f] bg-[#050714]" : "border-[#e2e7fb] bg-white"}`}
+          className={`border-t px-4 py-4 lg:hidden ${
+            dark
+              ? "border-zinc-900 bg-black"
+              : "border-zinc-200 bg-white"
+          }`}
           aria-label="Mobile navigation"
         >
           <div className="mx-auto grid max-w-7xl gap-1">
             {navItems.map((item) => (
-              <div key={item.href}>
+              <div key={item.href} className="py-1">
                 <Link
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`block rounded-md px-3 py-2 text-sm font-semibold ${dark ? "text-white hover:bg-[#10172b]" : "text-[#172554] hover:bg-[#eef2ff]"}`}
+                  className={`block font-mono text-[11px] font-bold tracking-widest uppercase py-1 ${
+                    dark ? "text-zinc-300 hover:text-white" : "text-zinc-600 hover:text-zinc-900"
+                  }`}
                 >
                   {item.label}
                 </Link>
                 {item.children ? (
-                  <div
-                    className={`ml-3 grid gap-1 border-l pl-3 ${dark ? "border-[#24304d]" : "border-[#dbe3ff]"}`}
-                  >
+                  <div className={`ml-3 grid gap-1 border-l pl-3 ${
+                    dark ? "border-zinc-800" : "border-zinc-200"
+                  }`}>
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
                         href={child.href}
                         onClick={() => setMenuOpen(false)}
-                        className={`rounded-md px-3 py-2 text-sm ${dark ? "text-[#aeb9d1] hover:bg-[#10172b]" : "text-[#5a685f] hover:bg-[#f8faff]"}`}
+                        className={`rounded px-3 py-1.5 text-xs transition font-mono tracking-wider ${
+                          dark
+                            ? "text-zinc-400 hover:bg-zinc-900/50 hover:text-white"
+                            : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
+                        }`}
                       >
-                        {child.label}
+                        {child.label.toUpperCase()}
                       </Link>
                     ))}
                   </div>
                 ) : null}
               </div>
             ))}
-            <div className={`mt-3 border-t pt-3 ${dark ? "border-[#24304d]" : "border-[#e2e7fb]"}`}>
-              <AuthSessionMenu theme={theme} />
+            <div className={`mt-3 border-t pt-3 flex items-center justify-between gap-4 ${
+              dark ? "border-zinc-900" : "border-zinc-200"
+            }`}>
+              <AuthSessionMenu />
+              <ThemeSwitcher />
             </div>
           </div>
         </nav>
@@ -304,25 +308,26 @@ export function PageShell({
   active,
   children,
   className = "",
-  headerTheme = "light",
 }: {
   active?: string;
   children: ReactNode;
   className?: string;
   headerTheme?: "light" | "dark";
 }) {
+  const { resolvedTheme } = useTheme();
   const hasCustomBackground = className.includes("bg-");
   const hasCustomTextColor = className.includes("text-");
 
   return (
     <main
-      className={`min-h-screen ${hasCustomBackground ? "" : "bg-white"} ${hasCustomTextColor ? "" : "text-[#0a0f0c]"} ${className}`}
+      className={`min-h-screen ${hasCustomBackground ? "" : "bg-white dark:bg-[#09090b]"} ${hasCustomTextColor ? "" : "text-zinc-950 dark:text-zinc-50"} ${className}`}
     >
-      <SiteHeader active={active} theme={headerTheme} />
+      <SiteHeader active={active} theme={resolvedTheme} />
       {children}
     </main>
   );
 }
+
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (

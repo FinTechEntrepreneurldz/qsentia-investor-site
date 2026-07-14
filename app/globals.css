@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 :root {
   --background: #fbfbfb;
   --foreground: #1a1a2e;
@@ -677,3 +680,144 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* Dark Theme Overrides */
+.dark {
+  --background: #050714;
+  --foreground: #f8fafc;
+  --accent: #6f7cff;
+  --accent-light: #8f9cff;
+  --accent-cyan: #00e5ff;
+  --card-bg: rgba(111, 124, 255, 0.08);
+  --border-color: rgba(111, 124, 255, 0.2);
+  
+  --bg: #050714;
+  --grid: rgba(111, 124, 255, 0.07);
+  --sur: rgba(13, 20, 41, 0.88);
+  --sur2: rgba(13, 20, 41, 0.55);
+  --bdr: rgba(111, 124, 255, 0.14);
+  --bdr2: rgba(111, 124, 255, 0.25);
+  --t1: #f8fafc;
+  --t2: #aeb9d1;
+  --t3: #7b8ba3;
+  --ac: #6f7cff;
+  --acb: rgba(111, 124, 255, 0.12);
+  --gr: #10b981;
+  --grb: rgba(16, 185, 129, 0.12);
+  --rd: #ef4444;
+  --rdb: rgba(239, 68, 68, 0.12);
+  --am: #f59e0b;
+  --amb: rgba(245, 158, 11, 0.12);
+  --pu: #8b5cf6;
+}
+
+.dark body {
+  background-color: #09090b !important;
+  color: #f8fafc !important;
+}
+
+.dark .bg-white {
+  background-color: #09090b !important;
+}
+
+.dark .bg-\[\#f8faff\] {
+  background-color: #09090b !important;
+}
+
+.dark .bg-\[\#fbfcff\] {
+  background-color: #121214 !important;
+}
+
+.dark .bg-\[\#f2f5ff\] {
+  background-color: #18181b !important;
+}
+
+.dark .border-\[\#e2e7fb\] {
+  border-color: #27272a !important;
+}
+
+.dark .border-\[\#cbd5ff\] {
+  border-color: #27272a !important;
+}
+
+.dark .border-\[\#dbe3ff\] {
+  border-color: #27272a !important;
+}
+
+.dark .border-\[\#d7ddf7\] {
+  border-color: #27272a !important;
+}
+
+.dark .text-\[\#0a0f0c\] {
+  color: #f8fafc !important;
+}
+
+.dark .text-\[\#06130c\] {
+  color: #f8fafc !important;
+}
+
+.dark .text-\[\#172554\] {
+  color: #e4e4e7 !important;
+}
+
+.dark .text-\[\#5a685f\] {
+  color: #a1a1aa !important;
+}
+
+.dark .text-\[\#26352c\] {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-\[\#647269\] {
+  color: #71717a !important;
+}
+
+.dark .text-\[\#46554b\] {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-\[\#68756d\] {
+  color: #cbd5e1 !important;
+}
+
+.dark .hover\:bg-\[\#f8faff\]:hover {
+  background-color: #18181b !important;
+}
+
+.dark .hover\:bg-\[\#eef2ff\]:hover {
+  background-color: #18181b !important;
+}
+
+.dark select,
+.dark input,
+.dark textarea {
+  background-color: #09090b !important;
+  color: #f8fafc !important;
+  border-color: #27272a !important;
+}
+
+.dark select option {
+  background-color: #09090b !important;
+  color: #f8fafc !important;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.ticker-container {
+  cursor: pointer;
+}
+
+.ticker-container:hover .animate-marquee {
+  animation-play-state: paused !important;
+  -webkit-animation-play-state: paused !important;
+}
+

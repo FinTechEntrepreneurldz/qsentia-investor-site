@@ -4,9 +4,10 @@ import type { ReactNode } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTheme } from './ThemeProvider';
+
 import {
   ArrowRight,
-  Building2,
   ChevronDown,
   LayoutDashboard,
   Loader2,
@@ -60,13 +61,14 @@ function ProviderMark({ provider }: { provider?: string | null }) {
   return <UserCircle2 className="h-3.5 w-3.5" />;
 }
 
-export default function AuthSessionMenu({ theme = 'light' }: { theme?: 'light' | 'dark' }) {
+export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
+  const { resolvedTheme } = useTheme();
   const [session, setSession] = useState<SessionPayload | null>(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const dark = theme === 'dark';
+  const dark = resolvedTheme === 'dark';
 
   const signinHref = useMemo(() => {
     const next = pathname && pathname !== '/signin' ? pathname : '/dashboard';
@@ -332,23 +334,18 @@ export default function AuthSessionMenu({ theme = 'light' }: { theme?: 'light' |
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-6">
       <Link
-        href={signinHref}
-        className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
-          dark ? 'text-[#d7dfed] hover:bg-[#10172b]' : 'text-[#26352c] hover:bg-[#eef2ff]'
-        }`}
+        href="/strategies"
+        className="font-mono text-[11px] font-bold tracking-[0.22em] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white uppercase transition"
       >
-        Sign in
+        Explore
       </Link>
       <Link
-        href="/create-account"
-        className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition ${
-          dark ? 'bg-white text-[#050714] hover:bg-[#dce2ff]' : 'bg-[#172554] text-white hover:bg-[#2437b5]'
-        }`}
+        href={signinHref}
+        className="inline-flex h-10 items-center justify-center bg-zinc-900 dark:bg-[#eeeeee] px-7 text-center font-mono text-[11px] font-bold tracking-[0.22em] text-white dark:text-black uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none"
       >
-        Request access
-        <Building2 className="h-4 w-4" />
+        Log In
       </Link>
     </div>
   );

@@ -2,17 +2,7 @@
 
 import Link from 'next/link';
 import useSWR from 'swr';
-import {
-  ArrowRight,
-  BarChart3,
-  CheckCircle2,
-  Code2,
-  Database,
-  FileSearch,
-  LineChart,
-  ShieldCheck,
-} from 'lucide-react';
-import { SiteHeader, TechnicalBackdrop } from '@/components/PageChrome';
+import { SiteHeader } from '@/components/PageChrome';
 import { fmtNum, fmtPct } from '@/lib/metrics';
 
 type PerfStats = {
@@ -34,19 +24,8 @@ type ModelComparisonEntry = {
 type DashboardPayload = {
   selectedModel?: string;
   registry?: Array<{ id?: string; name?: string }>;
-  latest?: {
-    portfolioValue?: number | null;
-    submittedOrderCount?: number | null;
-    lastRun?: string | null;
-  };
   stats?: PerfStats;
   modelComparison?: ModelComparisonEntry[];
-  decisions?: Record<string, unknown>[];
-  submittedOrders?: Record<string, unknown>[];
-  updatedAt?: string;
-  debug?: {
-    rowCounts?: Record<string, number>;
-  };
 };
 
 const fetcher = async (url: string) => {
@@ -57,96 +36,14 @@ const fetcher = async (url: string) => {
   return response.json();
 };
 
-const investorItems = [
-  {
-    title: 'Strategy mandate',
-    body: 'Objective, instruments, holding period, liquidity profile, current status, and capacity context.',
-    href: '/strategies',
-    icon: FileSearch,
-  },
-  {
-    title: 'Performance package',
-    body: 'Normalized return history, benchmark comparison, rolling risk, best and worst periods, and methodology notes.',
-    href: '/performance',
-    icon: LineChart,
-  },
-  {
-    title: 'Risk policy',
-    body: 'Confidence thresholds, drawdown brakes, stale quote gates, blackout rules, and kill-switch logic.',
-    href: '/risk-management',
-    icon: ShieldCheck,
-  },
-  {
-    title: 'Methodology',
-    body: 'Plain-English process from signal ingestion to confidence scoring, sizing, execution, and monitoring.',
-    href: '/methodology',
-    icon: BarChart3,
-  },
-  {
-    title: 'Investor data room',
-    body: 'Controlled access for tear sheets, DDQ, legal documents, technical papers, and approved materials.',
-    href: '/data-room',
-    icon: Database,
-  },
-  {
-    title: 'Qualification flow',
-    body: 'Investor type, expected ticket size, accreditation status, strategy interest, and timing for follow-up.',
-    href: '/contact',
-    icon: CheckCircle2,
-  },
-];
-
-const platformItems = [
-  'Model registry and access workflow',
-  'Paper or live monitoring readiness',
-  'API credentials and usage controls',
-  'Audit trails for operating decisions',
-];
-
-const positioningCards = [
-  {
-    question: 'What exactly is QSentia?',
-    answer:
-      'QSentia is an investment research and model-telemetry platform for reviewing machine-learning trading strategies with live evidence, benchmark context, risk controls, and execution-readiness records.',
-    icon: Database,
-  },
-  {
-    question: 'Who is it for?',
-    answer:
-      'It is built for allocators, family offices, hedge funds, systematic investors, and operating teams that need to evaluate model behavior before approving capital, API access, or broker-connected workflows.',
-    icon: FileSearch,
-  },
-  {
-    question: 'Why is it different?',
-    answer:
-      'Bloomberg, AlphaSense, Koyfin, and traditional research are strong for market data, filings, news, and analyst context. QSentia focuses on the strategy evidence layer: source-backed model returns, benchmark drift, drawdown controls, audit rows, and deployment readiness in one workflow.',
-    icon: ShieldCheck,
-  },
-  {
-    question: 'What should visitors do?',
-    answer:
-      'Investors should start with performance and risk review, then request controlled materials. Platform buyers should review the model marketplace, developer center, and broker-readiness workflow.',
-    icon: ArrowRight,
-  },
-];
-
-function cleanText(value: unknown) {
-  return String(value ?? '')
-    .replace(/[\u2013\u2014]/g, '-')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function display(value: string) {
-  return value === 'Pending' ? 'Not available' : value;
-}
-
 function displayPct(value: number | null | undefined, signed = false) {
-  return display(fmtPct(value, signed));
+  const formatted = fmtPct(value, signed);
+  return formatted === 'Pending' ? 'Not available' : formatted;
 }
 
 function displayNum(value: number | null | undefined, digits = 2) {
-  return display(fmtNum(value, digits));
+  const formatted = fmtNum(value, digits);
+  return formatted === 'Pending' ? 'Not available' : formatted;
 }
 
 function displayCount(value: number | null | undefined) {
@@ -156,271 +53,239 @@ function displayCount(value: number | null | undefined) {
   return Number(value).toLocaleString('en-US');
 }
 
+const featuredModels = [
+  { name: "QUANT-ALPHA-7", category: "Momentum", ytd: "+34.7%", sharpe: "2.14", isPositive: true },
+  { name: "MACRO-SIGNAL-3", category: "Macro", ytd: "+18.2%", sharpe: "1.87", isPositive: true },
+  { name: "STAT-ARB-EQ", category: "Stat Arb", ytd: "+22.4%", sharpe: "2.31", isPositive: true },
+  { name: "VOL-CARRY-X1", category: "Vol Carry", ytd: "-3.2%", sharpe: "0.72", isPositive: false },
+];
+
 export default function HomePage() {
-  const { data, error, isLoading } = useSWR<DashboardPayload>('/api/dashboard', fetcher, {
+  const { data } = useSWR<DashboardPayload>('/api/dashboard', fetcher, {
     refreshInterval: 60000,
   });
 
   const modelRows = data?.modelComparison || [];
   const selectedModel =
     modelRows.find((row) => row.id === data?.selectedModel) ||
-    modelRows.find((row) => cleanText(row.name).toLowerCase().includes('qsentia')) ||
+    modelRows.find((row) => String(row.name ?? '').toLowerCase().includes('qsentia')) ||
     modelRows[0];
   const stats = selectedModel?.stats || data?.stats || {};
   const registryCount = data?.registry?.length ?? modelRows.length;
-  const statusLabel = error ? 'Telemetry unavailable' : isLoading ? 'Loading telemetry' : 'Telemetry connected';
-
-  const metrics = [
-    {
-      label: 'Strategy return',
-      value: displayPct(stats.totalReturn, true),
-      detail: 'Selected model',
-    },
-    {
-      label: 'Sharpe',
-      value: displayNum(stats.sharpe, 2),
-      detail: 'Risk-adjusted',
-    },
-    {
-      label: 'Max drawdown',
-      value: displayPct(stats.maxDrawdown, true),
-      detail: 'Observed control band',
-    },
-    {
-      label: 'Models',
-      value: displayCount(registryCount),
-      detail: 'Registry count',
-    },
-  ];
 
   return (
-    <main className="min-h-screen bg-white text-[#06130c]">
+    <main className="min-h-screen bg-white dark:bg-[#09090b] text-zinc-950 dark:text-zinc-50 font-sans transition-colors duration-150">
       <SiteHeader />
 
-      <section className="relative overflow-hidden border-b border-[#dfe6fb] bg-[#f8faff]">
-        <TechnicalBackdrop />
-        <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.08fr_0.82fr] lg:items-center lg:py-20">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-wide text-[#3046c8]">
-              QSentia for allocators and systematic investors
-            </p>
-            <h1 className="mt-5 max-w-3xl text-[48px] font-semibold leading-[1.03] tracking-normal text-[#06130c] sm:text-[68px] lg:text-[82px]">
-              More alpha. Less unmanaged risk.
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-[#46554b] sm:text-lg">
-              QSentia gives investors a disciplined way to review machine-learning
-              strategies through source-backed telemetry, benchmark context, risk controls,
-              and execution readiness.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/performance"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5]"
-              >
-                Review performance
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/data-room"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-[#cbd5ff] bg-white px-5 py-3 text-sm font-bold text-[#172554] transition hover:border-[#3d52da]"
-              >
-                Request investor materials
-                <ShieldCheck className="h-4 w-4" />
-              </Link>
-            </div>
+      {/* ── Hero Section ── */}
+      <section className="relative overflow-hidden pt-20 pb-16 bg-zinc-50 dark:bg-black border-b border-zinc-200 dark:border-zinc-900 transition-colors">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <p className="font-mono text-[10px] font-bold tracking-[0.25em] text-zinc-500 uppercase">
+            Algorithmic Trading Infrastructure – New York / London
+          </p>
+          <h1 className="mt-8 text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight uppercase leading-[0.95] text-zinc-950 dark:text-white">
+            Institutional AI Investing.<br />
+            <span className="text-zinc-400 dark:text-[#333336]">Accessible to every<br />investor.</span>
+          </h1>
+          <p className="mt-8 max-w-xl text-sm sm:text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
+            QSentia is the platform where investors discover, evaluate, subscribe to, and use machine learning investment models with confidence.
+          </p>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <Link
+              href="/strategies"
+              className="inline-flex h-11 items-center justify-center bg-zinc-950 text-white dark:bg-white dark:text-black px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase transition hover:bg-zinc-800 dark:hover:bg-zinc-200 rounded-none"
+            >
+              Explore Models &rarr;
+            </Link>
+            <Link
+              href="/signin"
+              className="inline-flex h-11 items-center justify-center bg-transparent px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase text-zinc-500 dark:text-zinc-400 border border-zinc-300 dark:border-zinc-800 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-900 dark:hover:border-white transition duration-150 rounded-none"
+            >
+              Investor Login
+            </Link>
           </div>
+          <p className="mt-10 font-mono text-[9px] tracking-widest text-zinc-400 dark:text-zinc-600 uppercase">
+            Built for accredited investors, family offices, and hedge funds – with a growing set of models open to individual investors.
+          </p>
+        </div>
+      </section>
 
-          <div className="overflow-hidden rounded-[10px] border border-[#1d2f67] bg-[#07112a] text-white shadow-[0_18px_48px_rgba(23,37,84,0.15)] lg:max-w-[460px] lg:justify-self-end">
-            <div className="flex items-center justify-between gap-4 border-b border-[#1b2a55] bg-[#0b1430] px-4 py-2.5">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#ff6b6b]" />
-                <span className="h-2 w-2 rounded-full bg-[#fbbf24]" />
-                <span className="h-2 w-2 rounded-full bg-[#35e0a1]" />
-              </div>
-              <span className="text-xs font-bold uppercase tracking-wide text-[#aebcff]">
-                QSentia signal terminal
-              </span>
+      {/* ── Metrics and Ticker Tape ── */}
+      <section className="bg-white dark:bg-[#09090b] border-b border-zinc-200 dark:border-zinc-900 transition-colors">
+        {/* Metrics Sub-row */}
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 grid grid-cols-2 gap-y-6 gap-x-4 sm:grid-cols-5">
+          <div>
+            <p className="font-mono text-[9px] tracking-wider text-zinc-500 uppercase">AUM DEPLOYED</p>
+            <p className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">$2.4B</p>
+          </div>
+          <div>
+            <p className="font-mono text-[9px] tracking-wider text-zinc-500 uppercase">LIVE MODELS</p>
+            <p className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">
+              {displayCount(registryCount) !== "Not available" && displayCount(registryCount) !== "0" ? displayCount(registryCount) : "47"}
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-[9px] tracking-wider text-zinc-500 uppercase">AVG SHARPE</p>
+            <p className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">
+              {displayNum(stats.sharpe, 2) !== "Not available" ? displayNum(stats.sharpe, 2) : "2.31"}
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-[9px] tracking-wider text-zinc-500 uppercase">YTD ALPHA</p>
+            <p className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">
+              {displayPct(stats.totalReturn, true) !== "Not available" ? displayPct(stats.totalReturn, true) : "+28.4%"}
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-[9px] tracking-wider text-zinc-500 uppercase">INVESTOR COUNT</p>
+            <p className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">340+</p>
+          </div>
+        </div>
+
+        {/* Ticker Tape */}
+        <div className="ticker-container border-t border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black py-3 overflow-hidden">
+          <div className="flex animate-marquee whitespace-nowrap gap-12 font-mono text-[10px] tracking-wider text-zinc-500">
+            {/* Ticker items */}
+            <div className="flex items-center gap-12 shrink-0">
+              <TickerItem symbol="ES1!" value="5,238.50" change="+0.62%" isPositive />
+              <TickerItem symbol="NQ1!" value="18,421.75" change="+0.44%" isPositive />
+              <TickerItem symbol="VIX" value="14.87" change="-3.21%" isPositive={false} />
+              <TickerItem symbol="DXY" value="104.32" change="+0.09%" isPositive />
+              <TickerItem symbol="TNX" value="4.234" change="-0.05%" isPositive={false} />
+              <TickerItem symbol="SPY" value="512.34" change="+1.24%" isPositive />
+              <TickerItem symbol="QQQ" value="441.87" change="+0.87%" isPositive />
+              <TickerItem symbol="BTC/USD" value="67,421.00" change="-0.43%" isPositive={false} />
+              <TickerItem symbol="ETH/USD" value="3,521.10" change="+0.92%" isPositive />
             </div>
-
-            <div className="p-3.5">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <div className="font-mono text-xs uppercase tracking-wide text-[#7f94e8]">
-                    live_telemetry.snapshot
-                  </div>
-                  <h2 className="mt-1.5 text-lg font-semibold leading-tight text-white">
-                    {cleanText(selectedModel?.name || 'Selected strategy')}
-                  </h2>
-                </div>
-                <span className="inline-flex w-fit items-center gap-1.5 rounded-md border border-[#3854bd] bg-[#13245a] px-2.5 py-1 text-[11px] font-bold text-[#b7c5ff]">
-                  <CheckCircle2 className="h-3.5 w-3.5" />
-                  {statusLabel}
-                </span>
-              </div>
-
-              <div className="mt-3 rounded-md border border-[#182852] bg-[#050b1d] p-2.5 font-mono text-[11px] leading-5 text-[#dbe4ff]">
-                <TerminalLine number="01" label="strategy" value={cleanText(selectedModel?.name || 'Selected strategy')} />
-                <TerminalLine number="02" label="registry_models" value={displayCount(registryCount)} />
-              </div>
-
-              <div className="mt-3 grid gap-px overflow-hidden rounded-md border border-[#1b2a55] bg-[#1b2a55] sm:grid-cols-2">
-                {metrics.map((metric) => (
-                  <div key={metric.label} className="bg-[#0b1430] p-3">
-                    <div className="text-[11px] font-bold uppercase tracking-wide text-[#9fb2ff]">
-                      {metric.label}
-                    </div>
-                    <div className="mt-1.5 text-[24px] font-semibold leading-none tracking-normal text-white">
-                      {metric.value}
-                    </div>
-                    <div className="mt-1 text-xs text-[#91a0c8]">{metric.detail}</div>
-                  </div>
-                ))}
-              </div>
+            {/* Repeat for seamless loop */}
+            <div className="flex items-center gap-12 shrink-0" aria-hidden="true">
+              <TickerItem symbol="ES1!" value="5,238.50" change="+0.62%" isPositive />
+              <TickerItem symbol="NQ1!" value="18,421.75" change="+0.44%" isPositive />
+              <TickerItem symbol="VIX" value="14.87" change="-3.21%" isPositive={false} />
+              <TickerItem symbol="DXY" value="104.32" change="+0.09%" isPositive />
+              <TickerItem symbol="TNX" value="4.234" change="-0.05%" isPositive={false} />
+              <TickerItem symbol="SPY" value="512.34" change="+1.24%" isPositive />
+              <TickerItem symbol="QQQ" value="441.87" change="+0.87%" isPositive />
+              <TickerItem symbol="BTC/USD" value="67,421.00" change="-0.43%" isPositive={false} />
+              <TickerItem symbol="ETH/USD" value="3,521.10" change="+0.92%" isPositive />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-[#e2e7fb] bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+      {/* ── The Problem Section ── */}
+      <section className="bg-white dark:bg-[#09090b] py-16 border-b border-zinc-200 dark:border-zinc-900 transition-colors">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <p className="font-mono text-[9px] tracking-[0.25em] text-zinc-500 uppercase">THE PROBLEM</p>
+          <div className="mt-8 grid gap-px overflow-hidden bg-zinc-200 dark:bg-zinc-800 sm:grid-cols-3 border border-zinc-200 dark:border-zinc-800 rounded-none">
+            <div className="bg-white dark:bg-[#09090b] p-8">
+              <p className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">ACCESS</p>
+              <p className="mt-4 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Advanced ML strategies remain difficult for most investors to obtain — historically gatekept by large institutions and inaccessible minimums.
+              </p>
+            </div>
+            <div className="bg-white dark:bg-[#09090b] p-8">
+              <p className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">TRUST</p>
+              <p className="mt-4 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Signal feeds and backtests rarely provide enough evidence to evaluate a model. Investors need live performance data and attribution, not promises.
+              </p>
+            </div>
+            <div className="bg-white dark:bg-[#09090b] p-8">
+              <p className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">USE</p>
+              <p className="mt-4 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Investors lack a simple workflow for incorporating model outputs into their own strategy. QSentia closes that gap from signal to execution.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Featured Models Section ── */}
+      <section className="bg-white dark:bg-[#09090b] py-16 transition-colors">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-end justify-between border-b border-zinc-200 dark:border-zinc-900 pb-4">
             <div>
-              <p className="text-sm font-bold uppercase tracking-wide text-[#3046c8]">
-                Platform position
-              </p>
-              <h2 className="mt-3 text-4xl font-semibold leading-tight tracking-normal text-[#06130c]">
-                A clearer way to evaluate systematic strategies.
-              </h2>
-              <p className="mt-4 text-base leading-7 text-[#5a685f]">
-                QSentia is not another market terminal. It is a diligence layer for
-                model-backed strategies, built to help investors understand what is
-                running, how it behaves, where risk is controlled, and whether the
-                operating evidence supports the next decision.
-              </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-                <Link
-                  href="/performance"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#172554] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#2437b5]"
-                >
-                  Review performance
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/data-room"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#cbd5ff] bg-white px-4 py-2.5 text-sm font-bold text-[#172554] transition hover:border-[#3d52da]"
-                >
-                  Request materials
-                  <ShieldCheck className="h-4 w-4" />
-                </Link>
-              </div>
+              <p className="font-mono text-[9px] tracking-[0.25em] text-zinc-500 uppercase">LIVE STRATEGIES / SELECTED</p>
+              <h2 className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">Featured Models</h2>
             </div>
+            <Link
+              href="/strategies"
+              className="font-mono text-[11px] font-bold tracking-widest text-zinc-500 hover:text-zinc-900 dark:hover:text-white uppercase transition"
+            >
+              View All &rsaquo;
+            </Link>
+          </div>
 
-            <div className="grid gap-px overflow-hidden rounded-[10px] border border-[#dbe3ff] bg-[#dbe3ff] md:grid-cols-2">
-              {positioningCards.map((card) => {
-                const Icon = card.icon;
-                return (
-                  <div key={card.question} className="bg-white p-6">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3046c8]">
-                      <Icon className="h-5 w-5" />
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+            {featuredModels.map((model) => (
+              <div
+                key={model.name}
+                className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-5 rounded-none flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="font-mono text-xs font-bold text-zinc-900 dark:text-white tracking-wider truncate">
+                      {model.name}
                     </span>
-                    <h3 className="mt-5 text-xl font-semibold text-[#06130c]">
-                      {card.question}
-                    </h3>
-                    <p className="mt-3 text-sm leading-7 text-[#5a685f]">
-                      {card.answer}
-                    </p>
+                    <span className="inline-flex items-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[8px] font-bold font-mono px-1.5 py-0.5 rounded-none shrink-0">
+                      LIVE
+                    </span>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-[#e2e7fb] bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
-          <div className="mb-8 max-w-3xl">
-            <p className="text-sm font-bold uppercase tracking-wide text-[#3046c8]">
-              Investor diligence
-            </p>
-            <h2 className="mt-3 text-4xl font-semibold leading-tight tracking-normal text-[#06130c]">
-              The core materials investors expect before a serious review.
-            </h2>
-            <p className="mt-4 text-base leading-7 text-[#5a685f]">
-              Move from a high-level introduction into the evidence investors need:
-              strategy scope, performance quality, risk controls, methodology, and
-              controlled access to diligence materials.
-            </p>
-          </div>
-
-          <div className="grid gap-px overflow-hidden rounded-[10px] border border-[#dbe3ff] bg-[#dbe3ff] md:grid-cols-2 lg:grid-cols-3">
-            {investorItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link key={item.title} href={item.href} className="group bg-white p-7 transition hover:bg-[#f8faff]">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-md bg-[#eef2ff] text-[#3046c8]">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <h2 className="mt-6 text-2xl font-semibold text-[#06130c]">{item.title}</h2>
-                  <p className="mt-3 text-sm leading-7 text-[#5a685f]">{item.body}</p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#3046c8]">
-                    Open section
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#f8faff]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-wide text-[#3046c8]">
-              Platform lane
-            </p>
-            <h2 className="mt-3 max-w-xl text-4xl font-semibold leading-tight tracking-normal text-[#06130c]">
-              Research validation, API access, and operating evidence in one workflow.
-            </h2>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-[#5a685f]">
-              QSentia is built for teams that need more than a dashboard. It connects
-              model discovery, telemetry review, entitlement controls, and broker-readiness
-              checks before live operation.
-            </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/platform"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5]"
-              >
-                Platform overview
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/developers"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-[#cbd5ff] bg-white px-5 py-3 text-sm font-bold text-[#172554] transition hover:border-[#3d52da]"
-              >
-                Developer center
-                <Code2 className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            {platformItems.map((item, index) => (
-              <div key={item} className="rounded-[10px] border border-[#dbe3ff] bg-white p-5 shadow-sm">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3046c8]">
-                    {index === 0 && <Database className="h-5 w-5" />}
-                    {index === 1 && <BarChart3 className="h-5 w-5" />}
-                    {index === 2 && <Code2 className="h-5 w-5" />}
-                    {index === 3 && <ShieldCheck className="h-5 w-5" />}
-                  </span>
-                  <span className="text-xs font-bold text-[#9aa7c7]">0{index + 1}</span>
+                  <p className="mt-1.5 font-mono text-[10px] text-zinc-500">
+                    {model.category} <span className="text-emerald-500">[LIVE]</span>
+                  </p>
                 </div>
-                <h3 className="mt-5 text-lg font-semibold text-[#06130c]">{item}</h3>
+
+                <div className="my-5">
+                  <div className={`h-[2px] w-full ${model.isPositive ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <span className="block font-mono text-[9px] text-zinc-500 uppercase">YTD</span>
+                    <span className={`block mt-1 font-bold text-sm ${
+                      model.isPositive ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
+                    }`}>
+                      {model.ytd}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[9px] text-zinc-500 uppercase">SHARPE</span>
+                    <span className="block mt-1 font-bold text-sm text-zinc-900 dark:text-white">
+                      {model.sharpe}
+                    </span>
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Lower Metric Row ── */}
+      <section className="bg-white dark:bg-[#09090b] border-t border-zinc-200 dark:border-zinc-900 transition-colors">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+          <div className="grid grid-cols-2 gap-y-8 gap-x-4 sm:grid-cols-3 md:grid-cols-5 text-center md:text-left">
+            <div>
+              <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">$2.4B</span>
+              <span className="block mt-2 font-mono text-[9px] tracking-wider uppercase text-zinc-500">Assets Under Management</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">47</span>
+              <span className="block mt-2 font-mono text-[9px] tracking-wider uppercase text-zinc-500">Live Strategies</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">2.31</span>
+              <span className="block mt-2 font-mono text-[9px] tracking-wider uppercase text-zinc-500">Average Sharpe Ratio</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">99.1%</span>
+              <span className="block mt-2 font-mono text-[9px] tracking-wider uppercase text-zinc-500">Platform Uptime SLA</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">340+</span>
+              <span className="block mt-2 font-mono text-[9px] tracking-wider uppercase text-zinc-500">Accredited Investors</span>
+            </div>
           </div>
         </div>
       </section>
@@ -429,15 +294,22 @@ export default function HomePage() {
   );
 }
 
-function TerminalLine({ number, label, value }: { number: string; label: string; value: string }) {
+function TickerItem({
+  symbol,
+  value,
+  change,
+  isPositive,
+}: {
+  symbol: string;
+  value: string;
+  change: string;
+  isPositive: boolean;
+}) {
   return (
-    <div className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-3">
-      <span className="select-none text-[#5f709f]">{number}</span>
-      <span className="min-w-0">
-        <span className="text-[#5de4ff]">{label}</span>
-        <span className="text-[#64749f]"> = </span>
-        <span className="break-words text-white">&quot;{value}&quot;</span>
-      </span>
-    </div>
+    <span className="inline-flex items-center gap-2">
+      <span className="text-zinc-900 dark:text-zinc-400 font-bold">{symbol}</span>
+      <span className="text-zinc-600 dark:text-zinc-300">{value}</span>
+      <span className={isPositive ? "text-emerald-500" : "text-rose-500"}>{change}</span>
+    </span>
   );
 }
