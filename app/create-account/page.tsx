@@ -18,7 +18,7 @@ const onboardingSteps = [
 export default function CreateAccountPage() {
   return (
     <PageShell>
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
           <div>
             <Eyebrow>New account request</Eyebrow>
@@ -32,7 +32,7 @@ export default function CreateAccountPage() {
 
           <SectionCard className="p-6 md:p-8">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
                 <FileCheck2 className="h-5 w-5" />
               </span>
               <div>
@@ -45,7 +45,7 @@ export default function CreateAccountPage() {
 
             <p className="mt-6 text-sm text-[#5a685f]">
               Already registered?{' '}
-              <Link href="/signin" className="font-semibold text-[#3d52da] hover:underline">
+              <Link href="/signin" className="font-semibold text-[#0F8F5A] hover:underline">
                 Sign in here
               </Link>
             </p>
@@ -56,23 +56,23 @@ export default function CreateAccountPage() {
       <section className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-3">
         {onboardingSteps.map((step, index) => (
           <SectionCard key={step} className="p-6">
-            <div className="text-xs font-bold uppercase tracking-wide text-[#3d52da]">Step {index + 1}</div>
+            <div className="text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">Step {index + 1}</div>
             <p className="mt-4 text-sm leading-6 text-[#26352c]">{step}</p>
           </SectionCard>
         ))}
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-y border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-2">
           <SectionCard className="p-6">
-            <ShieldCheck className="h-5 w-5 text-[#3d52da]" />
+            <ShieldCheck className="h-5 w-5 text-[#0F8F5A]" />
             <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Security policy</h2>
             <p className="mt-3 text-sm leading-6 text-[#5a685f]">
               Never send passwords, API keys, broker credentials, or private tokens through unsecured channels.
             </p>
           </SectionCard>
           <SectionCard className="p-6">
-            <Building2 className="h-5 w-5 text-[#3d52da]" />
+            <Building2 className="h-5 w-5 text-[#0F8F5A]" />
             <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Institutional context</h2>
             <p className="mt-3 text-sm leading-6 text-[#5a685f]">
               Include your organization profile and scope of interest for faster routing and setup.

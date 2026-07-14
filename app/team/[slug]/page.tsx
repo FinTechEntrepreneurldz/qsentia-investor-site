@@ -1,29 +1,29 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowLeft, Mail } from "lucide-react";
-import { Eyebrow, PageShell, TechnicalBackdrop } from "@/components/PageChrome";
-import { getTeamMember, teamMembers, type TeamRole } from "@/lib/team";
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { ArrowLeft, Mail } from 'lucide-react';
+import { Eyebrow, PageShell, TechnicalBackdrop } from '@/components/PageChrome';
+import { getTeamMember, teamMembers, type TeamRole } from '@/lib/team';
 
 const roleStyles: Record<
   TeamRole,
   { badge: string; avatar: string; ring: string }
 > = {
   CEO: {
-    badge: "border-[#cbd5ff] bg-[#eef2ff] text-[#172554]",
-    avatar: "bg-[#172554] text-white",
-    ring: "border-[#cbd5ff]",
+    badge: 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white',
+    avatar: 'bg-zinc-950 text-white dark:bg-zinc-800 dark:text-white',
+    ring: 'border-zinc-200 dark:border-zinc-800',
   },
-  "Quantitative Research": {
-    badge: "border-[#c7d2fe] bg-[#f8faff] text-[#3046c8]",
-    avatar: "bg-[#3046c8] text-white",
-    ring: "border-[#c7d2fe]",
+  'Quantitative Research': {
+    badge: 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white',
+    avatar: 'bg-zinc-800 text-white',
+    ring: 'border-zinc-200 dark:border-zinc-800',
   },
-  "Software Development": {
-    badge: "border-[#dbe3ff] bg-white text-[#23443a]",
-    avatar: "bg-[#eef2ff] text-[#172554]",
-    ring: "border-[#dbe3ff]",
+  'Software Development': {
+    badge: 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white',
+    avatar: 'bg-zinc-200 text-zinc-950 dark:bg-zinc-800 dark:text-white',
+    ring: 'border-zinc-200 dark:border-zinc-800',
   },
 };
 
@@ -41,7 +41,7 @@ export async function generateMetadata({
 
   if (!member) {
     return {
-      title: "Team Bio | QSentia",
+      title: 'Team Bio | QSentia',
     };
   }
 
@@ -65,34 +65,34 @@ export default async function TeamBioPage({
 
   return (
     <PageShell active="/team">
-      <section className="relative overflow-hidden border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="relative overflow-hidden border-b border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black transition-colors">
         <TechnicalBackdrop />
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_320px] lg:items-end lg:py-16">
           <div>
             <Link
               href="/team"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#172554] transition hover:text-[#3046c8]"
+              className="inline-flex items-center gap-2 font-mono text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-3.5 w-3.5" />
               Back to team
             </Link>
             <div className="mt-8">
               <Eyebrow>Team bio</Eyebrow>
             </div>
-            <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
+            <h1 className="mt-6 max-w-4xl font-mono text-3xl sm:text-5xl font-bold uppercase tracking-wider text-zinc-950 dark:text-white">
               {member.fullName}
             </h1>
-            <p className="mt-5 text-lg font-semibold text-[#3046c8]">
+            <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-550">
               {member.designation}
             </p>
             <span
-              className={`mt-5 inline-flex rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${style.badge}`}
+              className={`mt-5 inline-flex rounded-[4px] border px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider ${style.badge}`}
             >
               {member.role}
             </span>
           </div>
 
-          <div className="relative flex h-80 items-center justify-center overflow-hidden rounded-[14px] border border-[#dbe3ff] bg-white shadow-sm">
+          <div className="relative flex h-80 items-center justify-center overflow-hidden rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40">
             {member.imageSrc ? (
               <Image
                 src={member.imageSrc}
@@ -101,16 +101,16 @@ export default async function TeamBioPage({
                 priority
                 sizes="(min-width: 1024px) 320px, 100vw"
                 className="object-cover"
-                style={{ objectPosition: member.imagePosition ?? "center" }}
+                style={{ objectPosition: member.imagePosition ?? 'center' }}
               />
             ) : (
               <>
                 <div
                   aria-hidden
-                  className="absolute inset-0 bg-[linear-gradient(to_right,rgba(61,82,218,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(61,82,218,0.06)_1px,transparent_1px)] bg-[size:54px_54px]"
+                  className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,100,100,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,100,100,0.06)_1px,transparent_1px)] bg-[size:54px_54px]"
                 />
                 <div
-                  className={`relative z-10 flex h-36 w-36 items-center justify-center rounded-full border-4 bg-white text-5xl font-semibold ${style.ring}`}
+                  className={`relative z-10 flex h-36 w-36 items-center justify-center rounded-full border-4 bg-white dark:bg-[#1A1A1D] text-5xl font-semibold ${style.ring}`}
                 >
                   <span className={`flex h-28 w-28 items-center justify-center rounded-full ${style.avatar}`}>
                     {member.initials}
@@ -122,9 +122,9 @@ export default async function TeamBioPage({
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <article className="max-w-4xl">
-          <div className="grid gap-7 text-xl leading-9 text-[#06130c]">
+          <div className="grid gap-7 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
             {member.biography.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -132,41 +132,43 @@ export default async function TeamBioPage({
         </article>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-[12px] border border-[#e2e7fb] bg-white p-6 shadow-sm">
-            <p className="text-xs font-bold uppercase tracking-wide text-[#3d52da]">
+          <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-6">
+            <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-550">
               Profile highlights
             </p>
 
             {member.qualifications ? (
-              <div className="mt-6 border-t border-[#e2e7fb] pt-5">
-                <h2 className="text-sm font-semibold text-[#06130c]">
+              <div className="mt-6 border-t border-zinc-200 dark:border-zinc-800 pt-5">
+                <h2 className="font-mono text-[10px] uppercase font-bold tracking-wider text-zinc-950 dark:text-white">
                   Qualifications
                 </h2>
-                <p className="mt-2 text-sm leading-6 text-[#46554b]">
+                <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
                   {member.qualifications}
                 </p>
               </div>
             ) : null}
 
             {member.focus ? (
-              <div className="mt-6 border-t border-[#e2e7fb] pt-5">
-                <h2 className="text-sm font-semibold text-[#06130c]">Focus</h2>
-                <p className="mt-2 text-sm leading-6 text-[#46554b]">
+              <div className="mt-6 border-t border-zinc-200 dark:border-zinc-800 pt-5">
+                <h2 className="font-mono text-[10px] uppercase font-bold tracking-wider text-zinc-955 dark:text-white">
+                  Focus
+                </h2>
+                <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
                   {member.focus}
                 </p>
               </div>
             ) : null}
 
             {member.emailAddress ? (
-              <div className="mt-6 border-t border-[#e2e7fb] pt-5">
-                <h2 className="text-sm font-semibold text-[#06130c]">
+              <div className="mt-6 border-t border-zinc-200 dark:border-zinc-800 pt-5">
+                <h2 className="font-mono text-[10px] uppercase font-bold tracking-wider text-zinc-955 dark:text-white">
                   Contact
                 </h2>
                 <a
                   href={`mailto:${member.emailAddress}`}
-                  className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#172554] transition hover:text-[#3046c8]"
+                  className="mt-3 inline-flex items-center gap-2 font-mono text-xs font-bold text-zinc-950 dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 transition"
                 >
-                  <Mail className="h-4 w-4" />
+                  <Mail className="h-4 w-4 shrink-0" />
                   {member.emailAddress}
                 </a>
               </div>

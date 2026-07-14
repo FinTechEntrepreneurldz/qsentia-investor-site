@@ -148,7 +148,7 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
       <PageShell active="/marketplace">
         <section className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
           <EmptyState title="Model not found" body="The requested model is not available in the current model API payload." />
-          <Link href="/marketplace" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#3d52da]">
+          <Link href="/marketplace" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#0F8F5A]">
             <ArrowLeft className="h-4 w-4" />
             Back to marketplace
           </Link>
@@ -159,9 +159,9 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
 
   return (
     <PageShell active="/marketplace">
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
-          <Link href="/marketplace" className="inline-flex items-center gap-2 text-sm font-semibold text-[#3d52da] hover:underline">
+          <Link href="/marketplace" className="inline-flex items-center gap-2 text-sm font-semibold text-[#0F8F5A] hover:underline">
             <ArrowLeft className="h-4 w-4" />
             Back to marketplace
           </Link>
@@ -184,7 +184,7 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
         <div className="space-y-6">
           <SectionCard className="p-6">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
                 <BarChart3 className="h-5 w-5" />
               </span>
               <div>
@@ -214,7 +214,7 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
                 type="button"
                 onClick={handlePreview}
                 disabled={demoLoading}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5] disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Play className="h-4 w-4" />
                 {demoLoading ? 'Running preview' : 'Run preview'}
@@ -233,8 +233,8 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
               <h2 className="text-xl font-semibold text-[#06130c]">Published features</h2>
               <div className="mt-5 grid gap-3 md:grid-cols-2">
                 {model.features.map((feature) => (
-                  <div key={feature} className="flex gap-3 rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-3 text-sm text-[#26352c]">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#3d52da]" />
+                  <div key={feature} className="flex gap-3 rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-3 text-sm text-[#26352c]">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0F8F5A]" />
                     {feature}
                   </div>
                 ))}
@@ -245,9 +245,9 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
 
         <aside className="space-y-6">
           <SectionCard className="p-6">
-            <Database className="h-5 w-5 text-[#3d52da]" />
+            <Database className="h-5 w-5 text-[#0F8F5A]" />
             <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Source details</h2>
-            <dl className="mt-5 divide-y divide-[#e2e7fb] text-sm">
+            <dl className="mt-5 divide-y divide-[#E5E5E7] text-sm">
               <InfoRow label="Repository" value={model.repo || 'Not available'} />
               <InfoRow label="Logs path" value={model.logsPath || 'Not available'} />
               <InfoRow label="Pricing" value={model.pricing || 'Contact sales'} />
@@ -259,20 +259,20 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
           </SectionCard>
 
           <SectionCard className="p-6">
-            <ShieldCheck className="h-5 w-5 text-[#3d52da]" />
+            <ShieldCheck className="h-5 w-5 text-[#0F8F5A]" />
             <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Access</h2>
             <p className="mt-3 text-sm leading-6 text-[#5a685f]">
               Commercial terms are controlled from the QSentia back office and published through the
               model API. Request access for eligibility, onboarding, and execution details.
             </p>
             {model.onboardingNotes && (
-              <div className="mt-4 rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-3 text-sm leading-6 text-[#46554b]">
+              <div className="mt-4 rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-3 text-sm leading-6 text-[#46554b]">
                 {model.onboardingNotes}
               </div>
             )}
             <Link
               href="/contact"
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white hover:bg-[#2437b5]"
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white hover:bg-[#12B76A]"
             >
               Request access
               <ArrowRight className="h-4 w-4" />
@@ -285,7 +285,7 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
               <h2 className="text-xl font-semibold text-[#06130c]">Tags</h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {model.tags.map((tag) => (
-                  <span key={tag} className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-2 py-1 text-xs text-[#647269]">
+                  <span key={tag} className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-2 py-1 text-xs text-[#647269]">
                     {tag}
                   </span>
                 ))}
@@ -300,7 +300,7 @@ export default function ModelDetailPage({ params }: ModelDetailPageProps) {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-4">
+    <div className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-4">
       <div className="text-[11px] font-bold uppercase tracking-wide text-[#647269]">{label}</div>
       <div className="mt-1 text-lg font-semibold text-[#06130c]">{value}</div>
     </div>

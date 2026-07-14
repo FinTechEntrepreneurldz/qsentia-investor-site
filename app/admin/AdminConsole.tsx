@@ -328,7 +328,7 @@ function settingForEdit(setting: AdminSetting | undefined): AdminSetting {
 
 function statusClasses(status: string) {
   if (['active', 'won', 'open'].includes(status)) return 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]';
-  if (['private', 'proposal', 'in_progress'].includes(status)) return 'border-[#c7d2fe] bg-[#eef2ff] text-[#3046c8]';
+  if (['private', 'proposal', 'in_progress'].includes(status)) return 'border-[#c7d2fe] bg-[#D1F1E1] text-[#12B76A]';
   if (['waitlist', 'demo', 'waiting', 'paused', 'high'].includes(status)) return 'border-[#fde68a] bg-[#fffbeb] text-[#a16207]';
   if (['retired', 'lost', 'closed', 'resolved', 'urgent'].includes(status)) return 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
   return 'border-[#d9e0ec] bg-[#f8fafc] text-[#46554b]';
@@ -629,14 +629,14 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
     <main className="admin-portal min-h-screen bg-[#f5f7fb] text-[#0f172a]">
       <div className="mx-auto min-h-screen max-w-[1760px] md:grid md:grid-cols-[304px_minmax(0,1fr)]">
         <aside className="flex flex-col border-b border-[#dfe6f3] bg-white/95 p-4 text-[#0f172a] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur md:sticky md:top-0 md:max-h-screen md:min-h-screen md:self-start md:overflow-y-auto md:border-b-0 md:border-r">
-          <div className="rounded-[16px] border border-[#dfe6f3] bg-[#f8faff] p-4">
+          <div className="rounded-[16px] border border-[#dfe6f3] bg-[#F5F5F6] p-4">
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-[#cbd5ff] bg-white" aria-label="QSentia home">
+              <Link href="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-[#E5E5E7] bg-white" aria-label="QSentia home">
                 <Image src="/logo/qsentia-primary.png" alt="QSentia" width={27} height={27} className="h-7 w-7 object-contain" />
               </Link>
               <div className="min-w-0">
                 <div className="truncate text-sm font-semibold text-[#0f172a]">QSentia</div>
-                <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3d52da]">Administration</div>
+                <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0F8F5A]">Administration</div>
               </div>
             </div>
             <p className="mt-4 text-sm leading-6 text-[#5a685f]">
@@ -659,11 +659,11 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
                   }}
                   className={`group flex min-h-12 w-full items-start gap-3 rounded-[10px] border px-3 py-3 text-left transition ${
                     active
-                      ? 'border-[#cbd5ff] bg-[#eef2ff] text-[#172554] shadow-sm'
-                      : 'border-transparent text-[#334155] hover:border-[#dfe6f3] hover:bg-[#f8faff]'
+                      ? 'border-[#E5E5E7] bg-[#D1F1E1] text-[#0F8F5A] shadow-sm'
+                      : 'border-transparent text-[#334155] hover:border-[#dfe6f3] hover:bg-[#F5F5F6]'
                   }`}
                 >
-                  <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${active ? 'bg-white text-[#3d52da]' : 'bg-[#f1f5ff] text-[#64748b] group-hover:text-[#3d52da]'}`}>
+                  <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${active ? 'bg-white text-[#0F8F5A]' : 'bg-[#f1f5ff] text-[#64748b] group-hover:text-[#0F8F5A]'}`}>
                     {section.icon}
                   </span>
                   <span className="min-w-0">
@@ -675,17 +675,17 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
             })}
           </nav>
 
-          <div className="mt-6 grid gap-2 border-t border-[#e2e7fb] pt-4 md:mt-auto">
-            <div className="rounded-[12px] border border-[#dfe6f3] bg-[#f8faff] p-3">
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#172554]">
-                <LockKeyhole className="h-4 w-4 text-[#3d52da]" />
+          <div className="mt-6 grid gap-2 border-t border-[#E5E5E7] pt-4 md:mt-auto">
+            <div className="rounded-[12px] border border-[#dfe6f3] bg-[#F5F5F6] p-3">
+              <div className="flex items-center gap-2 text-xs font-semibold text-[#0F8F5A]">
+                <LockKeyhole className="h-4 w-4 text-[#0F8F5A]" />
                 Role-secured workspace
               </div>
               <p className="mt-2 text-xs leading-5 text-[#647269]">
                 Access follows the signed-in account and server-side admin grants.
               </p>
             </div>
-            <Link href="/" className="inline-flex items-center justify-between rounded-[10px] border border-[#dfe6f3] bg-white px-3 py-3 text-sm font-semibold text-[#172554] transition hover:border-[#3d52da] hover:bg-[#f8faff]">
+            <Link href="/" className="inline-flex items-center justify-between rounded-[10px] border border-[#dfe6f3] bg-white px-3 py-3 text-sm font-semibold text-[#0F8F5A] transition hover:border-[#0F8F5A] hover:bg-[#F5F5F6]">
               Public site
               <ArrowUpRight className="h-4 w-4" />
             </Link>
@@ -697,20 +697,20 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
             <div className="px-4 py-4 sm:px-6 xl:px-8">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="min-w-0">
-                  <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#3d52da]">Operations workspace</div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#0F8F5A]">Operations workspace</div>
                   <div className="mt-2">
                     <h1 className="text-2xl font-semibold tracking-[-0.01em] text-[#0f172a]">{activeSectionMeta.label}</h1>
                     <p className="mt-1 max-w-3xl text-sm leading-6 text-[#647269]">{activeSectionMeta.detail}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="hidden rounded-full border border-[#dfe6f3] bg-[#f8faff] px-3 py-1.5 text-xs font-semibold text-[#647269] lg:block">
+                  <span className="hidden rounded-full border border-[#dfe6f3] bg-[#F5F5F6] px-3 py-1.5 text-xs font-semibold text-[#647269] lg:block">
                     Updated {shortDate(data?.updatedAt)}
                   </span>
                   <AuthSessionMenu />
                 </div>
               </div>
-              <div className="mt-4 grid gap-px overflow-hidden rounded-[12px] border border-[#e2e7fb] bg-[#e2e7fb] sm:grid-cols-4">
+              <div className="mt-4 grid gap-px overflow-hidden rounded-[12px] border border-[#E5E5E7] bg-[#E5E5E7] sm:grid-cols-4">
                 <AdminHeaderStat label="Models" value={formatNumber(data?.metrics.models || 0)} />
                 <AdminHeaderStat label="Sold licenses" value={formatNumber(data?.metrics.soldModels || 0)} />
                 <AdminHeaderStat label="Open leads" value={formatNumber(data?.metrics.leads || 0)} />
@@ -731,7 +731,7 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
               <WorkspacePanel title="Loading operations" icon={<RefreshCw className="h-4 w-4 animate-spin" />}>
                 <div className="grid gap-3 md:grid-cols-3">
                   {Array.from({ length: 6 }).map((_, index) => (
-                    <div key={index} className="h-28 animate-pulse rounded-md border border-[#dfe5f2] bg-[#f8faff]" />
+                    <div key={index} className="h-28 animate-pulse rounded-md border border-[#dfe5f2] bg-[#F5F5F6]" />
                   ))}
                 </div>
               </WorkspacePanel>
@@ -926,14 +926,14 @@ function OverviewSection({ data, onRefresh }: { data: AdminOverview; onRefresh: 
                     <th className="pb-3">Sold</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e2e7fb]">
+                <tbody className="divide-y divide-[#E5E5E7]">
                   {data.bestPerforming.map((model) => (
                     <tr key={model.id}>
                       <td className="py-3 font-semibold text-[#0f172a]">{model.name}</td>
-                      <td className="py-3 text-[#172554]">{formatRatio(model.performance.sharpeRatio)}</td>
+                      <td className="py-3 text-[#0F8F5A]">{formatRatio(model.performance.sharpeRatio)}</td>
                       <td className="py-3 text-[#047857]">{formatPct(model.performance.annualizedReturn, true)}</td>
                       <td className="py-3 text-[#be123c]">{formatPct(model.performance.maxDrawdown, true)}</td>
-                      <td className="py-3 text-[#172554]">{formatNumber(model.sales.soldUnits)}</td>
+                      <td className="py-3 text-[#0F8F5A]">{formatNumber(model.sales.soldUnits)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1020,7 +1020,7 @@ function ModelsSection({
                 onClick={() => onSelectModel(model.id)}
                 className={`mb-2 w-full rounded-md border p-3 text-left transition ${
                   selectedModel?.id === model.id
-                    ? 'border-[#3d52da] bg-[#eef2ff]'
+                    ? 'border-[#0F8F5A] bg-[#D1F1E1]'
                     : 'border-[#dfe5f2] bg-white hover:border-[#aab8eb]'
                 }`}
               >
@@ -1032,7 +1032,7 @@ function ModelsSection({
                   {model.settings.visibility === 'hidden' ? (
                     <EyeOff className="h-4 w-4 shrink-0 text-[#647269]" />
                   ) : (
-                    <Eye className="h-4 w-4 shrink-0 text-[#3d52da]" />
+                    <Eye className="h-4 w-4 shrink-0 text-[#0F8F5A]" />
                   )}
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -1188,12 +1188,12 @@ function ModelsSection({
             </div>
 
             <div className="mt-6 grid gap-3">
-              <label className="flex items-center gap-3 rounded-md border border-[#dfe5f2] bg-[#f8fafc] p-3 text-sm font-semibold text-[#172554]">
+              <label className="flex items-center gap-3 rounded-md border border-[#dfe5f2] bg-[#f8fafc] p-3 text-sm font-semibold text-[#0F8F5A]">
                 <input
                   type="checkbox"
                   checked={draft.featured}
                   onChange={(event) => onUpdateDraft('featured', event.target.checked)}
-                  className="h-4 w-4 border-[#cbd5e1] accent-[#3d52da]"
+                  className="h-4 w-4 border-[#cbd5e1] accent-[#0F8F5A]"
                 />
                 Feature this model in marketplace ordering and commercial review.
               </label>
@@ -1386,7 +1386,7 @@ function OffersSection({
                   <th className="pb-3">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#e2e7fb]">
+              <tbody className="divide-y divide-[#E5E5E7]">
                 {offers.map((offer) => {
                   const model = models.find((candidate) => candidate.id === offer.modelId);
                   return (
@@ -1396,11 +1396,11 @@ function OffersSection({
                         <div className="font-semibold text-[#0f172a]">{offer.title}</div>
                         <div className="mt-1 text-xs text-[#647269]">Expires: {offer.expiresAt ? shortDate(offer.expiresAt) : 'No expiry'}</div>
                       </td>
-                    <td className="py-3 text-[#172554]">{model?.name || 'All models'}</td>
-                    <td className="py-3 text-[#172554]">
+                    <td className="py-3 text-[#0F8F5A]">{model?.name || 'All models'}</td>
+                    <td className="py-3 text-[#0F8F5A]">
                         {offer.trialDays} trial days, {labelFromToken(offer.discountType)} {offer.discountValue}
                       </td>
-                    <td className="py-3 text-[#172554]">
+                    <td className="py-3 text-[#0F8F5A]">
                         {formatNumber(offer.redemptions)} / {offer.maxRedemptions ?? 'Unlimited'}
                       </td>
                       <td className="py-3">
@@ -1503,7 +1503,7 @@ function LeadsSection({
                     <th className="pb-3">Created</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e2e7fb]">
+                <tbody className="divide-y divide-[#E5E5E7]">
                   {leads.map((lead) => (
                     <tr key={lead.id}>
                       <td className="py-3">
@@ -1512,7 +1512,7 @@ function LeadsSection({
                         {lead.organization && <div className="text-xs text-[#647269]">{lead.organization}</div>}
                       </td>
                       <td className="py-3"><Chip>{labelFromToken(lead.source)}</Chip></td>
-                      <td className="py-3 text-[#172554]">{compactText(lead.interest)}</td>
+                      <td className="py-3 text-[#0F8F5A]">{compactText(lead.interest)}</td>
                       <td className="py-3">
                         <select
                           value={lead.stage}
@@ -1672,7 +1672,7 @@ function CareersSection({
                             href={application.linkedInUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 rounded-md border border-[#cbd5ff] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#3046c8] hover:bg-[#eef2ff]"
+                            className="inline-flex items-center gap-1 rounded-md border border-[#E5E5E7] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#12B76A] hover:bg-[#D1F1E1]"
                           >
                             <Link2 className="h-3.5 w-3.5" />
                             LinkedIn
@@ -1683,7 +1683,7 @@ function CareersSection({
                             href={application.cvUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 rounded-md border border-[#cbd5ff] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#3046c8] hover:bg-[#eef2ff]"
+                            className="inline-flex items-center gap-1 rounded-md border border-[#E5E5E7] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#12B76A] hover:bg-[#D1F1E1]"
                           >
                             <ArrowUpRight className="h-3.5 w-3.5" />
                             {application.cvFileName || 'CV'}
@@ -1821,7 +1821,7 @@ function MetricCard({ helper, icon, label, value }: { helper: string; icon: Reac
   return (
     <div className="rounded-[16px] border border-[#dfe5f2] bg-white p-5 shadow-[0_14px_36px_rgba(15,23,42,0.05)]">
       <div className="flex items-start justify-between gap-4">
-        <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#eef2ff] text-[#3d52da]">
+        <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#D1F1E1] text-[#0F8F5A]">
           {icon}
         </span>
         <span className="text-3xl font-semibold tracking-[-0.02em] text-[#0f172a]">{value}</span>
@@ -1847,7 +1847,7 @@ function WorkspacePanel({
     <section className="overflow-hidden rounded-[16px] border border-[#dfe5f2] bg-white p-5 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#eef2ff] text-[#3d52da]">
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#D1F1E1] text-[#0F8F5A]">
             {icon}
           </span>
           <h2 className="text-lg font-semibold tracking-[-0.01em] text-[#0f172a]">{title}</h2>
@@ -1881,7 +1881,7 @@ function LockedField({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid gap-2">
       <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</span>
-      <div className="rounded-md border border-[#d9e0ec] bg-[#f8fafc] px-3 py-2.5 text-sm font-semibold text-[#172554]">
+      <div className="rounded-md border border-[#d9e0ec] bg-[#f8fafc] px-3 py-2.5 text-sm font-semibold text-[#0F8F5A]">
         {value}
       </div>
     </div>
@@ -1890,7 +1890,7 @@ function LockedField({ label, value }: { label: string; value: string }) {
 
 function MiniStat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-[12px] border border-[#dfe5f2] bg-[#f8faff] p-4">
+    <div className="rounded-[12px] border border-[#dfe5f2] bg-[#F5F5F6] p-4">
       <div className="text-xs font-bold uppercase tracking-[0.15em] text-[#647269]">{label}</div>
       <div className="mt-2 text-2xl font-semibold text-[#0f172a]">{formatNumber(value)}</div>
     </div>
@@ -1907,7 +1907,7 @@ function Chip({ children, tone }: { children: ReactNode; tone?: string }) {
 
 function EmptyPanel({ body, title }: { body: string; title: string }) {
   return (
-    <div className="rounded-[12px] border border-dashed border-[#cbd5e1] bg-[#f8faff] p-6 text-center">
+    <div className="rounded-[12px] border border-dashed border-[#cbd5e1] bg-[#F5F5F6] p-6 text-center">
       <div className="font-semibold text-[#0f172a]">{title}</div>
       <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#647269]">{body}</p>
     </div>

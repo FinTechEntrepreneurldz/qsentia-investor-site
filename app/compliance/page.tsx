@@ -80,10 +80,10 @@ const programme = [
 export default function CompliancePage() {
   return (
     <PageShell active="/compliance">
-      <section className="relative overflow-hidden border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="relative overflow-hidden border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <TechnicalBackdrop />
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
             <ShieldCheck className="h-4 w-4" /> Trust centre
           </div>
           <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[1.04] text-[#06130c] md:text-7xl">
@@ -104,9 +104,9 @@ export default function CompliancePage() {
               <Link
                 key={policy.href}
                 href={policy.href}
-                className="group border border-[#dbe3ff] bg-white p-5 transition hover:border-[#3d52da]"
+                className="group border border-[#dbe3ff] bg-white p-5 transition hover:border-[#0F8F5A]"
               >
-                <span className="flex h-10 w-10 items-center justify-center bg-[#eef2ff] text-[#3d52da]">
+                <span className="flex h-10 w-10 items-center justify-center bg-[#D1F1E1] text-[#0F8F5A]">
                   <Icon className="h-5 w-5" />
                 </span>
                 <h2 className="mt-5 text-xl font-semibold text-[#06130c]">
@@ -115,7 +115,7 @@ export default function CompliancePage() {
                 <p className="mt-2 min-h-12 text-sm leading-6 text-[#5a685f]">
                   {policy.body}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#3046c8]">
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#12B76A]">
                   Read policy{" "}
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </span>
@@ -125,7 +125,7 @@ export default function CompliancePage() {
         </div>
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-y border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
           <div className="max-w-3xl">
             <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">
@@ -137,21 +137,21 @@ export default function CompliancePage() {
           </div>
           <div className="mt-7 overflow-x-auto border border-[#dbe3ff] bg-white">
             <table className="w-full min-w-[760px] text-left text-sm">
-              <thead className="border-b border-[#e2e7fb] bg-[#fbfcff] text-xs uppercase tracking-wide text-[#647269]">
+              <thead className="border-b border-[#E5E5E7] bg-[#F5F5F6] text-xs uppercase tracking-wide text-[#647269]">
                 <tr>
                   <th className="px-4 py-3">Area</th>
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3">Position</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#eef2ff]">
+              <tbody className="divide-y divide-[#D1F1E1]">
                 {programme.map(([area, status, position]) => (
                   <tr key={area}>
                     <td className="px-4 py-4 font-semibold text-[#06130c]">
                       {area}
                     </td>
                     <td className="px-4 py-4">
-                      <span className="border border-[#c7d2fe] bg-[#eef2ff] px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+                      <span className="border border-[#c7d2fe] bg-[#D1F1E1] px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
                         {status}
                       </span>
                     </td>

@@ -52,7 +52,7 @@ const outcomes = [
 export default function ProblemSolutionPage() {
   return (
     <PageShell active="/problem-solution">
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
           <Eyebrow>Problem & solution</Eyebrow>
           <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
@@ -65,14 +65,14 @@ export default function ProblemSolutionPage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/research"
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5]"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A]"
             >
               Open research terminal
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/docs"
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-[#cbd5ff] bg-white px-5 py-3 text-sm font-bold text-[#172554] transition hover:bg-[#f7f8ff]"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-[#E5E5E7] bg-white px-5 py-3 text-sm font-bold text-[#0F8F5A] transition hover:bg-[#f7f8ff]"
             >
               Review API docs
             </Link>
@@ -82,7 +82,7 @@ export default function ProblemSolutionPage() {
 
       <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr]">
         <SectionCard className="p-6 md:p-8">
-          <div className="flex items-center gap-2 text-[#3d52da]">
+          <div className="flex items-center gap-2 text-[#0F8F5A]">
             <LineChart className="h-4 w-4" />
             <span className="text-xs font-bold uppercase tracking-wide">Problem statement</span>
           </div>
@@ -104,7 +104,7 @@ export default function ProblemSolutionPage() {
         </div>
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#07112a] text-white">
+      <section className="border-y border-[#E5E5E7] bg-[#07112a] text-white">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#aebcff]">Qsentia solution</p>
@@ -120,7 +120,7 @@ export default function ProblemSolutionPage() {
               const Icon = card.icon;
               return (
                 <div key={card.title} className="rounded-[10px] border border-white/12 bg-white/[0.06] p-5">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-md bg-white text-[#172554]">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-md bg-white text-[#0F8F5A]">
                     <Icon className="h-5 w-5" />
                   </span>
                   <h3 className="mt-5 text-xl font-semibold">{card.title}</h3>
@@ -136,13 +136,13 @@ export default function ProblemSolutionPage() {
         <SectionCard className="p-6 md:p-8">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-[#3d52da]">Operating objectives</p>
+              <p className="text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">Operating objectives</p>
               <h2 className="mt-3 text-3xl font-semibold text-[#06130c]">What the solution is designed to improve</h2>
             </div>
             <ul className="grid gap-3 sm:grid-cols-2">
               {outcomes.map((outcome) => (
-                <li key={outcome} className="flex gap-3 rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-4 text-sm leading-6 text-[#26352c]">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2b36ff]" />
+                <li key={outcome} className="flex gap-3 rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-4 text-sm leading-6 text-[#26352c]">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0F8F5A]" />
                   <span>{outcome}</span>
                 </li>
               ))}
