@@ -143,13 +143,13 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
     return (
       <div className="flex items-center gap-2" aria-label="Checking account session">
         <span
-          className={`hidden h-10 w-24 animate-pulse rounded-md md:block ${
-            dark ? 'bg-white/10' : 'bg-[#eef2ff]'
+          className={`hidden h-10 w-24 animate-pulse rounded-none md:block ${
+            dark ? 'bg-zinc-900' : 'bg-zinc-100'
           }`}
         />
         <span
-          className={`flex h-10 w-10 items-center justify-center rounded-md border ${
-            dark ? 'border-[#24304d] text-[#b7c5ff]' : 'border-[#dbe3ff] text-[#3d52da]'
+          className={`flex h-10 w-10 items-center justify-center rounded-none border ${
+            dark ? 'border-zinc-850 text-zinc-500' : 'border-zinc-200 text-zinc-400'
           }`}
         >
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -169,20 +169,20 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
         href: '/dashboard',
         label: 'Dashboard',
         detail: 'Model telemetry and research views',
-        icon: <LayoutDashboard className="h-4 w-4" />,
+        icon: <LayoutDashboard className="h-3.5 w-3.5" />,
       },
       {
         href: '/customer',
         label: 'Settings',
         detail: 'Billing, API keys, broker setup',
-        icon: <Settings className="h-4 w-4" />,
+        icon: <Settings className="h-3.5 w-3.5" />,
       },
       adminRole
         ? {
             href: '/admin',
             label: 'Administration',
             detail: adminLabel || 'Admin workspace',
-            icon: <ShieldCheck className="h-4 w-4" />,
+            icon: <ShieldCheck className="h-3.5 w-3.5" />,
           }
         : null,
     ].filter(Boolean) as Array<{ href: string; label: string; detail: string; icon: ReactNode }>;
@@ -191,14 +191,14 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
       <div ref={menuRef} className="relative flex items-center gap-2">
         <Link
           href="/dashboard"
-          className={`hidden h-10 items-center gap-2 rounded-md px-4 text-sm font-semibold transition sm:inline-flex ${
+          className={`hidden h-10 items-center justify-center px-4 font-mono text-[11px] font-bold tracking-[0.22em] uppercase transition sm:inline-flex rounded-none ${
             dark
-              ? 'bg-white text-[#050714] hover:bg-[#dce2ff]'
-              : 'bg-[#172554] text-white hover:bg-[#2437b5]'
+              ? 'bg-[#eeeeee] text-black hover:bg-white'
+              : 'bg-zinc-950 text-white hover:bg-zinc-800'
           }`}
         >
           Dashboard
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="ml-1 h-3.5 w-3.5" />
         </Link>
 
         <button
@@ -206,58 +206,64 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-haspopup="menu"
-          className={`inline-flex h-10 max-w-[220px] items-center gap-2 rounded-md border px-2.5 transition ${
+          className={`inline-flex h-10 max-w-[240px] items-center gap-3 rounded-none border px-3 transition ${
             dark
-              ? 'border-[#24304d] bg-[#10172b] text-white hover:border-[#b7c5ff]'
-              : 'border-[#cbd5ff] bg-white text-[#172554] hover:border-[#3d52da] hover:bg-[#f8faff]'
+              ? 'border-zinc-850 bg-black text-white hover:border-zinc-700'
+              : 'border-zinc-200 bg-white text-zinc-950 hover:border-zinc-400 hover:bg-zinc-50'
           }`}
           title={`${name} via ${providerLabel(provider)}`}
         >
           <span
-            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-              dark ? 'bg-[#050714] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+            className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-none text-[10px] font-bold font-mono border ${
+              dark
+                ? 'bg-zinc-900 border-zinc-800 text-zinc-300'
+                : 'bg-zinc-100 border-zinc-200 text-zinc-800'
             }`}
           >
             {initialsFor(name, email)}
           </span>
           <span className="hidden min-w-0 text-left lg:block">
-            <span className="block truncate text-sm font-semibold leading-4">{name}</span>
-            <span className={`block truncate text-[11px] leading-4 ${dark ? 'text-[#9ba7c2]' : 'text-[#647269]'}`}>
+            <span className="block truncate font-mono text-[11px] font-bold tracking-wider uppercase leading-none">{name}</span>
+            <span className="block truncate font-mono text-[9px] tracking-wider uppercase text-zinc-500 mt-0.5 leading-none">
               {providerLabel(provider)}
             </span>
           </span>
-          <ChevronDown className={`h-4 w-4 shrink-0 transition ${open ? 'rotate-180' : ''}`} />
+          <ChevronDown className={`h-3 w-3 shrink-0 text-zinc-400 dark:text-zinc-500 transition ${open ? 'rotate-180' : ''}`} />
         </button>
 
         {open ? (
           <div
-            className={`absolute right-0 top-full z-50 mt-2 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-[10px] border shadow-[0_22px_55px_rgba(15,23,42,0.18)] ${
-              dark ? 'border-[#24304d] bg-[#070b19]' : 'border-[#dfe5ff] bg-white'
+            className={`absolute right-0 top-full z-50 mt-2 w-[min(18rem,calc(100vw-2rem))] overflow-hidden rounded-none border shadow-md ${
+              dark ? 'border-zinc-800 bg-black' : 'border-zinc-200 bg-white'
             }`}
             role="menu"
           >
-            <div className={`border-b p-4 ${dark ? 'border-[#18233f]' : 'border-[#e2e7fb]'}`}>
+            <div className={`border-b p-4 ${dark ? 'border-zinc-800' : 'border-zinc-100'}`}>
               <div className="flex items-start gap-3">
                 <span
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                    dark ? 'bg-[#10172b] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-none text-xs font-bold font-mono border ${
+                    dark
+                      ? 'bg-zinc-900 border-zinc-800 text-zinc-300'
+                      : 'bg-zinc-100 border-zinc-200 text-zinc-850'
                   }`}
                 >
                   {initialsFor(name, email)}
                 </span>
                 <div className="min-w-0">
-                  <div className={`truncate text-sm font-semibold ${dark ? 'text-white' : 'text-[#06130c]'}`}>
+                  <div className="truncate font-mono text-xs font-bold tracking-wider uppercase text-zinc-950 dark:text-white leading-none">
                     {name}
                   </div>
                   {email ? (
-                    <div className={`truncate text-xs ${dark ? 'text-[#9ba7c2]' : 'text-[#647269]'}`}>{email}</div>
+                    <div className="truncate font-mono text-[10.5px] text-zinc-500 lowercase mt-1 leading-none">
+                      {email}
+                    </div>
                   ) : null}
                   <div className="mt-2 flex flex-wrap gap-2">
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold ${
+                      className={`inline-flex items-center gap-1 rounded-none border px-1.5 py-0.5 font-mono text-[9px] tracking-wider uppercase ${
                         dark
-                          ? 'border-[#24304d] bg-[#10172b] text-[#b7c5ff]'
-                          : 'border-[#dbe3ff] bg-[#f8faff] text-[#3d52da]'
+                          ? 'border-zinc-800 bg-zinc-900 text-zinc-400'
+                          : 'border-zinc-200 bg-zinc-50 text-zinc-600'
                       }`}
                     >
                       <ProviderMark provider={provider} />
@@ -265,13 +271,13 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
                     </span>
                     {adminLabel ? (
                       <span
-                        className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold ${
+                        className={`inline-flex items-center gap-1 rounded-none border px-1.5 py-0.5 font-mono text-[9px] tracking-wider uppercase ${
                           dark
-                            ? 'border-[#24304d] bg-[#10172b] text-[#b7c5ff]'
-                            : 'border-[#dbe3ff] bg-[#f8faff] text-[#172554]'
+                            ? 'border-zinc-800 bg-zinc-900 text-zinc-400'
+                            : 'border-zinc-200 bg-zinc-50 text-zinc-850'
                         }`}
                       >
-                        <ShieldCheck className="h-3.5 w-3.5" />
+                        <ShieldCheck className="h-3 w-3" />
                         {adminLabel}
                       </span>
                     ) : null}
@@ -280,27 +286,29 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
               </div>
             </div>
 
-            <div className="p-2">
+            <div className="p-1">
               {dropdownLinks.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`flex items-start gap-3 rounded-md px-3 py-3 transition ${
-                    dark ? 'text-[#d7dfed] hover:bg-[#10172b]' : 'text-[#172554] hover:bg-[#f8faff]'
+                  className={`flex items-start gap-3 rounded-none px-3 py-2 transition ${
+                    dark ? 'text-zinc-300 hover:bg-zinc-900' : 'text-zinc-850 hover:bg-zinc-50'
                   }`}
                   role="menuitem"
                 >
                   <span
-                    className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
-                      dark ? 'bg-[#10172b] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+                    className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-none border ${
+                      dark
+                        ? 'bg-zinc-900 border-zinc-800 text-zinc-400'
+                        : 'bg-zinc-50 border-zinc-200 text-zinc-650'
                     }`}
                   >
                     {item.icon}
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-sm font-semibold">{item.label}</span>
-                    <span className={`mt-0.5 block text-xs leading-5 ${dark ? 'text-[#9ba7c2]' : 'text-[#647269]'}`}>
+                    <span className="block font-mono text-xs font-bold tracking-wider uppercase">{item.label}</span>
+                    <span className="mt-0.5 block font-mono text-[10px] lowercase tracking-wider text-zinc-500">
                       {item.detail}
                     </span>
                   </span>
@@ -308,23 +316,25 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
               ))}
             </div>
 
-            <div className={`border-t p-2 ${dark ? 'border-[#18233f]' : 'border-[#e2e7fb]'}`}>
+            <div className={`border-t p-1 ${dark ? 'border-zinc-800' : 'border-zinc-100'}`}>
               <button
                 type="button"
                 onClick={signOut}
-                className={`flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm font-semibold transition ${
-                  dark ? 'text-[#d7dfed] hover:bg-[#10172b]' : 'text-[#172554] hover:bg-[#f8faff]'
+                className={`flex w-full items-center gap-3 rounded-none px-3 py-2 text-left transition ${
+                  dark ? 'text-zinc-300 hover:bg-zinc-900' : 'text-zinc-850 hover:bg-zinc-50'
                 }`}
                 role="menuitem"
               >
                 <span
-                  className={`flex h-8 w-8 items-center justify-center rounded-md ${
-                    dark ? 'bg-[#10172b] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+                  className={`flex h-7 w-7 items-center justify-center rounded-none border ${
+                    dark
+                      ? 'bg-zinc-900 border-zinc-800 text-zinc-400'
+                      : 'bg-zinc-50 border-zinc-200 text-zinc-650'
                   }`}
                 >
-                  <LogOut className="h-4 w-4" />
+                  <LogOut className="h-3.5 w-3.5" />
                 </span>
-                Sign out
+                <span className="font-mono text-xs font-bold tracking-wider uppercase">Sign out</span>
               </button>
             </div>
           </div>

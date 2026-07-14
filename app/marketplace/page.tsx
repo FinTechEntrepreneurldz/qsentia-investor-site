@@ -4,7 +4,8 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { ArrowRight, BarChart3, Database, Filter, Search, ShieldCheck } from 'lucide-react';
-import { ApiLoadingPanel, EmptyState, Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
+import { ApiLoadingPanel, EmptyState, PageShell, SectionCard } from '@/components/PageChrome';
+import { PageIntro } from '@/components/InstitutionalShell';
 
 const fetcher = async (url: string) => {
   const response = await fetch(url);
@@ -55,7 +56,6 @@ function categoryLabel(value: string) {
     .join(' ');
 }
 
-
 function accessLabel(value: string | undefined) {
   if (!value) return null;
   return value
@@ -65,11 +65,19 @@ function accessLabel(value: string | undefined) {
 }
 
 function accessBadgeClass(value: string | undefined) {
-  if (value === 'active') return 'border-[#bbf7d0] bg-[#f0fdf4] text-[#047857]';
-  if (value === 'private') return 'border-[#c7d2fe] bg-[#eef2ff] text-[#3d52da]';
-  if (value === 'waitlist') return 'border-[#fde68a] bg-[#fffbeb] text-[#b45309]';
-  if (value === 'retired') return 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
-  return 'border-[#e2e7fb] bg-[#fbfcff] text-[#647269]';
+  if (value === 'active') {
+    return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400';
+  }
+  if (value === 'private') {
+    return 'border-zinc-200 bg-zinc-50 text-zinc-650 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400';
+  }
+  if (value === 'waitlist') {
+    return 'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400';
+  }
+  if (value === 'retired') {
+    return 'border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400';
+  }
+  return 'border-zinc-200 bg-zinc-50 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400';
 }
 
 export default function MarketplacePage() {
@@ -79,7 +87,10 @@ export default function MarketplacePage() {
   const initialLoading = isLoading && !data;
 
   const models = useMemo(() => data?.models || [], [data?.models]);
-  const categories = useMemo(() => ['all', ...Array.from(new Set(models.map((model) => model.category))).sort()], [models]);
+  const categories = useMemo(
+    () => ['all', ...Array.from(new Set(models.map((model) => model.category))).sort()],
+    [models]
+  );
 
   const filteredModels = models.filter((model) => {
     const query = searchQuery.toLowerCase().trim();
@@ -95,54 +106,52 @@ export default function MarketplacePage() {
 
   return (
     <PageShell active="/marketplace">
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
-          <Eyebrow>Model registry</Eyebrow>
-          <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Trading model products, sourced from live telemetry
-          </h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Browse registered strategies with source-backed metrics. Missing performance values remain
-            unavailable until repository logs publish the required observations.
-          </p>
-        </div>
-      </section>
+      <PageIntro
+        eyebrow="Model registry"
+        title="Trading model products, sourced from live telemetry"
+        body="Browse registered strategies with source-backed metrics. Missing performance values remain unavailable until repository logs publish the required observations."
+      />
 
+      {/* ── Search & Filter Panel ── */}
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         <SectionCard className="p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative min-w-0 flex-1">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#647269]" />
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-400 dark:text-zinc-500" />
               <input
                 type="text"
                 placeholder="Filter by model, strategy, tag, or repository..."
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="w-full rounded-md border border-[#cbd5ff] bg-white py-3 pl-12 pr-4 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+                className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black py-3 pl-12 pr-4 font-mono text-xs uppercase tracking-wider text-zinc-950 dark:text-white outline-none focus:border-zinc-400 dark:focus:border-zinc-650 transition"
               />
             </div>
 
             <div className="flex min-w-0 items-center gap-2 overflow-x-auto">
-              <Filter className="h-4 w-4 shrink-0 text-[#3d52da]" />
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => setSelectedCategory(category)}
-                  className={`shrink-0 rounded-md border px-3 py-2 text-xs font-bold transition ${
-                    selectedCategory === category
-                      ? 'border-[#3d52da] bg-[#eef2ff] text-[#3d52da]'
-                      : 'border-[#e2e7fb] bg-white text-[#46554b] hover:bg-[#f7f8ff]'
-                  }`}
-                >
-                  {category === 'all' ? 'All models' : categoryLabel(category)}
-                </button>
-              ))}
+              <Filter className="h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" />
+              {categories.map((category) => {
+                const isSelected = selectedCategory === category;
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => setSelectedCategory(category)}
+                    className={`shrink-0 rounded-none border px-3 py-2 font-mono text-[9px] font-bold tracking-widest uppercase transition ${
+                      isSelected
+                        ? 'border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-black'
+                        : 'border-zinc-200 bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-800 dark:bg-black dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white'
+                    }`}
+                  >
+                    {category === 'all' ? 'All models' : categoryLabel(category)}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </SectionCard>
       </section>
 
+      {/* ── Models Grid ── */}
       <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6">
         {initialLoading && (
           <ApiLoadingPanel
@@ -167,50 +176,71 @@ export default function MarketplacePage() {
         )}
 
         {!initialLoading && !error && filteredModels.length > 0 && (
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredModels.map((model) => (
-              <Link key={model.id} href={`/marketplace/${model.slug}`} className="group">
-                <SectionCard className="flex h-full flex-col p-6 transition group-hover:border-[#3d52da]">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-wrap gap-2">
-                      <span className="rounded-md border border-[#c7d2fe] bg-[#eef2ff] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#3d52da]">
-                        {categoryLabel(model.category)}
-                      </span>
-                      {model.commercialUpdatedAt && (
-                        <span className={`rounded-md border px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${accessBadgeClass(model.accessStatus)}`}>
-                          {accessLabel(model.accessStatus)}
+              <Link key={model.id} href={`/marketplace/${model.slug}`} className="group flex flex-col h-full">
+                <SectionCard className="flex h-full flex-col p-6 transition group-hover:border-zinc-400 dark:group-hover:border-zinc-650 justify-between">
+                  <div>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex flex-wrap gap-2">
+                        <span className="rounded-[4px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-500">
+                          {categoryLabel(model.category)}
                         </span>
+                        {model.commercialUpdatedAt && (
+                          <span
+                            className={`rounded-[4px] border px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide ${accessBadgeClass(
+                              model.accessStatus
+                            )}`}
+                          >
+                            {accessLabel(model.accessStatus)}
+                          </span>
+                        )}
+                      </div>
+                      <ArrowRight className="h-3.5 w-3.5 shrink-0 text-zinc-400 dark:text-zinc-500 transition group-hover:translate-x-1 group-hover:text-zinc-950 dark:group-hover:text-white" />
+                    </div>
+
+                    <h2 className="mt-5 font-mono text-base sm:text-lg font-bold tracking-wider text-zinc-950 dark:text-white uppercase truncate">
+                      {model.name}
+                    </h2>
+                    <p className="mt-3 line-clamp-3 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                      {model.description}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="mt-5 grid grid-cols-2 gap-3">
+                      <Metric label="Sharpe" value={formatNum(model.performance.sharpeRatio)} />
+                      <Metric label="Annualized" value={formatPct(model.performance.annualizedReturn, true)} />
+                      <Metric label="Drawdown" value={formatPct(model.performance.maxDrawdown, true)} />
+                      <Metric label="Win rate" value={formatPct(model.performance.winRate)} />
+                    </div>
+
+                    <div className="mt-5 flex flex-wrap gap-1.5">
+                      {model.tags.slice(0, 5).map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-[4px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-2 py-0.5 font-mono text-[8px] tracking-wider uppercase text-zinc-500"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-5 border-t border-zinc-200 dark:border-zinc-850 pt-5 flex justify-between items-end">
+                      <div>
+                        <div className="font-mono text-[9px] font-bold tracking-wider uppercase text-zinc-500">
+                          Access
+                        </div>
+                        <div className="mt-1 font-mono text-sm font-bold text-zinc-950 dark:text-white leading-none">
+                          {model.pricing || 'Contact sales'}
+                        </div>
+                      </div>
+                      {model.minimumCapital && (
+                        <div className="font-mono text-[9px] tracking-wide text-zinc-400 dark:text-zinc-500 leading-none">
+                          Min: {model.minimumCapital}
+                        </div>
                       )}
                     </div>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-[#3d52da] transition group-hover:translate-x-1" />
-                  </div>
-
-                  <h2 className="mt-5 text-xl font-semibold text-[#06130c]">{model.name}</h2>
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#5a685f]">{model.description}</p>
-
-                  <div className="mt-5 grid grid-cols-2 gap-3">
-                    <Metric label="Sharpe" value={formatNum(model.performance.sharpeRatio)} />
-                    <Metric label="Annualized" value={formatPct(model.performance.annualizedReturn, true)} />
-                    <Metric label="Drawdown" value={formatPct(model.performance.maxDrawdown, true)} />
-                    <Metric label="Win rate" value={formatPct(model.performance.winRate)} />
-                  </div>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {model.tags.slice(0, 5).map((tag) => (
-                      <span key={tag} className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-2 py-1 text-xs text-[#647269]">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-auto border-t border-[#e2e7fb] pt-5">
-                    <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Access</div>
-                    <div className="mt-1 text-sm font-semibold text-[#06130c]">
-                      {model.pricing || 'Contact sales'}
-                    </div>
-                    {model.minimumCapital && (
-                      <div className="mt-1 text-xs text-[#647269]">Minimum capital: {model.minimumCapital}</div>
-                    )}
                   </div>
                 </SectionCard>
               </Link>
@@ -219,8 +249,9 @@ export default function MarketplacePage() {
         )}
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
-        <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-3">
+      {/* ── Info Cards Section ── */}
+      <section className="border-y border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black transition-colors">
+        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 md:grid-cols-3">
           <InfoCard icon={<Database className="h-5 w-5" />} title="Registry-backed">
             Names, categories, repositories, and log paths are sourced through the live model API.
           </InfoCard>
@@ -238,9 +269,9 @@ export default function MarketplacePage() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-3">
-      <div className="text-[11px] font-bold uppercase tracking-wide text-[#647269]">{label}</div>
-      <div className="mt-1 text-sm font-semibold text-[#06130c]">{value}</div>
+    <div className="rounded-[8px] border border-zinc-200 dark:border-zinc-850 bg-zinc-50 dark:bg-black/40 p-3">
+      <div className="font-mono text-[9px] tracking-wider uppercase text-zinc-500">{label}</div>
+      <div className="mt-1 font-mono text-xs sm:text-sm font-bold text-zinc-950 dark:text-white">{value}</div>
     </div>
   );
 }
@@ -248,9 +279,13 @@ function Metric({ label, value }: { label: string; value: string }) {
 function InfoCard({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
     <SectionCard className="p-6">
-      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">{icon}</span>
-      <h2 className="mt-5 text-xl font-semibold text-[#06130c]">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-[#5a685f]">{children}</p>
+      <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400">
+        {icon}
+      </span>
+      <h2 className="mt-5 font-mono text-sm font-bold tracking-wider text-zinc-950 dark:text-white uppercase">
+        {title}
+      </h2>
+      <p className="mt-3 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{children}</p>
     </SectionCard>
   );
 }
