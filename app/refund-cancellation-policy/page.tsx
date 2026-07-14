@@ -10,7 +10,7 @@ const sections: readonly PolicySection[] = [
   {
     id: 'digital-service',
     title: 'Digital service',
-    paragraphs: ['QSentia provides digital platform, model-access, API, research, onboarding, and support services. Physical shipping is not part of the standard service. Pricing, currency, taxes, billing interval, included usage, and service scope should be displayed or agreed before purchase.'],
+    paragraphs: ['QSentia provides digital platform, model-access, API, research, onboarding, and support services. Physical shipping is not part of the standard service. Pricing, currency, taxes, billing interval, included usage, and service scope are displayed or agreed before purchase.'],
   },
   {
     id: 'trials',

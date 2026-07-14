@@ -65,7 +65,7 @@ const sections: readonly PolicySection[] = [
   {
     id: 'liability',
     title: 'Liability and indemnity',
-    paragraphs: ['To the maximum extent permitted by law, QSentia is not liable for indirect, incidental, special, consequential, exemplary, or trading losses, loss of data, profits, opportunity, or goodwill arising from use of the service. Any applicable liability cap and indemnity obligations should be stated in the relevant order form or commercial agreement. Rights that cannot lawfully be excluded remain unaffected.'],
+    paragraphs: ['To the maximum extent permitted by law, QSentia is not liable for indirect, incidental, special, consequential, exemplary, or trading losses, loss of data, profits, opportunity, or goodwill arising from use of the service. Any applicable liability cap and indemnity obligations are stated in the relevant order form or commercial agreement. Rights that cannot lawfully be excluded remain unaffected.'],
   },
   {
     id: 'termination',
@@ -75,7 +75,7 @@ const sections: readonly PolicySection[] = [
   {
     id: 'law-changes',
     title: 'Applicable terms, disputes, and changes',
-    paragraphs: ['The governing law, venue, notices, and dispute process should be identified in the applicable order form, corporate terms, or mandatory law. QSentia may update these terms for legal, security, or service changes. Material changes will be communicated appropriately and will not retroactively remove mandatory rights.'],
+    paragraphs: ['The governing law, venue, notices, and dispute process are identified in the applicable order form, corporate terms, or mandatory law. QSentia may update these terms for legal, security, or service changes. Material changes will be communicated appropriately and will not retroactively remove mandatory rights.'],
   },
 ];
 

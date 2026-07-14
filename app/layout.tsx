@@ -4,7 +4,7 @@ import PublicChrome from "@/components/PublicChrome";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Qsentia - Investor Intelligence Platform",
+  title: "QSentia - Investor Intelligence Platform",
   description: "Advanced research and analytics platform for investor insights",
 };
 
@@ -37,7 +37,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full bg-white font-sans antialiased flex flex-col dark:bg-[#050714] dark:text-slate-100" suppressHydrationWarning>
+      <body className="min-h-full bg-white font-sans antialiased flex flex-col dark:bg-[#09090b] dark:text-slate-100" suppressHydrationWarning>
         <ThemeProvider>
           {children}
           <PublicChrome />

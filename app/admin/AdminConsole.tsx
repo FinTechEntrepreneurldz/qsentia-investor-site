@@ -328,10 +328,10 @@ function settingForEdit(setting: AdminSetting | undefined): AdminSetting {
 
 function statusClasses(status: string) {
   if (['active', 'won', 'open'].includes(status)) return 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]';
-  if (['private', 'proposal', 'in_progress'].includes(status)) return 'border-[#c7d2fe] bg-[#eef2ff] text-[#3046c8]';
+  if (['private', 'proposal', 'in_progress'].includes(status)) return 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]';
   if (['waitlist', 'demo', 'waiting', 'paused', 'high'].includes(status)) return 'border-[#fde68a] bg-[#fffbeb] text-[#a16207]';
   if (['retired', 'lost', 'closed', 'resolved', 'urgent'].includes(status)) return 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
-  return 'border-[#d9e0ec] bg-[#f8fafc] text-[#46554b]';
+  return 'border-[#d9e0ec] bg-[#fafafa] text-[#52525b]';
 }
 
 export default function AdminConsole({ initialData = null }: { initialData?: AdminOverview | null }) {
@@ -626,26 +626,26 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
   }
 
   return (
-    <main className="admin-portal min-h-screen bg-[#f5f7fb] text-[#0f172a]">
+    <main className="admin-portal min-h-screen bg-[#f5f7fb] text-[#09090b]">
       <div className="mx-auto min-h-screen max-w-[1760px] md:grid md:grid-cols-[304px_minmax(0,1fr)]">
-        <aside className="flex flex-col border-b border-[#dfe6f3] bg-white/95 p-4 text-[#0f172a] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur md:sticky md:top-0 md:max-h-screen md:min-h-screen md:self-start md:overflow-y-auto md:border-b-0 md:border-r">
-          <div className="rounded-[16px] border border-[#dfe6f3] bg-[#f8faff] p-4">
+        <aside className="flex flex-col border-b border-[#e4e4e7] bg-white/95 p-4 text-[#09090b] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur md:sticky md:top-0 md:max-h-screen md:min-h-screen md:self-start md:overflow-y-auto md:border-b-0 md:border-r">
+          <div className="rounded-[16px] border border-[#e4e4e7] bg-[#fafafa] p-4">
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-[#cbd5ff] bg-white" aria-label="QSentia home">
+              <Link href="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-[#d4d4d8] bg-white" aria-label="QSentia home">
                 <Image src="/logo/qsentia-primary.png" alt="QSentia" width={27} height={27} className="h-7 w-7 object-contain" />
               </Link>
               <div className="min-w-0">
-                <div className="truncate text-sm font-semibold text-[#0f172a]">QSentia</div>
-                <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3d52da]">Administration</div>
+                <div className="truncate text-sm font-semibold text-[#09090b]">QSentia</div>
+                <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#18181b]">Administration</div>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-6 text-[#5a685f]">
+            <p className="mt-4 text-sm leading-6 text-[#52525b]">
               Back-office controls for model commerce, customer access, careers,
               CRM, billing, and internal operations.
             </p>
           </div>
 
-          <div className="mt-6 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#647269]">Workspace</div>
+          <div className="mt-6 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#71717a]">Workspace</div>
           <nav className="mt-2 grid grid-cols-1 gap-1" aria-label="Admin sections">
             {sections.map((section) => {
               const active = activeSection === section.id;
@@ -659,33 +659,33 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
                   }}
                   className={`group flex min-h-12 w-full items-start gap-3 rounded-[10px] border px-3 py-3 text-left transition ${
                     active
-                      ? 'border-[#cbd5ff] bg-[#eef2ff] text-[#172554] shadow-sm'
-                      : 'border-transparent text-[#334155] hover:border-[#dfe6f3] hover:bg-[#f8faff]'
+                      ? 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b] shadow-sm'
+                      : 'border-transparent text-[#3f3f46] hover:border-[#e4e4e7] hover:bg-[#fafafa]'
                   }`}
                 >
-                  <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${active ? 'bg-white text-[#3d52da]' : 'bg-[#f1f5ff] text-[#64748b] group-hover:text-[#3d52da]'}`}>
+                  <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${active ? 'bg-white text-[#18181b]' : 'bg-[#f4f4f5] text-[#71717a] group-hover:text-[#18181b]'}`}>
                     {section.icon}
                   </span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold">{section.label}</span>
-                    <span className={`mt-0.5 block truncate text-xs ${active ? 'text-[#46554b]' : 'text-[#647269]'}`}>{section.detail}</span>
+                    <span className={`mt-0.5 block truncate text-xs ${active ? 'text-[#52525b]' : 'text-[#71717a]'}`}>{section.detail}</span>
                   </span>
                 </button>
               );
             })}
           </nav>
 
-          <div className="mt-6 grid gap-2 border-t border-[#e2e7fb] pt-4 md:mt-auto">
-            <div className="rounded-[12px] border border-[#dfe6f3] bg-[#f8faff] p-3">
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#172554]">
-                <LockKeyhole className="h-4 w-4 text-[#3d52da]" />
+          <div className="mt-6 grid gap-2 border-t border-[#e4e4e7] pt-4 md:mt-auto">
+            <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-3">
+              <div className="flex items-center gap-2 text-xs font-semibold text-[#18181b]">
+                <LockKeyhole className="h-4 w-4 text-[#18181b]" />
                 Role-secured workspace
               </div>
-              <p className="mt-2 text-xs leading-5 text-[#647269]">
+              <p className="mt-2 text-xs leading-5 text-[#71717a]">
                 Access follows the signed-in account and server-side admin grants.
               </p>
             </div>
-            <Link href="/" className="inline-flex items-center justify-between rounded-[10px] border border-[#dfe6f3] bg-white px-3 py-3 text-sm font-semibold text-[#172554] transition hover:border-[#3d52da] hover:bg-[#f8faff]">
+            <Link href="/" className="inline-flex items-center justify-between rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa]">
               Public site
               <ArrowUpRight className="h-4 w-4" />
             </Link>
@@ -693,24 +693,24 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
         </aside>
 
         <section className="min-w-0">
-          <header className="sticky top-0 z-40 border-b border-[#dfe5f2] bg-white/95 backdrop-blur">
+          <header className="sticky top-0 z-40 border-b border-[#e4e4e7] bg-white/95 backdrop-blur">
             <div className="px-4 py-4 sm:px-6 xl:px-8">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="min-w-0">
-                  <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#3d52da]">Operations workspace</div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#18181b]">Operations workspace</div>
                   <div className="mt-2">
-                    <h1 className="text-2xl font-semibold tracking-[-0.01em] text-[#0f172a]">{activeSectionMeta.label}</h1>
-                    <p className="mt-1 max-w-3xl text-sm leading-6 text-[#647269]">{activeSectionMeta.detail}</p>
+                    <h1 className="text-2xl font-semibold tracking-[-0.01em] text-[#09090b]">{activeSectionMeta.label}</h1>
+                    <p className="mt-1 max-w-3xl text-sm leading-6 text-[#71717a]">{activeSectionMeta.detail}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="hidden rounded-full border border-[#dfe6f3] bg-[#f8faff] px-3 py-1.5 text-xs font-semibold text-[#647269] lg:block">
+                  <span className="hidden rounded-full border border-[#e4e4e7] bg-[#fafafa] px-3 py-1.5 text-xs font-semibold text-[#71717a] lg:block">
                     Updated {shortDate(data?.updatedAt)}
                   </span>
                   <AuthSessionMenu />
                 </div>
               </div>
-              <div className="mt-4 grid gap-px overflow-hidden rounded-[12px] border border-[#e2e7fb] bg-[#e2e7fb] sm:grid-cols-4">
+              <div className="mt-4 grid gap-px overflow-hidden rounded-[12px] border border-[#e4e4e7] bg-[#e4e4e7] sm:grid-cols-4">
                 <AdminHeaderStat label="Models" value={formatNumber(data?.metrics.models || 0)} />
                 <AdminHeaderStat label="Sold licenses" value={formatNumber(data?.metrics.soldModels || 0)} />
                 <AdminHeaderStat label="Open leads" value={formatNumber(data?.metrics.leads || 0)} />
@@ -731,7 +731,7 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
               <WorkspacePanel title="Loading operations" icon={<RefreshCw className="h-4 w-4 animate-spin" />}>
                 <div className="grid gap-3 md:grid-cols-3">
                   {Array.from({ length: 6 }).map((_, index) => (
-                    <div key={index} className="h-28 animate-pulse rounded-md border border-[#dfe5f2] bg-[#f8faff]" />
+                    <div key={index} className="h-28 animate-pulse rounded-md border border-[#e4e4e7] bg-[#fafafa]" />
                   ))}
                 </div>
               </WorkspacePanel>
@@ -904,7 +904,7 @@ function OverviewSection({ data, onRefresh }: { data: AdminOverview; onRefresh: 
           icon={<Gauge className="h-4 w-4" />}
           action={
             <div className="flex items-center gap-3">
-              <span className="text-xs font-semibold uppercase tracking-wide text-[#647269]">
+              <span className="text-xs font-semibold uppercase tracking-wide text-[#71717a]">
                 {data.bestPerforming.length} models
               </span>
               <button type="button" onClick={onRefresh} className="admin-secondary-button">
@@ -917,7 +917,7 @@ function OverviewSection({ data, onRefresh }: { data: AdminOverview; onRefresh: 
           {data.bestPerforming.length ? (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[640px] text-left text-sm">
-                <thead className="text-xs uppercase tracking-wide text-[#647269]">
+                <thead className="text-xs uppercase tracking-wide text-[#71717a]">
                   <tr>
                     <th className="pb-3">Model</th>
                     <th className="pb-3">Sharpe</th>
@@ -926,14 +926,14 @@ function OverviewSection({ data, onRefresh }: { data: AdminOverview; onRefresh: 
                     <th className="pb-3">Sold</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e2e7fb]">
+                <tbody className="divide-y divide-[#e4e4e7]">
                   {data.bestPerforming.map((model) => (
                     <tr key={model.id}>
-                      <td className="py-3 font-semibold text-[#0f172a]">{model.name}</td>
-                      <td className="py-3 text-[#172554]">{formatRatio(model.performance.sharpeRatio)}</td>
+                      <td className="py-3 font-semibold text-[#09090b]">{model.name}</td>
+                      <td className="py-3 text-[#18181b]">{formatRatio(model.performance.sharpeRatio)}</td>
                       <td className="py-3 text-[#047857]">{formatPct(model.performance.annualizedReturn, true)}</td>
                       <td className="py-3 text-[#be123c]">{formatPct(model.performance.maxDrawdown, true)}</td>
-                      <td className="py-3 text-[#172554]">{formatNumber(model.sales.soldUnits)}</td>
+                      <td className="py-3 text-[#18181b]">{formatNumber(model.sales.soldUnits)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -947,9 +947,9 @@ function OverviewSection({ data, onRefresh }: { data: AdminOverview; onRefresh: 
         <WorkspacePanel title="Commercial funnel" icon={<SlidersHorizontal className="h-4 w-4" />}>
           <div className="grid gap-3">
             {funnel.map((row) => (
-              <div key={row.label} className="flex items-center justify-between rounded-md border border-[#dfe5f2] bg-[#f8fafc] px-4 py-3">
-                <span className="text-sm text-[#46554b]">{row.label}</span>
-                <span className="text-xl font-semibold text-[#0f172a]">{formatNumber(row.value)}</span>
+              <div key={row.label} className="flex items-center justify-between rounded-md border border-[#e4e4e7] bg-[#fafafa] px-4 py-3">
+                <span className="text-sm text-[#52525b]">{row.label}</span>
+                <span className="text-xl font-semibold text-[#09090b]">{formatNumber(row.value)}</span>
               </div>
             ))}
           </div>
@@ -1002,7 +1002,7 @@ function ModelsSection({
         }
       >
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#62708f]" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#71717a]" />
           <input
             type="text"
             value={modelQuery}
@@ -1020,19 +1020,19 @@ function ModelsSection({
                 onClick={() => onSelectModel(model.id)}
                 className={`mb-2 w-full rounded-md border p-3 text-left transition ${
                   selectedModel?.id === model.id
-                    ? 'border-[#3d52da] bg-[#eef2ff]'
-                    : 'border-[#dfe5f2] bg-white hover:border-[#aab8eb]'
+                    ? 'border-[#18181b] bg-[#f4f4f5]'
+                    : 'border-[#e4e4e7] bg-white hover:border-[#a1a1aa]'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="truncate text-sm font-semibold text-[#0f172a]">{model.name}</div>
-                    <div className="mt-1 truncate text-xs text-[#647269]">{model.id}</div>
+                    <div className="truncate text-sm font-semibold text-[#09090b]">{model.name}</div>
+                    <div className="mt-1 truncate text-xs text-[#71717a]">{model.id}</div>
                   </div>
                   {model.settings.visibility === 'hidden' ? (
-                    <EyeOff className="h-4 w-4 shrink-0 text-[#647269]" />
+                    <EyeOff className="h-4 w-4 shrink-0 text-[#71717a]" />
                   ) : (
-                    <Eye className="h-4 w-4 shrink-0 text-[#3d52da]" />
+                    <Eye className="h-4 w-4 shrink-0 text-[#18181b]" />
                   )}
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -1188,12 +1188,12 @@ function ModelsSection({
             </div>
 
             <div className="mt-6 grid gap-3">
-              <label className="flex items-center gap-3 rounded-md border border-[#dfe5f2] bg-[#f8fafc] p-3 text-sm font-semibold text-[#172554]">
+              <label className="flex items-center gap-3 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-3 text-sm font-semibold text-[#18181b]">
                 <input
                   type="checkbox"
                   checked={draft.featured}
                   onChange={(event) => onUpdateDraft('featured', event.target.checked)}
-                  className="h-4 w-4 border-[#cbd5e1] accent-[#3d52da]"
+                  className="h-4 w-4 border-[#cbd5e1] accent-[#18181b]"
                 />
                 Feature this model in marketplace ordering and commercial review.
               </label>
@@ -1376,7 +1376,7 @@ function OffersSection({
         {offers.length ? (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[860px] text-left text-sm">
-              <thead className="text-xs uppercase tracking-wide text-[#647269]">
+              <thead className="text-xs uppercase tracking-wide text-[#71717a]">
                 <tr>
                   <th className="pb-3">Code</th>
                   <th className="pb-3">Offer</th>
@@ -1386,21 +1386,21 @@ function OffersSection({
                   <th className="pb-3">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#e2e7fb]">
+              <tbody className="divide-y divide-[#e4e4e7]">
                 {offers.map((offer) => {
                   const model = models.find((candidate) => candidate.id === offer.modelId);
                   return (
                     <tr key={offer.id}>
-                    <td className="py-3 font-mono font-semibold text-[#0f172a]">{offer.code}</td>
+                    <td className="py-3 font-mono font-semibold text-[#09090b]">{offer.code}</td>
                       <td className="py-3">
-                        <div className="font-semibold text-[#0f172a]">{offer.title}</div>
-                        <div className="mt-1 text-xs text-[#647269]">Expires: {offer.expiresAt ? shortDate(offer.expiresAt) : 'No expiry'}</div>
+                        <div className="font-semibold text-[#09090b]">{offer.title}</div>
+                        <div className="mt-1 text-xs text-[#71717a]">Expires: {offer.expiresAt ? shortDate(offer.expiresAt) : 'No expiry'}</div>
                       </td>
-                    <td className="py-3 text-[#172554]">{model?.name || 'All models'}</td>
-                    <td className="py-3 text-[#172554]">
+                    <td className="py-3 text-[#18181b]">{model?.name || 'All models'}</td>
+                    <td className="py-3 text-[#18181b]">
                         {offer.trialDays} trial days, {labelFromToken(offer.discountType)} {offer.discountValue}
                       </td>
-                    <td className="py-3 text-[#172554]">
+                    <td className="py-3 text-[#18181b]">
                         {formatNumber(offer.redemptions)} / {offer.maxRedemptions ?? 'Unlimited'}
                       </td>
                       <td className="py-3">
@@ -1494,7 +1494,7 @@ function LeadsSection({
           {leads.length ? (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
-                <thead className="text-xs uppercase tracking-wide text-[#647269]">
+                <thead className="text-xs uppercase tracking-wide text-[#71717a]">
                   <tr>
                     <th className="pb-3">Contact</th>
                     <th className="pb-3">Source</th>
@@ -1503,16 +1503,16 @@ function LeadsSection({
                     <th className="pb-3">Created</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e2e7fb]">
+                <tbody className="divide-y divide-[#e4e4e7]">
                   {leads.map((lead) => (
                     <tr key={lead.id}>
                       <td className="py-3">
-                        <div className="font-semibold text-[#0f172a]">{lead.name}</div>
-                        <div className="text-xs text-[#647269]">{lead.email}</div>
-                        {lead.organization && <div className="text-xs text-[#647269]">{lead.organization}</div>}
+                        <div className="font-semibold text-[#09090b]">{lead.name}</div>
+                        <div className="text-xs text-[#71717a]">{lead.email}</div>
+                        {lead.organization && <div className="text-xs text-[#71717a]">{lead.organization}</div>}
                       </td>
                       <td className="py-3"><Chip>{labelFromToken(lead.source)}</Chip></td>
-                      <td className="py-3 text-[#172554]">{compactText(lead.interest)}</td>
+                      <td className="py-3 text-[#18181b]">{compactText(lead.interest)}</td>
                       <td className="py-3">
                         <select
                           value={lead.stage}
@@ -1524,7 +1524,7 @@ function LeadsSection({
                           ))}
                         </select>
                       </td>
-                      <td className="py-3 text-[#647269]">{shortDate(lead.createdAt)}</td>
+                      <td className="py-3 text-[#71717a]">{shortDate(lead.createdAt)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1619,11 +1619,11 @@ function CareersSection({
           {roles.length ? (
             <div className="grid gap-3">
               {roles.map((role) => (
-                <div key={role.id} className="rounded-md border border-[#dfe5f2] bg-[#f8fafc] p-4">
+                <div key={role.id} className="rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
                   <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                     <div>
-                      <div className="font-semibold text-[#0f172a]">{role.title}</div>
-                      <div className="mt-1 text-sm text-[#647269]">{role.department} - {role.location}</div>
+                      <div className="font-semibold text-[#09090b]">{role.title}</div>
+                      <div className="mt-1 text-sm text-[#71717a]">{role.department} - {role.location}</div>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
                       <select
@@ -1645,7 +1645,7 @@ function CareersSection({
                       </button>
                     </div>
                   </div>
-                  <div className="mt-3 text-xs text-[#647269]">Hiring manager: {compactText(role.hiringManager)}</div>
+                  <div className="mt-3 text-xs text-[#71717a]">Hiring manager: {compactText(role.hiringManager)}</div>
                 </div>
               ))}
             </div>
@@ -1658,12 +1658,12 @@ function CareersSection({
           {applications.length ? (
             <div className="grid gap-3">
               {applications.map((application) => (
-                <div key={application.id} className="rounded-md border border-[#dfe5f2] bg-[#f8fafc] p-4">
+                <div key={application.id} className="rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div className="min-w-0">
-                      <div className="font-semibold text-[#0f172a]">{application.candidateName}</div>
-                      <div className="mt-1 text-sm text-[#647269]">{application.email}</div>
-                      <div className="mt-2 text-xs text-[#647269]">
+                      <div className="font-semibold text-[#09090b]">{application.candidateName}</div>
+                      <div className="mt-1 text-sm text-[#71717a]">{application.email}</div>
+                      <div className="mt-2 text-xs text-[#71717a]">
                         Role: {application.roleId ? roleById.get(application.roleId)?.title || application.roleId : 'General application'}
                       </div>
                       <div className="mt-3 flex flex-wrap gap-2">
@@ -1672,7 +1672,7 @@ function CareersSection({
                             href={application.linkedInUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 rounded-md border border-[#cbd5ff] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#3046c8] hover:bg-[#eef2ff]"
+                            className="inline-flex items-center gap-1 rounded-md border border-[#d4d4d8] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#18181b] hover:bg-[#f4f4f5]"
                           >
                             <Link2 className="h-3.5 w-3.5" />
                             LinkedIn
@@ -1683,13 +1683,13 @@ function CareersSection({
                             href={application.cvUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 rounded-md border border-[#cbd5ff] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#3046c8] hover:bg-[#eef2ff]"
+                            className="inline-flex items-center gap-1 rounded-md border border-[#d4d4d8] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#18181b] hover:bg-[#f4f4f5]"
                           >
                             <ArrowUpRight className="h-3.5 w-3.5" />
                             {application.cvFileName || 'CV'}
                           </a>
                         ) : (
-                          <span className="inline-flex rounded-md border border-[#dfe5f2] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#647269]">
+                          <span className="inline-flex rounded-md border border-[#e4e4e7] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#71717a]">
                             No CV uploaded
                           </span>
                         )}
@@ -1785,11 +1785,11 @@ function TicketsSection({
         {tickets.length ? (
           <div className="grid gap-3">
             {tickets.map((ticket) => (
-              <div key={ticket.id} className="rounded-md border border-[#dfe5f2] bg-[#f8fafc] p-4">
+              <div key={ticket.id} className="rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                   <div>
-                    <div className="font-semibold text-[#0f172a]">{ticket.title}</div>
-                    <div className="mt-1 text-sm text-[#647269]">{ticket.category} - {shortDate(ticket.createdAt)}</div>
+                    <div className="font-semibold text-[#09090b]">{ticket.title}</div>
+                    <div className="mt-1 text-sm text-[#71717a]">{ticket.category} - {shortDate(ticket.createdAt)}</div>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Chip tone={ticket.priority}>{labelFromToken(ticket.priority)}</Chip>
@@ -1804,8 +1804,8 @@ function TicketsSection({
                     </select>
                   </div>
                 </div>
-                <p className="mt-3 text-sm leading-6 text-[#46554b]">{ticket.description}</p>
-                <div className="mt-3 text-xs text-[#647269]">Owner: {compactText(ticket.owner)}</div>
+                <p className="mt-3 text-sm leading-6 text-[#52525b]">{ticket.description}</p>
+                <div className="mt-3 text-xs text-[#71717a]">Owner: {compactText(ticket.owner)}</div>
               </div>
             ))}
           </div>
@@ -1819,15 +1819,15 @@ function TicketsSection({
 
 function MetricCard({ helper, icon, label, value }: { helper: string; icon: ReactNode; label: string; value: string }) {
   return (
-    <div className="rounded-[16px] border border-[#dfe5f2] bg-white p-5 shadow-[0_14px_36px_rgba(15,23,42,0.05)]">
+    <div className="rounded-[16px] border border-[#e4e4e7] bg-white p-5 shadow-[0_14px_36px_rgba(15,23,42,0.05)]">
       <div className="flex items-start justify-between gap-4">
-        <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#eef2ff] text-[#3d52da]">
+        <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#f4f4f5] text-[#18181b]">
           {icon}
         </span>
-        <span className="text-3xl font-semibold tracking-[-0.02em] text-[#0f172a]">{value}</span>
+        <span className="text-3xl font-semibold tracking-[-0.02em] text-[#09090b]">{value}</span>
       </div>
-      <div className="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-[#647269]">{label}</div>
-      <p className="mt-2 text-sm leading-5 text-[#647269]">{helper}</p>
+      <div className="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">{label}</div>
+      <p className="mt-2 text-sm leading-5 text-[#71717a]">{helper}</p>
     </div>
   );
 }
@@ -1844,13 +1844,13 @@ function WorkspacePanel({
   title: string;
 }) {
   return (
-    <section className="overflow-hidden rounded-[16px] border border-[#dfe5f2] bg-white p-5 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+    <section className="overflow-hidden rounded-[16px] border border-[#e4e4e7] bg-white p-5 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#eef2ff] text-[#3d52da]">
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#f4f4f5] text-[#18181b]">
             {icon}
           </span>
-          <h2 className="text-lg font-semibold tracking-[-0.01em] text-[#0f172a]">{title}</h2>
+          <h2 className="text-lg font-semibold tracking-[-0.01em] text-[#09090b]">{title}</h2>
         </div>
         {action}
       </div>
@@ -1862,8 +1862,8 @@ function WorkspacePanel({
 function AdminHeaderStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="min-w-0 bg-white px-4 py-3">
-      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#647269]">{label}</div>
-      <div className="mt-1 truncate text-sm font-semibold text-[#0f172a]">{value}</div>
+      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#71717a]">{label}</div>
+      <div className="mt-1 truncate text-sm font-semibold text-[#09090b]">{value}</div>
     </div>
   );
 }
@@ -1871,7 +1871,7 @@ function AdminHeaderStat({ label, value }: { label: string; value: string }) {
 function Field({ children, label }: { children: ReactNode; label: string }) {
   return (
     <label className="grid gap-2">
-      <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</span>
+      <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{label}</span>
       {children}
     </label>
   );
@@ -1880,8 +1880,8 @@ function Field({ children, label }: { children: ReactNode; label: string }) {
 function LockedField({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid gap-2">
-      <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</span>
-      <div className="rounded-md border border-[#d9e0ec] bg-[#f8fafc] px-3 py-2.5 text-sm font-semibold text-[#172554]">
+      <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{label}</span>
+      <div className="rounded-md border border-[#d9e0ec] bg-[#fafafa] px-3 py-2.5 text-sm font-semibold text-[#18181b]">
         {value}
       </div>
     </div>
@@ -1890,9 +1890,9 @@ function LockedField({ label, value }: { label: string; value: string }) {
 
 function MiniStat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-[12px] border border-[#dfe5f2] bg-[#f8faff] p-4">
-      <div className="text-xs font-bold uppercase tracking-[0.15em] text-[#647269]">{label}</div>
-      <div className="mt-2 text-2xl font-semibold text-[#0f172a]">{formatNumber(value)}</div>
+    <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
+      <div className="text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">{label}</div>
+      <div className="mt-2 text-2xl font-semibold text-[#09090b]">{formatNumber(value)}</div>
     </div>
   );
 }
@@ -1907,9 +1907,9 @@ function Chip({ children, tone }: { children: ReactNode; tone?: string }) {
 
 function EmptyPanel({ body, title }: { body: string; title: string }) {
   return (
-    <div className="rounded-[12px] border border-dashed border-[#cbd5e1] bg-[#f8faff] p-6 text-center">
-      <div className="font-semibold text-[#0f172a]">{title}</div>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#647269]">{body}</p>
+    <div className="rounded-[12px] border border-dashed border-[#cbd5e1] bg-[#fafafa] p-6 text-center">
+      <div className="font-semibold text-[#09090b]">{title}</div>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#71717a]">{body}</p>
     </div>
   );
 }

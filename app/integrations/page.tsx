@@ -35,23 +35,23 @@ export default function IntegrationsPage() {
       />
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-2">
         <div className="lg:col-span-2 mx-auto w-full max-w-2xl">
-          <h2 className="text-2xl font-semibold text-[#06130c]">
+          <h2 className="text-2xl font-semibold text-[#09090b]">
             Connected or represented
           </h2>
           <div className="mt-5 grid gap-4">
             {connected.map(([title, body, Icon]) => (
               <SectionCard key={String(title)} className="flex gap-4 p-5">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
                   <Icon className="h-5 w-5" />
                 </span>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-[#06130c]">
+                    <h3 className="font-semibold text-[#09090b]">
                       {String(title)}
                     </h3>
                     <CheckCircle2 className="h-4 w-4 text-[#047857]" />
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#5a685f]">
+                  <p className="mt-2 text-sm leading-6 text-[#52525b]">
                     {String(body)}
                   </p>
                 </div>

@@ -123,7 +123,7 @@ const sitePages = [
     href: '/signin',
     label: 'Sign in',
     keywords: ['sign in', 'login', 'account', 'auth'],
-    summary: 'Sign in stores a lightweight local user session so the site and Alex can personalize the experience by name.',
+    summary: 'Sign in stores a lightweight local user session so QSentia can personalize the experience by name.',
   },
   {
     href: '/create-account',
@@ -256,7 +256,7 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: `Hi${name ? ` ${name}` : ''}, I'm Alex. I can help with QSentia pages, MLEQ, dashboards, models, API docs, account access, and live telemetry values.`,
+      body: `Hi${name ? ` ${name}` : ''}, I'm the QSentia help assistant. I can help with QSentia pages, MLEQ, dashboards, models, API docs, account access, and live telemetry values.`,
       links: [
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/research', label: 'Research terminal' },
@@ -269,8 +269,8 @@ function answerQuestion({
       id: crypto.randomUUID(),
       role: 'alex',
       body: session
-        ? `You're signed in locally as ${session.name}${session.email ? ` (${session.email})` : ''}. I'll use ${name || session.name} when I address you.`
-        : "I do not see a signed-in local session yet. Sign in or create an account and I'll pick up your name automatically.",
+        ? `You're signed in locally as ${session.name}${session.email ? ` (${session.email})` : ''}.`
+        : "I do not see a signed-in local session yet. Sign in or create an account to personalize the site.",
       links: session
         ? [{ href: '/dashboard', label: 'Go to dashboard' }]
         : [
@@ -458,7 +458,7 @@ export default function AlexAssistant() {
     () => ({
       id: 'alex-opening-message',
       role: 'alex',
-      body: `Hi${greetingName ? ` ${greetingName}` : ''}, I'm Alex. Ask me about QSentia pages, live model data, MLEQ, docs, or account access.`,
+      body: `Hi${greetingName ? ` ${greetingName}` : ''}, ask me about QSentia pages, live model data, MLEQ, docs, or account access.`,
     }),
     [greetingName]
   );
@@ -498,16 +498,16 @@ export default function AlexAssistant() {
   return (
     <div className="fixed bottom-4 right-4 z-[80]">
       {open && (
-        <section className="mb-3 flex h-[min(520px,calc(100vh-6.5rem))] w-[min(340px,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[12px] border border-[#e2e7fb] bg-white shadow-[0_18px_55px_rgba(23,37,84,0.2)]">
-          <header className="border-b border-[#e2e7fb] bg-[#07112a] px-3.5 py-3 text-white">
+        <section className="mb-3 flex h-[min(520px,calc(100vh-6.5rem))] w-[min(340px,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[12px] border border-[#e4e4e7] bg-white shadow-[0_18px_55px_rgba(23,37,84,0.2)]">
+          <header className="border-b border-[#e4e4e7] bg-[#09090b] px-3.5 py-3 text-white">
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#c7d2fe] text-[#06130c]">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#d4d4d8] text-[#09090b]">
                   <Bot className="h-4 w-4" />
                 </span>
                 <div>
-                  <div className="text-sm font-semibold">Alex</div>
-                  <div className="mt-1 text-xs text-[#b8c2e8]">
+                  <div className="text-sm font-semibold">QSentia Help</div>
+                  <div className="mt-1 text-xs text-[#d4d4d8]">
                     {greetingName ? `Assisting ${greetingName}` : 'QSentia help assistant'} / {contextLabel}
                   </div>
                 </div>
@@ -516,30 +516,30 @@ export default function AlexAssistant() {
                 type="button"
                 suppressHydrationWarning
                 onClick={() => setOpen(false)}
-                className="rounded-md p-1 text-[#b8c2e8] hover:bg-white/10 hover:text-white"
-                aria-label="Close Alex assistant"
+                className="rounded-md p-1 text-[#d4d4d8] hover:bg-white/10 hover:text-white"
+                aria-label="Close QSentia help"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
           </header>
 
-          <div className="flex-1 space-y-2.5 overflow-y-auto bg-[#f8faff] px-3 py-3">
+          <div className="flex-1 space-y-2.5 overflow-y-auto bg-[#fafafa] px-3 py-3">
             {visibleMessages.map((message) => (
               <div
                 key={message.id}
                 className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.role === 'alex' && (
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#eef2ff] text-[#3d52da]">
+                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#f4f4f5] text-[#18181b]">
                     <Sparkles className="h-3 w-3" />
                   </span>
                 )}
                 <div
                   className={`max-w-[84%] whitespace-pre-line rounded-[10px] px-2.5 py-2 text-xs leading-5 ${
                     message.role === 'user'
-                      ? 'bg-[#172554] text-white'
-                      : 'border border-[#e2e7fb] bg-white text-[#26352c]'
+                      ? 'bg-[#18181b] text-white'
+                      : 'border border-[#e4e4e7] bg-white text-[#27272a]'
                   }`}
                 >
                   {message.body}
@@ -549,7 +549,7 @@ export default function AlexAssistant() {
                         <Link
                           key={`${message.id}-${link.href}`}
                           href={link.href}
-                          className="inline-flex items-center gap-1 rounded-md border border-[#cbd5ff] bg-[#fbfcff] px-2 py-1 text-xs font-semibold text-[#3d52da] hover:bg-[#eef2ff]"
+                          className="inline-flex items-center gap-1 rounded-md border border-[#d4d4d8] bg-[#fafafa] px-2 py-1 text-xs font-semibold text-[#18181b] hover:bg-[#f4f4f5]"
                         >
                           {link.label}
                           <ExternalLink className="h-3 w-3" />
@@ -559,7 +559,7 @@ export default function AlexAssistant() {
                   ) : null}
                 </div>
                 {message.role === 'user' && (
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#e2e7fb] text-[#26352c]">
+                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#e4e4e7] text-[#27272a]">
                     <UserRound className="h-3 w-3" />
                   </span>
                 )}
@@ -568,7 +568,7 @@ export default function AlexAssistant() {
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="border-t border-[#e2e7fb] bg-white p-2.5">
+          <div className="border-t border-[#e4e4e7] bg-white p-2.5">
             <div className="mb-2.5 flex gap-1.5 overflow-x-auto">
               {quickPrompts.map((prompt) => (
                 <button
@@ -576,7 +576,7 @@ export default function AlexAssistant() {
                   type="button"
                   suppressHydrationWarning
                   onClick={() => submitQuestion(prompt)}
-                  className="shrink-0 rounded-full border border-[#e2e7fb] bg-[#f8faff] px-2.5 py-1 text-[11px] font-semibold text-[#46554b] hover:border-[#3d52da] hover:text-[#3d52da]"
+                  className="shrink-0 rounded-full border border-[#e4e4e7] bg-[#fafafa] px-2.5 py-1 text-[11px] font-semibold text-[#52525b] hover:border-[#18181b] hover:text-[#18181b]"
                 >
                   {prompt}
                 </button>
@@ -587,14 +587,14 @@ export default function AlexAssistant() {
                 suppressHydrationWarning
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
-                placeholder="Ask Alex about QSentia..."
-                className="min-w-0 flex-1 rounded-md border border-[#cbd5ff] px-2.5 py-2 text-xs text-[#06130c] outline-none focus:border-[#3d52da]"
+                placeholder="Ask about QSentia..."
+                className="min-w-0 flex-1 rounded-md border border-[#d4d4d8] px-2.5 py-2 text-xs text-[#09090b] outline-none focus:border-[#18181b]"
               />
               <button
                 type="submit"
                 suppressHydrationWarning
-                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#172554] text-white hover:bg-[#2437b5]"
-                aria-label="Send message to Alex"
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#18181b] text-white hover:bg-[#3f3f46]"
+                aria-label="Send message to QSentia help"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>
@@ -607,12 +607,12 @@ export default function AlexAssistant() {
         type="button"
         suppressHydrationWarning
         onClick={() => setOpen((current) => !current)}
-        className="ml-auto flex h-11 items-center gap-2.5 rounded-full bg-[#172554] px-4 text-xs font-bold text-white shadow-[0_12px_32px_rgba(23,37,84,0.24)] hover:bg-[#2437b5]"
+        className="ml-auto flex h-11 items-center gap-2.5 rounded-full bg-[#18181b] px-4 text-xs font-bold text-white shadow-[0_12px_32px_rgba(23,37,84,0.24)] hover:bg-[#3f3f46]"
         aria-expanded={open}
-        aria-label={open ? 'Close Alex assistant' : 'Open Alex assistant'}
+        aria-label={open ? 'Close QSentia help' : 'Open QSentia help'}
       >
         <MessageCircle className="h-4 w-4" />
-        Alex
+        Help
       </button>
     </div>
   );

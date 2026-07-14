@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useState } from "react";
@@ -12,19 +13,9 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const navItems = [
   {
-    href: "/strategies",
-    label: "MODELS",
+    href: "/platform",
+    label: "PRODUCT",
     children: [
-      {
-        href: "/strategies",
-        label: "Investment strategies",
-        description: "Objectives, operating status, and published model evidence.",
-      },
-      {
-        href: "/marketplace",
-        label: "Model marketplace",
-        description: "Published model cards and commercial access.",
-      },
       {
         href: "/platform",
         label: "Platform overview",
@@ -43,13 +34,34 @@ const navItems = [
     ],
   },
   {
-    href: "/performance",
-    label: "PERFORMANCE",
+    href: "/strategies",
+    label: "MODELS",
     children: [
+      {
+        href: "/strategies",
+        label: "Investment strategies",
+        description: "Objectives, operating status, and published model evidence.",
+      },
+      {
+        href: "/marketplace",
+        label: "Model marketplace",
+        description: "Published model cards and commercial access.",
+      },
       {
         href: "/performance",
         label: "Performance center",
         description: "Returns, benchmarks, rolling risk, and methodology.",
+      },
+    ],
+  },
+  {
+    href: "/methodology",
+    label: "HOW IT WORKS",
+    children: [
+      {
+        href: "/methodology",
+        label: "Methodology",
+        description: "The process from inputs through monitored execution.",
       },
       {
         href: "/risk-management",
@@ -57,30 +69,41 @@ const navItems = [
         description: "Signal gates, limits, reconciliation, and controls.",
       },
       {
-        href: "/methodology",
-        label: "Methodology",
-        description: "The process from inputs through monitored execution.",
-      },
-    ],
-  },
-  {
-    href: "/research",
-    label: "RESEARCH",
-    children: [
-      {
         href: "/research",
         label: "Research terminal",
         description: "Live fund tickers, filters, and normalized curves.",
       },
+    ],
+  },
+  {
+    href: "/data-room",
+    label: "PROFESSIONALS",
+    children: [
       {
-        href: "/mleq",
-        label: "MLEQ engine",
-        description: "Machine Learning Equity Quant system overview.",
+        href: "/data-room",
+        label: "Investor data room",
+        description: "Qualification and controlled diligence materials.",
       },
       {
-        href: "/insights",
-        label: "Letters & research",
-        description: "Firm-approved commentary and methodology updates.",
+        href: "/contact",
+        label: "Request materials",
+        description: "Reach out for investor materials or beta access.",
+      },
+    ],
+  },
+  {
+    href: "/developers",
+    label: "CREATORS",
+    children: [
+      {
+        href: "/developers",
+        label: "Developer center",
+        description: "API contracts, keys, schemas, and OpenAPI.",
+      },
+      {
+        href: "/docs",
+        label: "API docs",
+        description: "Technical resources and endpoint references.",
       },
     ],
   },
@@ -93,27 +116,28 @@ const navItems = [
         label: "Plans",
         description: "Research, marketplace, monitoring, and enterprise packaging.",
       },
+    ],
+  },
+  {
+    href: "/compliance",
+    label: "TRUST",
+    children: [
       {
-        href: "/contact",
-        label: "Contact",
-        description: "Reach out to QSentia for inquiries.",
+        href: "/compliance",
+        label: "Compliance centre",
+        description: "Product boundaries, policy status, and operating controls.",
+      },
+      {
+        href: "/security",
+        label: "Security",
+        description: "Security posture and data protection controls.",
       },
     ],
   },
   {
-    href: "/developers",
-    label: "DOCS",
+    href: "/team",
+    label: "COMPANY",
     children: [
-      {
-        href: "/developers",
-        label: "Developer center",
-        description: "API contracts, keys, schemas, and OpenAPI.",
-      },
-      {
-        href: "/data-room",
-        label: "Investor data room",
-        description: "Qualification and controlled diligence materials.",
-      },
       {
         href: "/firm",
         label: "Firm",
@@ -125,9 +149,9 @@ const navItems = [
         description: "Leadership, software development, and quantitative research.",
       },
       {
-        href: "/faq",
-        label: "FAQ",
-        description: "Frequently asked questions.",
+        href: "/careers",
+        label: "Careers",
+        description: "Open roles and candidate intake.",
       },
     ],
   },
@@ -146,50 +170,65 @@ export function SiteHeader({
   return (
     <header className={`sticky top-0 z-50 border-b transition-colors ${
       dark
-        ? "border-zinc-900 bg-black/95"
-        : "border-zinc-200 bg-white/95"
-    } backdrop-blur-md`}>
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        ? "border-white/10 bg-black/90"
+        : "border-zinc-200/80 bg-white/90"
+    } backdrop-blur-xl`}>
+      <div className="mx-auto grid h-[72px] max-w-[1480px] grid-cols-[auto_1fr_auto] items-center gap-5 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className={`flex items-center font-mono text-[13px] font-bold tracking-[0.4em] transition hover:opacity-90 ${
-            dark ? "text-white" : "text-zinc-950"
-          }`}
-          aria-label="Qsentia home"
+          className="flex h-11 min-w-[156px] items-center transition hover:opacity-80"
+          aria-label="QSentia home"
         >
-          QSENTIA
+          <Image
+            src="/logo/qsentia-primary.png"
+            alt="QSentia"
+            width={150}
+            height={36}
+            priority
+            className={`h-8 w-auto ${dark ? "invert" : ""}`}
+          />
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
+        <nav className="hidden min-w-0 justify-center 2xl:flex" aria-label="Primary navigation">
+          <div
+            className={`flex min-w-0 items-center gap-1 rounded-full border px-1.5 py-1.5 shadow-sm ${
+              dark
+                ? "border-white/10 bg-white/[0.035]"
+                : "border-zinc-200 bg-zinc-50/80"
+            }`}
+          >
           {navItems.map((item) => {
             const isActive =
               active === item.href ||
               item.children?.some((child) => child.href === active);
 
             return (
-              <div key={item.href} className="group relative">
+              <div
+                key={item.href}
+                className="group relative"
+              >
                 <Link
                   href={item.href}
-                  className={`inline-flex items-center font-mono text-[11px] font-bold tracking-widest uppercase transition ${
+                  className={`inline-flex h-9 items-center whitespace-nowrap rounded-full px-3 text-[12px] font-semibold tracking-normal transition ${
                     isActive
                       ? dark
-                        ? "text-white"
-                        : "text-zinc-950"
+                        ? "bg-white text-black shadow-sm"
+                        : "bg-zinc-950 text-white shadow-sm"
                       : dark
-                        ? "text-zinc-400 hover:text-white"
-                        : "text-zinc-500 hover:text-zinc-950"
+                        ? "text-zinc-400 hover:bg-white/10 hover:text-white"
+                        : "text-zinc-600 hover:bg-white hover:text-zinc-950"
                   }`}
-                  aria-haspopup="menu"
+                  aria-haspopup={item.children ? "menu" : undefined}
                 >
-                  {item.label}
+                  {formatNavLabel(item.label)}
                 </Link>
                 {item.children && (
-                  <div className="pointer-events-none absolute left-1/2 top-full z-50 w-[340px] -translate-x-1/2 translate-y-2 pt-2 opacity-0 transition group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="pointer-events-none absolute left-1/2 top-full z-50 w-[360px] -translate-x-1/2 translate-y-3 pt-3 opacity-0 transition duration-150 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
                     <div
-                      className={`rounded-[4px] border p-2 shadow-lg dark:shadow-[0_18px_50px_rgba(0,0,0,0.6)] ${
+                      className={`overflow-hidden rounded-2xl border p-2 shadow-[0_24px_70px_rgba(15,23,42,0.16)] dark:shadow-[0_24px_70px_rgba(0,0,0,0.65)] ${
                         dark
-                          ? "border-zinc-800 bg-[#09090b]"
-                          : "border-zinc-200 bg-white"
+                          ? "border-white/10 bg-[#09090b]/98"
+                          : "border-zinc-200 bg-white/98"
                       }`}
                       role="menu"
                     >
@@ -198,23 +237,23 @@ export function SiteHeader({
                           <Link
                             key={child.href}
                             href={child.href}
-                            className={`block rounded px-3 py-2 transition ${
+                            className={`block rounded-xl px-4 py-3 transition ${
                               active === child.href
                                 ? dark
-                                  ? "bg-zinc-900 text-white"
-                                  : "bg-zinc-100 text-zinc-900"
+                                  ? "bg-white/10 text-white"
+                                  : "bg-zinc-100 text-zinc-950"
                                 : dark
-                                  ? "hover:bg-zinc-900/50 text-zinc-300 hover:text-white"
-                                  : "hover:bg-zinc-50 text-zinc-600 hover:text-zinc-900"
+                                  ? "text-zinc-300 hover:bg-white/10 hover:text-white"
+                                  : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950"
                             }`}
                             role="menuitem"
                           >
-                            <span className={`block text-xs font-semibold font-mono tracking-wider ${
+                            <span className={`block text-[13px] font-semibold ${
                               dark ? "text-zinc-200" : "text-zinc-800"
                             }`}>
-                              {child.label.toUpperCase()}
+                              {child.label}
                             </span>
-                            <span className={`mt-0.5 block text-[10px] leading-relaxed ${
+                            <span className={`mt-1 block text-xs leading-5 ${
                               dark ? "text-zinc-500" : "text-zinc-400"
                             }`}>
                               {child.description}
@@ -228,10 +267,21 @@ export function SiteHeader({
               </div>
             );
           })}
+          </div>
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden min-w-[290px] items-center justify-end gap-3 2xl:flex">
           <ThemeSwitcher />
+          <Link
+            href="/contact"
+            className={`inline-flex h-10 items-center justify-center rounded-full border px-4 text-[11px] font-semibold tracking-wide transition ${
+              dark
+                ? "border-white/20 text-white hover:border-white hover:bg-white/10"
+                : "border-zinc-300 text-zinc-800 hover:border-zinc-950 hover:bg-zinc-50"
+            }`}
+          >
+            Request beta access
+          </Link>
           <AuthSessionMenu />
         </div>
         <button
@@ -239,7 +289,7 @@ export function SiteHeader({
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((value) => !value)}
-          className={`flex h-10 w-10 items-center justify-center rounded-none border lg:hidden transition ${
+          className={`flex h-10 w-10 items-center justify-center rounded-full border 2xl:hidden transition ${
             dark
               ? "border-zinc-800 text-white hover:border-zinc-500"
               : "border-zinc-300 text-zinc-950 hover:border-zinc-400"
@@ -250,7 +300,7 @@ export function SiteHeader({
       </div>
       {menuOpen ? (
         <nav
-          className={`border-t px-4 py-4 lg:hidden ${
+          className={`border-t px-4 py-4 2xl:hidden ${
             dark
               ? "border-zinc-900 bg-black"
               : "border-zinc-200 bg-white"
@@ -294,7 +344,20 @@ export function SiteHeader({
             <div className={`mt-3 border-t pt-3 flex items-center justify-between gap-4 ${
               dark ? "border-zinc-900" : "border-zinc-200"
             }`}>
-              <AuthSessionMenu />
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/contact"
+                  onClick={() => setMenuOpen(false)}
+                  className={`inline-flex h-10 items-center rounded-full border px-3 text-[11px] font-semibold ${
+                    dark
+                      ? "border-white/20 text-white hover:bg-white/10"
+                      : "border-zinc-300 text-zinc-800 hover:bg-zinc-50"
+                  }`}
+                >
+                  Request beta access
+                </Link>
+                <AuthSessionMenu />
+              </div>
               <ThemeSwitcher />
             </div>
           </div>
@@ -331,10 +394,16 @@ export function PageShell({
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <div className="inline-flex items-center rounded-full border border-[#c7d2fe] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+    <div className="inline-flex items-center border border-zinc-300 bg-white px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-600 dark:border-zinc-800 dark:bg-black dark:text-zinc-400">
       {children}
     </div>
   );
+}
+
+function formatNavLabel(label: string) {
+  return label
+    .toLowerCase()
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 export function TechnicalBackdrop({ className = "" }: { className?: string }) {
@@ -343,12 +412,12 @@ export function TechnicalBackdrop({ className = "" }: { className?: string }) {
       aria-hidden
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(61,82,218,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(61,82,218,0.07)_1px,transparent_1px)] bg-[size:86px_86px]" />
-      <div className="absolute left-[7%] top-[18%] h-16 w-16 rotate-[31deg] rounded-[5px] border border-[#3d52da]/18" />
-      <div className="absolute left-[16%] top-[11%] h-9 w-9 rotate-[8deg] rounded-[5px] border border-[#3d52da]/18" />
-      <div className="absolute bottom-[21%] left-[5%] h-3 w-3 rounded-full bg-[#3d52da]/12 ring-8 ring-[#3d52da]/5" />
-      <div className="absolute right-[9%] top-[17%] h-20 w-20 -rotate-[16deg] rounded-[6px] border border-[#3d52da]/10" />
-      <div className="absolute bottom-[16%] right-[17%] h-2.5 w-2.5 rounded-full bg-[#3d52da]/10 ring-6 ring-[#3d52da]/5" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(24,24,27,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(24,24,27,0.06)_1px,transparent_1px)] bg-[size:86px_86px] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.055)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.055)_1px,transparent_1px)]" />
+      <div className="absolute left-[7%] top-[18%] h-16 w-16 rotate-[31deg] rounded-[5px] border border-zinc-300/60 dark:border-white/10" />
+      <div className="absolute left-[16%] top-[11%] h-9 w-9 rotate-[8deg] rounded-[5px] border border-zinc-300/60 dark:border-white/10" />
+      <div className="absolute bottom-[21%] left-[5%] h-3 w-3 rounded-full bg-zinc-300/60 ring-8 ring-zinc-200/60 dark:bg-white/10 dark:ring-white/5" />
+      <div className="absolute right-[9%] top-[17%] h-20 w-20 -rotate-[16deg] rounded-[6px] border border-zinc-300/50 dark:border-white/10" />
+      <div className="absolute bottom-[16%] right-[17%] h-2.5 w-2.5 rounded-full bg-zinc-300/60 ring-6 ring-zinc-200/60 dark:bg-white/10 dark:ring-white/5" />
     </div>
   );
 }
@@ -362,7 +431,7 @@ export function SectionCard({
 }) {
   return (
     <div
-      className={`min-w-0 rounded-[10px] border border-[#e2e7fb] bg-white shadow-sm ${className}`}
+      className={`min-w-0 border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-[#09090b] ${className}`}
     >
       {children}
     </div>
@@ -371,9 +440,9 @@ export function SectionCard({
 
 export function EmptyState({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-md border border-dashed border-[#cbd5ff] bg-[#f8faff] p-6 text-center">
-      <div className="font-semibold text-[#06130c]">{title}</div>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#5a685f]">
+    <div className="border border-dashed border-zinc-300 bg-zinc-50 p-6 text-center dark:border-zinc-800 dark:bg-black">
+      <div className="font-semibold text-zinc-950 dark:text-white">{title}</div>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-zinc-600 dark:text-zinc-400">
         {body}
       </p>
     </div>
@@ -397,8 +466,8 @@ export function ApiLoadingPanel({
     <div
       className={`relative overflow-hidden rounded-[12px] border p-6 shadow-sm sm:p-8 ${
         dark
-          ? "border-[#18233f] bg-[#080d1c] text-white"
-          : "border-[#e2e7fb] bg-white text-[#06130c]"
+          ? "border-[#27272a] bg-[#080d1c] text-white"
+          : "border-zinc-200 bg-white text-zinc-950"
       }`}
       role="status"
       aria-live="polite"
@@ -408,16 +477,16 @@ export function ApiLoadingPanel({
         className={`absolute inset-0 ${
           dark
             ? "bg-[linear-gradient(to_right,rgba(111,124,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(111,124,255,0.08)_1px,transparent_1px)]"
-            : "bg-[linear-gradient(to_right,rgba(61,82,218,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(61,82,218,0.06)_1px,transparent_1px)]"
+            : "bg-[linear-gradient(to_right,rgba(24,24,27,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(24,24,27,0.06)_1px,transparent_1px)]"
         } bg-[size:64px_64px]`}
       />
       <div
         aria-hidden
-        className={`absolute right-8 top-8 h-14 w-14 rotate-[16deg] rounded-md border ${dark ? "border-[#6f7cff]/16" : "border-[#3d52da]/14"}`}
+        className={`absolute right-8 top-8 h-14 w-14 rotate-[16deg] rounded-md border ${dark ? "border-white/10" : "border-zinc-300/70"}`}
       />
       <div
         aria-hidden
-        className={`absolute bottom-8 left-8 h-2.5 w-2.5 rounded-full ${dark ? "bg-[#00d6b8]/25 ring-8 ring-[#00d6b8]/5" : "bg-[#3d52da]/16 ring-8 ring-[#3d52da]/5"}`}
+        className={`absolute bottom-8 left-8 h-2.5 w-2.5 rounded-full ${dark ? "bg-white/15 ring-8 ring-white/5" : "bg-zinc-300/80 ring-8 ring-zinc-200/70"}`}
       />
 
       <div className="relative z-10">
@@ -425,20 +494,20 @@ export function ApiLoadingPanel({
           <span
             className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md ${
               dark
-                ? "border border-[#24304d] bg-[#050714] text-[#00d6b8]"
-                : "bg-[#eef2ff] text-[#3d52da]"
+                ? "border border-[#3f3f46] bg-[#09090b] text-[#00d6b8]"
+                : "bg-zinc-100 text-zinc-700"
             }`}
           >
             <Loader2 className="h-5 w-5 animate-spin" />
           </span>
           <div>
             <div
-              className={`text-lg font-semibold ${dark ? "text-white" : "text-[#06130c]"}`}
+              className={`text-lg font-semibold ${dark ? "text-white" : "text-zinc-950"}`}
             >
               {title}
             </div>
             <p
-              className={`mt-1 max-w-2xl text-sm leading-6 ${dark ? "text-[#9ba7c2]" : "text-[#5a685f]"}`}
+              className={`mt-1 max-w-2xl text-sm leading-6 ${dark ? "text-zinc-400" : "text-zinc-600"}`}
             >
               {body}
             </p>
@@ -451,8 +520,8 @@ export function ApiLoadingPanel({
               key={item}
               className={`rounded-md border px-3 py-2 text-xs font-semibold ${
                 dark
-                  ? "border-[#18233f] bg-[#050714] text-[#cbd5e1]"
-                  : "border-[#e2e7fb] bg-[#fbfcff] text-[#46554b]"
+                  ? "border-[#27272a] bg-[#09090b] text-[#cbd5e1]"
+                  : "border-zinc-200 bg-zinc-50 text-zinc-600"
               }`}
             >
               {item}
@@ -461,11 +530,11 @@ export function ApiLoadingPanel({
         </div>
 
         <div
-          className={`mt-6 h-1.5 overflow-hidden rounded-full ${dark ? "bg-[#121a2f]" : "bg-[#eef2ff]"}`}
+          className={`mt-6 h-1.5 overflow-hidden rounded-full ${dark ? "bg-zinc-900" : "bg-zinc-100"}`}
         >
           <div
             className={`h-full w-1/3 rounded-full [animation:buffer-slide_1.45s_ease-in-out_infinite] ${
-              dark ? "bg-[#00d6b8]" : "bg-[#3d52da]"
+              dark ? "bg-white" : "bg-zinc-950"
             }`}
           />
         </div>

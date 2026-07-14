@@ -38,23 +38,23 @@ export default function InsightsPage() {
             return (
               <SectionCard key={item.title} className="p-6">
                 <div className="flex items-center justify-between gap-4">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <span className="rounded-md border border-[#dbe3ff] bg-[#f8faff] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#647269]">
+                  <span className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#71717a]">
                     Coming soon
                   </span>
                 </div>
-                <h2 className="mt-5 text-xl font-semibold text-[#06130c]">{item.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-[#5a685f]">{item.body}</p>
-                <div className="mt-5 border-t border-[#e2e7fb] pt-4 text-xs text-[#647269]">
+                <h2 className="mt-5 text-xl font-semibold text-[#09090b]">{item.title}</h2>
+                <p className="mt-3 text-sm leading-6 text-[#52525b]">{item.body}</p>
+                <div className="mt-5 border-t border-[#e4e4e7] pt-4 text-xs text-[#71717a]">
                   No publication released
                 </div>
               </SectionCard>
             );
           })}
         </div>
-        <p className="mt-6 text-xs leading-5 text-[#647269]">
+        <p className="mt-6 text-xs leading-5 text-[#71717a]">
           QSentia does not publish generated, backdated, or unapproved investment commentary.
         </p>
       </section>

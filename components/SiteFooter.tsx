@@ -1,72 +1,152 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "@/components/ThemeProvider";
+
+type FooterLink = {
+  href: string;
+  label: string;
+};
+
+const footerColumns: Array<{ title: string; links: FooterLink[] }> = [
+  {
+    title: "Investors",
+    links: [
+      { href: "/strategies", label: "Strategies" },
+      { href: "/performance", label: "Performance" },
+      { href: "/risk-management", label: "Risk management" },
+      { href: "/data-room", label: "Data room" },
+    ],
+  },
+  {
+    title: "Platform",
+    links: [
+      { href: "/platform", label: "Overview" },
+      { href: "/marketplace", label: "Marketplace" },
+      { href: "/research", label: "Research" },
+      { href: "/methodology", label: "How it works" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "/", label: "About" },
+      { href: "/firm", label: "Firm" },
+      { href: "/team", label: "Team" },
+      { href: "/careers", label: "Careers" },
+      { href: "/contact", label: "Contact" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { href: "/developers", label: "API docs" },
+      { href: "/docs", label: "Technical docs" },
+      { href: "/insights", label: "Research notes" },
+      { href: "/compliance", label: "Compliance" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/disclaimer", label: "Risk disclaimer" },
+      { href: "/privacy-policy", label: "Privacy" },
+      { href: "/cookie-policy", label: "Cookies" },
+      { href: "/terms-and-conditions", label: "Terms" },
+      { href: "/security", label: "Security" },
+    ],
+  },
+];
 
 export default function SiteFooter() {
   const { resolvedTheme } = useTheme();
   const dark = resolvedTheme === "dark";
 
-  const links = [
-    { href: "/privacy-policy", label: "PRIVACY" },
-    { href: "/terms-and-conditions", label: "TERMS" },
-    { href: "/disclaimer", label: "DISCLOSURES" },
-    { href: "/compliance", label: "ADV FORM" },
-    { href: "/contact", label: "CONTACT" },
-    { href: "/team", label: "TEAM" },
-    { href: "/status", label: "STATUS" },
-  ];
-
   return (
-    <footer className={`relative z-10 border-t transition-colors ${
-      dark
-        ? "border-zinc-900 bg-black text-zinc-400"
-        : "border-zinc-200 bg-white text-zinc-500"
-    }`}>
-      {/* ── Links & Logo Row ── */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-          {/* Logo */}
-          <Link
-            href="/"
-            className={`font-mono text-[13px] font-bold tracking-[0.4em] uppercase transition hover:opacity-90 ${
-              dark ? "text-white" : "text-zinc-950"
-            }`}
-            aria-label="Qsentia home"
-          >
-            QSENTIA
-          </Link>
+    <footer
+      className={`relative z-10 border-t transition-colors ${
+        dark
+          ? "border-zinc-900 bg-black text-zinc-400"
+          : "border-zinc-200 bg-white text-zinc-500"
+      }`}
+    >
+      <div className="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-10">
+        <div className="grid gap-9 lg:grid-cols-[0.44fr_1.56fr] lg:gap-16">
+          <div className="flex items-center lg:justify-start">
+            <Link href="/" className="inline-flex" aria-label="QSentia home">
+              <Image
+                src="/logo/qsentia-primary.png"
+                alt="QSentia"
+                width={170}
+                height={38}
+                className={`h-9 w-auto ${dark ? "invert" : ""}`}
+                priority={false}
+              />
+            </Link>
+          </div>
 
-          {/* Links */}
-          <nav className="flex flex-wrap items-center gap-x-6 gap-y-3" aria-label="Footer Navigation">
-            {links.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`font-mono text-[10px] font-bold tracking-[0.2em] transition ${
-                  dark
-                    ? "text-zinc-500 hover:text-white"
-                    : "text-zinc-400 hover:text-zinc-950"
-                }`}
-              >
-                {link.label}
-              </Link>
+          <div className="grid gap-x-12 gap-y-7 sm:grid-cols-2 lg:ml-auto lg:w-[80%] lg:grid-cols-5">
+            {footerColumns.map((column) => (
+              <FooterColumn
+                key={column.title}
+                title={column.title}
+                links={column.links}
+                dark={dark}
+              />
             ))}
-          </nav>
-
-          {/* Copyright */}
-          <div className="font-mono text-[9px] tracking-widest text-zinc-500 uppercase">
-            © 2026 QSENTIA INC. FOR ACCREDITED INVESTORS ONLY.
           </div>
         </div>
 
-        {/* Legal Disclaimer */}
-        <div className={`mt-8 border-t pt-6 font-mono text-[9px] leading-relaxed tracking-wider text-zinc-600 dark:text-zinc-500 ${
-          dark ? "border-zinc-900" : "border-zinc-200"
-        }`}>
-          Quantitative trading systems involve risk. Historical or paper-trading information does not guarantee future results. Data shown only reflects returned source logs.
+        <div
+          className={`mt-9 border-t pt-5 text-zinc-500 ${
+            dark ? "border-zinc-900" : "border-zinc-200"
+          }`}
+        >
+          <p className="text-xs leading-relaxed">
+            Copyright 2026 QSentia LLC. Access may include accredited and
+            non-accredited users where permitted.
+          </p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  links,
+  dark,
+}: {
+  title: string;
+  links: FooterLink[];
+  dark: boolean;
+}) {
+  return (
+    <nav aria-label={title}>
+      <h2
+        className={`text-[13px] font-extrabold tracking-tight ${
+          dark ? "text-white" : "text-zinc-950"
+        }`}
+      >
+        {title}
+      </h2>
+      <ul className="mt-3 grid gap-2">
+        {links.map((link) => (
+          <li key={`${title}-${link.href}`}>
+            <Link
+              href={link.href}
+              className={`text-[13px] leading-5 transition ${
+                dark
+                  ? "text-zinc-500 hover:text-white"
+                  : "text-zinc-500 hover:text-zinc-950"
+              }`}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }

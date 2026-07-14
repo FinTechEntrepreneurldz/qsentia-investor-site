@@ -573,7 +573,7 @@ export function ResearchTerminal() {
 
   if (error) {
     return (
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-y border-[#e4e4e7] bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
           <EmptyState
             title="Research terminal unavailable"
@@ -586,7 +586,7 @@ export function ResearchTerminal() {
 
   if (isLoading && !data) {
     return (
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-y border-[#e4e4e7] bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
           <ApiLoadingPanel
             title="Loading research terminal"
@@ -599,17 +599,17 @@ export function ResearchTerminal() {
   }
 
   return (
-    <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+    <section className="border-y border-[#e4e4e7] bg-[#fafafa]">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
         <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#2b36ff]">Research terminal</p>
-            <h2 className="mt-3 text-3xl font-semibold text-[#06130c]">Fund performance and normalized curves</h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#5a685f]">
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#18181b]">Research terminal</p>
+            <h2 className="mt-3 text-3xl font-semibold text-[#09090b]">Fund performance and normalized curves</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#52525b]">
               Live model performance, benchmark context, portfolio exposure, and execution audit views for research review.
             </p>
           </div>
-          <div className="rounded-md border border-[#e2e7fb] bg-white px-3 py-2 text-xs font-semibold text-[#647269]">
+          <div className="rounded-md border border-[#e4e4e7] bg-white px-3 py-2 text-xs font-semibold text-[#71717a]">
             {isLoading || isLoadingDetails ? 'Loading live model curves' : `Updated ${formatDate(data?.updatedAt)}`}
           </div>
         </div>
@@ -704,11 +704,11 @@ export function ResearchTerminal() {
           </SectionCard>
 
           <SectionCard className="min-w-0">
-            <div className="border-b border-[#e2e7fb] px-5 py-4">
+            <div className="border-b border-[#e4e4e7] px-5 py-4">
               <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-[#06130c]">Normalized Equity Curves</h3>
-                  <p className="mt-1 text-xs text-[#647269]">
+                  <h3 className="text-lg font-semibold text-[#09090b]">Normalized Equity Curves</h3>
+                  <p className="mt-1 text-xs text-[#71717a]">
                     Reference line at {curveMetric === 'equity' ? '100: selected range baseline' : '0: neutral threshold'}
                   </p>
                 </div>
@@ -730,7 +730,7 @@ export function ResearchTerminal() {
             </div>
 
             <div className="p-5">
-              <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-semibold text-[#647269]">
+              <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-semibold text-[#71717a]">
                 <span className="inline-flex items-center gap-2">
                   <span className="h-px w-8 bg-[#4b5563]" />
                   Strategy
@@ -746,8 +746,8 @@ export function ResearchTerminal() {
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={chartRows}>
                       <CartesianGrid stroke="#e3e8e4" strokeDasharray="3 3" />
-                      <XAxis dataKey="timestamp" tick={{ fill: '#647269', fontSize: 11 }} minTickGap={28} />
-                      <YAxis tick={{ fill: '#647269', fontSize: 11 }} width={58} />
+                      <XAxis dataKey="timestamp" tick={{ fill: '#71717a', fontSize: 11 }} minTickGap={28} />
+                      <YAxis tick={{ fill: '#71717a', fontSize: 11 }} width={58} />
                       <Tooltip contentStyle={tooltipStyle} />
                       <ReferenceLine
                         y={curveMetric === 'equity' ? 100 : 0}
@@ -785,7 +785,7 @@ export function ResearchTerminal() {
                 {chartSeries.slice(0, 14).map((series) => (
                   <span
                     key={series.key}
-                    className="inline-flex max-w-full items-center gap-2 rounded-md border border-[#e2e7fb] bg-white px-2.5 py-1 text-xs font-semibold text-[#46554b]"
+                    className="inline-flex max-w-full items-center gap-2 rounded-md border border-[#e4e4e7] bg-white px-2.5 py-1 text-xs font-semibold text-[#52525b]"
                   >
                     <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: series.color }} />
                     <span className="truncate">{series.name}</span>
@@ -809,7 +809,7 @@ function TerminalTabNav({
   onChange: (tab: TerminalTab) => void;
 }) {
   return (
-    <div className="rounded-[10px] border border-[#d7ddf7] bg-white p-2 shadow-sm">
+    <div className="rounded-[10px] border border-[#d4d4d8] bg-white p-2 shadow-sm">
       <div className="flex flex-wrap gap-2">
         {terminalTabs.map((tab) => (
           <button
@@ -818,8 +818,8 @@ function TerminalTabNav({
             onClick={() => onChange(tab.id)}
             className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
               activeTab === tab.id
-                ? 'bg-[#eef2ff] text-[#2b36ff]'
-                : 'text-[#7b849c] hover:bg-[#f8faff] hover:text-[#2b36ff]'
+                ? 'bg-[#f4f4f5] text-[#18181b]'
+                : 'text-[#71717a] hover:bg-[#fafafa] hover:text-[#18181b]'
             }`}
           >
             {tab.label}
@@ -1030,16 +1030,16 @@ function DecisionHistory({ data }: { data?: DashboardPayload }) {
 
       <div className="grid gap-5 xl:grid-cols-[0.7fr_1.3fr]">
         <SectionCard className="overflow-hidden">
-          <div className="border-b border-[#e2e7fb] px-5 py-4">
-            <h3 className="text-base font-semibold text-[#06130c]">Action summary</h3>
-            <p className="mt-1 text-xs text-[#647269]">Aggregated from committed decision rows</p>
+          <div className="border-b border-[#e4e4e7] px-5 py-4">
+            <h3 className="text-base font-semibold text-[#09090b]">Action summary</h3>
+            <p className="mt-1 text-xs text-[#71717a]">Aggregated from committed decision rows</p>
           </div>
           <div className="space-y-3 p-5">
             {actionRows.length ? (
               actionRows.map((row) => (
-                <div key={String(row.Action)} className="flex items-center justify-between gap-4 rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-4 py-3">
-                  <span className="text-sm font-semibold text-[#26352c]">{String(row.Action)}</span>
-                  <span className="rounded-md bg-[#eef2ff] px-2.5 py-1 text-xs font-bold text-[#2b36ff]">{String(row.Count)}</span>
+                <div key={String(row.Action)} className="flex items-center justify-between gap-4 rounded-md border border-[#e4e4e7] bg-[#fafafa] px-4 py-3">
+                  <span className="text-sm font-semibold text-[#27272a]">{String(row.Action)}</span>
+                  <span className="rounded-md bg-[#f4f4f5] px-2.5 py-1 text-xs font-bold text-[#18181b]">{String(row.Count)}</span>
                 </div>
               ))
             ) : (
@@ -1094,15 +1094,15 @@ function ModelHealth({ data }: { data?: DashboardPayload }) {
 
       <div className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
         <SectionCard className="overflow-hidden">
-          <div className="border-b border-[#e2e7fb] px-5 py-4">
-            <h3 className="text-base font-semibold text-[#06130c]">Health details</h3>
-            <p className="mt-1 text-xs text-[#647269]">Selected fields from the live health payload</p>
+          <div className="border-b border-[#e4e4e7] px-5 py-4">
+            <h3 className="text-base font-semibold text-[#09090b]">Health details</h3>
+            <p className="mt-1 text-xs text-[#71717a]">Selected fields from the live health payload</p>
           </div>
-          <div className="divide-y divide-[#e2e7fb]">
+          <div className="divide-y divide-[#e4e4e7]">
             {healthDetails.map(([label, value]) => (
               <div key={label} className="grid gap-2 px-5 py-3 sm:grid-cols-[180px_1fr]">
-                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#7f89a8]">{label}</span>
-                <span className="min-w-0 break-words text-sm font-semibold text-[#26352c]">{formatHealthValue(value)}</span>
+                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#71717a]">{label}</span>
+                <span className="min-w-0 break-words text-sm font-semibold text-[#27272a]">{formatHealthValue(value)}</span>
               </div>
             ))}
           </div>
@@ -1128,10 +1128,10 @@ function ValueGrid({
   return (
     <div className={gridClass}>
       {items.map(([label, value, detail]) => (
-        <div key={`${label}-${value}`} className="rounded-[10px] border border-[#e2e7fb] bg-white p-5 shadow-sm">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7f89a8]">{label}</p>
-          <div className="mt-3 break-words text-2xl font-semibold text-[#06130c]">{value}</div>
-          {detail && <p className="mt-2 text-xs leading-5 text-[#647269]">{detail}</p>}
+        <div key={`${label}-${value}`} className="rounded-[10px] border border-[#e4e4e7] bg-white p-5 shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#71717a]">{label}</p>
+          <div className="mt-3 break-words text-2xl font-semibold text-[#09090b]">{value}</div>
+          {detail && <p className="mt-2 text-xs leading-5 text-[#71717a]">{detail}</p>}
         </div>
       ))}
     </div>
@@ -1156,14 +1156,14 @@ function ApiTable({
 
   return (
     <SectionCard className="min-w-0 overflow-hidden">
-      <div className="border-b border-[#e2e7fb] px-5 py-4">
-        <h3 className="text-base font-semibold text-[#06130c]">{title}</h3>
-        <p className="mt-1 text-xs text-[#647269]">{rows.length ? `${rows.length} source row${rows.length === 1 ? '' : 's'} shown` : 'No source rows available'}</p>
+      <div className="border-b border-[#e4e4e7] px-5 py-4">
+        <h3 className="text-base font-semibold text-[#09090b]">{title}</h3>
+        <p className="mt-1 text-xs text-[#71717a]">{rows.length ? `${rows.length} source row${rows.length === 1 ? '' : 's'} shown` : 'No source rows available'}</p>
       </div>
       {rows.length && columns.length ? (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-xs">
-            <thead className="bg-[#f8faff] text-[#687083]">
+            <thead className="bg-[#fafafa] text-[#71717a]">
               <tr>
                 {columns.map((column) => (
                   <th key={column} className="whitespace-nowrap px-4 py-3 font-bold uppercase tracking-[0.12em]">
@@ -1172,11 +1172,11 @@ function ApiTable({
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#e2e7fb] bg-white">
+            <tbody className="divide-y divide-[#e4e4e7] bg-white">
               {rows.map((row, index) => (
                 <tr key={`${title}-${index}`}>
                   {columns.map((column) => (
-                    <td key={`${title}-${index}-${column}`} className="max-w-[260px] truncate px-4 py-3 font-medium text-[#354038]">
+                    <td key={`${title}-${index}-${column}`} className="max-w-[260px] truncate px-4 py-3 font-medium text-[#27272a]">
                       {formatUnknown(row[column])}
                     </td>
                   ))}
@@ -1220,31 +1220,31 @@ function LiveMetricStrip({ summary }: { summary: FundSummary | null }) {
 
   return (
     <SectionCard className="overflow-hidden">
-      <div className="flex flex-col gap-3 border-b border-[#e2e7fb] bg-[#fbfcff] px-5 py-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-3 border-b border-[#e4e4e7] bg-[#fafafa] px-5 py-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#2b36ff]">Live API model metrics</p>
-          <h3 className="mt-2 max-w-3xl text-xl font-semibold text-[#06130c]">{summary?.name || 'Model metrics pending'}</h3>
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#18181b]">Live API model metrics</p>
+          <h3 className="mt-2 max-w-3xl text-xl font-semibold text-[#09090b]">{summary?.name || 'Model metrics pending'}</h3>
         </div>
-        <p className="rounded-md border border-[#d7ddf7] bg-white px-3 py-1.5 text-xs font-semibold text-[#647269]">
+        <p className="rounded-md border border-[#d4d4d8] bg-white px-3 py-1.5 text-xs font-semibold text-[#71717a]">
           Fetched from /api/dashboard
         </p>
       </div>
 
-      <div className="grid gap-0 divide-y divide-[#e2e7fb] sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4">
+      <div className="grid gap-0 divide-y divide-[#e4e4e7] sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4">
         {metrics.map((metric) => {
           const pending = metric.value === 'Not available';
 
           return (
             <div key={metric.label} className="p-5">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7f89a8]">{metric.label}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#71717a]">{metric.label}</p>
               <div
                 className={`mt-3 font-semibold leading-none tracking-normal ${
-                  pending ? 'text-2xl text-[#687083]' : 'text-4xl text-[#06130c]'
+                  pending ? 'text-2xl text-[#71717a]' : 'text-4xl text-[#09090b]'
                 }`}
               >
                 {metric.value}
               </div>
-              <p className="mt-3 text-xs font-semibold leading-5 text-[#3d52da]">{metric.detail}</p>
+              <p className="mt-3 text-xs font-semibold leading-5 text-[#18181b]">{metric.detail}</p>
             </div>
           );
         })}
@@ -1342,10 +1342,10 @@ function TickerStrip({
 }) {
   return (
     <SectionCard className="overflow-hidden">
-      <div className="flex flex-col gap-3 border-b border-[#e2e7fb] px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-3 border-b border-[#e4e4e7] px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#2b36ff]">{title}</p>
-          <p className="mt-2 text-sm text-[#46554b]">{subtitle}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#18181b]">{title}</p>
+          <p className="mt-2 text-sm text-[#52525b]">{subtitle}</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           <PerformanceBadge label={metric === 'daily' ? 'Best Today' : 'Best YTD'} item={best} metric={metric} tone="good" />
@@ -1371,18 +1371,18 @@ function TickerStrip({
                   key={`${metric}-${summary.id}`}
                   type="button"
                   onClick={() => onFocus(summary.id)}
-                  className={`min-h-[132px] w-[300px] shrink-0 rounded-[10px] border bg-white p-5 text-left transition hover:border-[#2b36ff] ${
-                    focusedModelId === summary.id ? 'border-[#2b36ff] bg-[#f3f2ff]' : 'border-[#dfe3e6]'
+                  className={`min-h-[132px] w-[300px] shrink-0 rounded-[10px] border bg-white p-5 text-left transition hover:border-[#18181b] ${
+                    focusedModelId === summary.id ? 'border-[#18181b] bg-[#fafafa]' : 'border-[#e4e4e7]'
                   }`}
                 >
                   <div className="flex min-w-0 items-center gap-2">
                     <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: summary.color }} />
-                    <span className="truncate text-xs font-bold uppercase tracking-[0.18em] text-[#687083]">
+                    <span className="truncate text-xs font-bold uppercase tracking-[0.18em] text-[#71717a]">
                       {summary.name}
                     </span>
                   </div>
                   <div className={`mt-6 text-3xl font-light ${pctTone(value)}`}>{formatPercent(value)}</div>
-                  <div className="mt-5 flex items-center justify-between gap-4 text-xs font-semibold text-[#9198ad]">
+                  <div className="mt-5 flex items-center justify-between gap-4 text-xs font-semibold text-[#71717a]">
                     <span>{dateLabel}</span>
                     <span>{formatMoney(summary.latestValue)}</span>
                   </div>
@@ -1450,12 +1450,12 @@ function FilterPanel({
 }) {
   return (
     <div>
-      <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#2b36ff]">Models</p>
+      <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#18181b]">Models</p>
       <div className="mt-3 flex gap-2">
-        <button type="button" onClick={onSelectAllModels} className="rounded-md border border-[#ccd3d8] bg-[#eef1f5] px-3 py-1.5 text-xs font-semibold text-[#687083]">
+        <button type="button" onClick={onSelectAllModels} className="rounded-md border border-[#d4d4d8] bg-[#f4f4f5] px-3 py-1.5 text-xs font-semibold text-[#71717a]">
           All
         </button>
-        <button type="button" onClick={onSelectNoModels} className="rounded-md border border-[#ccd3d8] bg-[#eef1f5] px-3 py-1.5 text-xs font-semibold text-[#687083]">
+        <button type="button" onClick={onSelectNoModels} className="rounded-md border border-[#d4d4d8] bg-[#f4f4f5] px-3 py-1.5 text-xs font-semibold text-[#71717a]">
           None
         </button>
       </div>
@@ -1464,14 +1464,14 @@ function FilterPanel({
         value={searchValue}
         onChange={(event) => onSearchChange(event.target.value)}
         placeholder="Search models..."
-        className="mt-3 w-full rounded-md border border-[#ccd3d8] bg-[#f3f5f8] px-3 py-2.5 text-xs text-[#06130c] outline-none focus:border-[#2b36ff]"
+        className="mt-3 w-full rounded-md border border-[#d4d4d8] bg-[#f3f5f8] px-3 py-2.5 text-xs text-[#09090b] outline-none focus:border-[#18181b]"
       />
 
       <div className="mt-3 max-h-[360px] space-y-2 overflow-y-auto pr-2">
         {summaries.map((summary) => (
           <label
             key={`filter-${summary.id}`}
-            className="flex cursor-pointer items-center gap-2 rounded-md border border-[#dfe3e6] bg-white px-3 py-2 text-xs font-semibold text-[#354038]"
+            className="flex cursor-pointer items-center gap-2 rounded-md border border-[#e4e4e7] bg-white px-3 py-2 text-xs font-semibold text-[#27272a]"
           >
             <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: summary.color }} />
             <span className="min-w-0 flex-1 truncate">{summary.name}</span>
@@ -1485,7 +1485,7 @@ function FilterPanel({
         ))}
       </div>
 
-      <p className="mt-6 text-xs font-bold uppercase tracking-[0.22em] text-[#2b36ff]">Benchmarks</p>
+      <p className="mt-6 text-xs font-bold uppercase tracking-[0.22em] text-[#18181b]">Benchmarks</p>
       <div className="mt-3 space-y-2">
         {benchmarks.map((benchmark) => {
           const id = benchmark.ticker || benchmark.name || '';
@@ -1493,7 +1493,7 @@ function FilterPanel({
           return (
             <label
               key={`benchmark-${id}`}
-              className="flex cursor-pointer items-center gap-2 rounded-md border border-[#dfe3e6] bg-white px-3 py-2 text-xs font-semibold text-[#354038]"
+              className="flex cursor-pointer items-center gap-2 rounded-md border border-[#e4e4e7] bg-white px-3 py-2 text-xs font-semibold text-[#27272a]"
             >
               <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: benchmark.color || '#111111' }} />
               <span className="min-w-0 flex-1 truncate">
@@ -1525,8 +1525,8 @@ function SegmentedControl({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="flex min-w-0 items-center gap-2 rounded-md border border-[#d7ddf7] bg-[#f2f5ff] p-2">
-      <span className="shrink-0 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a958e]">
+    <div className="flex min-w-0 items-center gap-2 rounded-md border border-[#d4d4d8] bg-[#fafafa] p-2">
+      <span className="shrink-0 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#71717a]">
         {label}
       </span>
       <div className="flex min-w-0 gap-1 overflow-x-auto">
@@ -1537,8 +1537,8 @@ function SegmentedControl({
             onClick={() => onChange(option.key)}
             className={`shrink-0 rounded px-3 py-1.5 text-xs font-semibold transition ${
               value === option.key
-                ? 'border border-[#2b36ff] bg-white text-[#2b36ff]'
-                : 'border border-transparent text-[#68756d] hover:bg-white'
+                ? 'border border-[#18181b] bg-white text-[#18181b]'
+                : 'border border-transparent text-[#71717a] hover:bg-white'
             }`}
           >
             {option.label}
@@ -1551,9 +1551,9 @@ function SegmentedControl({
 
 const tooltipStyle = {
   background: '#ffffff',
-  border: '1px solid #e2e7fb',
+  border: '1px solid #e4e4e7',
   borderRadius: '10px',
-  color: '#06130c',
+  color: '#09090b',
   boxShadow: '0 16px 50px rgba(15,31,22,0.12)',
   padding: '10px 12px',
   fontSize: '12px',

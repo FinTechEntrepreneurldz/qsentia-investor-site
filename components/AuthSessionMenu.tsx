@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 
 import {
-  ArrowRight,
   ChevronDown,
   LayoutDashboard,
   Loader2,
@@ -144,12 +143,12 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
       <div className="flex items-center gap-2" aria-label="Checking account session">
         <span
           className={`hidden h-10 w-24 animate-pulse rounded-md md:block ${
-            dark ? 'bg-white/10' : 'bg-[#eef2ff]'
+            dark ? 'bg-white/10' : 'bg-[#f4f4f5]'
           }`}
         />
         <span
           className={`flex h-10 w-10 items-center justify-center rounded-md border ${
-            dark ? 'border-[#24304d] text-[#b7c5ff]' : 'border-[#dbe3ff] text-[#3d52da]'
+            dark ? 'border-[#3f3f46] text-[#d4d4d8]' : 'border-[#e4e4e7] text-[#18181b]'
           }`}
         >
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -189,40 +188,28 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
 
     return (
       <div ref={menuRef} className="relative flex items-center gap-2">
-        <Link
-          href="/dashboard"
-          className={`hidden h-10 items-center gap-2 rounded-md px-4 text-sm font-semibold transition sm:inline-flex ${
-            dark
-              ? 'bg-white text-[#050714] hover:bg-[#dce2ff]'
-              : 'bg-[#172554] text-white hover:bg-[#2437b5]'
-          }`}
-        >
-          Dashboard
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-haspopup="menu"
-          className={`inline-flex h-10 max-w-[220px] items-center gap-2 rounded-md border px-2.5 transition ${
+          className={`inline-flex h-10 max-w-[220px] items-center gap-2 rounded-full border px-2.5 transition ${
             dark
-              ? 'border-[#24304d] bg-[#10172b] text-white hover:border-[#b7c5ff]'
-              : 'border-[#cbd5ff] bg-white text-[#172554] hover:border-[#3d52da] hover:bg-[#f8faff]'
+              ? 'border-[#3f3f46] bg-[#18181b] text-white hover:border-[#d4d4d8]'
+              : 'border-[#d4d4d8] bg-white text-[#18181b] hover:border-[#18181b] hover:bg-[#fafafa]'
           }`}
           title={`${name} via ${providerLabel(provider)}`}
         >
           <span
             className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-              dark ? 'bg-[#050714] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+              dark ? 'bg-[#09090b] text-[#d4d4d8]' : 'bg-[#f4f4f5] text-[#18181b]'
             }`}
           >
             {initialsFor(name, email)}
           </span>
           <span className="hidden min-w-0 text-left lg:block">
             <span className="block truncate text-sm font-semibold leading-4">{name}</span>
-            <span className={`block truncate text-[11px] leading-4 ${dark ? 'text-[#9ba7c2]' : 'text-[#647269]'}`}>
+            <span className={`block truncate text-[11px] leading-4 ${dark ? 'text-[#a1a1aa]' : 'text-[#71717a]'}`}>
               {providerLabel(provider)}
             </span>
           </span>
@@ -232,32 +219,32 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
         {open ? (
           <div
             className={`absolute right-0 top-full z-50 mt-2 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-[10px] border shadow-[0_22px_55px_rgba(15,23,42,0.18)] ${
-              dark ? 'border-[#24304d] bg-[#070b19]' : 'border-[#dfe5ff] bg-white'
+              dark ? 'border-[#3f3f46] bg-[#09090b]' : 'border-[#e4e4e7] bg-white'
             }`}
             role="menu"
           >
-            <div className={`border-b p-4 ${dark ? 'border-[#18233f]' : 'border-[#e2e7fb]'}`}>
+            <div className={`border-b p-4 ${dark ? 'border-[#27272a]' : 'border-[#e4e4e7]'}`}>
               <div className="flex items-start gap-3">
                 <span
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                    dark ? 'bg-[#10172b] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+                    dark ? 'bg-[#18181b] text-[#d4d4d8]' : 'bg-[#f4f4f5] text-[#18181b]'
                   }`}
                 >
                   {initialsFor(name, email)}
                 </span>
                 <div className="min-w-0">
-                  <div className={`truncate text-sm font-semibold ${dark ? 'text-white' : 'text-[#06130c]'}`}>
+                  <div className={`truncate text-sm font-semibold ${dark ? 'text-white' : 'text-[#09090b]'}`}>
                     {name}
                   </div>
                   {email ? (
-                    <div className={`truncate text-xs ${dark ? 'text-[#9ba7c2]' : 'text-[#647269]'}`}>{email}</div>
+                    <div className={`truncate text-xs ${dark ? 'text-[#a1a1aa]' : 'text-[#71717a]'}`}>{email}</div>
                   ) : null}
                   <div className="mt-2 flex flex-wrap gap-2">
                     <span
                       className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold ${
                         dark
-                          ? 'border-[#24304d] bg-[#10172b] text-[#b7c5ff]'
-                          : 'border-[#dbe3ff] bg-[#f8faff] text-[#3d52da]'
+                          ? 'border-[#3f3f46] bg-[#18181b] text-[#d4d4d8]'
+                          : 'border-[#e4e4e7] bg-[#fafafa] text-[#18181b]'
                       }`}
                     >
                       <ProviderMark provider={provider} />
@@ -267,8 +254,8 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
                       <span
                         className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold ${
                           dark
-                            ? 'border-[#24304d] bg-[#10172b] text-[#b7c5ff]'
-                            : 'border-[#dbe3ff] bg-[#f8faff] text-[#172554]'
+                            ? 'border-[#3f3f46] bg-[#18181b] text-[#d4d4d8]'
+                            : 'border-[#e4e4e7] bg-[#fafafa] text-[#18181b]'
                         }`}
                       >
                         <ShieldCheck className="h-3.5 w-3.5" />
@@ -287,20 +274,20 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={`flex items-start gap-3 rounded-md px-3 py-3 transition ${
-                    dark ? 'text-[#d7dfed] hover:bg-[#10172b]' : 'text-[#172554] hover:bg-[#f8faff]'
+                    dark ? 'text-[#e4e4e7] hover:bg-[#18181b]' : 'text-[#18181b] hover:bg-[#fafafa]'
                   }`}
                   role="menuitem"
                 >
                   <span
                     className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
-                      dark ? 'bg-[#10172b] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+                      dark ? 'bg-[#18181b] text-[#d4d4d8]' : 'bg-[#f4f4f5] text-[#18181b]'
                     }`}
                   >
                     {item.icon}
                   </span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold">{item.label}</span>
-                    <span className={`mt-0.5 block text-xs leading-5 ${dark ? 'text-[#9ba7c2]' : 'text-[#647269]'}`}>
+                    <span className={`mt-0.5 block text-xs leading-5 ${dark ? 'text-[#a1a1aa]' : 'text-[#71717a]'}`}>
                       {item.detail}
                     </span>
                   </span>
@@ -308,18 +295,18 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
               ))}
             </div>
 
-            <div className={`border-t p-2 ${dark ? 'border-[#18233f]' : 'border-[#e2e7fb]'}`}>
+            <div className={`border-t p-2 ${dark ? 'border-[#27272a]' : 'border-[#e4e4e7]'}`}>
               <button
                 type="button"
                 onClick={signOut}
                 className={`flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm font-semibold transition ${
-                  dark ? 'text-[#d7dfed] hover:bg-[#10172b]' : 'text-[#172554] hover:bg-[#f8faff]'
+                  dark ? 'text-[#e4e4e7] hover:bg-[#18181b]' : 'text-[#18181b] hover:bg-[#fafafa]'
                 }`}
                 role="menuitem"
               >
                 <span
                   className={`flex h-8 w-8 items-center justify-center rounded-md ${
-                    dark ? 'bg-[#10172b] text-[#b7c5ff]' : 'bg-[#eef2ff] text-[#3d52da]'
+                    dark ? 'bg-[#18181b] text-[#d4d4d8]' : 'bg-[#f4f4f5] text-[#18181b]'
                   }`}
                 >
                   <LogOut className="h-4 w-4" />
@@ -334,18 +321,12 @@ export default function AuthSessionMenu({}: { theme?: 'light' | 'dark' }) {
   }
 
   return (
-    <div className="flex items-center gap-6">
-      <Link
-        href="/strategies"
-        className="font-mono text-[11px] font-bold tracking-[0.22em] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white uppercase transition"
-      >
-        Explore
-      </Link>
+    <div className="flex items-center">
       <Link
         href={signinHref}
-        className="inline-flex h-10 items-center justify-center bg-zinc-900 dark:bg-[#eeeeee] px-7 text-center font-mono text-[11px] font-bold tracking-[0.22em] text-white dark:text-black uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none"
+        className="inline-flex h-10 items-center justify-center rounded-full bg-zinc-900 px-5 text-center text-[12px] font-semibold text-white transition hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100"
       >
-        Log In
+        Log in
       </Link>
     </div>
   );

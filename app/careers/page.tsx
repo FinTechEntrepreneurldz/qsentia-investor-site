@@ -60,15 +60,15 @@ const hiringSteps = [
 export default function CareersPage() {
   return (
     <PageShell active="/careers">
-      <section className="relative overflow-hidden border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="relative overflow-hidden border-b border-[#e4e4e7] bg-[#fafafa]">
         <TechnicalBackdrop />
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,1.1fr)_420px] lg:items-end lg:py-20">
           <div>
           <Eyebrow>Careers</Eyebrow>
-          <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
+          <h1 className="mt-6 max-w-5xl text-5xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-7xl lg:text-[5.5rem]">
             Build the operating layer for systematic investment models
           </h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#52525b] md:text-lg">
             QSentia hires across quantitative research, software engineering, investor operations,
             and model infrastructure. Open roles are published from the back-office career board,
             and every application is routed through one controlled intake workflow.
@@ -76,14 +76,14 @@ export default function CareersPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="#open-roles"
-                className="inline-flex min-h-12 items-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5]"
+                className="inline-flex min-h-12 items-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46]"
               >
                 View open roles
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/faq#careers"
-                className="inline-flex min-h-12 items-center gap-2 rounded-md border border-[#cbd5ff] bg-white px-5 py-3 text-sm font-bold text-[#172554] transition hover:border-[#3d52da]"
+                className="inline-flex min-h-12 items-center gap-2 rounded-md border border-[#d4d4d8] bg-white px-5 py-3 text-sm font-bold text-[#18181b] transition hover:border-[#18181b]"
               >
                 Careers FAQ
               </Link>
@@ -91,18 +91,18 @@ export default function CareersPage() {
           </div>
 
           <SectionCard className="p-6">
-            <div className="text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+            <div className="text-xs font-bold uppercase tracking-wide text-[#18181b]">
               Candidate intake
             </div>
             <div className="mt-5 grid gap-4">
               {candidateRequirements.map(({ title, body, icon: Icon }) => (
-                <div key={title} className="flex gap-3 rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+                <div key={title} className="flex gap-3 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
                     <Icon className="h-5 w-5" />
                   </span>
                   <div>
-                    <div className="text-sm font-semibold text-[#06130c]">{title}</div>
-                    <p className="mt-1 text-sm leading-6 text-[#5a685f]">{body}</p>
+                    <div className="text-sm font-semibold text-[#09090b]">{title}</div>
+                    <p className="mt-1 text-sm leading-6 text-[#52525b]">{body}</p>
                   </div>
                 </div>
               ))}
@@ -111,14 +111,14 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section className="border-b border-[#e2e7fb] bg-white">
+      <section className="border-b border-[#e4e4e7] bg-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-          <div className="grid gap-px overflow-hidden rounded-[10px] border border-[#e2e7fb] bg-[#e2e7fb] md:grid-cols-4">
+          <div className="grid gap-px overflow-hidden rounded-[10px] border border-[#e4e4e7] bg-[#e4e4e7] md:grid-cols-4">
             {hiringSteps.map(({ step, title, body }) => (
               <div key={step} className="bg-white p-6">
-                <div className="text-xs font-bold uppercase tracking-wide text-[#3046c8]">Step {step}</div>
-                <h2 className="mt-3 text-lg font-semibold text-[#06130c]">{title}</h2>
-                <p className="mt-3 text-sm leading-6 text-[#5a685f]">{body}</p>
+                <div className="text-xs font-bold uppercase tracking-wide text-[#18181b]">Step {step}</div>
+                <h2 className="mt-3 text-lg font-semibold text-[#09090b]">{title}</h2>
+                <p className="mt-3 text-sm leading-6 text-[#52525b]">{body}</p>
               </div>
             ))}
           </div>
@@ -129,26 +129,26 @@ export default function CareersPage() {
         <CareersBoard />
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-y border-[#e4e4e7] bg-[#fafafa]">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-3">
           <SectionCard className="p-6">
-            <BriefcaseBusiness className="h-5 w-5 text-[#3d52da]" />
-            <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Research and product</h2>
-            <p className="mt-3 text-sm leading-6 text-[#5a685f]">
+            <BriefcaseBusiness className="h-5 w-5 text-[#18181b]" />
+            <h2 className="mt-4 text-xl font-semibold text-[#09090b]">Research and product</h2>
+            <p className="mt-3 text-sm leading-6 text-[#52525b]">
               Roles are shaped around live telemetry, model evaluation, and institutional workflows.
             </p>
           </SectionCard>
           <SectionCard className="p-6">
-            <UsersRound className="h-5 w-5 text-[#3d52da]" />
-            <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Small team standards</h2>
-            <p className="mt-3 text-sm leading-6 text-[#5a685f]">
+            <UsersRound className="h-5 w-5 text-[#18181b]" />
+            <h2 className="mt-4 text-xl font-semibold text-[#09090b]">Small team standards</h2>
+            <p className="mt-3 text-sm leading-6 text-[#52525b]">
               We value careful execution, ownership, and clear communication around financial systems.
             </p>
           </SectionCard>
           <SectionCard className="p-6">
-            <ShieldCheck className="h-5 w-5 text-[#3d52da]" />
-            <h2 className="mt-4 text-xl font-semibold text-[#06130c]">Security minded</h2>
-            <p className="mt-3 text-sm leading-6 text-[#5a685f]">
+            <ShieldCheck className="h-5 w-5 text-[#18181b]" />
+            <h2 className="mt-4 text-xl font-semibold text-[#09090b]">Security minded</h2>
+            <p className="mt-3 text-sm leading-6 text-[#52525b]">
               Do not include passwords, API keys, broker credentials, or private tokens in applications.
             </p>
           </SectionCard>

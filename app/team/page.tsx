@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/InstitutionalShell";
 import { PageShell } from "@/components/PageChrome";
 import TeamDirectory from "@/components/TeamDirectory";
 
@@ -12,11 +11,21 @@ export const metadata: Metadata = {
 export default function TeamPage() {
   return (
     <PageShell active="/team">
-      <PageIntro
-        eyebrow="Team"
-        title="Meet the QSentia team"
-        body="Meet the people building QSentia's investor telemetry, model research workflows, customer dashboards, and API infrastructure for systematic investment operations."
-      />
+      <section className="border-b border-zinc-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500">
+            QSentia team
+          </p>
+          <h1 className="mt-8 max-w-5xl text-5xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-7xl">
+            Research, engineering, and investment infrastructure.
+          </h1>
+          <p className="mt-8 max-w-3xl text-sm leading-7 text-zinc-600 dark:text-zinc-400 md:text-base">
+            Meet the people building QSentia&apos;s investor telemetry, model research
+            workflows, customer dashboards, and API infrastructure for systematic
+            investment operations.
+          </p>
+        </div>
+      </section>
       <TeamDirectory />
     </PageShell>
   );

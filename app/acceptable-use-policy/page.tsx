@@ -29,7 +29,7 @@ const sections: readonly PolicySection[] = [
     id: 'trading',
     title: 'Broker and automated-trading controls',
     paragraphs: [
-      'Users must not enable live order execution until broker authorization, risk limits, model entitlement, operational monitoring, and any required approvals are complete. Paper trading should be used for validation. Users remain responsible for broker terms, capital allocation, order review, regulatory obligations, and kill-switch access.',
+      'Users must not enable live order execution until broker authorization, risk limits, model entitlement, operational monitoring, and any required approvals are complete. Paper trading is the required validation environment before live use. Users remain responsible for broker terms, capital allocation, order review, regulatory obligations, and kill-switch access.',
     ],
   },
   {

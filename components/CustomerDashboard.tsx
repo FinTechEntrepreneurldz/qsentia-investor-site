@@ -336,29 +336,29 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
   const activeNav = navItems.find((item) => item.id === activeSection) || navItems[0];
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb] text-[#0f172a]">
+    <div className="min-h-screen bg-[#f5f7fb] text-[#09090b]">
       <div className="mx-auto grid max-w-[1540px] lg:grid-cols-[292px_minmax(0,1fr)]">
-        <aside className="border-b border-[#dfe6f3] bg-white/95 text-[#0f172a] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur lg:sticky lg:top-16 lg:max-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-b-0 lg:border-r">
+        <aside className="border-b border-[#e4e4e7] bg-white/95 text-[#09090b] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur lg:sticky lg:top-16 lg:max-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-b-0 lg:border-r">
           <div className="flex h-full flex-col px-4 py-5">
-            <div className="rounded-[14px] border border-[#dfe6f3] bg-[#f8faff] p-4">
+            <div className="rounded-[14px] border border-[#e4e4e7] bg-[#fafafa] p-4">
               <div className="flex items-center gap-3">
-                <Link href="/" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-[#cbd5ff] bg-white" aria-label="QSentia home">
+                <Link href="/" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-[#d4d4d8] bg-white" aria-label="QSentia home">
                   <Image src="/logo/qsentia-primary.png" alt="QSentia" width={26} height={26} className="h-7 w-7 object-contain" />
                 </Link>
                 <div>
-                  <div className="text-sm font-semibold text-[#0f172a]">QSentia</div>
-                  <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3d52da]">
+                  <div className="text-sm font-semibold text-[#09090b]">QSentia</div>
+                  <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#18181b]">
                     Settings
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-6 text-[#5a685f]">
+              <p className="mt-4 text-sm leading-6 text-[#52525b]">
                 Manage model entitlements, API usage, billing, broker readiness,
                 and deployment controls from one account workspace.
               </p>
             </div>
 
-            <div className="mt-6 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#647269]">
+            <div className="mt-6 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#71717a]">
               Workspace
             </div>
             <nav className="mt-2 grid gap-1" aria-label="Settings navigation">
@@ -374,18 +374,18 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                     onClick={() => setActiveSection(item.id)}
                     className={`group flex items-start gap-3 rounded-[10px] border px-3 py-3 text-left text-sm transition ${
                       active
-                        ? "border-[#cbd5ff] bg-[#eef2ff] text-[#172554] shadow-sm"
-                        : "border-transparent text-[#334155] hover:border-[#dfe6f3] hover:bg-[#f8faff]"
+                        ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b] shadow-sm"
+                        : "border-transparent text-[#3f3f46] hover:border-[#e4e4e7] hover:bg-[#fafafa]"
                     }`}
                   >
                     <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
-                      active ? "bg-white text-[#3d52da]" : "bg-[#f1f5ff] text-[#64748b] group-hover:text-[#3d52da]"
+                      active ? "bg-white text-[#18181b]" : "bg-[#f4f4f5] text-[#71717a] group-hover:text-[#18181b]"
                     }`}>
                       <Icon className="h-4 w-4" />
                     </span>
                     <span className="min-w-0">
                       <span className="block font-semibold">{item.label}</span>
-                      <span className={`mt-0.5 block truncate text-xs ${active ? "text-[#46554b]" : "text-[#647269]"}`}>
+                      <span className={`mt-0.5 block truncate text-xs ${active ? "text-[#52525b]" : "text-[#71717a]"}`}>
                         {item.detail}
                       </span>
                     </span>
@@ -394,35 +394,35 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
               })}
             </nav>
 
-            <div className="mt-6 rounded-[14px] border border-[#dfe6f3] bg-white p-4 shadow-sm">
+            <div className="mt-6 rounded-[14px] border border-[#e4e4e7] bg-white p-4 shadow-sm">
               <div className="flex items-start gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#172554] text-sm font-semibold text-white">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#18181b] text-sm font-semibold text-white">
                   {sessionUser.name.slice(0, 2).toUpperCase()}
                 </span>
                 <div className="min-w-0">
-                  <div className="truncate text-sm font-semibold text-[#0f172a]">
+                  <div className="truncate text-sm font-semibold text-[#09090b]">
                     {sessionUser.name}
                   </div>
-                  <div className="mt-1 truncate text-xs text-[#647269]">
+                  <div className="mt-1 truncate text-xs text-[#71717a]">
                     {sessionUser.email}
                   </div>
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-md border border-[#e2e7fb] bg-[#f8faff] px-3 py-2">
-                  <div className="font-bold uppercase tracking-wide text-[#647269]">Plan</div>
-                  <div className="mt-1 truncate font-semibold text-[#172554]">{planName}</div>
+                <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-3 py-2">
+                  <div className="font-bold uppercase tracking-wide text-[#71717a]">Plan</div>
+                  <div className="mt-1 truncate font-semibold text-[#18181b]">{planName}</div>
                 </div>
-                <div className="rounded-md border border-[#e2e7fb] bg-[#f8faff] px-3 py-2">
-                  <div className="font-bold uppercase tracking-wide text-[#647269]">Models</div>
-                  <div className="mt-1 font-semibold text-[#172554]">{licensedModels.length}</div>
+                <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-3 py-2">
+                  <div className="font-bold uppercase tracking-wide text-[#71717a]">Models</div>
+                  <div className="mt-1 font-semibold text-[#18181b]">{licensedModels.length}</div>
                 </div>
               </div>
               <button
                 type="button"
                 suppressHydrationWarning
                 onClick={logout}
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#cfd7e6] bg-white px-3 py-2 text-sm font-semibold text-[#172554] transition hover:border-[#3d52da] hover:bg-[#f8faff]"
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#cfd7e6] bg-white px-3 py-2 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa]"
               >
                 <LogOut className="h-4 w-4" />
                 Sign out
@@ -431,7 +431,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
 
             <Link
               href="/contact"
-              className="mt-auto hidden items-center justify-between rounded-[10px] border border-[#dfe6f3] bg-white px-3 py-3 text-sm font-semibold text-[#172554] transition hover:border-[#3d52da] hover:bg-[#f8faff] lg:flex"
+              className="mt-auto hidden items-center justify-between rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] lg:flex"
             >
               Contact support
               <ArrowRight className="h-4 w-4" />
@@ -440,17 +440,17 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
         </aside>
 
         <main className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">
-          <div className="mb-6 overflow-hidden rounded-[16px] border border-[#dbe3ff] bg-white shadow-sm">
-            <div className="border-b border-[#e2e7fb] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#eef2ff_100%)] p-5 md:p-6">
+          <div className="mb-6 overflow-hidden rounded-[16px] border border-[#e4e4e7] bg-white shadow-sm">
+            <div className="border-b border-[#e4e4e7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#f4f4f5_100%)] p-5 md:p-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#3d52da]">
+                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#18181b]">
                     Account settings
                   </div>
-                  <h1 className="mt-2 text-3xl font-semibold tracking-[-0.01em] text-[#06130c]">
+                  <h1 className="mt-2 text-3xl font-semibold tracking-[-0.01em] text-[#09090b]">
                     {sectionTitle(activeSection)}
                   </h1>
-                  <p className="mt-2 max-w-3xl text-sm leading-6 text-[#5a685f]">
+                  <p className="mt-2 max-w-3xl text-sm leading-6 text-[#52525b]">
                     {sectionDescription(activeSection)}
                   </p>
                 </div>
@@ -460,7 +460,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                 </div>
               </div>
             </div>
-            <div className="grid gap-px bg-[#e2e7fb] sm:grid-cols-3">
+            <div className="grid gap-px bg-[#e4e4e7] sm:grid-cols-3">
               <WorkspaceStat label="Workspace" value={workspaceId} />
               <WorkspaceStat label="Billing" value={label(billingStatus)} />
               <WorkspaceStat label="Active section" value={activeNav.detail} />
@@ -509,8 +509,8 @@ function sectionDescription(section: SectionId) {
 function WorkspaceStat({ label: labelText, value }: { label: string; value: string }) {
   return (
     <div className="min-w-0 bg-white px-5 py-3">
-      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#647269]">{labelText}</div>
-      <div className="mt-1 truncate text-sm font-semibold text-[#0f172a]">{value}</div>
+      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#71717a]">{labelText}</div>
+      <div className="mt-1 truncate text-sm font-semibold text-[#09090b]">{value}</div>
     </div>
   );
 }
@@ -568,7 +568,7 @@ function OverviewSection({ ctx }: { ctx: DashboardContext }) {
         </Panel>
 
         <SectionCard className="p-5 md:p-6">
-          <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">
+          <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
             Account identity
           </div>
           <div className="mt-4 grid gap-3">
@@ -598,7 +598,7 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
           {(ctx.billing?.invoices || []).length ? (
             <div className="mt-4 overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
-                <thead className="border-b border-[#e2e7fb] text-xs uppercase tracking-wide text-[#647269]">
+                <thead className="border-b border-[#e4e4e7] text-xs uppercase tracking-wide text-[#71717a]">
                   <tr>
                     <th className="pb-3">Invoice</th>
                     <th className="pb-3">Period</th>
@@ -609,16 +609,16 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
                     <th className="pb-3">File</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#eef2ff]">
+                <tbody className="divide-y divide-[#f4f4f5]">
                   {(ctx.billing?.invoices || []).map((invoice) => (
                     <tr key={invoice.id}>
-                      <td className="py-3 font-semibold text-[#06130c]">{invoice.id}</td>
-                      <td className="py-3 text-[#5a685f]">{invoice.period}</td>
-                      <td className="py-3 text-[#5a685f]">{dateLabel(invoice.issuedAt)}</td>
-                      <td className="py-3 text-[#5a685f]">{dateLabel(invoice.dueAt)}</td>
-                      <td className="py-3 font-semibold text-[#06130c]">{currency(invoice.amount, ctx.billing?.subscription.currency)}</td>
+                      <td className="py-3 font-semibold text-[#09090b]">{invoice.id}</td>
+                      <td className="py-3 text-[#52525b]">{invoice.period}</td>
+                      <td className="py-3 text-[#52525b]">{dateLabel(invoice.issuedAt)}</td>
+                      <td className="py-3 text-[#52525b]">{dateLabel(invoice.dueAt)}</td>
+                      <td className="py-3 font-semibold text-[#09090b]">{currency(invoice.amount, ctx.billing?.subscription.currency)}</td>
                       <td className="py-3"><StatusPill value={invoice.status} /></td>
-                      <td className="py-3 text-xs font-semibold text-[#647269]">PDF pending</td>
+                      <td className="py-3 text-xs font-semibold text-[#71717a]">PDF pending</td>
                     </tr>
                   ))}
                 </tbody>
@@ -631,12 +631,12 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
       </Panel>
 
       <SectionCard className="p-5 md:p-6">
-        <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">
+        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
           Billing address
         </div>
-        <div className="mt-4 rounded-[10px] border border-[#e2e7fb] bg-[#f8faff] p-4">
-          <div className="font-semibold text-[#06130c]">{ctx.billingEntity}</div>
-          <div className="mt-3 space-y-1 text-sm leading-6 text-[#5a685f]">
+        <div className="mt-4 rounded-[10px] border border-[#e4e4e7] bg-[#fafafa] p-4">
+          <div className="font-semibold text-[#09090b]">{ctx.billingEntity}</div>
+          <div className="mt-3 space-y-1 text-sm leading-6 text-[#52525b]">
             <div>{ctx.workspace?.billingAddress.contact || ctx.sessionUser.name}</div>
             <div>{ctx.workspace?.billingAddress.line1 || "Address not configured"}</div>
             {ctx.workspace?.billingAddress.line2 ? <div>{ctx.workspace.billingAddress.line2}</div> : null}
@@ -648,7 +648,7 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
           <InfoRow icon={<KeyRound className="h-4 w-4" />} label="Billing email" value={ctx.billing?.account.billingEmail || ctx.sessionUser.email} />
           <InfoRow icon={<FileText className="h-4 w-4" />} label="Tax status" value={ctx.billing?.account.taxStatus || "Not configured"} />
         </div>
-        <Link href="/contact" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#172554] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#2437b5]">
+        <Link href="/contact" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
           Request billing update
           <ArrowRight className="h-4 w-4" />
         </Link>
@@ -662,12 +662,12 @@ function ModelsSection({ ctx }: { ctx: DashboardContext }) {
     <Panel
       eyebrow="Model access"
       title="Licensed model entitlements"
-      action={<Link href="/marketplace" className="text-sm font-semibold text-[#3046c8] hover:underline">Model marketplace</Link>}
+      action={<Link href="/marketplace" className="text-sm font-semibold text-[#18181b] hover:underline">Model marketplace</Link>}
     >
       {ctx.licensedModels.length ? (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[820px] text-left text-sm">
-            <thead className="border-b border-[#e2e7fb] text-xs uppercase tracking-wide text-[#647269]">
+            <thead className="border-b border-[#e4e4e7] text-xs uppercase tracking-wide text-[#71717a]">
               <tr>
                 <th className="pb-3">Model</th>
                 <th className="pb-3">Category</th>
@@ -677,15 +677,15 @@ function ModelsSection({ ctx }: { ctx: DashboardContext }) {
                 <th className="pb-3">Access</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#eef2ff]">
+            <tbody className="divide-y divide-[#f4f4f5]">
               {ctx.licensedModels.map((model) => (
                 <tr key={model.id}>
                   <td className="max-w-[320px] py-3">
-                    <div className="font-semibold text-[#06130c]">{model.name}</div>
-                    <div className="mt-1 text-xs text-[#647269]">{model.slug}</div>
+                    <div className="font-semibold text-[#09090b]">{model.name}</div>
+                    <div className="mt-1 text-xs text-[#71717a]">{model.slug}</div>
                   </td>
-                  <td className="py-3 text-[#5a685f]">{model.category}</td>
-                  <td className="py-3 text-[#172554]">{cleanMetric(fmtNum(model.performance?.sharpeRatio, 2))}</td>
+                  <td className="py-3 text-[#52525b]">{model.category}</td>
+                  <td className="py-3 text-[#18181b]">{cleanMetric(fmtNum(model.performance?.sharpeRatio, 2))}</td>
                   <td className="py-3 text-[#047857]">{cleanMetric(fmtPct(model.performance?.annualizedReturn, true))}</td>
                   <td className="py-3 text-[#be123c]">{cleanMetric(fmtPct(model.performance?.maxDrawdown, true))}</td>
                   <td className="py-3"><StatusPill value={model.accessStatus || "Review"} /></td>
@@ -731,15 +731,15 @@ function ApiSection({ ctx }: { ctx: DashboardContext }) {
       </Panel>
 
       <SectionCard className="p-5 md:p-6">
-        <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Developer actions</div>
+        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">Developer actions</div>
         <div className="mt-4 grid gap-3">
           <QuickAction href="/docs" icon={<FileText />} label="Read API docs" />
           <QuickAction href="/developers" icon={<Code2 />} label="Developer center" />
           <QuickAction href="/api/customer/audit-export" icon={<Download />} label="Download audit CSV" external />
         </div>
-        <div className="mt-6 rounded-md border border-[#e2e7fb] bg-[#f8faff] p-4">
-          <div className="text-sm font-semibold text-[#06130c]">API requirements</div>
-          <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#5a685f]">
+        <div className="mt-6 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
+          <div className="text-sm font-semibold text-[#09090b]">API requirements</div>
+          <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#52525b]">
             <li>Active model entitlement</li>
             <li>Issued server-side API credential</li>
             <li>Approved environment scope</li>
@@ -761,7 +761,7 @@ function BrokerSection({ ctx }: { ctx: DashboardContext }) {
           <ControlRow label="Credentials vault" value={ctx.workspace?.broker.credentialsVault || "Not configured"} />
           <ControlRow label="Approval mode" value={label(ctx.workspace?.risk.approvalMode)} />
         </div>
-        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#172554] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#2437b5]">
+        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
           Request broker onboarding
           <ArrowRight className="h-4 w-4" />
         </Link>
@@ -807,7 +807,7 @@ function SupportSection({ ctx }: { ctx: DashboardContext }) {
       </Panel>
 
       <SectionCard className="p-5 md:p-6">
-        <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Activity</div>
+        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">Activity</div>
         <div className="mt-4 grid gap-4">
           {(ctx.workspace?.activity || []).length ? (
             ctx.workspace?.activity.slice(0, 5).map((item) => (
@@ -835,11 +835,11 @@ function Panel({
   title: string;
 }) {
   return (
-    <SectionCard className="overflow-hidden rounded-[16px] border-[#dbe3ff] shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+    <SectionCard className="overflow-hidden rounded-[16px] border-[#e4e4e7] shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="px-5 pt-5 md:px-6 md:pt-6">
-          <div className="text-xs font-bold uppercase tracking-[0.16em] text-[#3d52da]">{eyebrow}</div>
-          <h2 className="mt-2 text-xl font-semibold text-[#06130c]">{title}</h2>
+          <div className="text-xs font-bold uppercase tracking-[0.16em] text-[#18181b]">{eyebrow}</div>
+          <h2 className="mt-2 text-xl font-semibold text-[#09090b]">{title}</h2>
         </div>
         {action ? <div className="shrink-0 px-5 pt-5 md:px-6 md:pt-6">{action}</div> : null}
       </div>
@@ -862,14 +862,14 @@ function SummaryTile({
   value: string;
 }) {
   return (
-    <div className="rounded-[14px] border border-[#dbe3ff] bg-white p-4 shadow-[0_12px_32px_rgba(15,23,42,0.05)]">
+    <div className="rounded-[14px] border border-[#e4e4e7] bg-white p-4 shadow-[0_12px_32px_rgba(15,23,42,0.05)]">
       <div className="flex items-start justify-between gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#eef2ff] text-[#3d52da]">{icon}</span>
-        <span className="mt-1 h-2 w-2 rounded-full bg-[#3d52da]/35" />
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#f4f4f5] text-[#18181b]">{icon}</span>
+        <span className="mt-1 h-2 w-2 rounded-full bg-[#18181b]/35" />
       </div>
-      <div className="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-[#647269]">{labelText}</div>
-      <div className="mt-2 truncate text-xl font-semibold text-[#06130c]">{value}</div>
-      <p className="mt-1 truncate text-sm text-[#5a685f]">{helper}</p>
+      <div className="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">{labelText}</div>
+      <div className="mt-2 truncate text-xl font-semibold text-[#09090b]">{value}</div>
+      <p className="mt-1 truncate text-sm text-[#52525b]">{helper}</p>
     </div>
   );
 }
@@ -886,13 +886,13 @@ function FactCard({
   value: string;
 }) {
   return (
-    <div className="rounded-[12px] border border-[#e2e7fb] bg-[#fbfcff] p-4">
-      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-[#647269]">
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-[#3d52da] shadow-sm">{icon}</span>
+    <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
+      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">
+        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-[#18181b] shadow-sm">{icon}</span>
         {labelText}
       </div>
-      <div className="mt-3 truncate text-lg font-semibold text-[#06130c]">{value}</div>
-      <p className="mt-1 truncate text-sm text-[#5a685f]">{detail}</p>
+      <div className="mt-3 truncate text-lg font-semibold text-[#09090b]">{value}</div>
+      <p className="mt-1 truncate text-sm text-[#52525b]">{detail}</p>
     </div>
   );
 }
@@ -907,21 +907,21 @@ function InfoRow({
   value: string;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e2e7fb] bg-white px-3 py-2.5">
-      <span className="inline-flex items-center gap-2 text-sm text-[#5a685f]">
-        <span className="text-[#3d52da]">{icon}</span>
+    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-2.5">
+      <span className="inline-flex items-center gap-2 text-sm text-[#52525b]">
+        <span className="text-[#18181b]">{icon}</span>
         {labelText}
       </span>
-      <span className="max-w-[190px] truncate text-right text-sm font-semibold text-[#06130c]">{value}</span>
+      <span className="max-w-[190px] truncate text-right text-sm font-semibold text-[#09090b]">{value}</span>
     </div>
   );
 }
 
 function ControlRow({ label: labelText, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e2e7fb] bg-[#fbfcff] px-3 py-2.5">
-      <span className="text-sm text-[#5a685f]">{labelText}</span>
-      <span className="max-w-[240px] truncate rounded-md border border-[#dbe3ff] bg-white px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#3046c8]">{value}</span>
+    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-[#fafafa] px-3 py-2.5">
+      <span className="text-sm text-[#52525b]">{labelText}</span>
+      <span className="max-w-[240px] truncate rounded-md border border-[#e4e4e7] bg-white px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#18181b]">{value}</span>
     </div>
   );
 }
@@ -936,12 +936,12 @@ function ReadinessItem({
   status: string;
 }) {
   return (
-    <div className="rounded-[10px] border border-[#e2e7fb] bg-white px-3 py-2.5">
+    <div className="rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-2.5">
       <div className="flex items-center justify-between gap-3">
-        <span className="text-sm font-semibold text-[#06130c]">{labelText}</span>
+        <span className="text-sm font-semibold text-[#09090b]">{labelText}</span>
         <StatusPill value={status} />
       </div>
-      <div className="mt-1 text-xs uppercase tracking-wide text-[#647269]">{owner}</div>
+      <div className="mt-1 text-xs uppercase tracking-wide text-[#71717a]">{owner}</div>
     </div>
   );
 }
@@ -958,13 +958,13 @@ function StatusPill({ value }: { value: string }) {
           normalized.includes("open") ||
           normalized.includes("paper") ||
           normalized.includes("refreshing")
-        ? "border-[#c7d2fe] bg-[#eef2ff] text-[#3046c8]"
+        ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]"
         : normalized.includes("required") ||
             normalized.includes("pending") ||
             normalized.includes("not") ||
             normalized.includes("past due")
           ? "border-[#fed7aa] bg-[#fff7ed] text-[#c2410c]"
-          : "border-[#e2e7fb] bg-[#f8faff] text-[#46554b]";
+          : "border-[#e4e4e7] bg-[#fafafa] text-[#52525b]";
 
   return (
     <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${tone}`}>
@@ -986,15 +986,15 @@ function UsageMeter({
   const percent = Math.min(Math.max((used / safeLimit) * 100, 0), 100);
 
   return (
-    <div className="rounded-[12px] border border-[#e2e7fb] bg-[#f8faff] p-4">
+    <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
       <div className="flex items-center justify-between gap-3">
-        <span className="text-sm font-semibold text-[#06130c]">{labelText}</span>
-        <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">
+        <span className="text-sm font-semibold text-[#09090b]">{labelText}</span>
+        <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
           {used.toLocaleString()} / {limit.toLocaleString()}
         </span>
       </div>
-      <div className="mt-4 h-2 rounded-full bg-[#e2e7fb]">
-        <div className="h-full rounded-full bg-[#3d52da]" style={{ width: `${percent}%` }} />
+      <div className="mt-4 h-2 rounded-full bg-[#e4e4e7]">
+        <div className="h-full rounded-full bg-[#18181b]" style={{ width: `${percent}%` }} />
       </div>
     </div>
   );
@@ -1012,7 +1012,7 @@ function QuickAction({
   label: string;
 }) {
   const className =
-    "inline-flex items-center justify-between gap-3 rounded-[10px] border border-[#dbe3ff] bg-white px-3 py-3 text-sm font-semibold text-[#172554] transition hover:border-[#3d52da] hover:bg-[#f8faff] [&>svg]:h-4 [&>svg]:w-4";
+    "inline-flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] [&>svg]:h-4 [&>svg]:w-4";
 
   if (external) {
     return (
@@ -1039,13 +1039,13 @@ function QuickAction({
 
 function SupportCard({ body, title }: { body: string; title: string }) {
   return (
-    <div className="rounded-[12px] border border-[#e2e7fb] bg-[#f8faff] p-4">
-      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-[#3d52da] shadow-sm">
+    <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
+      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-[#18181b] shadow-sm">
         <LifeBuoy className="h-4 w-4" />
       </span>
-      <h3 className="mt-4 font-semibold text-[#06130c]">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-[#5a685f]">{body}</p>
-      <Link href="/contact" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#3046c8] hover:underline">
+      <h3 className="mt-4 font-semibold text-[#09090b]">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-[#52525b]">{body}</p>
+      <Link href="/contact" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#18181b] hover:underline">
         Open request
         <ArrowRight className="h-4 w-4" />
       </Link>
@@ -1064,13 +1064,13 @@ function ActivityItem({
 }) {
   return (
     <div className="flex gap-3">
-      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
         <CheckCircle2 className="h-4 w-4" />
       </span>
       <div>
-        <div className="font-semibold text-[#06130c]">{title}</div>
-        <p className="mt-1 text-sm leading-6 text-[#5a685f]">{body}</p>
-        <div className="mt-1 text-xs uppercase tracking-wide text-[#647269]">
+        <div className="font-semibold text-[#09090b]">{title}</div>
+        <p className="mt-1 text-sm leading-6 text-[#52525b]">{body}</p>
+        <div className="mt-1 text-xs uppercase tracking-wide text-[#71717a]">
           {timestamp ? dateLabel(timestamp) : "Current session"}
         </div>
       </div>
@@ -1080,8 +1080,8 @@ function ActivityItem({
 
 function TableHeader({ title }: { title: string }) {
   return (
-    <div className="flex items-center justify-between border-b border-[#e2e7fb] pb-3">
-      <h3 className="font-semibold text-[#06130c]">{title}</h3>
+    <div className="flex items-center justify-between border-b border-[#e4e4e7] pb-3">
+      <h3 className="font-semibold text-[#09090b]">{title}</h3>
     </div>
   );
 }
@@ -1099,12 +1099,12 @@ function InlineEmpty({
     <div
       className={
         compact
-          ? "rounded-md border border-dashed border-[#cbd5ff] bg-[#f8faff] p-4 text-center"
-          : "mt-5 rounded-md border border-dashed border-[#cbd5ff] bg-[#f8faff] p-6 text-center"
+          ? "rounded-md border border-dashed border-[#d4d4d8] bg-[#fafafa] p-4 text-center"
+          : "mt-5 rounded-md border border-dashed border-[#d4d4d8] bg-[#fafafa] p-6 text-center"
       }
     >
-      <div className="text-sm font-semibold text-[#06130c]">{title}</div>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#5a685f]">{body}</p>
+      <div className="text-sm font-semibold text-[#09090b]">{title}</div>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#52525b]">{body}</p>
     </div>
   );
 }

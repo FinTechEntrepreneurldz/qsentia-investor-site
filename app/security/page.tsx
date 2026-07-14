@@ -276,17 +276,17 @@ function ControlSection({
 export default function SecurityPage() {
   return (
     <PageShell active="/security">
-      <main className="min-h-screen bg-slate-50">
+      <main className="min-h-screen bg-slate-50 dark:bg-[#09090b]">
         {/* ── hero ── */}
-        <div className="border-b border-slate-200 bg-white">
-          <div className="max-w-4xl mx-auto px-6 py-16">
-            <p className="text-xs font-medium tracking-widest uppercase text-slate-400 mb-3">
+        <div className="border-b border-slate-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:py-24">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500">
               Security
             </p>
-            <h1 className="text-3xl sm:text-4xl font-semibold text-slate-900 leading-tight">
+            <h1 className="mt-8 max-w-6xl text-5xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-7xl lg:text-[5.5rem]">
               How QSentia handles your data
             </h1>
-            <p className="mt-4 text-base text-slate-500 leading-relaxed max-w-2xl">
+            <p className="mt-8 max-w-3xl text-sm leading-7 text-zinc-600 dark:text-zinc-400 md:text-base">
               This page documents our current security controls, what is in
               progress, and what we have not yet built. We do not overclaim.
               Every status below reflects the actual state of the platform.

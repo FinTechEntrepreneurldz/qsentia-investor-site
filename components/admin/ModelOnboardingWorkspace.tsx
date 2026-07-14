@@ -48,7 +48,7 @@ type OnboardingData = {
 const assetClasses = ['Crypto', 'Equities', 'Multi-asset', 'Fixed income', 'FX', 'Commodities'];
 const brokers = ['IBKR', 'Alpaca', 'Broker neutral'];
 const deliveryModes = ['Signals only', 'Paper execution', 'Live execution'];
-const colors = ['#3d52da', '#0ea5e9', '#14b8a6', '#8b5cf6', '#f59e0b', '#ef4444'];
+const colors = ['#18181b', '#0ea5e9', '#14b8a6', '#8b5cf6', '#f59e0b', '#ef4444'];
 const nextStatus: Partial<Record<SubmissionStatus, SubmissionStatus>> = {
   submitted: 'technical_review',
   technical_review: 'risk_review',
@@ -88,7 +88,7 @@ export default function ModelOnboardingWorkspace() {
   const [form, setForm] = useState({
     modelId: '', name: '', description: '', repo: '', branch: 'main', logsPath: 'logs',
     assetClass: 'Crypto', broker: 'Broker neutral', deliveryMode: 'Signals only',
-    submittedBy: '', color: '#3d52da', startingCapital: '', reviewNotes: '',
+    submittedBy: '', color: '#18181b', startingCapital: '', reviewNotes: '',
   });
 
   async function submitModel() {
@@ -104,7 +104,7 @@ export default function ModelOnboardingWorkspace() {
       setForm({
         modelId: '', name: '', description: '', repo: '', branch: 'main', logsPath: 'logs',
         assetClass: 'Crypto', broker: 'Broker neutral', deliveryMode: 'Signals only',
-        submittedBy: '', color: '#3d52da', startingCapital: '', reviewNotes: '',
+        submittedBy: '', color: '#18181b', startingCapital: '', reviewNotes: '',
       });
       await mutate();
       setMessage({ tone: 'success', text: 'Model submitted for technical review.' });
@@ -156,7 +156,7 @@ export default function ModelOnboardingWorkspace() {
   }
 
   if (isLoading && !data) {
-    return <Panel title="Loading model pipeline" icon={<RefreshCw className="h-4 w-4 animate-spin" />}><div className="h-32 animate-pulse rounded-md bg-[#f1f4f9]" /></Panel>;
+    return <Panel title="Loading model pipeline" icon={<RefreshCw className="h-4 w-4 animate-spin" />}><div className="h-32 animate-pulse rounded-md bg-[#f4f4f5]" /></Panel>;
   }
 
   if (error || !data) {
@@ -179,7 +179,7 @@ export default function ModelOnboardingWorkspace() {
         <Metric icon={<Rocket className="h-5 w-5" />} label="Published" value={counts.published} />
       </div>
 
-      <div className="grid gap-3 border-y border-[#dfe5f2] bg-white px-4 py-4 sm:grid-cols-4">
+      <div className="grid gap-3 border-y border-[#e4e4e7] bg-white px-4 py-4 sm:grid-cols-4">
         <Stage icon={<UploadCloud className="h-4 w-4" />} number="01" label="Research submission" />
         <Stage icon={<GitBranch className="h-4 w-4" />} number="02" label="Technical validation" />
         <Stage icon={<ShieldCheck className="h-4 w-4" />} number="03" label="Risk approval" />
@@ -206,7 +206,7 @@ export default function ModelOnboardingWorkspace() {
               <Field label="Research owner"><input className="admin-input" maxLength={160} value={form.submittedBy} onChange={(event) => setForm({ ...form, submittedBy: event.target.value })} /></Field>
               <Field label="Starting capital"><input className="admin-input" type="number" min="1" value={form.startingCapital} onChange={(event) => setForm({ ...form, startingCapital: event.target.value })} /></Field>
             </div>
-            <Field label="Chart color"><div className="flex gap-2">{colors.map((color) => <button key={color} type="button" aria-label={`Use ${color}`} onClick={() => setForm({ ...form, color })} className={`h-8 w-8 rounded-md border-2 ${form.color === color ? 'border-[#0f172a]' : 'border-white ring-1 ring-[#cbd5e1]'}`} style={{ backgroundColor: color }} />)}</div></Field>
+            <Field label="Chart color"><div className="flex gap-2">{colors.map((color) => <button key={color} type="button" aria-label={`Use ${color}`} onClick={() => setForm({ ...form, color })} className={`h-8 w-8 rounded-md border-2 ${form.color === color ? 'border-[#09090b]' : 'border-white ring-1 ring-[#cbd5e1]'}`} style={{ backgroundColor: color }} />)}</div></Field>
             <button type="button" onClick={submitModel} disabled={saving} className="admin-primary-button justify-center"><Send className="h-4 w-4" />Submit for review</button>
           </div>
         </Panel>
@@ -217,12 +217,12 @@ export default function ModelOnboardingWorkspace() {
               {data.submissions.map((submission) => {
                 const canAdvance = submission.status !== 'technical_review' || submission.validationPassed;
                 return (
-                  <article key={submission.id} className="border-b border-[#e2e7fb] pb-4 last:border-b-0 last:pb-0">
+                  <article key={submission.id} className="border-b border-[#e4e4e7] pb-4 last:border-b-0 last:pb-0">
                     <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                       <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2"><h3 className="font-semibold text-[#0f172a]">{submission.name}</h3><Status value={submission.status} /></div>
-                        <div className="mt-1 font-mono text-xs text-[#647269]">{submission.modelId} · {submission.repo}</div>
-                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#647269]"><span>{submission.assetClass}</span><span>{submission.broker}</span><span>{submission.deliveryMode}</span><span>{shortDate(submission.createdAt)}</span></div>
+                        <div className="flex flex-wrap items-center gap-2"><h3 className="font-semibold text-[#09090b]">{submission.name}</h3><Status value={submission.status} /></div>
+                        <div className="mt-1 font-mono text-xs text-[#71717a]">{submission.modelId} · {submission.repo}</div>
+                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#71717a]"><span>{submission.assetClass}</span><span>{submission.broker}</span><span>{submission.deliveryMode}</span><span>{shortDate(submission.createdAt)}</span></div>
                         {submission.validationMessage && <div className={`mt-2 text-xs font-semibold ${submission.validationPassed ? 'text-[#047857]' : 'text-[#be123c]'}`}>{submission.validationMessage}</div>}
                       </div>
                       <div className="flex shrink-0 flex-wrap gap-2">
@@ -246,11 +246,11 @@ export default function ModelOnboardingWorkspace() {
 }
 
 function Panel({ children, icon, title }: { children: ReactNode; icon: ReactNode; title: string }) {
-  return <section className="rounded-md border border-[#dfe5f2] bg-white p-5 shadow-sm"><div className="mb-5 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">{icon}</span><h2 className="text-lg font-semibold text-[#0f172a]">{title}</h2></div>{children}</section>;
+  return <section className="rounded-md border border-[#e4e4e7] bg-white p-5 shadow-sm"><div className="mb-5 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">{icon}</span><h2 className="text-lg font-semibold text-[#09090b]">{title}</h2></div>{children}</section>;
 }
 
 function Field({ children, label: fieldLabel }: { children: ReactNode; label: string }) {
-  return <label className="grid gap-2"><span className="text-xs font-bold uppercase tracking-wide text-[#647269]">{fieldLabel}</span>{children}</label>;
+  return <label className="grid gap-2"><span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{fieldLabel}</span>{children}</label>;
 }
 
 function Select({ onChange, options, value }: { onChange: (value: string) => void; options: string[]; value: string }) {
@@ -258,15 +258,15 @@ function Select({ onChange, options, value }: { onChange: (value: string) => voi
 }
 
 function Metric({ icon, label: metricLabel, value }: { icon: ReactNode; label: string; value: number }) {
-  return <div className="flex items-center justify-between rounded-md border border-[#dfe5f2] bg-white p-4 shadow-sm"><div className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">{icon}</span><span className="text-sm font-semibold text-[#647269]">{metricLabel}</span></div><span className="text-2xl font-semibold text-[#0f172a]">{value}</span></div>;
+  return <div className="flex items-center justify-between rounded-md border border-[#e4e4e7] bg-white p-4 shadow-sm"><div className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">{icon}</span><span className="text-sm font-semibold text-[#71717a]">{metricLabel}</span></div><span className="text-2xl font-semibold text-[#09090b]">{value}</span></div>;
 }
 
 function Stage({ icon, label: stageLabel, number }: { icon: ReactNode; label: string; number: string }) {
-  return <div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">{icon}</span><div><div className="text-[10px] font-bold uppercase tracking-wide text-[#94a3b8]">{number}</div><div className="text-sm font-semibold text-[#0f172a]">{stageLabel}</div></div></div>;
+  return <div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">{icon}</span><div><div className="text-[10px] font-bold uppercase tracking-wide text-[#a1a1aa]">{number}</div><div className="text-sm font-semibold text-[#09090b]">{stageLabel}</div></div></div>;
 }
 
 function Status({ value }: { value: SubmissionStatus }) {
-  const tone = value === 'published' || value === 'approved' ? 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]' : value === 'rejected' ? 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]' : 'border-[#c7d2fe] bg-[#eef2ff] text-[#3046c8]';
+  const tone = value === 'published' || value === 'approved' ? 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]' : value === 'rejected' ? 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]' : 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]';
   return <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-bold uppercase tracking-wide ${tone}`}><CircleDot className="h-3 w-3" />{label(value)}</span>;
 }
 
@@ -275,5 +275,5 @@ function Notice({ children, tone }: { children: ReactNode; tone: 'success' | 'er
 }
 
 function Empty({ body, title }: { body: string; title: string }) {
-  return <div className="rounded-md border border-dashed border-[#cbd5e1] bg-[#f8fafc] p-6 text-center"><div className="font-semibold text-[#0f172a]">{title}</div><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#647269]">{body}</p></div>;
+  return <div className="rounded-md border border-dashed border-[#cbd5e1] bg-[#fafafa] p-6 text-center"><div className="font-semibold text-[#09090b]">{title}</div><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#71717a]">{body}</p></div>;
 }

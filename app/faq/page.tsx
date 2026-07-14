@@ -9,7 +9,8 @@ import {
   Scale,
   ShieldCheck,
 } from "lucide-react";
-import { PageShell, SectionCard, TechnicalBackdrop } from "@/components/PageChrome";
+import { PageIntro } from "@/components/InstitutionalShell";
+import { PageShell, SectionCard } from "@/components/PageChrome";
 
 export const metadata: Metadata = {
   title: "FAQ | QSentia",
@@ -30,7 +31,7 @@ const faqGroups = [
       {
         question: "Is the performance data live or manually entered?",
         answer:
-          "Research and performance surfaces are designed around source-backed telemetry from the platform APIs and configured model records. When source rows are unavailable, the interface should show missing or unavailable states rather than replacing them with unsupported numbers.",
+          "Research and performance surfaces are designed around source-backed telemetry from the platform APIs and configured model records. When source rows are unavailable, the interface shows missing or unavailable states rather than replacing them with unsupported numbers.",
       },
       {
         question: "Can investors request diligence materials?",
@@ -51,7 +52,7 @@ const faqGroups = [
       {
         question: "How are model APIs issued?",
         answer:
-          "API access is tied to approved customer accounts, model entitlements, scoped keys, and usage controls. Production credentials should be issued only after commercial approval, security review, and broker or deployment-readiness checks where relevant.",
+          "API access is tied to approved customer accounts, model entitlements, scoped keys, and usage controls. Production credentials are issued only after commercial approval, security review, and broker or deployment-readiness checks where relevant.",
       },
       {
         question: "Can QSentia connect models to brokerage accounts?",
@@ -86,9 +87,9 @@ const faqGroups = [
     icon: ShieldCheck,
     items: [
       {
-        question: "How should users handle broker credentials or API secrets?",
+        question: "How do users handle broker credentials or API secrets?",
         answer:
-          "Users should never place broker credentials, API secrets, private keys, passwords, or payment-card numbers in ordinary forms, support messages, or application materials. Sensitive integrations should use approved secure flows only.",
+          "Users must never place broker credentials, API secrets, private keys, passwords, or payment-card numbers in ordinary forms, support messages, or application materials. Sensitive integrations use approved secure flows only.",
       },
       {
         question: "What privacy framework does QSentia reference?",
@@ -98,7 +99,7 @@ const faqGroups = [
       {
         question: "Does QSentia claim SOC 2 or GDPR certification?",
         answer:
-          "No. Public policy pages describe operating baselines and readiness work. Certification, audit scope, and legal compliance claims should be published only after appropriate validation.",
+          "No. Public policy pages describe operating baselines and readiness work. Certification, audit scope, and legal compliance claims are published only after appropriate validation.",
       },
     ],
   },
@@ -119,7 +120,7 @@ const faqGroups = [
       {
         question: "Can candidates apply without sending secrets?",
         answer:
-          "Yes. Candidates should share only professional information needed for recruitment evaluation. They should not include passwords, private keys, API keys, broker credentials, or confidential employer information.",
+          "Yes. Candidates must share only professional information needed for recruitment evaluation. They must not include passwords, private keys, API keys, broker credentials, or confidential employer information.",
       },
     ],
   },
@@ -134,45 +135,37 @@ const quickLinks = [
 export default function FAQPage() {
   return (
     <PageShell active="/faq">
-      <section className="relative overflow-hidden border-b border-[#e2e7fb] bg-[#f8faff]">
-        <TechnicalBackdrop />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
-          <div className="text-xs font-bold uppercase tracking-wide text-[#3046c8]">
-            Help center
-          </div>
-          <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Frequently asked questions
-          </h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Practical answers for investors, platform customers, developers, candidates, and
-            internal teams reviewing QSentia access, telemetry, security, and workflows.
-          </p>
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
-            {quickLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="inline-flex min-h-12 items-center justify-between gap-3 rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm font-semibold text-[#172554] shadow-sm transition hover:border-[#3d52da]"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Icon className="h-4 w-4 text-[#3d52da]" />
-                    {link.label}
-                  </span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              );
-            })}
-          </div>
+      <PageIntro
+        eyebrow="Help centre"
+        title="Frequently asked questions"
+        body="Practical answers for investors, platform customers, developers, candidates, and internal teams reviewing QSentia access, telemetry, security, and workflows."
+      />
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
+        <div className="grid gap-3 sm:grid-cols-3">
+          {quickLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="inline-flex min-h-12 items-center justify-between gap-3 rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm font-semibold text-[#18181b] shadow-sm transition hover:border-[#18181b]"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <Icon className="h-4 w-4 text-[#18181b]" />
+                  {link.label}
+                </span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            );
+          })}
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
         <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
           <aside className="self-start lg:sticky lg:top-24">
-            <div className="border-l-2 border-[#cbd5ff] pl-4">
-              <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">
+            <div className="border-l-2 border-[#d4d4d8] pl-4">
+              <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
                 Categories
               </div>
               <nav className="mt-4 grid gap-2" aria-label="FAQ categories">
@@ -180,7 +173,7 @@ export default function FAQPage() {
                   <a
                     key={group.title}
                     href={`#${slugify(group.title)}`}
-                    className="text-sm leading-6 text-[#46554b] transition hover:text-[#2b36ff]"
+                    className="text-sm leading-6 text-[#52525b] transition hover:text-[#18181b]"
                   >
                     {group.title}
                   </a>
@@ -196,25 +189,25 @@ export default function FAQPage() {
                 <SectionCard key={group.title} className="p-6 md:p-8">
                   <section id={slugify(group.title)} className="scroll-mt-24">
                     <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
                         <Icon className="h-5 w-5" />
                       </span>
-                      <h2 className="text-2xl font-semibold text-[#06130c]">
+                      <h2 className="text-2xl font-semibold text-[#09090b]">
                         {group.title}
                       </h2>
                     </div>
-                    <div className="mt-6 divide-y divide-[#e2e7fb] border-y border-[#e2e7fb]">
+                    <div className="mt-6 divide-y divide-[#e4e4e7] border-y border-[#e4e4e7]">
                       {group.items.map((item) => (
                         <details key={item.question} className="group py-5">
-                          <summary className="cursor-pointer list-none text-base font-semibold text-[#06130c] marker:hidden">
+                          <summary className="cursor-pointer list-none text-base font-semibold text-[#09090b] marker:hidden">
                             <span className="flex items-start justify-between gap-4">
                               {item.question}
-                              <span className="mt-1 text-[#3d52da] transition group-open:rotate-90">
+                              <span className="mt-1 text-[#18181b] transition group-open:rotate-90">
                                 <ArrowRight className="h-4 w-4" />
                               </span>
                             </span>
                           </summary>
-                          <p className="mt-3 max-w-3xl text-sm leading-7 text-[#5a685f]">
+                          <p className="mt-3 max-w-3xl text-sm leading-7 text-[#52525b]">
                             {item.answer}
                           </p>
                         </details>

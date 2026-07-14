@@ -142,13 +142,13 @@ export default function PerformanceCenter() {
       <SectionCard className="p-5 sm:p-6">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wide text-[#3d52da]">
+            <div className="text-xs font-bold uppercase tracking-wide text-[#18181b]">
               Performance center
             </div>
-            <h2 className="mt-2 text-2xl font-semibold text-[#06130c]">
+            <h2 className="mt-2 text-2xl font-semibold text-[#09090b]">
               {selectedStrategy?.name || 'Select a strategy'}
             </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#5a685f]">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#52525b]">
               Select any published strategy to review its source-backed return series, risk
               measures, monthly outcomes, and benchmark context.
             </p>
@@ -156,13 +156,13 @@ export default function PerformanceCenter() {
 
           <div className="grid gap-3">
             <label className="grid gap-2">
-              <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">
+              <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
                 Strategy
               </span>
               <select
                 value={activeStrategyId}
                 onChange={(event) => setSelectedStrategyId(event.target.value)}
-                className="min-h-11 rounded-md border border-[#cbd5ff] bg-white px-3 py-2 text-sm font-semibold text-[#06130c] outline-none transition focus:border-[#3d52da]"
+                className="min-h-11 rounded-md border border-[#d4d4d8] bg-white px-3 py-2 text-sm font-semibold text-[#09090b] outline-none transition focus:border-[#18181b]"
               >
                 {strategies.map((strategy) => (
                   <option key={strategy.id} value={strategy.id}>
@@ -172,18 +172,18 @@ export default function PerformanceCenter() {
               </select>
             </label>
 
-            <div className="inline-flex w-fit rounded-md border border-[#cbd5ff] bg-white p-1" aria-label="Return basis">
+            <div className="inline-flex w-fit rounded-md border border-[#d4d4d8] bg-white p-1" aria-label="Return basis">
               <button
                 type="button"
                 onClick={() => setBasis('net')}
-                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'net' ? 'bg-[#172554] text-white' : 'text-[#5a685f]'}`}
+                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'net' ? 'bg-[#18181b] text-white' : 'text-[#52525b]'}`}
               >
                 Net
               </button>
               <button
                 type="button"
                 onClick={() => setBasis('gross')}
-                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'gross' ? 'bg-[#172554] text-white' : 'text-[#5a685f]'}`}
+                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'gross' ? 'bg-[#18181b] text-white' : 'text-[#52525b]'}`}
               >
                 Gross
               </button>
@@ -221,18 +221,18 @@ export default function PerformanceCenter() {
 
           <SectionCard className="min-w-0 p-5 sm:p-6">
             <div className="flex items-center justify-between gap-4">
-              <h3 className="text-lg font-semibold text-[#06130c]">Normalized performance and benchmark</h3>
-              <span className="text-xs text-[#647269]">Base 100</span>
+              <h3 className="text-lg font-semibold text-[#09090b]">Normalized performance and benchmark</h3>
+              <span className="text-xs text-[#71717a]">Base 100</span>
             </div>
             <div className="mt-5 h-[360px] min-w-0">
               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <LineChart data={analysis.chart}>
                   <CartesianGrid stroke="#e7ebf7" strokeDasharray="4 4" />
-                  <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#647269' }} minTickGap={30} />
-                  <YAxis domain={['auto', 'auto']} tick={{ fontSize: 11, fill: '#647269' }} width={48} />
+                  <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#71717a' }} minTickGap={30} />
+                  <YAxis domain={['auto', 'auto']} tick={{ fontSize: 11, fill: '#71717a' }} width={48} />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="strategy" name="Strategy" stroke="#3d52da" strokeWidth={2.5} dot={false} />
+                  <Line type="monotone" dataKey="strategy" name="Strategy" stroke="#18181b" strokeWidth={2.5} dot={false} />
                   {analysis.benchmarkKey ? (
                     <Line
                       type="monotone"
@@ -251,16 +251,16 @@ export default function PerformanceCenter() {
 
           <div className="grid min-w-0 gap-6 lg:grid-cols-2">
             <SectionCard className="min-w-0 p-5 sm:p-6">
-              <h3 className="text-lg font-semibold text-[#06130c]">Rolling risk view</h3>
+              <h3 className="text-lg font-semibold text-[#09090b]">Rolling risk view</h3>
               <div className="mt-5 h-[260px] min-w-0">
                 <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <AreaChart data={analysis.rolling}>
                     <CartesianGrid stroke="#e7ebf7" strokeDasharray="4 4" />
-                    <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#647269' }} minTickGap={24} />
-                    <YAxis tick={{ fontSize: 11, fill: '#647269' }} width={48} />
+                    <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#71717a' }} minTickGap={24} />
+                    <YAxis tick={{ fontSize: 11, fill: '#71717a' }} width={48} />
                     <Tooltip />
                     <Legend />
-                    <Area type="monotone" dataKey="rollingSharpe" name="Rolling Sharpe" stroke="#3d52da" fill="#dfe4ff" />
+                    <Area type="monotone" dataKey="rollingSharpe" name="Rolling Sharpe" stroke="#18181b" fill="#dfe4ff" />
                     <Line type="monotone" dataKey="drawdownPct" name="Drawdown %" stroke="#be123c" dot={false} />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -271,7 +271,7 @@ export default function PerformanceCenter() {
         </>
       )}
 
-      <p className="text-xs leading-5 text-[#647269]">
+      <p className="text-xs leading-5 text-[#71717a]">
         Returns, Sharpe, and drawdown are calculated from the selected strategy&apos;s visible source
         observations. Benchmark comparison is informational; fee treatment is not reported by the
         source. Historical and paper results do not guarantee future performance.
@@ -469,18 +469,18 @@ function strategyPoints(data: Payload | undefined, strategy: StrategyOption | nu
 
 function StrategyMeta({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#e2e7fb] bg-[#f8faff] px-4 py-3">
-      <div className="text-[11px] font-bold uppercase tracking-wide text-[#647269]">{label}</div>
-      <div className="mt-1 text-sm font-semibold text-[#06130c]">{value}</div>
+    <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-4 py-3">
+      <div className="text-[11px] font-bold uppercase tracking-wide text-[#71717a]">{label}</div>
+      <div className="mt-1 text-sm font-semibold text-[#09090b]">{value}</div>
     </div>
   );
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#e2e7fb] bg-white p-4">
-      <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</div>
-      <div className="mt-2 text-xl font-semibold text-[#06130c]">{value}</div>
+    <div className="rounded-md border border-[#e4e4e7] bg-white p-4">
+      <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{label}</div>
+      <div className="mt-2 text-xl font-semibold text-[#09090b]">{value}</div>
     </div>
   );
 }
@@ -488,21 +488,21 @@ function Stat({ label, value }: { label: string; value: string }) {
 function MonthlyTable({ rows }: { rows: Array<{ month: string; value: number | null }> }) {
   return (
     <SectionCard className="overflow-hidden">
-      <div className="border-b border-[#e2e7fb] px-5 py-4">
-        <h3 className="text-lg font-semibold text-[#06130c]">Monthly returns</h3>
+      <div className="border-b border-[#e4e4e7] px-5 py-4">
+        <h3 className="text-lg font-semibold text-[#09090b]">Monthly returns</h3>
       </div>
       <div className="max-h-[280px] overflow-auto">
         <table className="w-full text-left text-sm">
-          <thead className="sticky top-0 bg-[#f8faff] text-xs uppercase tracking-wide text-[#647269]">
+          <thead className="sticky top-0 bg-[#fafafa] text-xs uppercase tracking-wide text-[#71717a]">
             <tr>
               <th className="px-5 py-3">Month</th>
               <th className="px-5 py-3 text-right">Return</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#e2e7fb]">
+          <tbody className="divide-y divide-[#e4e4e7]">
             {rows.map((row) => (
               <tr key={row.month}>
-                <td className="px-5 py-3 font-semibold text-[#26352c]">{row.month}</td>
+                <td className="px-5 py-3 font-semibold text-[#27272a]">{row.month}</td>
                 <td className={`px-5 py-3 text-right font-semibold ${(row.value || 0) < 0 ? 'text-[#be123c]' : 'text-[#047857]'}`}>
                   {safePct(row.value)}
                 </td>

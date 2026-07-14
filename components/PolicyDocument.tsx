@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, FileCheck2, Mail, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, Mail, ShieldCheck } from 'lucide-react';
 import { PageShell } from '@/components/PageChrome';
 
 export type PolicySection = {
@@ -37,34 +37,33 @@ export default function PolicyDocument({
 }) {
   return (
     <PageShell>
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
-            <FileCheck2 className="h-4 w-4" />
+      <section className="border-b border-zinc-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:py-24">
+          <div className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500">
             {eyebrow}
           </div>
-          <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-[#06130c] md:text-6xl">
+          <h1 className="mt-8 max-w-6xl text-5xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-7xl lg:text-[5.5rem]">
             {title}
           </h1>
-          <p className="mt-5 max-w-3xl text-base leading-7 text-[#46554b]">{summary}</p>
-          <div className="mt-7 flex flex-wrap gap-x-8 gap-y-2 text-sm text-[#5a685f]">
-            <span><strong className="text-[#06130c]">Effective:</strong> {effectiveDate}</span>
-            <span><strong className="text-[#06130c]">Version:</strong> {version}</span>
-            <span><strong className="text-[#06130c]">Owner:</strong> QSentia</span>
+          <p className="mt-8 max-w-3xl text-sm leading-7 text-zinc-600 dark:text-zinc-400 md:text-base">{summary}</p>
+          <div className="mt-8 grid gap-px overflow-hidden border border-zinc-200 bg-zinc-200 font-mono text-[10px] uppercase tracking-widest text-zinc-500 dark:border-zinc-800 dark:bg-zinc-800 sm:grid-cols-3">
+            <span className="bg-white px-4 py-3 dark:bg-[#09090b]"><strong className="text-zinc-950 dark:text-white">Effective</strong> / {effectiveDate}</span>
+            <span className="bg-white px-4 py-3 dark:bg-[#09090b]"><strong className="text-zinc-950 dark:text-white">Version</strong> / {version}</span>
+            <span className="bg-white px-4 py-3 dark:bg-[#09090b]"><strong className="text-zinc-950 dark:text-white">Owner</strong> / QSentia LLC</span>
           </div>
         </div>
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[270px_minmax(0,1fr)] lg:py-14">
         <aside className="self-start lg:sticky lg:top-24">
-          <div className="border-l-2 border-[#cbd5ff] pl-4">
-            <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Contents</div>
+          <div className="border-l border-zinc-200 pl-4 dark:border-zinc-800">
+            <div className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-500">Contents</div>
             <nav className="mt-4 grid gap-2" aria-label={`${title} contents`}>
               {sections.map((section, index) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}
-                  className="text-sm leading-6 text-[#46554b] transition hover:text-[#2b36ff]"
+                  className="font-mono text-[11px] uppercase leading-6 tracking-wider text-zinc-500 transition hover:text-zinc-950 dark:hover:text-white"
                 >
                   {index + 1}. {section.title}
                 </a>
@@ -72,18 +71,18 @@ export default function PolicyDocument({
             </nav>
           </div>
 
-          <div className="mt-8 border-t border-[#e2e7fb] pt-6">
-            <div className="flex items-center gap-2 text-sm font-semibold text-[#06130c]">
-              <Mail className="h-4 w-4 text-[#2b36ff]" />
+          <div className="mt-8 border-t border-zinc-200 pt-6 dark:border-zinc-800">
+            <div className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-zinc-950 dark:text-white">
+              <Mail className="h-4 w-4 text-zinc-500" strokeWidth={1.5} />
               Privacy and grievance contact
             </div>
             <a
               href="mailto:inquiries@qsentia.com?subject=Privacy%20or%20Compliance%20Request"
-              className="mt-2 block break-all text-sm text-[#3046c8] hover:underline"
+              className="mt-3 block break-all text-sm text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-400"
             >
               inquiries@qsentia.com
             </a>
-            <Link href="/contact" className="mt-2 inline-block text-sm font-semibold text-[#3046c8] hover:underline">
+            <Link href="/contact" className="mt-3 inline-block font-mono text-[10px] font-bold uppercase tracking-widest text-zinc-950 hover:underline dark:text-white">
               Contact form
             </Link>
           </div>
@@ -91,23 +90,23 @@ export default function PolicyDocument({
 
         <article className="min-w-0">
           {notice ? (
-            <div className="mb-8 flex gap-3 border border-[#cbd5ff] bg-[#f8faff] p-4">
-              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#2b36ff]" />
-              <p className="text-sm leading-6 text-[#46554b]">{notice}</p>
+            <div className="mb-8 flex gap-3 border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-black">
+              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-zinc-500" strokeWidth={1.5} />
+              <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">{notice}</p>
             </div>
           ) : null}
 
-          <div className="divide-y divide-[#e2e7fb] border-y border-[#e2e7fb]">
+          <div className="divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
             {sections.map((section, index) => (
               <section key={section.id} id={section.id} className="scroll-mt-24 py-8 first:pt-0 last:pb-0">
-                <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Section {index + 1}</div>
-                <h2 className="mt-2 text-2xl font-semibold text-[#06130c]">{section.title}</h2>
+                <div className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-500">Section {index + 1}</div>
+                <h2 className="mt-3 text-2xl font-bold tracking-normal text-zinc-950 dark:text-white">{section.title}</h2>
                 <div className="mt-4 space-y-4">
                   {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph} className="text-sm leading-7 text-[#5a685f]">{paragraph}</p>
+                    <p key={paragraph} className="text-sm leading-7 text-zinc-600 dark:text-zinc-400">{paragraph}</p>
                   ))}
                   {section.bullets?.length ? (
-                    <ul className="grid gap-2 pl-5 text-sm leading-7 text-[#5a685f]">
+                    <ul className="grid gap-2 pl-5 text-sm leading-7 text-zinc-600 dark:text-zinc-400">
                       {section.bullets.map((bullet) => <li key={bullet} className="list-disc">{bullet}</li>)}
                     </ul>
                   ) : null}
@@ -118,8 +117,8 @@ export default function PolicyDocument({
           </div>
 
           {references.length ? (
-            <section className="mt-10 border-t border-[#e2e7fb] pt-7">
-              <h2 className="text-lg font-semibold text-[#06130c]">Official references</h2>
+            <section className="mt-10 border-t border-zinc-200 pt-7 dark:border-zinc-800">
+              <h2 className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-950 dark:text-white">Official references</h2>
               <div className="mt-4 grid gap-2">
                 {references.map((reference) => (
                   <a
@@ -127,10 +126,10 @@ export default function PolicyDocument({
                     href={reference.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#3046c8] hover:underline"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 underline-offset-4 hover:text-zinc-950 hover:underline dark:text-zinc-400 dark:hover:text-white"
                   >
                     {reference.label}
-                    <ArrowUpRight className="h-3.5 w-3.5" />
+                    <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.5} />
                   </a>
                 ))}
               </div>

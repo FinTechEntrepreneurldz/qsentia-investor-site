@@ -66,10 +66,10 @@ function accessLabel(value: string | undefined) {
 
 function accessBadgeClass(value: string | undefined) {
   if (value === 'active') return 'border-[#bbf7d0] bg-[#f0fdf4] text-[#047857]';
-  if (value === 'private') return 'border-[#c7d2fe] bg-[#eef2ff] text-[#3d52da]';
+  if (value === 'private') return 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]';
   if (value === 'waitlist') return 'border-[#fde68a] bg-[#fffbeb] text-[#b45309]';
   if (value === 'retired') return 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
-  return 'border-[#e2e7fb] bg-[#fbfcff] text-[#647269]';
+  return 'border-[#e4e4e7] bg-[#fafafa] text-[#71717a]';
 }
 
 export default function MarketplacePage() {
@@ -95,13 +95,13 @@ export default function MarketplacePage() {
 
   return (
     <PageShell active="/marketplace">
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#e4e4e7] bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
           <Eyebrow>Model registry</Eyebrow>
-          <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
+          <h1 className="mt-6 max-w-5xl text-5xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-7xl lg:text-[5.5rem]">
             Trading model products, sourced from live telemetry
           </h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#52525b] md:text-lg">
             Browse registered strategies with source-backed metrics. Missing performance values remain
             unavailable until repository logs publish the required observations.
           </p>
@@ -112,18 +112,18 @@ export default function MarketplacePage() {
         <SectionCard className="p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative min-w-0 flex-1">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#647269]" />
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#71717a]" />
               <input
                 type="text"
                 placeholder="Filter by model, strategy, tag, or repository..."
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="w-full rounded-md border border-[#cbd5ff] bg-white py-3 pl-12 pr-4 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+                className="w-full rounded-md border border-[#d4d4d8] bg-white py-3 pl-12 pr-4 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
               />
             </div>
 
             <div className="flex min-w-0 items-center gap-2 overflow-x-auto">
-              <Filter className="h-4 w-4 shrink-0 text-[#3d52da]" />
+              <Filter className="h-4 w-4 shrink-0 text-[#18181b]" />
               {categories.map((category) => (
                 <button
                   key={category}
@@ -131,8 +131,8 @@ export default function MarketplacePage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`shrink-0 rounded-md border px-3 py-2 text-xs font-bold transition ${
                     selectedCategory === category
-                      ? 'border-[#3d52da] bg-[#eef2ff] text-[#3d52da]'
-                      : 'border-[#e2e7fb] bg-white text-[#46554b] hover:bg-[#f7f8ff]'
+                      ? 'border-[#18181b] bg-[#f4f4f5] text-[#18181b]'
+                      : 'border-[#e4e4e7] bg-white text-[#52525b] hover:bg-[#fafafa]'
                   }`}
                 >
                   {category === 'all' ? 'All models' : categoryLabel(category)}
@@ -170,10 +170,10 @@ export default function MarketplacePage() {
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {filteredModels.map((model) => (
               <Link key={model.id} href={`/marketplace/${model.slug}`} className="group">
-                <SectionCard className="flex h-full flex-col p-6 transition group-hover:border-[#3d52da]">
+                <SectionCard className="flex h-full flex-col p-6 transition group-hover:border-[#18181b]">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex flex-wrap gap-2">
-                      <span className="rounded-md border border-[#c7d2fe] bg-[#eef2ff] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#3d52da]">
+                      <span className="rounded-md border border-[#d4d4d8] bg-[#f4f4f5] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#18181b]">
                         {categoryLabel(model.category)}
                       </span>
                       {model.commercialUpdatedAt && (
@@ -182,11 +182,11 @@ export default function MarketplacePage() {
                         </span>
                       )}
                     </div>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-[#3d52da] transition group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 shrink-0 text-[#18181b] transition group-hover:translate-x-1" />
                   </div>
 
-                  <h2 className="mt-5 text-xl font-semibold text-[#06130c]">{model.name}</h2>
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#5a685f]">{model.description}</p>
+                  <h2 className="mt-5 text-xl font-semibold text-[#09090b]">{model.name}</h2>
+                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-[#52525b]">{model.description}</p>
 
                   <div className="mt-5 grid grid-cols-2 gap-3">
                     <Metric label="Sharpe" value={formatNum(model.performance.sharpeRatio)} />
@@ -197,19 +197,19 @@ export default function MarketplacePage() {
 
                   <div className="mt-5 flex flex-wrap gap-2">
                     {model.tags.slice(0, 5).map((tag) => (
-                      <span key={tag} className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-2 py-1 text-xs text-[#647269]">
+                      <span key={tag} className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-2 py-1 text-xs text-[#71717a]">
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="mt-auto border-t border-[#e2e7fb] pt-5">
-                    <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Access</div>
-                    <div className="mt-1 text-sm font-semibold text-[#06130c]">
+                  <div className="mt-auto border-t border-[#e4e4e7] pt-5">
+                    <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">Access</div>
+                    <div className="mt-1 text-sm font-semibold text-[#09090b]">
                       {model.pricing || 'Contact sales'}
                     </div>
                     {model.minimumCapital && (
-                      <div className="mt-1 text-xs text-[#647269]">Minimum capital: {model.minimumCapital}</div>
+                      <div className="mt-1 text-xs text-[#71717a]">Minimum capital: {model.minimumCapital}</div>
                     )}
                   </div>
                 </SectionCard>
@@ -219,7 +219,7 @@ export default function MarketplacePage() {
         )}
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-y border-[#e4e4e7] bg-[#fafafa]">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-3">
           <InfoCard icon={<Database className="h-5 w-5" />} title="Registry-backed">
             Names, categories, repositories, and log paths are sourced through the live model API.
@@ -238,9 +238,9 @@ export default function MarketplacePage() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-3">
-      <div className="text-[11px] font-bold uppercase tracking-wide text-[#647269]">{label}</div>
-      <div className="mt-1 text-sm font-semibold text-[#06130c]">{value}</div>
+    <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] p-3">
+      <div className="text-[11px] font-bold uppercase tracking-wide text-[#71717a]">{label}</div>
+      <div className="mt-1 text-sm font-semibold text-[#09090b]">{value}</div>
     </div>
   );
 }
@@ -248,9 +248,9 @@ function Metric({ label, value }: { label: string; value: string }) {
 function InfoCard({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
     <SectionCard className="p-6">
-      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">{icon}</span>
-      <h2 className="mt-5 text-xl font-semibold text-[#06130c]">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-[#5a685f]">{children}</p>
+      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">{icon}</span>
+      <h2 className="mt-5 text-xl font-semibold text-[#09090b]">{title}</h2>
+      <p className="mt-3 text-sm leading-6 text-[#52525b]">{children}</p>
     </SectionCard>
   );
 }

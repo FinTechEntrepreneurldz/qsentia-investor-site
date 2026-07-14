@@ -1,10 +1,15 @@
-export type TeamRole = "CEO" | "Quantitative Research" | "Software Development";
+export type TeamRole = "Founder" | "Quantitative Research" | "Software Development";
+export type TeamGroup =
+  | "Founder"
+  | "Engineering Interns and Contributors"
+  | "Quantitative Research Interns and Contributors";
 
 export type TeamMember = {
   slug: string;
   fullName: string;
   designation: string;
   role: TeamRole;
+  group: TeamGroup;
   initials: string;
   summary: string;
   biography: string[];
@@ -20,13 +25,14 @@ export const teamMembers: TeamMember[] = [
   {
     slug: "lucas-zarzeczny",
     fullName: "Lucas Zarzeczny",
-    designation: "CEO",
-    role: "CEO",
+    designation: "Founder, CEO & Technical Leader",
+    role: "Founder",
+    group: "Founder",
     initials: "LZ",
     summary:
       "Lucas leads QSentia's company strategy across investor relations, product direction, AI research priorities, and institutional partnerships.",
     biography: [
-      "Lucas Zarzeczny is the CEO of QSentia. He leads the company's strategy across investor relations, product direction, research prioritization, and institutional partnerships.",
+      "Lucas Zarzeczny is the Founder, CEO & Technical Leader of QSentia. He leads the company's strategy across investor relations, product direction, research prioritization, and institutional partnerships.",
       "Lucas is pursuing a Doctorate of Engineering in Machine Learning and Artificial Intelligence at The George Washington University. His academic foundation also includes a Master's in Applied Data Science from Syracuse University and dual Bachelor's degrees in Energy, Business, Finance, and Economics from Penn State.",
       "His professional background spans leadership and strategic AI and data science initiatives across financial services, cloud infrastructure, consumer technology, and telecommunications organizations.",
       "At QSentia, Lucas focuses on building an investment infrastructure company that can serve investor diligence workflows and platform customers who need reliable model access, operational controls, and API-ready research systems.",
@@ -44,6 +50,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Anikesh Bhuvaneshwaram",
     designation: "Quantitative Research",
     role: "Quantitative Research",
+    group: "Quantitative Research Interns and Contributors",
     initials: "AB",
     summary:
       "Anikesh focuses on quantitative modelling, backtesting, risk management, and time series analysis for systematic investment workflows.",
@@ -65,6 +72,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Spencer Ozgur",
     designation: "Quantitative Research",
     role: "Quantitative Research",
+    group: "Quantitative Research Interns and Contributors",
     initials: "SO",
     summary:
       "Spencer works across quantitative research, systematic investing, machine learning, stochastic modeling, and time series analysis.",
@@ -87,21 +95,52 @@ export const teamMembers: TeamMember[] = [
     fullName: "Janet Chen",
     designation: "Quantitative Research",
     role: "Quantitative Research",
+    group: "Quantitative Research Interns and Contributors",
     initials: "JC",
     summary:
-      "Janet supports model evidence, analytical review, and research workflow coordination for investor and platform materials.",
+      "Janet focuses on systematic investing, factor research, machine learning, and data-driven quantitative research for financial markets.",
     biography: [
-      "Janet Chen supports the quantitative research function with a focus on model evidence, analytical review, and research workflow coordination.",
-      "She contributes to the structure and review of research materials used across investor-facing diligence, internal research processes, and platform documentation.",
+      "Janet Chen is a quantitative researcher with strong interests in systematic investing, factor research, and machine learning.",
+      "She focuses on quantitative research for financial markets, developing predictive factors and systematic investment strategies through data-driven analysis. Her work covers the full quantitative research process, from data engineering and feature construction to model development, factor validation, and backtesting.",
+      "Janet has a strong technical foundation in quantitative finance, statistics, and machine learning. She has worked on equity factor research, quantitative modeling, and financial data analysis, and enjoys applying statistical methods and machine learning techniques to better understand market behavior and support systematic investment research.",
     ],
+    qualifications: "Columbia University.",
     focus:
-      "Analytical review, research coordination, and model evidence workflows.",
+      "Systematic investing, factor research, machine learning, quantitative modeling, feature construction, factor validation, and backtesting.",
+    emailAddress: "zc2874@columbia.edu",
+    imageSrc: "/team/janet-chen.png",
+    imageAlt: "Janet Chen",
+    imagePosition: "center 34%",
+  },
+  {
+    slug: "ananth-seshadri",
+    fullName: "Ananth Seshadri",
+    designation: "Quantitative Research",
+    role: "Quantitative Research",
+    group: "Quantitative Research Interns and Contributors",
+    initials: "AS",
+    summary:
+      "Ananth focuses on quantitative finance, financial analytics, Python, statistics, and data-driven investment research.",
+    biography: [
+      "Ananth Seshadri is a Managerial Economics student at the University of California, Davis, with interests in quantitative finance and financial analytics.",
+      "He enjoys applying Python, statistics, and data analysis to solve investment and business problems, with recent projects focused on quantitative trading and financial modeling.",
+      "At QSentia, Ananth is excited to contribute to AI-powered investment intelligence while continuing to develop expertise at the intersection of finance, technology, and data science.",
+    ],
+    qualifications:
+      "Managerial Economics, University of California, Davis.",
+    focus:
+      "Quantitative finance, financial analytics, Python, statistics, data analysis, quantitative trading, and financial modeling.",
+    emailAddress: "seshadri.ananth@gmail.com",
+    imageSrc: "/team/ananth-seshadri.png",
+    imageAlt: "Ananth Seshadri",
+    imagePosition: "center 10%",
   },
   {
     slug: "debasish-mishra",
     fullName: "Debasish Mishra",
     designation: "Software Development",
     role: "Software Development",
+    group: "Engineering Interns and Contributors",
     initials: "DM",
     summary:
       "Debasish works across full-stack development, systems programming, and cybersecurity-oriented platform implementation.",
@@ -120,36 +159,27 @@ export const teamMembers: TeamMember[] = [
     imagePosition: "center 24%",
   },
   {
-    slug: "nidhish-gautam",
-    fullName: "Nidhish Gautam",
-    designation: "Software Development",
-    role: "Software Development",
-    initials: "NG",
-    summary:
-      "Nidhish supports product implementation, system interfaces, and customer workflow readiness for QSentia.",
-    biography: [
-      "Nidhish Gautam contributes to QSentia's software development function across product implementation, system interfaces, and customer workflow readiness.",
-      "His work supports the software layer needed for model access, operational dashboards, and platform delivery.",
-    ],
-    focus:
-      "Product implementation, system interfaces, and software workflow delivery.",
-  },
-  {
     slug: "shlok-chauhan",
-    fullName: "Shlok Chauhan",
+    fullName: "Shlok Pratap Chauhan",
     designation: "Software Development",
     role: "Software Development",
+    group: "Engineering Interns and Contributors",
     initials: "SC",
     summary:
-      "Shlok Chauhan works across the public website, dashboard experience, customer workflows, and operational tooling.",
+      "Shlok works across software development, machine learning, data science, research workflows, and QSentia's investor-facing product surfaces.",
     biography: [
-      "Shlok Chauhan contributes to QSentia's software development and product execution across the public website, dashboard experience, customer workflows, and operational tooling.",
-      "His work focuses on making the platform experience clearer for investors, customers, and internal operators as QSentia expands its model access and API workflow surfaces.",
+      "Shlok Pratap Chauhan contributes to QSentia's software development and product execution across the public website, dashboard experience, customer workflows, and operational tooling.",
+      "His work combines machine learning, data science, and software engineering, with experience across Python, C++, C#, SQL, HTML, CSS, .NET, MS SQL Server, Git, Scikit-learn, XGBoost, Pandas, and NumPy.",
+      "Shlok's research work includes a student dropout prediction project using machine learning on large-scale behavioural learning analytics data, with Random Forest and XGBoost models presented at the Ignite Pune 2025 IEEE Conference.",
+      "At QSentia, Shlok focuses on making the platform experience clearer for investors, customers, and internal operators as the company expands its model access, dashboard, and API workflow surfaces.",
     ],
+    qualifications:
+      "B.Sc. Computer Science, Somaiya School of Basic and Applied Sciences, Somaiya Vidyavihar University.",
     focus:
-      "Frontend implementation, dashboard workflows, customer portal experience, and product operations.",
+      "Machine learning, data science, software development, frontend implementation, dashboard workflows, customer portal experience, and product operations.",
+    emailAddress: "shlokpratap.c@somaiya.edu",
     imageSrc: "/team/shlok-chauhan-v2.png",
-    imageAlt: "Shlok Chauhan",
+    imageAlt: "Shlok Pratap Chauhan",
     imagePosition: "center 30%",
   },
   {
@@ -157,6 +187,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Priyansh Kumar",
     designation: "Software Development",
     role: "Software Development",
+    group: "Engineering Interns and Contributors",
     initials: "PK",
     summary:
       "Priyansh focuses on frontend architecture, cross-platform application development, performance optimization, and product-focused software delivery.",
@@ -179,6 +210,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Deepanshu Yadav",
     designation: "Software Development",
     role: "Software Development",
+    group: "Engineering Interns and Contributors",
     initials: "DY",
     summary:
       "Deepanshu supports implementation, product workflows, platform delivery, and operational controls.",
@@ -194,6 +226,7 @@ export const teamMembers: TeamMember[] = [
   fullName: "Ashutosh Pathak",
   designation: "Software Development",
   role: "Software Development",
+  group: "Engineering Interns and Contributors",
   initials: "AP",
   summary:
     "Ashutosh Pathak contributes to platform implementation, product support, and engineering delivery.",
