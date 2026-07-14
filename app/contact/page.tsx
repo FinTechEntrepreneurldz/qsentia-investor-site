@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, Building2, FileText, Mail, ShieldCheck } from 'lucide-react';
 import { ContactLeadForm } from '@/components/LeadCaptureForms';
-import { Eyebrow, PageShell, SectionCard } from '@/components/PageChrome';
+import { PageIntro } from '@/components/InstitutionalShell';
+import { PageShell, SectionCard } from '@/components/PageChrome';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Qsentia',
-  description: 'Institutional contact page for Qsentia research, platform access, due diligence, and partnership inquiries.',
+  title: 'Contact Us | QSentia',
+  description: 'Institutional contact page for QSentia research, platform access, due diligence, and partnership inquiries.',
 };
 
 const inquiryTracks = [
@@ -38,42 +39,40 @@ const prepItems = [
 export default function ContactPage() {
   return (
     <PageShell active="/contact">
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
-          <Eyebrow>Institutional contact</Eyebrow>
-          <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
-            Contact Qsentia
-          </h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
-            Use the published inbox for institutional access, model licensing, diligence coordination,
-            and research-related outreach. Only currently published channels are listed here.
-          </p>
-        </div>
-      </section>
+      <PageIntro
+        eyebrow="Institutional contact"
+        title="Contact QSentia"
+        body="Use the published inbox for institutional access, model licensing, diligence coordination, and research-related outreach. Only currently published channels are listed here."
+      />
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <SectionCard className="p-6 md:p-8">
+      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <SectionCard className="p-6 md:p-8 bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px]">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
-              <Mail className="h-5 w-5" />
+            <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">
+              <Mail className="h-4.5 w-4.5" />
             </span>
             <div>
-              <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Primary channel</div>
-              <h2 className="text-xl font-semibold text-[#06130c]">Institutional inquiries inbox</h2>
+              <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-550">
+                Primary channel
+              </div>
+              <h2 className="font-mono text-sm sm:text-base font-bold tracking-wider uppercase text-zinc-955 dark:text-white">
+                Institutional inquiries inbox
+              </h2>
             </div>
           </div>
 
-          <div className="mt-6 rounded-[10px] border border-[#e2e7fb] bg-[#f8faff] p-5">
-            <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Email</div>
+          <div className="mt-6 rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40 p-5">
+            <div className="font-mono text-[9px] font-bold tracking-wider uppercase text-zinc-550">
+              Email
+            </div>
             <a
               href="mailto:inquiries@qsentia.com?subject=QSentia%20Institutional%20Inquiry"
-              className="mt-2 block text-2xl font-semibold text-[#06130c] underline-offset-4 hover:underline"
+              className="mt-2 block font-mono text-xl sm:text-2xl font-bold text-zinc-950 dark:text-white underline-offset-4 hover:underline leading-none"
             >
               inquiries@qsentia.com
             </a>
-            <p className="mt-3 text-sm leading-6 text-[#5a685f]">
-              If your request involves diligence, secure materials, or commercial review, initiate
-              from your institutional email address.
+            <p className="mt-3.5 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+              If your request involves diligence, secure materials, or commercial review, initiate from your institutional email address.
             </p>
           </div>
 
@@ -82,29 +81,36 @@ export default function ContactPage() {
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <a
               href="mailto:inquiries@qsentia.com?subject=QSentia%20Institutional%20Inquiry"
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5]"
+              className="inline-flex h-11 items-center justify-center bg-zinc-950 text-white dark:bg-[#eeeeee] dark:text-black px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none w-full sm:w-auto"
             >
               Start email inquiry
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 ml-2" />
             </a>
             <Link
               href="/marketplace"
-              className="inline-flex items-center justify-center rounded-md border border-[#cbd5ff] bg-white px-5 py-3 text-sm font-bold text-[#172554] transition hover:bg-[#f7f8ff]"
+              className="inline-flex h-11 items-center justify-center bg-transparent px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase text-zinc-500 dark:text-zinc-400 border border-zinc-350 dark:border-zinc-800 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-900 dark:hover:border-white transition rounded-none w-full sm:w-auto"
             >
               Review models first
             </Link>
           </div>
         </SectionCard>
 
-        <SectionCard className="p-6 md:p-8">
-          <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Before you contact us</div>
-          <h2 className="mt-2 text-2xl font-semibold text-[#06130c]">Include operational context</h2>
-          <p className="mt-3 text-sm leading-6 text-[#5a685f]">
+        <SectionCard className="p-6 md:p-8 bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px] h-fit">
+          <div className="font-mono text-[9px] font-bold tracking-widest text-zinc-550 uppercase">
+            Before you contact us
+          </div>
+          <h2 className="mt-2 font-mono text-base sm:text-lg font-bold tracking-wider text-zinc-955 dark:text-white uppercase">
+            Include operational context
+          </h2>
+          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
             Clear initial context speeds up routing and keeps the conversation relevant to your review process.
           </p>
           <ul className="mt-6 space-y-3">
             {prepItems.map((item) => (
-              <li key={item} className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-4 py-3 text-sm text-[#26352c]">
+              <li
+                key={item}
+                className="rounded-[8px] border border-zinc-250 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40 px-4 py-3 font-mono text-[10px] text-zinc-650 dark:text-zinc-400"
+              >
                 {item}
               </li>
             ))}
@@ -112,17 +118,27 @@ export default function ContactPage() {
         </SectionCard>
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
-        <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-3">
+      {/* Inquiry Tracks at the bottom */}
+      <section className="border-y border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black transition-colors">
+        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 md:grid-cols-3">
           {inquiryTracks.map((track) => {
             const Icon = track.icon;
             return (
-              <SectionCard key={track.title} className="p-6">
-                <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <h3 className="mt-5 text-xl font-semibold text-[#06130c]">{track.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#5a685f]">{track.text}</p>
+              <SectionCard
+                key={track.title}
+                className="p-6 bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px] flex flex-col justify-between h-full"
+              >
+                <div>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">
+                    <Icon className="h-4.5 w-4.5" />
+                  </span>
+                  <h3 className="mt-5 font-mono text-sm sm:text-base font-bold tracking-wider uppercase text-zinc-955 dark:text-white">
+                    {track.title}
+                  </h3>
+                </div>
+                <p className="mt-3 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
+                  {track.text}
+                </p>
               </SectionCard>
             );
           })}

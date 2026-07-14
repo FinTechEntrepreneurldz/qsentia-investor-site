@@ -42,10 +42,15 @@ export function ContactLeadForm() {
     }
   }
 
+  const inputClass =
+    'w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black px-4 py-3 font-mono text-xs uppercase tracking-wider text-zinc-950 dark:text-white outline-none focus:border-zinc-400 dark:focus:border-zinc-650 transition';
+
+  const labelClass = 'font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-550';
+
   return (
     <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-2">
-        <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="leadName">
+        <label className={labelClass} htmlFor="leadName">
           Full name
         </label>
         <input
@@ -54,14 +59,14 @@ export function ContactLeadForm() {
           required
           value={name}
           onChange={(event) => setName(event.target.value)}
-          className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+          className={inputClass}
           placeholder="Your full name"
         />
       </div>
 
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="grid gap-2">
-          <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="leadEmail">
+          <label className={labelClass} htmlFor="leadEmail">
             Work email
           </label>
           <input
@@ -70,12 +75,12 @@ export function ContactLeadForm() {
             required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+            className={inputClass}
             placeholder="name@institution.com"
           />
         </div>
         <div className="grid gap-2">
-          <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="leadOrganization">
+          <label className={labelClass} htmlFor="leadOrganization">
             Organization
           </label>
           <input
@@ -83,21 +88,21 @@ export function ContactLeadForm() {
             type="text"
             value={organization}
             onChange={(event) => setOrganization(event.target.value)}
-            className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+            className={inputClass}
             placeholder="Firm or company"
           />
         </div>
       </div>
 
       <div className="grid gap-2">
-        <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="leadInterest">
+        <label className={labelClass} htmlFor="leadInterest">
           Inquiry type
         </label>
         <select
           id="leadInterest"
           value={interest}
           onChange={(event) => setInterest(event.target.value)}
-          className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+          className={inputClass}
         >
           <option>Institutional access</option>
           <option>Model licensing</option>
@@ -108,7 +113,7 @@ export function ContactLeadForm() {
       </div>
 
       <div className="grid gap-2">
-        <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="leadNotes">
+        <label className={labelClass} htmlFor="leadNotes">
           Context
         </label>
         <textarea
@@ -116,7 +121,7 @@ export function ContactLeadForm() {
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
           rows={4}
-          className="resize-none rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+          className={`${inputClass} resize-none`}
           placeholder="Models, timeline, or access needs"
         />
       </div>
@@ -124,20 +129,20 @@ export function ContactLeadForm() {
       <button
         type="submit"
         disabled={status === 'saving'}
-        className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5] disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex h-11 items-center justify-center bg-zinc-950 text-white dark:bg-[#eeeeee] dark:text-black px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none disabled:opacity-60 disabled:cursor-not-allowed w-full"
       >
-        {status === 'saving' ? 'Submitting' : 'Submit inquiry'}
-        <ArrowRight className="h-4 w-4" />
+        {status === 'saving' ? 'Submitting...' : 'Submit inquiry'}
+        <ArrowRight className="h-4 w-4 ml-2" />
       </button>
 
       {status === 'saved' && (
-        <div className="flex items-center gap-2 rounded-md border border-[#bbf7d0] bg-[#f0fdf4] p-3 text-sm font-semibold text-[#047857]">
-          <CheckCircle2 className="h-4 w-4" />
+        <div className="flex items-center gap-2 rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-3 font-mono text-xs text-zinc-950 dark:text-white">
+          <CheckCircle2 className="h-4 w-4 text-[#0F8F5A] dark:text-[#12B76A] shrink-0" />
           Inquiry captured for QSentia follow-up.
         </div>
       )}
       {status === 'error' && (
-        <div className="rounded-md border border-[#fecdd3] bg-[#fff1f2] p-3 text-sm font-semibold text-[#be123c]">
+        <div className="rounded-[8px] border border-rose-500/30 bg-rose-500/10 p-3 font-mono text-xs text-rose-600 dark:text-rose-400">
           The inquiry could not be submitted. Please use the email channel.
         </div>
       )}
