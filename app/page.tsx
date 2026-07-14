@@ -177,7 +177,7 @@ export default function HomePage() {
       <section className="bg-white dark:bg-[#09090b] py-16 border-b border-zinc-200 dark:border-zinc-900 transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <p className="font-mono text-[9px] tracking-[0.25em] text-zinc-500 uppercase">THE PROBLEM</p>
-          <div className="mt-8 grid gap-px overflow-hidden bg-zinc-200 dark:bg-zinc-800 sm:grid-cols-3 border border-zinc-200 dark:border-zinc-800 rounded-none">
+          <div className="mt-8 grid gap-px overflow-hidden bg-zinc-200 dark:bg-zinc-800 sm:grid-cols-3 border border-zinc-200 dark:border-zinc-800 rounded-[12px]">
             <div className="bg-white dark:bg-[#09090b] p-8">
               <p className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">ACCESS</p>
               <p className="mt-4 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -220,14 +220,14 @@ export default function HomePage() {
             {featuredModels.map((model) => (
               <div
                 key={model.name}
-                className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-5 rounded-none flex flex-col justify-between"
+                className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-5 rounded-[12px] flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <span className="font-mono text-xs font-bold text-zinc-900 dark:text-white tracking-wider truncate">
                       {model.name}
                     </span>
-                    <span className="inline-flex items-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[8px] font-bold font-mono px-1.5 py-0.5 rounded-none shrink-0">
+                    <span className="inline-flex items-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[8px] font-bold font-mono px-1.5 py-0.5 rounded-[4px] shrink-0">
                       LIVE
                     </span>
                   </div>

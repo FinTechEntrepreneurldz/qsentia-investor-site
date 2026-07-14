@@ -362,7 +362,7 @@ export function SectionCard({
 }) {
   return (
     <div
-      className={`min-w-0 rounded-[10px] border border-[#e2e7fb] bg-white shadow-sm ${className}`}
+      className={`min-w-0 rounded-[12px] border border-zinc-200 dark:border-zinc-850 bg-white dark:bg-black ${className}`}
     >
       {children}
     </div>
@@ -371,9 +371,9 @@ export function SectionCard({
 
 export function EmptyState({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-md border border-dashed border-[#cbd5ff] bg-[#f8faff] p-6 text-center">
-      <div className="font-semibold text-[#06130c]">{title}</div>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#5a685f]">
+    <div className="rounded-[12px] border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-black p-6 text-center">
+      <div className="font-mono text-xs font-bold tracking-wider uppercase text-zinc-950 dark:text-white">{title}</div>
+      <p className="mx-auto mt-2 max-w-md font-mono text-[10px] leading-relaxed text-zinc-500">
         {body}
       </p>
     </div>
