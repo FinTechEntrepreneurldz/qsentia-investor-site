@@ -106,11 +106,6 @@ function displayCount(value: number | null | undefined) {
   return value.toLocaleString("en-US");
 }
 
-function pctClass(value: number | null | undefined) {
-  if (!finiteNumber(value) || value === 0) return "text-zinc-450 dark:text-zinc-500";
-  return value > 0 ? "text-emerald-600 dark:text-[#12B76A]" : "text-rose-600 dark:text-rose-400";
-}
-
 function selectedModelFrom(data?: DashboardPayload) {
   const rows = data?.modelComparison || [];
   return (
@@ -239,24 +234,22 @@ export default function MleqPage() {
           true,
         ),
       ),
-      tone: pctClass(
-        selectedStats.totalReturn ?? data?.latest?.portfolioReturn,
-      ),
+      tone: "text-zinc-950 dark:text-white",
     },
     {
       label: "Sharpe ratio",
       value: display(fmtNum(selectedStats.sharpe)),
-      tone: "text-[#0F8F5A] dark:text-[#12B76A]",
+      tone: "text-zinc-950 dark:text-white",
     },
     {
       label: "Max drawdown",
       value: display(fmtPct(selectedStats.maxDrawdown, true)),
-      tone: pctClass(selectedStats.maxDrawdown),
+      tone: "text-zinc-950 dark:text-white",
     },
     {
       label: "Win rate",
       value: display(fmtPct(selectedStats.hitRate)),
-      tone: "text-[#0F8F5A] dark:text-[#12B76A]",
+      tone: "text-zinc-950 dark:text-white",
     },
   ];
 
@@ -321,7 +314,7 @@ export default function MleqPage() {
                   <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.02] tracking-tight text-zinc-950 dark:text-white uppercase md:text-6xl">
                     Machine Learning Equity Quant
                   </h1>
-                  <p className="mt-3 font-mono text-[10px] font-bold tracking-[0.25em] text-[#0F8F5A] dark:text-[#12B76A] uppercase">
+                  <p className="mt-3 font-mono text-[10px] font-bold tracking-[0.25em] text-zinc-500 uppercase">
                     MLEQ research system
                   </p>
                   <p className="mt-6 max-w-2xl text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
@@ -496,7 +489,7 @@ export default function MleqPage() {
                         }
                         className={`w-full rounded-[12px] border p-4 text-left transition ${
                           isActive
-                            ? "border-[#0F8F5A] bg-[#D1F1E1] text-[#0F8F5A] dark:border-[#12B76A] dark:bg-[#0F8F5A]/20 dark:text-[#12B76A]"
+                            ? "border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-black"
                             : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-[#1A1A1D] dark:text-zinc-400 dark:hover:bg-zinc-900"
                         }`}
                       >
@@ -681,7 +674,7 @@ function PipelineStageDetail({
     <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40 p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <div className="font-mono text-[9px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase">
+          <div className="font-mono text-[9px] font-bold tracking-widest text-zinc-500 uppercase">
             {label}
           </div>
           <h3 className="mt-2 font-mono text-sm font-bold tracking-wider uppercase text-zinc-955 dark:text-white">
@@ -735,7 +728,7 @@ function TerminalPanel({
     <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-6 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <div className="font-mono text-[10px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase">
+          <div className="font-mono text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
             &gt;_ platform terminal
           </div>
           <h2 className="mt-3 font-mono text-base sm:text-lg font-bold tracking-wider text-zinc-950 dark:text-white uppercase leading-none">
@@ -870,7 +863,7 @@ function DarkPanel({
 }) {
   return (
     <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
-      <h3 className="font-mono text-[10px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase border-b border-zinc-200 dark:border-zinc-850 pb-2">
+      <h3 className="font-mono text-[10px] font-bold tracking-widest text-zinc-500 uppercase border-b border-zinc-200 dark:border-zinc-850 pb-2">
         {title}
       </h3>
       <div className="mt-5">{children}</div>
@@ -911,7 +904,7 @@ function ModelBar({
         <span className="truncate text-zinc-650 dark:text-zinc-300 font-mono uppercase tracking-wider font-bold">
           {cleanText(model.name || model.id)}
         </span>
-        <span className={`${pctClass(value)} font-mono font-bold`}>{display(fmtPct(value, true))}</span>
+        <span className="text-zinc-950 dark:text-white font-mono font-bold">{display(fmtPct(value, true))}</span>
       </div>
       <div className="h-1.5 rounded-full bg-zinc-200 dark:bg-zinc-800">
         <div
@@ -937,10 +930,10 @@ function Principle({
   return (
     <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
       <div className="flex items-center justify-between gap-4">
-        <span className="font-mono text-[10px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase">
+        <span className="font-mono text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
           {number}
         </span>
-        <Icon className="h-4 w-4 text-[#0F8F5A] dark:text-[#12B76A]" />
+        <Icon className="h-4 w-4 text-zinc-950 dark:text-white" />
       </div>
       <h3 className="mt-5 font-mono text-sm font-bold tracking-wider uppercase text-zinc-950 dark:text-white">{title}</h3>
       <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{children}</p>
