@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { ApiLoadingPanel, PageShell } from "@/components/PageChrome";
 import { fmtDollar, fmtNum, fmtPct } from "@/lib/metrics";
+import { useTheme } from "@/components/ThemeProvider";
 
 type Stats = {
   totalReturn?: number | null;
@@ -106,8 +107,8 @@ function displayCount(value: number | null | undefined) {
 }
 
 function pctClass(value: number | null | undefined) {
-  if (!finiteNumber(value) || value === 0) return "text-[#cbd5e1]";
-  return value > 0 ? "text-[#00d6b8]" : "text-[#fb7185]";
+  if (!finiteNumber(value) || value === 0) return "text-zinc-450 dark:text-zinc-500";
+  return value > 0 ? "text-emerald-600 dark:text-[#12B76A]" : "text-rose-600 dark:text-rose-400";
 }
 
 function selectedModelFrom(data?: DashboardPayload) {
@@ -192,6 +193,8 @@ function formatDate(value?: string | null) {
 }
 
 export default function MleqPage() {
+  const { resolvedTheme } = useTheme();
+  const dark = resolvedTheme === "dark";
   const [activePipelineLabel, setActivePipelineLabel] =
     useState<PipelineLabel>("Signal generation");
   const { data, error, isLoading } = useSWR<DashboardPayload>(
@@ -243,7 +246,7 @@ export default function MleqPage() {
     {
       label: "Sharpe ratio",
       value: display(fmtNum(selectedStats.sharpe)),
-      tone: "text-[#8b93ff]",
+      tone: "text-[#0F8F5A] dark:text-[#12B76A]",
     },
     {
       label: "Max drawdown",
@@ -253,7 +256,7 @@ export default function MleqPage() {
     {
       label: "Win rate",
       value: display(fmtPct(selectedStats.hitRate)),
-      tone: "text-[#00d6b8]",
+      tone: "text-[#0F8F5A] dark:text-[#12B76A]",
     },
   ];
 
@@ -284,9 +287,9 @@ export default function MleqPage() {
   );
 
   return (
-    <PageShell active="/mleq" className="bg-white text-[#06130c]">
+    <PageShell active="/mleq">
       {initialLoading ? (
-        <section className="border-b border-slate-200 bg-white">
+        <section className="border-b border-zinc-200 dark:border-zinc-900 bg-white dark:bg-[#09090b] transition-colors">
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
             <ApiLoadingPanel
               title="Loading MLEQ telemetry"
@@ -301,26 +304,27 @@ export default function MleqPage() {
         </section>
       ) : (
         <>
-          <section className="border-b border-slate-200 bg-white">
+          {/* ── Page Hero Intro Section ── */}
+          <section className="border-b border-zinc-200 dark:border-zinc-900 bg-white dark:bg-[#09090b] transition-colors">
             <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:py-14">
               <div className="flex min-w-0 flex-col justify-between">
                 <div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.22em] text-[#8b93ff]">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-[4px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-500">
                       Deep tech engine
                     </span>
-                    <span className="rounded-full border border-[#00d6b8]/20 bg-[#00d6b8]/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-[#00d6b8]">
+                    <span className="rounded-[4px] border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                       {paperStatus}
                     </span>
                   </div>
 
-                  <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[1.02] tracking-normal text-[#06130c] md:text-6xl">
+                  <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.02] tracking-tight text-zinc-950 dark:text-white uppercase md:text-6xl">
                     Machine Learning Equity Quant
                   </h1>
-                  <p className="mt-3 font-mono text-sm uppercase tracking-[0.22em] text-[#8b93ff]">
+                  <p className="mt-3 font-mono text-[10px] font-bold tracking-[0.25em] text-[#0F8F5A] dark:text-[#12B76A] uppercase">
                     MLEQ research system
                   </p>
-                  <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600">
+                  <p className="mt-6 max-w-2xl text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
                     A source-audited quant research layer for model telemetry,
                     benchmark discipline, and execution review. Every figure on
                     this page is derived from the live dashboard API.
@@ -331,19 +335,19 @@ export default function MleqPage() {
                   {heroStats.map((stat) => (
                     <div
                       key={stat.label}
-                      className="rounded-[10px] border border-slate-200 bg-white p-4"
+                      className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-4"
                     >
-                      <div className="text-lg font-semibold text-[#06130c]">
+                      <div className="font-mono text-sm sm:text-base font-bold text-zinc-950 dark:text-white uppercase leading-none">
                         {isLoading ? "..." : stat.value}
                       </div>
-                      <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+                      <div className="mt-2 font-mono text-[9px] uppercase tracking-wider text-zinc-500">
                         {stat.label}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-2">
+                <div className="mt-6 flex flex-wrap gap-1.5">
                   {[
                     "Adaptive allocation",
                     "Benchmark gating",
@@ -353,7 +357,7 @@ export default function MleqPage() {
                   ].map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5 font-mono text-xs text-slate-700"
+                      className="rounded-[4px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-2 py-0.5 font-mono text-[8px] tracking-wider uppercase text-zinc-550 dark:text-zinc-400"
                     >
                       {tag}
                     </span>
@@ -368,11 +372,13 @@ export default function MleqPage() {
                 metrics={terminalMetrics}
                 selectedStats={selectedStats}
                 portfolioValue={data?.latest?.portfolioValue}
+                dark={dark}
               />
             </div>
           </section>
 
-          <section className="border-b border-slate-200 bg-white">
+          {/* ── Live Model Evidence ── */}
+          <section className="border-b border-zinc-200 dark:border-zinc-900 bg-white dark:bg-[#09090b] transition-colors">
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
               <SectionIntro
                 eyebrow="Live model evidence"
@@ -380,7 +386,7 @@ export default function MleqPage() {
                 body="Current model metrics are shown in a compact operating view, with rankable rows separated from missing source history."
               />
 
-              <div className="mt-7 grid gap-4 lg:grid-cols-[1.08fr_0.92fr]">
+              <div className="mt-7 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
                 <DarkPanel title="Top models by live return">
                   <div className="space-y-4">
                     {leaderboard.length ? (
@@ -392,7 +398,7 @@ export default function MleqPage() {
                         />
                       ))
                     ) : (
-                      <p className="text-sm text-slate-500">
+                      <p className="font-mono text-xs text-zinc-500">
                         Rankable model rows are not available yet.
                       </p>
                     )}
@@ -425,7 +431,8 @@ export default function MleqPage() {
             </div>
           </section>
 
-          <section className="border-b border-slate-200 bg-slate-50">
+          {/* ── Research Controls / Thesis ── */}
+          <section className="border-b border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black transition-colors">
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
               <SectionIntro
                 eyebrow="Research controls"
@@ -433,7 +440,7 @@ export default function MleqPage() {
                 body="The MLEQ view is organized around model behavior, risk controls, comparable benchmarks, and execution transparency."
               />
 
-              <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-7 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                 <Principle
                   icon={BrainCircuit}
                   number="01"
@@ -466,7 +473,8 @@ export default function MleqPage() {
             </div>
           </section>
 
-          <section className="border-b border-slate-200 bg-white">
+          {/* ── Predictive Pipeline ── */}
+          <section className="border-b border-zinc-200 dark:border-zinc-900 bg-white dark:bg-[#09090b] transition-colors">
             <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[0.9fr_1fr]">
               <div>
                 <SectionIntro
@@ -486,21 +494,21 @@ export default function MleqPage() {
                         onClick={() =>
                           setActivePipelineLabel(row.label as PipelineLabel)
                         }
-                        className={`w-full rounded-[10px] border p-4 text-left transition ${
+                        className={`w-full rounded-[12px] border p-4 text-left transition ${
                           isActive
-                            ? "border-[#4f57ff] bg-[#eef2ff]"
-                            : "border-slate-200 bg-white hover:border-[#8b93ff] hover:bg-slate-50"
+                            ? "border-[#0F8F5A] bg-[#D1F1E1] text-[#0F8F5A] dark:border-[#12B76A] dark:bg-[#0F8F5A]/20 dark:text-[#12B76A]"
+                            : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-[#1A1A1D] dark:text-zinc-400 dark:hover:bg-zinc-900"
                         }`}
                       >
                         <div className="flex items-start gap-3">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-[#8b93ff]">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">
                             <Icon className="h-4 w-4" />
                           </span>
                           <div>
-                            <h3 className="font-semibold text-[#06130c]">
+                            <h3 className="font-mono text-sm font-bold tracking-wider uppercase text-zinc-950 dark:text-white leading-none mt-1">
                               {row.label}
                             </h3>
-                            <p className="mt-1 text-sm leading-6 text-slate-600">
+                            <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-450">
                               {
                                 workflowCopy[
                                   row.label as keyof typeof workflowCopy
@@ -530,13 +538,13 @@ export default function MleqPage() {
                     );
                     return (
                       <div key={`bar-${row.label}`}>
-                        <div className="mb-2 flex justify-between font-mono text-xs text-slate-600">
+                        <div className="mb-2 flex justify-between font-mono text-[9px] tracking-wider uppercase text-zinc-500">
                           <span>{row.label}</span>
                           <span>{displayCount(Number(row.value || 0))}</span>
                         </div>
-                        <div className="h-2 rounded-full bg-slate-200">
+                        <div className="h-2 rounded-full bg-zinc-200 dark:bg-zinc-800">
                           <div
-                            className="h-2 rounded-full bg-[#00d6b8]"
+                            className="h-2 rounded-full bg-[#0F8F5A] dark:bg-[#12B76A]"
                             style={{ width: `${pct}%` }}
                           />
                         </div>
@@ -544,7 +552,7 @@ export default function MleqPage() {
                     );
                   })}
                 </div>
-                <div className="mt-6 rounded-[10px] border border-slate-200 bg-white p-4 font-mono text-xs leading-6 text-slate-700">
+                <div className="mt-6 rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black/40 p-4 font-mono text-[10px] leading-relaxed text-zinc-500">
                   {pipelineStageDetails[activePipeline.label as PipelineLabel]
                     .monitorNote}
                 </div>
@@ -552,7 +560,8 @@ export default function MleqPage() {
             </div>
           </section>
 
-          <section className="bg-white">
+          {/* ── Multi-Discipline Review & Navigation ── */}
+          <section className="bg-white dark:bg-[#09090b] transition-colors">
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
               <SectionIntro
                 eyebrow="Strategic grounding"
@@ -560,7 +569,7 @@ export default function MleqPage() {
                 body="The engine combines model telemetry, quantitative diagnostics, reinforcement learning outputs, and execution evidence."
               />
 
-              <div className="mt-7 grid gap-4 md:grid-cols-2">
+              <div className="mt-7 grid gap-6 md:grid-cols-2">
                 <Discipline icon={Database} title="Source-aware fundamentals">
                   Repository metadata, benchmark windows, observation dates, and
                   account logs stay attached to every model view.
@@ -582,21 +591,21 @@ export default function MleqPage() {
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-[#3d52da] px-5 py-3 text-sm font-bold text-white hover:bg-[#3144c4]"
+                  className="inline-flex h-11 items-center justify-center bg-zinc-950 text-white dark:bg-[#eeeeee] dark:text-black px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none"
                 >
                   Open live dashboard
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
                 <Link
                   href="/research"
-                  className="inline-flex items-center justify-center rounded-md border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-bold text-[#06130c] hover:border-[#00d6b8]"
+                  className="inline-flex h-11 items-center justify-center bg-transparent px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase text-zinc-550 dark:text-zinc-400 border border-zinc-350 dark:border-zinc-800 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-900 dark:hover:border-white transition rounded-none"
                 >
                   View research terminal
                 </Link>
               </div>
 
               {error && (
-                <div className="mt-8 rounded-md border border-[#fb7185]/30 bg-[#fb7185]/10 p-4 text-sm text-[#fecdd3]">
+                <div className="mt-8 rounded-[8px] border border-rose-500/30 bg-rose-500/10 p-4 font-mono text-[10px] text-rose-600 dark:text-rose-400">
                   Dashboard API unavailable. Live terminal values will populate
                   when the API responds.
                 </div>
@@ -669,34 +678,34 @@ function PipelineStageDetail({
   const pct = Math.max(6, (Number(value || 0) / Math.max(maxValue, 1)) * 100);
 
   return (
-    <div className="rounded-[12px] border border-[#cbd5ff] bg-[#f8faff] p-4">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40 p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#4f57ff]">
+          <div className="font-mono text-[9px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase">
             {label}
           </div>
-          <h3 className="mt-2 text-base font-semibold text-[#06130c]">
+          <h3 className="mt-2 font-mono text-sm font-bold tracking-wider uppercase text-zinc-955 dark:text-white">
             {details.title}
           </h3>
         </div>
-        <div className="rounded-md border border-slate-200 bg-white px-3 py-2 text-right">
-          <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+        <div className="rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] px-3 py-2 text-right">
+          <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
             Rows
           </div>
-          <div className="text-lg font-semibold text-[#06130c]">
+          <div className="mt-0.5 font-mono text-base font-bold text-zinc-950 dark:text-white leading-none">
             {displayCount(value)}
           </div>
         </div>
       </div>
-      <p className="mt-3 text-sm leading-6 text-slate-600">{details.body}</p>
+      <p className="mt-3 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{details.body}</p>
       <div className="mt-4">
-        <div className="mb-2 flex justify-between font-mono text-xs text-slate-600">
+        <div className="mb-2 flex justify-between font-mono text-[9px] tracking-wider uppercase text-zinc-500">
           <span>{details.source}</span>
           <span>{Math.round(pct)}%</span>
         </div>
-        <div className="h-2 rounded-full bg-slate-200">
+        <div className="h-2 rounded-full bg-zinc-200 dark:bg-zinc-800">
           <div
-            className="h-2 rounded-full bg-[#4f57ff]"
+            className="h-2 rounded-full bg-[#0F8F5A] dark:bg-[#12B76A]"
             style={{ width: `${Math.min(100, pct)}%` }}
           />
         </div>
@@ -712,6 +721,7 @@ function TerminalPanel({
   metrics,
   selectedStats,
   portfolioValue,
+  dark,
 }: {
   modelName: string;
   linePath: string;
@@ -719,32 +729,33 @@ function TerminalPanel({
   metrics: Array<{ label: string; value: string; tone: string }>;
   selectedStats: Stats;
   portfolioValue?: number | null;
+  dark: boolean;
 }) {
   return (
-    <div className="rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-6 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <div className="font-mono text-xs uppercase tracking-[0.18em] text-[#8b93ff]">
+          <div className="font-mono text-[10px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase">
             &gt;_ platform terminal
           </div>
-          <h2 className="mt-3 text-xl font-semibold text-[#06130c]">
+          <h2 className="mt-3 font-mono text-base sm:text-lg font-bold tracking-wider text-zinc-950 dark:text-white uppercase leading-none">
             {modelName}
           </h2>
-          <p className="mt-1 text-sm text-slate-600">
+          <p className="mt-2 text-xs text-zinc-550 dark:text-zinc-400">
             Normalized equity and live model telemetry.
           </p>
         </div>
-        <div className="rounded-md border border-slate-200 bg-white px-3 py-2 text-right">
-          <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+        <div className="rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40 px-3 py-2 text-right">
+          <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-550">
             Portfolio value
           </div>
-          <div className="mt-1 font-semibold text-[#06130c]">
+          <div className="mt-1 font-mono text-sm font-bold text-zinc-950 dark:text-white leading-none">
             {display(fmtDollar(portfolioValue))}
           </div>
         </div>
       </div>
 
-      <div className="mt-5 rounded-[14px] border border-slate-200 bg-white p-4">
+      <div className="mt-5 rounded-[8px] border border-zinc-200 dark:border-zinc-850 bg-zinc-50 dark:bg-black/40 p-4">
         <svg
           viewBox="0 0 640 170"
           className="h-[170px] w-full"
@@ -759,8 +770,8 @@ function TerminalPanel({
               y1="0"
               y2="0"
             >
-              <stop offset="0%" stopColor="#6f7cff" />
-              <stop offset="100%" stopColor="#00d6b8" />
+              <stop offset="0%" stopColor="#0F8F5A" />
+              <stop offset="100%" stopColor="#12B76A" />
             </linearGradient>
             <linearGradient
               id="mleqAreaProfessional"
@@ -769,8 +780,8 @@ function TerminalPanel({
               y1="0"
               y2="1"
             >
-              <stop offset="0%" stopColor="#6f7cff" stopOpacity="0.26" />
-              <stop offset="100%" stopColor="#00d6b8" stopOpacity="0" />
+              <stop offset="0%" stopColor="#0F8F5A" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#0F8F5A" stopOpacity="0" />
             </linearGradient>
           </defs>
           <line
@@ -778,7 +789,7 @@ function TerminalPanel({
             x2="640"
             y1="132"
             y2="132"
-            stroke="#e2e8f0"
+            stroke={dark ? "#27272a" : "#e4e4e7"}
             strokeDasharray="4 4"
           />
           {linePath ? (
@@ -791,11 +802,11 @@ function TerminalPanel({
                 d={linePath}
                 fill="none"
                 stroke="url(#mleqLineProfessional)"
-                strokeWidth="2.4"
+                strokeWidth="2"
               />
             </>
           ) : (
-            <text x="24" y="92" fill="#94a3b8" fontSize="16">
+            <text x="24" y="92" fill={dark ? "#71717a" : "#a1a1aa"} fontSize="12" fontFamily="monospace">
               Equity curve pending source rows
             </text>
           )}
@@ -806,21 +817,21 @@ function TerminalPanel({
         {metrics.map((metric) => (
           <div
             key={metric.label}
-            className="rounded-[10px] border border-slate-200 bg-white p-4"
+            className="rounded-[8px] border border-zinc-200 dark:border-zinc-850 bg-zinc-50 dark:bg-black/40 p-4"
           >
-            <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+            <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
               {metric.label}
             </div>
-            <div className={`mt-2 text-xl font-semibold ${metric.tone}`}>
+            <div className={`mt-1.5 font-mono text-sm sm:text-base font-bold ${metric.tone}`}>
               {isLoading ? "..." : metric.value}
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-5 flex items-center justify-between border-t border-slate-200 pt-4 font-mono text-xs text-slate-600">
+      <div className="mt-5 flex items-center justify-between border-t border-zinc-200 dark:border-zinc-850 pt-4 font-mono text-[10px] text-zinc-550">
         <span>Observation status</span>
-        <span className="text-slate-700">
+        <span className="text-zinc-700 dark:text-zinc-300 font-bold uppercase tracking-wider">
           {selectedStats.status || "Not available"}
         </span>
       </div>
@@ -839,13 +850,13 @@ function SectionIntro({
 }) {
   return (
     <div>
-      <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#8b93ff]">
+      <p className="font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.25em] text-zinc-500 uppercase">
         {eyebrow}
       </p>
-      <h2 className="mt-3 max-w-3xl text-3xl font-semibold text-[#06130c] md:text-4xl">
+      <h2 className="mt-3 max-w-3xl text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white uppercase">
         {title}
       </h2>
-      <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">{body}</p>
+      <p className="mt-3 max-w-3xl text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-450">{body}</p>
     </div>
   );
 }
@@ -858,8 +869,8 @@ function DarkPanel({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-[14px] border border-slate-200 bg-white p-5">
-      <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-[#8b93ff]">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
+      <h3 className="font-mono text-[10px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase border-b border-zinc-200 dark:border-zinc-850 pb-2">
         {title}
       </h3>
       <div className="mt-5">{children}</div>
@@ -869,11 +880,11 @@ function DarkPanel({
 
 function MetricBox({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[14px] border border-slate-200 bg-white p-5">
-      <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
+      <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
         {label}
       </div>
-      <div className="mt-2 text-xl font-semibold text-[#06130c]">{value}</div>
+      <div className="mt-2 font-mono text-sm sm:text-base font-bold text-zinc-950 dark:text-white uppercase leading-none">{value}</div>
     </div>
   );
 }
@@ -896,15 +907,15 @@ function ModelBar({
 
   return (
     <div>
-      <div className="mb-2 flex items-center justify-between gap-3 text-sm">
-        <span className="truncate text-slate-700">
+      <div className="mb-2 flex items-center justify-between gap-3 text-xs sm:text-sm">
+        <span className="truncate text-zinc-650 dark:text-zinc-300 font-mono uppercase tracking-wider font-bold">
           {cleanText(model.name || model.id)}
         </span>
-        <span className={pctClass(value)}>{display(fmtPct(value, true))}</span>
+        <span className={`${pctClass(value)} font-mono font-bold`}>{display(fmtPct(value, true))}</span>
       </div>
-      <div className="h-2 rounded-full bg-slate-200">
+      <div className="h-1.5 rounded-full bg-zinc-200 dark:bg-zinc-800">
         <div
-          className="h-2 rounded-full bg-[#00d6b8]"
+          className="h-1.5 rounded-full bg-[#0F8F5A] dark:bg-[#12B76A]"
           style={{ width: `${width}%` }}
         />
       </div>
@@ -924,15 +935,15 @@ function Principle({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-[14px] border border-slate-200 bg-white p-5">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
       <div className="flex items-center justify-between gap-4">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#8b93ff]">
+        <span className="font-mono text-[10px] font-bold tracking-widest text-[#0F8F5A] dark:text-[#12B76A] uppercase">
           {number}
         </span>
-        <Icon className="h-4 w-4 text-[#00d6b8]" />
+        <Icon className="h-4 w-4 text-[#0F8F5A] dark:text-[#12B76A]" />
       </div>
-      <h3 className="mt-5 font-semibold text-[#06130c]">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-slate-600">{children}</p>
+      <h3 className="mt-5 font-mono text-sm font-bold tracking-wider uppercase text-zinc-950 dark:text-white">{title}</h3>
+      <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{children}</p>
     </div>
   );
 }
@@ -947,14 +958,14 @@ function Discipline({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-[14px] border border-slate-200 bg-white p-5">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
       <div className="flex gap-4">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-[#8b93ff]">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">
           <Icon className="h-4 w-4" />
         </span>
         <div>
-          <h3 className="font-semibold text-[#06130c]">{title}</h3>
-          <p className="mt-2 text-sm leading-6 text-slate-600">{children}</p>
+          <h3 className="font-mono text-sm font-bold tracking-wider uppercase text-zinc-950 dark:text-white">{title}</h3>
+          <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">{children}</p>
         </div>
       </div>
     </div>
