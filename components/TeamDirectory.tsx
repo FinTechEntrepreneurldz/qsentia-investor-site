@@ -249,9 +249,9 @@ function ScrollRow({ children }: { children: React.ReactNode }) {
         <button
           type="button"
           onClick={() => scroll('left')}
-          className="absolute -left-4 top-[35%] -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#1A1A1D]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
+          className="absolute left-2 top-[35%] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#1A1A1D]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
       )}
       <div
@@ -265,9 +265,9 @@ function ScrollRow({ children }: { children: React.ReactNode }) {
         <button
           type="button"
           onClick={() => scroll('right')}
-          className="absolute -right-4 top-[35%] -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#1A1A1D]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
+          className="absolute right-2 top-[35%] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#1A1A1D]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-5 w-5" />
         </button>
       )}
     </div>
