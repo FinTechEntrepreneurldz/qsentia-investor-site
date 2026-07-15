@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Activity, Pause, Play, RotateCcw, ShieldCheck } from 'lucide-react';
 import { SectionCard } from '@/components/PageChrome';
-import { useTheme } from '@/components/ThemeProvider';
 
 const scenarios = {
   steady: {
@@ -30,8 +29,6 @@ const scenarios = {
 };
 
 export default function SandboxDemo() {
-  const { resolvedTheme } = useTheme();
-  const dark = resolvedTheme === 'dark';
   const [key, setKey] = useState<keyof typeof scenarios>('steady');
   const [running, setRunning] = useState(true);
   const s = scenarios[key];
@@ -54,7 +51,7 @@ export default function SandboxDemo() {
                   onClick={() => setKey(id as keyof typeof scenarios)}
                   className={`rounded-[8px] border px-3 py-3 text-left font-mono text-xs font-bold uppercase tracking-wider transition ${
                     isSelected
-                      ? 'border-[#0F8F5A] bg-[#D1F1E1] text-[#0F8F5A] dark:border-[#12B76A] dark:bg-[#0F8F5A]/20 dark:text-[#12B76A]'
+                      ? 'border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-black'
                       : 'border-zinc-200 bg-white text-zinc-500 hover:bg-zinc-50 dark:border-zinc-850 dark:bg-black dark:text-zinc-400 dark:hover:bg-zinc-900'
                   }`}
                 >
@@ -70,11 +67,7 @@ export default function SandboxDemo() {
             aria-label={running ? 'Pause demo' : 'Run demo'}
             type="button"
             onClick={() => setRunning(!running)}
-            className={`flex h-10 w-10 items-center justify-center rounded-[8px] transition ${
-              dark
-                ? 'bg-[#12B76A] text-black hover:bg-white'
-                : 'bg-[#0F8F5A] text-white hover:bg-[#12B76A]'
-            }`}
+            className="flex h-10 w-10 items-center justify-center rounded-[8px] transition bg-zinc-950 text-white dark:bg-[#eeeeee] dark:text-black hover:bg-zinc-800 dark:hover:bg-white"
           >
             {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           </button>
@@ -106,7 +99,7 @@ export default function SandboxDemo() {
           </div>
           <span
             className={`h-2.5 w-2.5 rounded-full transition-colors ${
-              running ? 'bg-[#0F8F5A] dark:bg-[#12B76A]' : 'bg-zinc-400 dark:bg-zinc-600'
+              running ? 'bg-zinc-950 dark:bg-white' : 'bg-zinc-400 dark:bg-zinc-600'
             }`}
           />
         </div>
@@ -147,7 +140,7 @@ export default function SandboxDemo() {
 function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="min-h-24 bg-white dark:bg-[#1A1A1D] p-4 transition-colors">
-      <span className="block text-[#0F8F5A] dark:text-[#12B76A] [&>svg]:h-4 [&>svg]:w-4">
+      <span className="block text-zinc-950 dark:text-white [&>svg]:h-4 [&>svg]:w-4">
         {icon}
       </span>
       <div className="mt-3 font-mono text-[9px] tracking-wider uppercase text-zinc-500">
