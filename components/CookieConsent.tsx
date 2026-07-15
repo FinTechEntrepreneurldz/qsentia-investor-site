@@ -99,12 +99,12 @@ export default function CookieConsent() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-[100] px-3 pb-3 sm:px-5 sm:pb-5" role="region" aria-label="Cookie consent">
-      <div className="mx-auto max-w-5xl border border-[#cbd5ff] bg-white shadow-[0_18px_60px_rgba(15,31,22,0.22)]">
+      <div className="mx-auto max-w-5xl border border-[#E5E5E7] bg-white shadow-[0_18px_60px_rgba(15,31,22,0.22)]">
         {managing ? (
           <div role="dialog" aria-modal="true" aria-labelledby="cookie-settings-title">
-            <div className="flex items-start justify-between gap-4 border-b border-[#e2e7fb] px-5 py-4">
+            <div className="flex items-start justify-between gap-4 border-b border-[#E5E5E7] px-5 py-4">
               <div>
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
                   <ShieldCheck className="h-4 w-4" /> Privacy controls
                 </div>
                 <h2 id="cookie-settings-title" className="mt-2 text-xl font-semibold text-[#06130c]">Cookie preferences</h2>
@@ -112,7 +112,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={() => setManaging(false)}
-                className="flex h-9 w-9 items-center justify-center border border-[#d6dded] text-[#46554b] hover:border-[#3d52da]"
+                className="flex h-9 w-9 items-center justify-center border border-[#d6dded] text-[#46554b] hover:border-[#0F8F5A]"
                 aria-label="Close cookie preferences"
               >
                 <X className="h-4 w-4" />
@@ -147,14 +147,14 @@ export default function CookieConsent() {
               />
             </div>
 
-            <div className="flex flex-col-reverse gap-2 border-t border-[#e2e7fb] px-5 py-4 sm:flex-row sm:justify-end">
-              <button type="button" onClick={() => save(essentialOnly)} className="border border-[#cbd5ff] px-4 py-2.5 text-sm font-semibold text-[#172554] hover:border-[#3d52da]">
+            <div className="flex flex-col-reverse gap-2 border-t border-[#E5E5E7] px-5 py-4 sm:flex-row sm:justify-end">
+              <button type="button" onClick={() => save(essentialOnly)} className="border border-[#E5E5E7] px-4 py-2.5 text-sm font-semibold text-[#0F8F5A] hover:border-[#0F8F5A]">
                 Reject non-essential
               </button>
-              <button type="button" onClick={() => save(choices)} className="bg-[#172554] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#2437b5]">
+              <button type="button" onClick={() => save(choices)} className="bg-[#0F8F5A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#12B76A]">
                 Save preferences
               </button>
-              <button type="button" onClick={() => save(allCategories)} className="border border-[#3d52da] px-4 py-2.5 text-sm font-semibold text-[#3046c8] hover:bg-[#eef2ff]">
+              <button type="button" onClick={() => save(allCategories)} className="border border-[#0F8F5A] px-4 py-2.5 text-sm font-semibold text-[#12B76A] hover:bg-[#D1F1E1]">
                 Accept all
               </button>
             </div>
@@ -162,24 +162,24 @@ export default function CookieConsent() {
         ) : (
           <div className="flex flex-col gap-5 p-5 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex max-w-2xl gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#eef2ff] text-[#3d52da]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#D1F1E1] text-[#0F8F5A]">
                 <Cookie className="h-5 w-5" />
               </span>
               <div>
                 <h2 className="font-semibold text-[#06130c]">Your privacy choices</h2>
                 <p className="mt-1 text-sm leading-6 text-[#5a685f]">
-                  QSentia uses necessary cookies for authentication, security, and consent storage. Optional categories remain off unless you allow them. Read the <Link href="/cookie-policy" className="font-semibold text-[#3046c8] hover:underline">Cookie Policy</Link>.
+                  QSentia uses necessary cookies for authentication, security, and consent storage. Optional categories remain off unless you allow them. Read the <Link href="/cookie-policy" className="font-semibold text-[#12B76A] hover:underline">Cookie Policy</Link>.
                 </p>
               </div>
             </div>
             <div className="grid shrink-0 gap-2 sm:grid-cols-3">
-              <button type="button" onClick={() => save(essentialOnly)} className="border border-[#cbd5ff] px-4 py-2.5 text-sm font-semibold text-[#172554] hover:border-[#3d52da]">
+              <button type="button" onClick={() => save(essentialOnly)} className="border border-[#E5E5E7] px-4 py-2.5 text-sm font-semibold text-[#0F8F5A] hover:border-[#0F8F5A]">
                 Reject optional
               </button>
-              <button type="button" onClick={() => setManaging(true)} className="border border-[#cbd5ff] px-4 py-2.5 text-sm font-semibold text-[#172554] hover:border-[#3d52da]">
+              <button type="button" onClick={() => setManaging(true)} className="border border-[#E5E5E7] px-4 py-2.5 text-sm font-semibold text-[#0F8F5A] hover:border-[#0F8F5A]">
                 Manage
               </button>
-              <button type="button" onClick={() => save(allCategories)} className="bg-[#172554] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#2437b5]">
+              <button type="button" onClick={() => save(allCategories)} className="bg-[#0F8F5A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#12B76A]">
                 Accept all
               </button>
             </div>
@@ -204,7 +204,7 @@ function ConsentOption({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <label className="flex cursor-pointer items-start justify-between gap-4 border border-[#e2e7fb] bg-[#fbfcff] p-4">
+    <label className="flex cursor-pointer items-start justify-between gap-4 border border-[#E5E5E7] bg-[#F5F5F6] p-4">
       <span>
         <span className="block text-sm font-semibold text-[#06130c]">{title}</span>
         <span className="mt-1 block text-xs leading-5 text-[#647269]">{body}</span>
@@ -214,7 +214,7 @@ function ConsentOption({
         checked={checked}
         disabled={disabled}
         onChange={(event) => onChange(event.target.checked)}
-        className="mt-1 h-4 w-4 accent-[#3d52da]"
+        className="mt-1 h-4 w-4 accent-[#0F8F5A]"
       />
     </label>
   );

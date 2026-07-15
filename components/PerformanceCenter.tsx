@@ -142,7 +142,7 @@ export default function PerformanceCenter() {
       <SectionCard className="p-5 sm:p-6">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wide text-[#3d52da]">
+            <div className="text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">
               Performance center
             </div>
             <h2 className="mt-2 text-2xl font-semibold text-[#06130c]">
@@ -162,7 +162,7 @@ export default function PerformanceCenter() {
               <select
                 value={activeStrategyId}
                 onChange={(event) => setSelectedStrategyId(event.target.value)}
-                className="min-h-11 rounded-md border border-[#cbd5ff] bg-white px-3 py-2 text-sm font-semibold text-[#06130c] outline-none transition focus:border-[#3d52da]"
+                className="min-h-11 rounded-md border border-[#E5E5E7] bg-white px-3 py-2 text-sm font-semibold text-[#06130c] outline-none transition focus:border-[#0F8F5A]"
               >
                 {strategies.map((strategy) => (
                   <option key={strategy.id} value={strategy.id}>
@@ -172,18 +172,18 @@ export default function PerformanceCenter() {
               </select>
             </label>
 
-            <div className="inline-flex w-fit rounded-md border border-[#cbd5ff] bg-white p-1" aria-label="Return basis">
+            <div className="inline-flex w-fit rounded-md border border-[#E5E5E7] bg-white p-1" aria-label="Return basis">
               <button
                 type="button"
                 onClick={() => setBasis('net')}
-                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'net' ? 'bg-[#172554] text-white' : 'text-[#5a685f]'}`}
+                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'net' ? 'bg-[#0F8F5A] text-white' : 'text-[#5a685f]'}`}
               >
                 Net
               </button>
               <button
                 type="button"
                 onClick={() => setBasis('gross')}
-                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'gross' ? 'bg-[#172554] text-white' : 'text-[#5a685f]'}`}
+                className={`rounded px-4 py-2 text-sm font-semibold ${basis === 'gross' ? 'bg-[#0F8F5A] text-white' : 'text-[#5a685f]'}`}
               >
                 Gross
               </button>
@@ -232,7 +232,7 @@ export default function PerformanceCenter() {
                   <YAxis domain={['auto', 'auto']} tick={{ fontSize: 11, fill: '#647269' }} width={48} />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="strategy" name="Strategy" stroke="#3d52da" strokeWidth={2.5} dot={false} />
+                  <Line type="monotone" dataKey="strategy" name="Strategy" stroke="#0F8F5A" strokeWidth={2.5} dot={false} />
                   {analysis.benchmarkKey ? (
                     <Line
                       type="monotone"
@@ -260,7 +260,7 @@ export default function PerformanceCenter() {
                     <YAxis tick={{ fontSize: 11, fill: '#647269' }} width={48} />
                     <Tooltip />
                     <Legend />
-                    <Area type="monotone" dataKey="rollingSharpe" name="Rolling Sharpe" stroke="#3d52da" fill="#dfe4ff" />
+                    <Area type="monotone" dataKey="rollingSharpe" name="Rolling Sharpe" stroke="#0F8F5A" fill="#dfe4ff" />
                     <Line type="monotone" dataKey="drawdownPct" name="Drawdown %" stroke="#be123c" dot={false} />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -469,7 +469,7 @@ function strategyPoints(data: Payload | undefined, strategy: StrategyOption | nu
 
 function StrategyMeta({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#e2e7fb] bg-[#f8faff] px-4 py-3">
+    <div className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-4 py-3">
       <div className="text-[11px] font-bold uppercase tracking-wide text-[#647269]">{label}</div>
       <div className="mt-1 text-sm font-semibold text-[#06130c]">{value}</div>
     </div>
@@ -478,7 +478,7 @@ function StrategyMeta({ label, value }: { label: string; value: string }) {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[#e2e7fb] bg-white p-4">
+    <div className="rounded-md border border-[#E5E5E7] bg-white p-4">
       <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</div>
       <div className="mt-2 text-xl font-semibold text-[#06130c]">{value}</div>
     </div>
@@ -488,18 +488,18 @@ function Stat({ label, value }: { label: string; value: string }) {
 function MonthlyTable({ rows }: { rows: Array<{ month: string; value: number | null }> }) {
   return (
     <SectionCard className="overflow-hidden">
-      <div className="border-b border-[#e2e7fb] px-5 py-4">
+      <div className="border-b border-[#E5E5E7] px-5 py-4">
         <h3 className="text-lg font-semibold text-[#06130c]">Monthly returns</h3>
       </div>
       <div className="max-h-[280px] overflow-auto">
         <table className="w-full text-left text-sm">
-          <thead className="sticky top-0 bg-[#f8faff] text-xs uppercase tracking-wide text-[#647269]">
+          <thead className="sticky top-0 bg-[#F5F5F6] text-xs uppercase tracking-wide text-[#647269]">
             <tr>
               <th className="px-5 py-3">Month</th>
               <th className="px-5 py-3 text-right">Return</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#e2e7fb]">
+          <tbody className="divide-y divide-[#E5E5E7]">
             {rows.map((row) => (
               <tr key={row.month}>
                 <td className="px-5 py-3 font-semibold text-[#26352c]">{row.month}</td>

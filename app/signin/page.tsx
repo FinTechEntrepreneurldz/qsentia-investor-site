@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function SignInPage() {
   return (
     <PageShell>
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
           <div>
             <Eyebrow>Access portal</Eyebrow>
@@ -26,7 +26,7 @@ export default function SignInPage() {
 
           <SectionCard className="p-6 md:p-8">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
                 <Lock className="h-5 w-5" />
               </span>
               <div>
@@ -39,7 +39,7 @@ export default function SignInPage() {
 
             <p className="mt-6 text-sm text-[#5a685f]">
               New here?{' '}
-              <Link href="/create-account" className="font-semibold text-[#3d52da] hover:underline">
+              <Link href="/create-account" className="font-semibold text-[#0F8F5A] hover:underline">
                 Create your account
               </Link>
             </p>
@@ -62,7 +62,7 @@ export default function SignInPage() {
 function SecurityCard({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
     <SectionCard className="p-6">
-      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">{icon}</span>
+      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">{icon}</span>
       <h2 className="mt-5 text-xl font-semibold text-[#06130c]">{title}</h2>
       <p className="mt-3 text-sm leading-6 text-[#5a685f]">{children}</p>
     </SectionCard>

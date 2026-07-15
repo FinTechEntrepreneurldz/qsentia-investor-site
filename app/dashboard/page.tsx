@@ -287,7 +287,7 @@ export default function DashboardPage() {
 
   return (
     <PageShell active="/dashboard">
-      <section className="relative overflow-hidden border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="relative overflow-hidden border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <TechnicalBackdrop />
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -305,12 +305,12 @@ export default function DashboardPage() {
             <div className="flex min-w-0 flex-col gap-3">
               <Link
                 href="/customer"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#172554] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#2437b5]"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#12B76A]"
               >
                 Open settings
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <div className="rounded-[10px] border border-[#e2e7fb] bg-white p-4 shadow-sm">
+              <div className="rounded-[10px] border border-[#E5E5E7] bg-white p-4 shadow-sm">
                 <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="model-select">
                   Selected model
                 </label>
@@ -318,7 +318,7 @@ export default function DashboardPage() {
                   id="model-select"
                   value={selectedId}
                   onChange={(event) => setSelectedModel(event.target.value)}
-                  className="mt-2 w-full min-w-[280px] rounded-md border border-[#cbd5ff] bg-white px-3 py-2 text-sm font-semibold text-[#06130c] outline-none focus:border-[#3d52da]"
+                  className="mt-2 w-full min-w-[280px] rounded-md border border-[#E5E5E7] bg-white px-3 py-2 text-sm font-semibold text-[#06130c] outline-none focus:border-[#0F8F5A]"
                 >
                   {registry.length ? (
                     registry.map((model) => (
@@ -359,12 +359,12 @@ export default function DashboardPage() {
                 const Icon = metric.icon;
                 return (
                   <SectionCard key={metric.label} className="relative overflow-hidden p-5">
-                    <div aria-hidden className="absolute -right-5 -top-5 h-20 w-20 rounded-full border border-[#3d52da]/10" />
-                    <div aria-hidden className="absolute right-12 top-8 h-7 w-7 rotate-[18deg] rounded-[4px] border border-[#3d52da]/14" />
+                    <div aria-hidden className="absolute -right-5 -top-5 h-20 w-20 rounded-full border border-[#0F8F5A]/10" />
+                    <div aria-hidden className="absolute right-12 top-8 h-7 w-7 rotate-[18deg] rounded-[4px] border border-[#0F8F5A]/14" />
                     <div className="relative z-10">
                       <div className="flex items-center justify-between gap-3">
                         <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">{metric.label}</div>
-                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#eef2ff] text-[#3d52da]">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
                           <Icon className="h-4 w-4" />
                         </span>
                       </div>
@@ -388,7 +388,7 @@ export default function DashboardPage() {
 
       {!error && !initialLoading && (
         <>
-          <section className="relative overflow-hidden border-y border-[#e2e7fb] bg-[#f8faff]">
+          <section className="relative overflow-hidden border-y border-[#E5E5E7] bg-[#F5F5F6]">
             <TechnicalBackdrop className="opacity-80" />
             <div className="relative z-10 mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.25fr_0.75fr]">
               <SectionCard className="p-5">
@@ -418,10 +418,10 @@ export default function DashboardPage() {
                 </div>
 
                 {hasChartRows ? (
-                  <div className="h-[360px] overflow-hidden rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-2">
+                  <div className="h-[360px] overflow-hidden rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-2">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={chartRows}>
-                        <CartesianGrid stroke="#e2e7fb" strokeDasharray="3 3" />
+                        <CartesianGrid stroke="#E5E5E7" strokeDasharray="3 3" />
                         <XAxis dataKey="timestamp" tick={{ fill: '#647269', fontSize: 11 }} minTickGap={24} />
                         <YAxis tick={{ fill: '#647269', fontSize: 11 }} width={56} />
                         <Tooltip contentStyle={tooltipStyle} />
@@ -434,10 +434,10 @@ export default function DashboardPage() {
                           type="monotone"
                           dataKey="value"
                           name={selectedCurveMetric.label}
-                          stroke="#3d52da"
+                          stroke="#0F8F5A"
                           strokeWidth={2.5}
                           dot={false}
-                          activeDot={{ r: 5, fill: '#3d52da', stroke: '#ffffff', strokeWidth: 2 }}
+                          activeDot={{ r: 5, fill: '#0F8F5A', stroke: '#ffffff', strokeWidth: 2 }}
                           connectNulls
                         />
                       </LineChart>
@@ -453,7 +453,7 @@ export default function DashboardPage() {
 
               <SectionCard className="p-5">
                 <h2 className="text-xl font-semibold text-[#06130c]">Execution status</h2>
-                <dl className="mt-4 divide-y divide-[#e2e7fb] text-sm">
+                <dl className="mt-4 divide-y divide-[#E5E5E7] text-sm">
                   <InfoRow label="Paper status" value={latest.paperStatus || 'Not available'} />
                   <InfoRow label="Paper replay" value={latest.paperReplayStatus || 'Not available'} />
                   <InfoRow label="Last run" value={formatDate(latest.lastRun)} />
@@ -470,7 +470,7 @@ export default function DashboardPage() {
                 <h2 className="text-xl font-semibold text-[#06130c]">Model registry comparison</h2>
                 <div className="mt-5 overflow-x-auto">
                   <table className="min-w-[760px] text-left text-sm">
-                    <thead className="bg-[#f8faff] text-xs font-bold uppercase tracking-wide text-[#647269]">
+                    <thead className="bg-[#F5F5F6] text-xs font-bold uppercase tracking-wide text-[#647269]">
                       <tr>
                         <th className="px-3 py-3">Model</th>
                         <th className="px-3 py-3 text-right">Rows</th>
@@ -479,7 +479,7 @@ export default function DashboardPage() {
                         <th className="px-3 py-3">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#e2e7fb]">
+                    <tbody className="divide-y divide-[#E5E5E7]">
                       {(data?.modelComparison || []).map((model) => (
                         <tr key={model.id || model.name}>
                           <td className="px-3 py-3 font-semibold text-[#06130c]">{model.name || model.id}</td>
@@ -502,7 +502,7 @@ export default function DashboardPage() {
                 <div className="mt-5 space-y-3">
                   {(data?.benchmarks || []).length ? (
                     (data?.benchmarks || []).map((benchmark) => (
-                      <div key={benchmark.ticker || benchmark.name} className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] p-4">
+                      <div key={benchmark.ticker || benchmark.name} className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div>
                             <div className="font-semibold text-[#06130c]">{benchmark.name || benchmark.ticker}</div>
@@ -523,7 +523,7 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          <section className="relative overflow-hidden border-y border-[#e2e7fb] bg-[#f8faff]">
+          <section className="relative overflow-hidden border-y border-[#E5E5E7] bg-[#F5F5F6]">
             <TechnicalBackdrop className="opacity-60" />
             <div className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6">
               <DataTable title="Decisions" rows={data?.decisions || []} />
@@ -564,7 +564,7 @@ function SegmentedControl({
             onClick={() => onChange(option.key)}
             className={`shrink-0 rounded px-3 py-1.5 text-xs font-semibold transition ${
               value === option.key
-                ? 'border border-[#2b36ff] bg-white text-[#2b36ff]'
+                ? 'border border-[#0F8F5A] bg-white text-[#0F8F5A]'
                 : 'border border-transparent text-[#68756d] hover:bg-white'
             }`}
           >
@@ -603,21 +603,21 @@ function DataTable({ title, rows }: { title: string; rows: Record<string, unknow
 
   return (
     <SectionCard>
-      <div className="flex items-center justify-between gap-4 border-b border-[#e2e7fb] px-5 py-4">
+      <div className="flex items-center justify-between gap-4 border-b border-[#E5E5E7] px-5 py-4">
         <h2 className="text-xl font-semibold text-[#06130c]">{title}</h2>
         <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">{displayCount(rows.length)} rows</span>
       </div>
       {rows.length && columns.length ? (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="bg-[#f8faff] text-xs font-bold uppercase tracking-wide text-[#647269]">
+            <thead className="bg-[#F5F5F6] text-xs font-bold uppercase tracking-wide text-[#647269]">
               <tr>
                 {columns.map((column) => (
                   <th key={column} className="px-3 py-3">{prettyColumnName(column)}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#e2e7fb]">
+            <tbody className="divide-y divide-[#E5E5E7]">
               {rows.slice(0, 50).map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   {columns.map((column) => (
@@ -662,7 +662,7 @@ function formatCell(value: unknown) {
 
 const tooltipStyle = {
   background: '#ffffff',
-  border: '1px solid #e2e7fb',
+  border: '1px solid #E5E5E7',
   borderRadius: '10px',
   color: '#06130c',
   boxShadow: '0 16px 50px rgba(15,31,22,0.12)',

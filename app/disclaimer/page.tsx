@@ -29,7 +29,7 @@ export default function DisclaimerPage() {
 
 function LegalHero({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+    <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <h1 className="text-5xl font-semibold tracking-normal text-[#06130c] md:text-6xl">{title}</h1>
         <p className="mt-3 text-sm font-semibold text-[#647269]">{subtitle}</p>
@@ -41,7 +41,7 @@ function LegalHero({ title, subtitle }: { title: string; subtitle: string }) {
 function LegalBody({ sections }: { sections: ReadonlyArray<readonly [string, string]> }) {
   return (
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-      <SectionCard className="divide-y divide-[#e2e7fb]">
+      <SectionCard className="divide-y divide-[#E5E5E7]">
         {sections.map(([title, body], index) => (
           <section key={title} className="p-6">
             <h2 className="text-xl font-semibold text-[#06130c]">{index + 1}. {title}</h2>

@@ -45,24 +45,13 @@ export function InstitutionalHero({
   );
 }
 
-export function PageIntro({
-  eyebrow,
-  title,
-  body,
-  children,
-}: {
-  eyebrow: string;
-  title: string;
-  body: string;
-  children?: ReactNode;
-}) {
+export function PageIntro({ eyebrow, title, body }: { eyebrow: string; title: string; body: string }) {
   return (
     <section className="relative overflow-hidden border-b border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black py-12 sm:py-16 transition-colors">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
         <p className="font-mono text-[10px] font-bold tracking-[0.25em] text-zinc-500 uppercase">{eyebrow}</p>
         <h1 className="mt-6 max-w-5xl text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight uppercase leading-[0.95] text-zinc-950 dark:text-white">{title}</h1>
         <p className="mt-6 max-w-2xl text-sm sm:text-base leading-relaxed text-zinc-600 dark:text-zinc-400">{body}</p>
-        {children}
       </div>
     </section>
   );

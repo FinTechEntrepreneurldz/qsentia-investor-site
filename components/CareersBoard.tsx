@@ -126,8 +126,8 @@ export default function CareersBoard() {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_440px]">
       <SectionCard className="overflow-hidden p-0">
-        <div className="border-b border-[#e2e7fb] p-6">
-          <div className="text-xs font-bold uppercase tracking-wide text-[#3046c8]">Open roles</div>
+        <div className="border-b border-[#E5E5E7] p-6">
+          <div className="text-xs font-bold uppercase tracking-wide text-[#12B76A]">Open roles</div>
           <h2 className="mt-2 text-2xl font-semibold text-[#06130c]">Published from the admin career board</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[#5a685f]">
             Choose the role that matches your background. Role titles, departments, status, and
@@ -135,7 +135,7 @@ export default function CareersBoard() {
           </p>
         </div>
 
-        <div className="divide-y divide-[#e2e7fb]">
+        <div className="divide-y divide-[#E5E5E7]">
           {roles.map((role) => (
             <button
               key={role.id}
@@ -147,13 +147,13 @@ export default function CareersBoard() {
               }}
               className={`w-full bg-white p-6 text-left transition ${
                 selectedRole?.id === role.id
-                  ? 'shadow-[inset_4px_0_0_#3d52da]'
-                  : 'hover:bg-[#f8faff]'
+                  ? 'shadow-[inset_4px_0_0_#0F8F5A]'
+                  : 'hover:bg-[#F5F5F6]'
               }`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#3d52da]">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">
                     <BriefcaseBusiness className="h-4 w-4" />
                     {role.department}
                   </div>
@@ -181,11 +181,11 @@ export default function CareersBoard() {
           </h2>
           {selectedRole ? (
             <dl className="mt-5 grid gap-3 text-sm">
-              <div className="flex items-center justify-between gap-4 border-b border-[#e2e7fb] pb-3">
+              <div className="flex items-center justify-between gap-4 border-b border-[#E5E5E7] pb-3">
                 <dt className="font-semibold text-[#647269]">Department</dt>
                 <dd className="text-right font-semibold text-[#06130c]">{selectedRole.department}</dd>
               </div>
-              <div className="flex items-center justify-between gap-4 border-b border-[#e2e7fb] pb-3">
+              <div className="flex items-center justify-between gap-4 border-b border-[#E5E5E7] pb-3">
                 <dt className="font-semibold text-[#647269]">Location</dt>
                 <dd className="text-right font-semibold text-[#06130c]">{selectedRole.location}</dd>
               </div>
@@ -212,7 +212,7 @@ export default function CareersBoard() {
               type="text"
               value={candidateName}
               onChange={(event) => setCandidateName(event.target.value)}
-              className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
             />
           </label>
           <label className="grid gap-2">
@@ -221,7 +221,7 @@ export default function CareersBoard() {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
             />
           </label>
           <label className="grid gap-2">
@@ -231,7 +231,7 @@ export default function CareersBoard() {
               value={source}
               onChange={(event) => setSource(event.target.value)}
               placeholder="Referral, portfolio, or source (optional)"
-              className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
             />
           </label>
           <label className="grid gap-2">
@@ -244,7 +244,7 @@ export default function CareersBoard() {
               value={linkedInUrl}
               onChange={(event) => setLinkedInUrl(event.target.value)}
               placeholder="https://www.linkedin.com/in/..."
-              className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#3d52da]"
+              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
             />
           </label>
           <label className="grid gap-2">
@@ -257,7 +257,7 @@ export default function CareersBoard() {
               required
               accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
               onChange={(event) => setCvFile(event.target.files?.[0] || null)}
-              className="rounded-md border border-[#cbd5ff] bg-white px-4 py-3 text-sm text-[#06130c] file:mr-3 file:rounded-md file:border-0 file:bg-[#eef2ff] file:px-3 file:py-2 file:text-xs file:font-bold file:text-[#3d52da] focus:border-[#3d52da]"
+              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] file:mr-3 file:rounded-md file:border-0 file:bg-[#D1F1E1] file:px-3 file:py-2 file:text-xs file:font-bold file:text-[#0F8F5A] focus:border-[#0F8F5A]"
             />
             {cvFile ? (
               <span className="flex items-center gap-2 text-xs font-semibold text-[#5a685f]">
@@ -266,12 +266,12 @@ export default function CareersBoard() {
               </span>
             ) : null}
           </label>
-          <label className="flex items-start gap-3 rounded-md border border-[#dfe5f2] bg-[#f8faff] p-3 text-xs leading-5 text-[#46554b]">
+          <label className="flex items-start gap-3 rounded-md border border-[#dfe5f2] bg-[#F5F5F6] p-3 text-xs leading-5 text-[#46554b]">
             <input
               type="checkbox"
               checked={profileConsent}
               onChange={(event) => setProfileConsent(event.target.checked)}
-              className="mt-1 h-4 w-4 accent-[#3d52da]"
+              className="mt-1 h-4 w-4 accent-[#0F8F5A]"
             />
             I authorize QSentia to review the LinkedIn profile and CV I provide for recruitment evaluation.
           </label>
@@ -279,7 +279,7 @@ export default function CareersBoard() {
             type="button"
             disabled={!selectedRole || status === 'saving'}
             onClick={submitApplication}
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2437b5] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === 'saving' ? 'Submitting' : 'Submit application'}
             <ArrowRight className="h-4 w-4" />

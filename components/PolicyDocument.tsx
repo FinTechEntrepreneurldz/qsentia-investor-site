@@ -37,9 +37,9 @@ export default function PolicyDocument({
 }) {
   return (
     <PageShell>
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
             <FileCheck2 className="h-4 w-4" />
             {eyebrow}
           </div>
@@ -57,14 +57,14 @@ export default function PolicyDocument({
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[270px_minmax(0,1fr)] lg:py-14">
         <aside className="self-start lg:sticky lg:top-24">
-          <div className="border-l-2 border-[#cbd5ff] pl-4">
+          <div className="border-l-2 border-[#E5E5E7] pl-4">
             <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Contents</div>
             <nav className="mt-4 grid gap-2" aria-label={`${title} contents`}>
               {sections.map((section, index) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}
-                  className="text-sm leading-6 text-[#46554b] transition hover:text-[#2b36ff]"
+                  className="text-sm leading-6 text-[#46554b] transition hover:text-[#0F8F5A]"
                 >
                   {index + 1}. {section.title}
                 </a>
@@ -72,18 +72,18 @@ export default function PolicyDocument({
             </nav>
           </div>
 
-          <div className="mt-8 border-t border-[#e2e7fb] pt-6">
+          <div className="mt-8 border-t border-[#E5E5E7] pt-6">
             <div className="flex items-center gap-2 text-sm font-semibold text-[#06130c]">
-              <Mail className="h-4 w-4 text-[#2b36ff]" />
+              <Mail className="h-4 w-4 text-[#0F8F5A]" />
               Privacy and grievance contact
             </div>
             <a
               href="mailto:inquiries@qsentia.com?subject=Privacy%20or%20Compliance%20Request"
-              className="mt-2 block break-all text-sm text-[#3046c8] hover:underline"
+              className="mt-2 block break-all text-sm text-[#12B76A] hover:underline"
             >
               inquiries@qsentia.com
             </a>
-            <Link href="/contact" className="mt-2 inline-block text-sm font-semibold text-[#3046c8] hover:underline">
+            <Link href="/contact" className="mt-2 inline-block text-sm font-semibold text-[#12B76A] hover:underline">
               Contact form
             </Link>
           </div>
@@ -91,13 +91,13 @@ export default function PolicyDocument({
 
         <article className="min-w-0">
           {notice ? (
-            <div className="mb-8 flex gap-3 border border-[#cbd5ff] bg-[#f8faff] p-4">
-              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#2b36ff]" />
+            <div className="mb-8 flex gap-3 border border-[#E5E5E7] bg-[#F5F5F6] p-4">
+              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#0F8F5A]" />
               <p className="text-sm leading-6 text-[#46554b]">{notice}</p>
             </div>
           ) : null}
 
-          <div className="divide-y divide-[#e2e7fb] border-y border-[#e2e7fb]">
+          <div className="divide-y divide-[#E5E5E7] border-y border-[#E5E5E7]">
             {sections.map((section, index) => (
               <section key={section.id} id={section.id} className="scroll-mt-24 py-8 first:pt-0 last:pb-0">
                 <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">Section {index + 1}</div>
@@ -118,7 +118,7 @@ export default function PolicyDocument({
           </div>
 
           {references.length ? (
-            <section className="mt-10 border-t border-[#e2e7fb] pt-7">
+            <section className="mt-10 border-t border-[#E5E5E7] pt-7">
               <h2 className="text-lg font-semibold text-[#06130c]">Official references</h2>
               <div className="mt-4 grid gap-2">
                 {references.map((reference) => (
@@ -127,7 +127,7 @@ export default function PolicyDocument({
                     href={reference.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#3046c8] hover:underline"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#12B76A] hover:underline"
                   >
                     {reference.label}
                     <ArrowUpRight className="h-3.5 w-3.5" />

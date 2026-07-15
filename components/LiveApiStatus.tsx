@@ -109,10 +109,10 @@ export function LiveApiRibbon({
   const frameClass = embedded
     ? dark
       ? 'rounded-[10px] border border-[#1d2a55] bg-[#07112a]/92'
-      : 'rounded-[10px] border border-[#cbd5ff] bg-white/90 shadow-sm backdrop-blur'
+      : 'rounded-[10px] border border-[#E5E5E7] bg-white/90 shadow-sm backdrop-blur'
     : dark
       ? 'border-b border-[#18233f] bg-[#07112a] text-[#dbe4ff]'
-      : 'border-b border-[#e2e7fb] bg-white/92 text-[#172554] backdrop-blur';
+      : 'border-b border-[#E5E5E7] bg-white/92 text-[#0F8F5A] backdrop-blur';
   const innerClass = embedded
     ? 'flex flex-col gap-3 p-3 lg:flex-row lg:items-center lg:justify-between'
     : 'mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between';
@@ -127,13 +127,13 @@ export function LiveApiRibbon({
                 ? 'border-red-200 bg-red-50 text-red-700'
                 : dark
                   ? 'border-[#33449f] bg-[#101a44] text-[#c7d2fe]'
-                  : 'border-[#cbd5ff] bg-[#eef2ff] text-[#3d52da]'
+                  : 'border-[#E5E5E7] bg-[#D1F1E1] text-[#0F8F5A]'
             }`}
           >
             {hasError ? <AlertCircle className="h-3.5 w-3.5" /> : <Activity className="h-3.5 w-3.5" />}
             {statusText}
           </span>
-          <span className={`truncate text-xs font-semibold ${dark ? 'text-[#dbe4ff]' : 'text-[#172554]'}`}>
+          <span className={`truncate text-xs font-semibold ${dark ? 'text-[#dbe4ff]' : 'text-[#0F8F5A]'}`}>
             {selectedModel}
           </span>
         </div>
@@ -148,7 +148,7 @@ export function LiveApiRibbon({
         <Link
           href="/docs"
           className={`shrink-0 text-xs font-bold underline-offset-4 hover:underline ${
-            dark ? 'text-[#c7d2fe]' : 'text-[#3d52da]'
+            dark ? 'text-[#c7d2fe]' : 'text-[#0F8F5A]'
           }`}
         >
           {sourceRepo || '/api/dashboard'}

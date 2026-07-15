@@ -57,9 +57,9 @@ const sections = [
 export default function ShippingPolicyPage() {
   return (
     <PageShell active="/shipping-policy">
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#c7d2fe] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#c7d2fe] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
             <FileCheck2 className="h-3.5 w-3.5" />
             Digital service delivery
           </div>
@@ -78,7 +78,7 @@ export default function ShippingPolicyPage() {
           const Icon = item.icon;
           return (
             <SectionCard key={item.title} className="p-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#eef2ff] text-[#2b36ff]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
                 <Icon className="h-5 w-5" />
               </span>
               <h2 className="mt-5 text-xl font-semibold text-[#06130c]">{item.title}</h2>
@@ -89,7 +89,7 @@ export default function ShippingPolicyPage() {
       </section>
 
       <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6">
-        <SectionCard className="divide-y divide-[#e2e7fb]">
+        <SectionCard className="divide-y divide-[#E5E5E7]">
           {sections.map(([title, body], index) => (
             <section key={title} className="p-6">
               <h2 className="text-xl font-semibold text-[#06130c]">
@@ -100,10 +100,10 @@ export default function ShippingPolicyPage() {
           ))}
         </SectionCard>
 
-        <div className="mt-6 rounded-[10px] border border-[#cbd5ff] bg-[#f8faff] p-5">
+        <div className="mt-6 rounded-[10px] border border-[#E5E5E7] bg-[#F5F5F6] p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-[#2b36ff]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-[#0F8F5A]">
                 <Mail className="h-5 w-5" />
               </span>
               <div>
@@ -115,7 +115,7 @@ export default function ShippingPolicyPage() {
             </div>
             <Link
               href="/contact"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-[#172554] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#2437b5]"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#12B76A]"
             >
               Contact support
               <ArrowRight className="h-4 w-4" />

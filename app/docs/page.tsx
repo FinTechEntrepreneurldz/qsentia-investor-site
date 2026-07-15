@@ -26,7 +26,7 @@ const endpointCards = [
 export default function DocsPage() {
   return (
     <PageShell active="/docs">
-      <section className="border-b border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
           <Eyebrow>Integration guide</Eyebrow>
           <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-[1.04] tracking-normal text-[#06130c] md:text-7xl">
@@ -41,14 +41,14 @@ export default function DocsPage() {
 
       <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_1fr]">
         <SectionCard className="p-6">
-          <div className="flex items-center gap-2 text-[#3d52da]">
+          <div className="flex items-center gap-2 text-[#0F8F5A]">
             <Workflow className="h-4 w-4" />
             <span className="text-xs font-bold uppercase tracking-wide">Quickstart flow</span>
           </div>
           <ol className="mt-5 space-y-3 text-sm leading-6 text-[#26352c]">
             {quickSteps.map((step, index) => (
-              <li key={step} className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-4 py-3">
-                <span className="mr-2 font-bold text-[#3d52da]">{index + 1}.</span>
+              <li key={step} className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-4 py-3">
+                <span className="mr-2 font-bold text-[#0F8F5A]">{index + 1}.</span>
                 {step}
               </li>
             ))}
@@ -56,7 +56,7 @@ export default function DocsPage() {
         </SectionCard>
 
         <SectionCard className="p-6">
-          <div className="flex items-center gap-2 text-[#3d52da]">
+          <div className="flex items-center gap-2 text-[#0F8F5A]">
             <KeyRound className="h-4 w-4" />
             <span className="text-xs font-bold uppercase tracking-wide">Authentication notes</span>
           </div>
@@ -73,7 +73,7 @@ export default function DocsPage() {
         </SectionCard>
       </section>
 
-      <section className="border-y border-[#e2e7fb] bg-[#f8faff]">
+      <section className="border-y border-[#E5E5E7] bg-[#F5F5F6]">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
           <h2 className="text-3xl font-semibold text-[#06130c]">Current endpoints</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -104,22 +104,22 @@ export default function DocsPage() {
         </SectionCard>
 
         <SectionCard className="p-6">
-          <div className="flex items-center gap-2 text-[#3d52da]">
+          <div className="flex items-center gap-2 text-[#0F8F5A]">
             <ShieldCheck className="h-4 w-4" />
             <span className="text-xs font-bold uppercase tracking-wide">Production checklist</span>
           </div>
           <ul className="mt-5 space-y-3 text-sm leading-6 text-[#26352c]">
-            <li className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-4 py-3">Apply retry logic and timeout controls for upstream API calls.</li>
-            <li className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-4 py-3">Cache model list/detail responses where freshness allows.</li>
-            <li className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-4 py-3">Respect preview route limits and avoid high-frequency polling.</li>
-            <li className="rounded-md border border-[#e2e7fb] bg-[#fbfcff] px-4 py-3">Show fallback states when telemetry is delayed or unavailable.</li>
+            <li className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-4 py-3">Apply retry logic and timeout controls for upstream API calls.</li>
+            <li className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-4 py-3">Cache model list/detail responses where freshness allows.</li>
+            <li className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-4 py-3">Respect preview route limits and avoid high-frequency polling.</li>
+            <li className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-4 py-3">Show fallback states when telemetry is delayed or unavailable.</li>
           </ul>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-[#172554] px-5 py-3 text-sm font-bold text-white hover:bg-[#2437b5]">
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white hover:bg-[#12B76A]">
               Request support
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/marketplace" className="inline-flex items-center justify-center rounded-md border border-[#cbd5ff] px-5 py-3 text-sm font-bold text-[#172554] hover:bg-[#f7f8ff]">
+            <Link href="/marketplace" className="inline-flex items-center justify-center rounded-md border border-[#E5E5E7] px-5 py-3 text-sm font-bold text-[#0F8F5A] hover:bg-[#f7f8ff]">
               View models
             </Link>
           </div>
