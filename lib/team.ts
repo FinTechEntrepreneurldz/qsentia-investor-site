@@ -1,8 +1,8 @@
 export type TeamRole = "Founder" | "Quantitative Research" | "Software Development";
 export type TeamGroup =
   | "Founder"
-  | "Engineering Interns and Contributors"
-  | "Quantitative Research Interns and Contributors";
+  | "Software team"
+  | "Quantitative team";
 
 export type TeamMember = {
   slug: string;
@@ -50,7 +50,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Anikesh Bhuvaneshwaram",
     designation: "Quantitative Research",
     role: "Quantitative Research",
-    group: "Quantitative Research Interns and Contributors",
+    group: "Quantitative team",
     initials: "AB",
     summary:
       "Anikesh focuses on quantitative modelling, backtesting, risk management, and time series analysis for systematic investment workflows.",
@@ -72,7 +72,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Spencer Ozgur",
     designation: "Quantitative Research",
     role: "Quantitative Research",
-    group: "Quantitative Research Interns and Contributors",
+    group: "Quantitative team",
     initials: "SO",
     summary:
       "Spencer works across quantitative research, systematic investing, machine learning, stochastic modeling, and time series analysis.",
@@ -95,7 +95,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Janet Chen",
     designation: "Quantitative Research",
     role: "Quantitative Research",
-    group: "Quantitative Research Interns and Contributors",
+    group: "Quantitative team",
     initials: "JC",
     summary:
       "Janet focuses on systematic investing, factor research, machine learning, and data-driven quantitative research for financial markets.",
@@ -117,7 +117,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Ananth Seshadri",
     designation: "Quantitative Research",
     role: "Quantitative Research",
-    group: "Quantitative Research Interns and Contributors",
+    group: "Quantitative team",
     initials: "AS",
     summary:
       "Ananth focuses on quantitative finance, financial analytics, Python, statistics, and data-driven investment research.",
@@ -140,7 +140,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Debasish Mishra",
     designation: "Software Development",
     role: "Software Development",
-    group: "Engineering Interns and Contributors",
+    group: "Software team",
     initials: "DM",
     summary:
       "Debasish works across full-stack development, systems programming, and cybersecurity-oriented platform implementation.",
@@ -163,7 +163,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Shlok Pratap Chauhan",
     designation: "Software Development",
     role: "Software Development",
-    group: "Engineering Interns and Contributors",
+    group: "Software team",
     initials: "SC",
     summary:
       "Shlok works across software development, machine learning, data science, research workflows, and QSentia's investor-facing product surfaces.",
@@ -187,7 +187,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Priyansh Kumar",
     designation: "Software Development",
     role: "Software Development",
-    group: "Engineering Interns and Contributors",
+    group: "Software team",
     initials: "PK",
     summary:
       "Priyansh focuses on frontend architecture, cross-platform application development, performance optimization, and product-focused software delivery.",
@@ -210,7 +210,7 @@ export const teamMembers: TeamMember[] = [
     fullName: "Deepanshu Yadav",
     designation: "Software Development",
     role: "Software Development",
-    group: "Engineering Interns and Contributors",
+    group: "Software team",
     initials: "DY",
     summary:
       "Deepanshu supports implementation, product workflows, platform delivery, and operational controls.",
@@ -222,27 +222,27 @@ export const teamMembers: TeamMember[] = [
       "Implementation support, product workflows, and platform delivery.",
   },
   {
-  slug: "ashutosh-pathak",
-  fullName: "Ashutosh Pathak",
-  designation: "Software Development",
-  role: "Software Development",
-  group: "Engineering Interns and Contributors",
-  initials: "AP",
-  summary:
-    "Ashutosh Pathak contributes to platform implementation, product support, and engineering delivery.",
-  biography: [
-    "Ashutosh Pathak contributes to QSentia's software development work across platform implementation, product support, and engineering delivery.",
-    "His work supports the technical execution needed to maintain and improve QSentia's website, dashboard, and platform workflows.",
-  ],
-  qualifications:
-    "B.E. in Computer Engineering (Expected 2028), University of Mumbai.",
-  focus:
-    "Platform implementation, product support, and engineering delivery.", // ← Keep ONLY this one
-  emailAddress: "luckypathak527@gmail.com",
-  imageSrc: "/team/Ashutosh_pathak1.png",
-  imageAlt: "Ashutosh Pathak",
-  imagePosition: "center 24%",
-},
+    slug: "ashutosh-pathak",
+    fullName: "Ashutosh Pathak",
+    designation: "Software Development",
+    role: "Software Development",
+    group: "Software team",
+    initials: "AP",
+    summary:
+      "Ashutosh Pathak contributes to platform implementation, product support, and engineering delivery.",
+    biography: [
+      "Ashutosh Pathak contributes to QSentia's software development work across platform implementation, product support, and engineering delivery.",
+      "His work supports the technical execution needed to maintain and improve QSentia's website, dashboard, and platform workflows.",
+    ],
+    qualifications:
+      "B.E. in Computer Engineering (Expected 2028), University of Mumbai.",
+    focus:
+      "Platform implementation, product support, and engineering delivery.",
+    emailAddress: "luckypathak527@gmail.com",
+    imageSrc: "/team/Ashutosh_pathak1.png",
+    imageAlt: "Ashutosh Pathak",
+    imagePosition: "center 24%",
+  },
 ];
 
 export function getTeamMember(slug: string) {

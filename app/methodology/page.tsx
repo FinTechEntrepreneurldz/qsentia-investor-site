@@ -57,7 +57,7 @@ export default function MethodologyPage() {
             return (
               <div
                 key={step.title}
-                className="bg-white dark:bg-[#1A1A1D] p-8 flex flex-col justify-between h-full transition-colors"
+                className="bg-white dark:bg-[#09090b] p-8 flex flex-col justify-between h-full transition-colors"
               >
                 <div>
                   <div className="flex items-center justify-between">
