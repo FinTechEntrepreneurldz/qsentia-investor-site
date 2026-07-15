@@ -336,7 +336,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
   const activeNav = navItems.find((item) => item.id === activeSection) || navItems[0];
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb] text-[#09090b]">
+    <div className="min-h-screen bg-[#f5f7fb] dark:bg-black text-[#09090b] transition-colors">
       <div className="mx-auto grid max-w-[1540px] lg:grid-cols-[292px_minmax(0,1fr)]">
         <aside className="border-b border-[#e4e4e7] bg-white/95 text-[#09090b] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur lg:sticky lg:top-16 lg:max-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-b-0 lg:border-r">
           <div className="flex h-full flex-col px-4 py-5">
@@ -372,14 +372,14 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                     type="button"
                     suppressHydrationWarning
                     onClick={() => setActiveSection(item.id)}
-                    className={`group flex items-start gap-3 rounded-[10px] border px-3 py-3 text-left text-sm transition ${
+                    className={`group flex items-start gap-3 rounded-[4px] border px-3 py-3 text-left text-sm transition ${
                       active
-                        ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b] shadow-sm"
-                        : "border-transparent text-[#3f3f46] hover:border-[#e4e4e7] hover:bg-[#fafafa]"
+                        ? "border-zinc-300 bg-zinc-100 text-zinc-955 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white shadow-sm"
+                        : "border-transparent text-zinc-500 dark:text-zinc-400 hover:border-zinc-200 dark:hover:border-zinc-850 hover:bg-zinc-50 dark:hover:bg-zinc-900"
                     }`}
                   >
                     <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
-                      active ? "bg-white text-[#18181b]" : "bg-[#f4f4f5] text-[#71717a] group-hover:text-[#18181b]"
+                      active ? "bg-white dark:bg-zinc-900 text-zinc-955 dark:text-white" : "bg-zinc-100 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-955 dark:group-hover:text-white"
                     }`}>
                       <Icon className="h-4 w-4" />
                     </span>
@@ -422,7 +422,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                 type="button"
                 suppressHydrationWarning
                 onClick={logout}
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#cfd7e6] bg-white px-3 py-2 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa]"
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-none border border-zinc-300 dark:border-zinc-800 bg-transparent px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-550 dark:text-zinc-400 transition hover:border-zinc-955 dark:hover:border-white hover:text-zinc-955 dark:hover:text-white"
               >
                 <LogOut className="h-4 w-4" />
                 Sign out
@@ -431,7 +431,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
 
             <Link
               href="/contact"
-              className="mt-auto hidden items-center justify-between rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] lg:flex"
+              className="mt-auto hidden items-center justify-between rounded-none border border-zinc-300 dark:border-zinc-850 bg-white dark:bg-zinc-900 px-3 py-3 font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-550 dark:text-zinc-400 transition hover:border-zinc-955 dark:hover:border-white hover:text-zinc-955 dark:hover:text-white lg:flex"
             >
               Contact support
               <ArrowRight className="h-4 w-4" />
@@ -441,7 +441,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
 
         <main className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">
           <div className="mb-6 overflow-hidden rounded-[16px] border border-[#e4e4e7] bg-white shadow-sm">
-            <div className="border-b border-[#e4e4e7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#f4f4f5_100%)] p-5 md:p-6">
+            <div className="border-b border-[#e4e4e7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#f4f4f5_100%)] dark:bg-none dark:bg-[#1A1A1D] p-5 md:p-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#18181b]">
@@ -648,9 +648,12 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
           <InfoRow icon={<KeyRound className="h-4 w-4" />} label="Billing email" value={ctx.billing?.account.billingEmail || ctx.sessionUser.email} />
           <InfoRow icon={<FileText className="h-4 w-4" />} label="Tax status" value={ctx.billing?.account.taxStatus || "Not configured"} />
         </div>
-        <Link href="/contact" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
+        <Link
+          href="/contact"
+          className="mt-5 inline-flex h-10 items-center justify-center bg-zinc-955 text-white dark:bg-[#eeeeee] dark:text-black px-4 font-mono text-[10px] font-bold tracking-wider uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none w-full"
+        >
           Request billing update
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4 ml-2" />
         </Link>
       </SectionCard>
     </div>
@@ -761,9 +764,12 @@ function BrokerSection({ ctx }: { ctx: DashboardContext }) {
           <ControlRow label="Credentials vault" value={ctx.workspace?.broker.credentialsVault || "Not configured"} />
           <ControlRow label="Approval mode" value={label(ctx.workspace?.risk.approvalMode)} />
         </div>
-        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
+        <Link
+          href="/contact"
+          className="mt-5 inline-flex h-10 items-center justify-center bg-zinc-955 text-white dark:bg-[#eeeeee] dark:text-black px-4 font-mono text-[10px] font-bold tracking-wider uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none w-full sm:w-auto"
+        >
           Request broker onboarding
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4 ml-2" />
         </Link>
       </Panel>
 
@@ -953,21 +959,21 @@ function StatusPill({ value }: { value: string }) {
     normalized.includes("approved") ||
     normalized.includes("complete") ||
     normalized.includes("current")
-      ? "border-[#bbf7d0] bg-[#f0fdf4] text-[#047857]"
+      ? "border-[#bbf7d0] bg-[#f0fdf4] text-[#047857] dark:border-emerald-500/20 dark:bg-emerald-950/20 dark:text-emerald-400"
       : normalized.includes("trial") ||
           normalized.includes("open") ||
           normalized.includes("paper") ||
           normalized.includes("refreshing")
-        ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]"
+        ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b] dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
         : normalized.includes("required") ||
             normalized.includes("pending") ||
             normalized.includes("not") ||
             normalized.includes("past due")
-          ? "border-[#fed7aa] bg-[#fff7ed] text-[#c2410c]"
-          : "border-[#e4e4e7] bg-[#fafafa] text-[#52525b]";
+          ? "border-[#fed7aa] bg-[#fff7ed] text-[#c2410c] dark:border-amber-500/20 dark:bg-amber-950/20 dark:text-amber-400"
+          : "border-[#e4e4e7] bg-[#fafafa] text-[#52525b] dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400";
 
   return (
-    <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${tone}`}>
+    <span className={`inline-flex rounded-[4px] border px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider ${tone}`}>
       {label(value)}
     </span>
   );
