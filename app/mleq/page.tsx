@@ -280,7 +280,7 @@ export default function MleqPage() {
   );
 
   return (
-    <PageShell active="/mleq">
+    <PageShell active="/mleq" className="bg-white text-[#09090b]">
       {initialLoading ? (
         <section className="border-b border-zinc-200 dark:border-zinc-900 bg-white dark:bg-[#09090b] transition-colors">
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
@@ -311,7 +311,7 @@ export default function MleqPage() {
                     </span>
                   </div>
 
-                  <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.02] tracking-tight text-zinc-950 dark:text-white uppercase md:text-6xl">
+                  <h1 className="mt-6 max-w-3xl text-4xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-6xl">
                     Machine Learning Equity Quant
                   </h1>
                   <p className="mt-3 font-mono text-[10px] font-bold tracking-[0.25em] text-zinc-500 uppercase">
@@ -330,7 +330,7 @@ export default function MleqPage() {
                       key={stat.label}
                       className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-4"
                     >
-                      <div className="font-mono text-sm sm:text-base font-bold text-zinc-950 dark:text-white uppercase leading-none">
+                      <div className="text-lg font-semibold text-[#09090b]">
                         {isLoading ? "..." : stat.value}
                       </div>
                       <div className="mt-2 font-mono text-[9px] uppercase tracking-wider text-zinc-500">
@@ -489,8 +489,8 @@ export default function MleqPage() {
                         }
                         className={`w-full rounded-[12px] border p-4 text-left transition ${
                           isActive
-                            ? "border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-black"
-                            : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-[#1A1A1D] dark:text-zinc-400 dark:hover:bg-zinc-900"
+                            ? "border-[#4f57ff] bg-[#f4f4f5]"
+                            : "border-slate-200 bg-white hover:border-[#8b93ff] hover:bg-slate-50"
                         }`}
                       >
                         <div className="flex items-start gap-3">
@@ -502,9 +502,7 @@ export default function MleqPage() {
                             <Icon className="h-4 w-4" />
                           </span>
                           <div>
-                            <h3 className={`font-mono text-sm font-bold tracking-wider uppercase leading-none mt-1 transition-colors ${
-                              isActive ? "text-white dark:text-black" : "text-zinc-950 dark:text-white"
-                            }`}>
+                            <h3 className="font-semibold text-[#09090b]">
                               {row.label}
                             </h3>
                             <p className={`mt-2.5 text-xs sm:text-sm leading-relaxed transition-colors ${
@@ -592,14 +590,14 @@ export default function MleqPage() {
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/dashboard"
-                  className="inline-flex h-11 items-center justify-center bg-zinc-950 text-white dark:bg-[#eeeeee] dark:text-black px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white hover:bg-[#3144c4]"
                 >
                   Open live dashboard
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
                 <Link
                   href="/research"
-                  className="inline-flex h-11 items-center justify-center bg-transparent px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase text-zinc-550 dark:text-zinc-400 border border-zinc-350 dark:border-zinc-800 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-900 dark:hover:border-white transition rounded-none"
+                  className="inline-flex items-center justify-center rounded-md border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-bold text-[#09090b] hover:border-[#00d6b8]"
                 >
                   View research terminal
                 </Link>
@@ -679,13 +677,13 @@ function PipelineStageDetail({
   const pct = Math.max(6, (Number(value || 0) / Math.max(maxValue, 1)) * 100);
 
   return (
-    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40 p-5">
+    <div className="rounded-[12px] border border-[#d4d4d8] bg-[#fafafa] p-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <div className="font-mono text-[9px] font-bold tracking-widest text-zinc-500 uppercase">
             {label}
           </div>
-          <h3 className="mt-2 font-mono text-sm font-bold tracking-wider uppercase text-zinc-955 dark:text-white">
+          <h3 className="mt-2 text-base font-semibold text-[#09090b]">
             {details.title}
           </h3>
         </div>
@@ -693,7 +691,7 @@ function PipelineStageDetail({
           <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
             Rows
           </div>
-          <div className="mt-0.5 font-mono text-base font-bold text-zinc-950 dark:text-white leading-none">
+          <div className="text-lg font-semibold text-[#09090b]">
             {displayCount(value)}
           </div>
         </div>
@@ -739,7 +737,7 @@ function TerminalPanel({
           <div className="font-mono text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
             &gt;_ platform terminal
           </div>
-          <h2 className="mt-3 font-mono text-base sm:text-lg font-bold tracking-wider text-zinc-950 dark:text-white uppercase leading-none">
+          <h2 className="mt-3 text-xl font-semibold text-[#09090b]">
             {modelName}
           </h2>
           <p className="mt-2 text-xs text-zinc-550 dark:text-zinc-400">
@@ -750,7 +748,7 @@ function TerminalPanel({
           <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-550">
             Portfolio value
           </div>
-          <div className="mt-1 font-mono text-sm font-bold text-zinc-950 dark:text-white leading-none">
+          <div className="mt-1 font-semibold text-[#09090b]">
             {display(fmtDollar(portfolioValue))}
           </div>
         </div>
@@ -807,7 +805,7 @@ function TerminalPanel({
               />
             </>
           ) : (
-            <text x="24" y="92" fill={dark ? "#71717a" : "#a1a1aa"} fontSize="12" fontFamily="monospace">
+            <text x="24" y="92" fill="#a1a1aa" fontSize="16">
               Equity curve pending source rows
             </text>
           )}
@@ -854,7 +852,7 @@ function SectionIntro({
       <p className="font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.25em] text-zinc-500 uppercase">
         {eyebrow}
       </p>
-      <h2 className="mt-3 max-w-3xl text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white uppercase">
+      <h2 className="mt-3 max-w-3xl text-3xl font-semibold text-[#09090b] md:text-4xl">
         {title}
       </h2>
       <p className="mt-3 max-w-3xl text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-450">{body}</p>
@@ -885,7 +883,7 @@ function MetricBox({ label, value }: { label: string; value: string }) {
       <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
         {label}
       </div>
-      <div className="mt-2 font-mono text-sm sm:text-base font-bold text-zinc-950 dark:text-white uppercase leading-none">{value}</div>
+      <div className="mt-2 text-xl font-semibold text-[#09090b]">{value}</div>
     </div>
   );
 }
@@ -943,8 +941,8 @@ function Principle({
         </span>
         <Icon className="h-4 w-4 text-zinc-950 dark:text-white" />
       </div>
-      <h3 className="mt-5 font-mono text-sm font-bold tracking-wider uppercase text-zinc-950 dark:text-white">{title}</h3>
-      <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{children}</p>
+      <h3 className="mt-5 font-semibold text-[#09090b]">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">{children}</p>
     </div>
   );
 }
@@ -965,8 +963,8 @@ function Discipline({
           <Icon className="h-4 w-4" />
         </span>
         <div>
-          <h3 className="font-mono text-sm font-bold tracking-wider uppercase text-zinc-950 dark:text-white">{title}</h3>
-          <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">{children}</p>
+          <h3 className="font-semibold text-[#09090b]">{title}</h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">{children}</p>
         </div>
       </div>
     </div>

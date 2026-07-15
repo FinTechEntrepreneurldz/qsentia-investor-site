@@ -732,18 +732,56 @@ body {
   background-color: #18181b !important;
 }
 
-.dark .border-\[\#E5E5E7\],
-.dark .border-\[\#dbe3ff\],
-.dark .border-\[\#d7ddf7\],
-.dark .border-\[\#e2e7fb\],
-.dark .border-\[\#cbd5ff\],
-.dark .border-\[\#eef2ff\],
-.dark .border-slate-100,
-.dark .border-slate-200,
-.dark .border-slate-300,
-.dark .border-zinc-100,
-.dark .border-zinc-200,
-.dark .border-zinc-300 {
+.dark .bg-\[\#fafafa\],
+.dark .bg-\[\#f4f4f5\],
+.dark .bg-\[\#f3f5f8\],
+.dark .bg-\[\#f0fdf4\],
+.dark .bg-\[\#ecfdf5\],
+.dark .bg-\[\#fef2f2\],
+.dark .bg-\[\#fff1f2\],
+.dark .bg-\[\#fffbeb\] {
+  background-color: #121214 !important;
+}
+
+.dark .bg-white {
+  background-color: #09090b !important;
+}
+
+.dark .bg-\[\#e4e4e7\],
+.dark .bg-\[\#d4d4d8\] {
+  background-color: #27272a !important;
+}
+
+.dark .bg-slate-50,
+.dark .bg-slate-100 {
+  background-color: #121214 !important;
+}
+
+.dark .bg-slate-900 {
+  background-color: #030712 !important;
+}
+
+.dark .border-\[\#e2e7fb\] {
+  border-color: #27272a !important;
+}
+
+.dark .border-\[\#cbd5ff\] {
+  border-color: #27272a !important;
+}
+
+.dark .border-\[\#dbe3ff\] {
+  border-color: #27272a !important;
+}
+
+.dark .border-\[\#d7ddf7\] {
+  border-color: #27272a !important;
+}
+
+.dark .border-\[\#e4e4e7\],
+.dark .border-\[\#d4d4d8\],
+.dark .border-\[\#e5e7eb\],
+.dark .border-\[\#d6dded\],
+.dark .border-\[\#d8e1f2\] {
   border-color: #27272a !important;
 }
 
@@ -755,7 +793,13 @@ body {
   color: #f8fafc !important;
 }
 
-.dark .text-\[\#0F8F5A\] {
+.dark .text-\[\#09090b\],
+.dark .text-\[\#18181b\],
+.dark .text-\[\#27272a\] {
+  color: #f8fafc !important;
+}
+
+.dark .text-\[\#172554\] {
   color: #e4e4e7 !important;
 }
 
@@ -779,7 +823,42 @@ body {
   color: #cbd5e1 !important;
 }
 
-.dark .hover\:bg-\[\#F5F5F6\]:hover {
+.dark .text-\[\#52525b\],
+.dark .text-\[\#71717a\],
+.dark .text-\[\#a1a1aa\],
+.dark .text-\[\#8a94a6\] {
+  color: #a1a1aa !important;
+}
+
+.dark .text-slate-900,
+.dark .text-slate-950 {
+  color: #f8fafc !important;
+}
+
+.dark .text-slate-700,
+.dark .text-slate-600,
+.dark .text-slate-500 {
+  color: #a1a1aa !important;
+}
+
+.dark .border-slate-200,
+.dark .border-slate-300 {
+  border-color: #27272a !important;
+}
+
+.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #27272a !important;
+}
+
+.dark .file\:bg-\[\#f4f4f5\]::file-selector-button {
+  background-color: #27272a !important;
+}
+
+.dark .file\:text-\[\#18181b\]::file-selector-button {
+  color: #f8fafc !important;
+}
+
+.dark .hover\:bg-\[\#f8faff\]:hover {
   background-color: #18181b !important;
 }
 

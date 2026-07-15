@@ -287,16 +287,16 @@ export default function DashboardPage() {
 
   return (
     <PageShell active="/dashboard">
-      <section className="relative overflow-hidden border-b border-[#E5E5E7] bg-[#F5F5F6]">
+      <section className="relative overflow-hidden border-b border-[#e4e4e7] bg-[#fafafa]">
         <TechnicalBackdrop />
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <Eyebrow>Live dashboard</Eyebrow>
-              <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.04] text-[#06130c] md:text-6xl">
-                Qsentia telemetry terminal
+              <h1 className="mt-5 max-w-4xl text-4xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-6xl">
+                QSentia telemetry terminal
               </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-[#46554b]">
+              <p className="mt-4 max-w-3xl text-base leading-7 text-[#52525b]">
                 Live portfolio, model registry, benchmark, and execution data from the dashboard API.
                 Source coverage, execution state, and portfolio observations remain available for review.
               </p>
@@ -305,20 +305,20 @@ export default function DashboardPage() {
             <div className="flex min-w-0 flex-col gap-3">
               <Link
                 href="/customer"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#12B76A]"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#3f3f46]"
               >
                 Open settings
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <div className="rounded-[10px] border border-[#E5E5E7] bg-white p-4 shadow-sm">
-                <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="model-select">
+              <div className="rounded-[10px] border border-[#e4e4e7] bg-white p-4 shadow-sm">
+                <label className="text-xs font-bold uppercase tracking-wide text-[#71717a]" htmlFor="model-select">
                   Selected model
                 </label>
                 <select
                   id="model-select"
                   value={selectedId}
                   onChange={(event) => setSelectedModel(event.target.value)}
-                  className="mt-2 w-full min-w-[280px] rounded-md border border-[#E5E5E7] bg-white px-3 py-2 text-sm font-semibold text-[#06130c] outline-none focus:border-[#0F8F5A]"
+                  className="mt-2 w-full min-w-[280px] rounded-md border border-[#d4d4d8] bg-white px-3 py-2 text-sm font-semibold text-[#09090b] outline-none focus:border-[#18181b]"
                 >
                   {registry.length ? (
                     registry.map((model) => (
@@ -359,17 +359,17 @@ export default function DashboardPage() {
                 const Icon = metric.icon;
                 return (
                   <SectionCard key={metric.label} className="relative overflow-hidden p-5">
-                    <div aria-hidden className="absolute -right-5 -top-5 h-20 w-20 rounded-full border border-[#0F8F5A]/10" />
-                    <div aria-hidden className="absolute right-12 top-8 h-7 w-7 rotate-[18deg] rounded-[4px] border border-[#0F8F5A]/14" />
+                    <div aria-hidden className="absolute -right-5 -top-5 h-20 w-20 rounded-full border border-[#18181b]/10" />
+                    <div aria-hidden className="absolute right-12 top-8 h-7 w-7 rotate-[18deg] rounded-[4px] border border-[#18181b]/14" />
                     <div className="relative z-10">
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">{metric.label}</div>
-                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
+                        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{metric.label}</div>
+                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
                           <Icon className="h-4 w-4" />
                         </span>
                       </div>
-                      <div className="mt-4 text-2xl font-semibold text-[#06130c]">{isLoading ? 'Loading' : metric.value}</div>
-                      <div className="mt-2 min-h-5 text-xs leading-5 text-[#5a685f]">{metric.detail}</div>
+                      <div className="mt-4 text-2xl font-semibold text-[#09090b]">{isLoading ? 'Loading' : metric.value}</div>
+                      <div className="mt-2 min-h-5 text-xs leading-5 text-[#52525b]">{metric.detail}</div>
                     </div>
                   </SectionCard>
                 );
@@ -388,18 +388,18 @@ export default function DashboardPage() {
 
       {!error && !initialLoading && (
         <>
-          <section className="relative overflow-hidden border-y border-[#E5E5E7] bg-[#F5F5F6]">
+          <section className="relative overflow-hidden border-y border-[#e4e4e7] bg-[#fafafa]">
             <TechnicalBackdrop className="opacity-80" />
             <div className="relative z-10 mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.25fr_0.75fr]">
               <SectionCard className="p-5">
                 <div className="mb-5 flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="text-xl font-semibold text-[#06130c]">Normalized equity curves</h2>
-                    <p className="mt-1 text-sm text-[#5a685f]">
+                    <h2 className="text-xl font-semibold text-[#09090b]">Normalized equity curves</h2>
+                    <p className="mt-1 text-sm text-[#52525b]">
                       Range and metric controls are computed from published portfolio observations.
                     </p>
                   </div>
-                  <RefreshCw className="h-4 w-4 text-[#647269]" />
+                  <RefreshCw className="h-4 w-4 text-[#71717a]" />
                 </div>
 
                 <div className="mb-4 flex flex-col gap-3 xl:flex-row xl:items-center">
@@ -418,12 +418,12 @@ export default function DashboardPage() {
                 </div>
 
                 {hasChartRows ? (
-                  <div className="h-[360px] overflow-hidden rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-2">
+                  <div className="h-[360px] overflow-hidden rounded-md border border-[#e4e4e7] bg-[#fafafa] p-2">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={chartRows}>
-                        <CartesianGrid stroke="#E5E5E7" strokeDasharray="3 3" />
-                        <XAxis dataKey="timestamp" tick={{ fill: '#647269', fontSize: 11 }} minTickGap={24} />
-                        <YAxis tick={{ fill: '#647269', fontSize: 11 }} width={56} />
+                        <CartesianGrid stroke="#e4e4e7" strokeDasharray="3 3" />
+                        <XAxis dataKey="timestamp" tick={{ fill: '#71717a', fontSize: 11 }} minTickGap={24} />
+                        <YAxis tick={{ fill: '#71717a', fontSize: 11 }} width={56} />
                         <Tooltip contentStyle={tooltipStyle} />
                         <ReferenceLine
                           y={curveMetric === 'equity' ? 100 : 0}
@@ -434,10 +434,10 @@ export default function DashboardPage() {
                           type="monotone"
                           dataKey="value"
                           name={selectedCurveMetric.label}
-                          stroke="#0F8F5A"
+                          stroke="#18181b"
                           strokeWidth={2.5}
                           dot={false}
-                          activeDot={{ r: 5, fill: '#0F8F5A', stroke: '#ffffff', strokeWidth: 2 }}
+                          activeDot={{ r: 5, fill: '#18181b', stroke: '#ffffff', strokeWidth: 2 }}
                           connectNulls
                         />
                       </LineChart>
@@ -452,8 +452,8 @@ export default function DashboardPage() {
               </SectionCard>
 
               <SectionCard className="p-5">
-                <h2 className="text-xl font-semibold text-[#06130c]">Execution status</h2>
-                <dl className="mt-4 divide-y divide-[#E5E5E7] text-sm">
+                <h2 className="text-xl font-semibold text-[#09090b]">Execution status</h2>
+                <dl className="mt-4 divide-y divide-[#e4e4e7] text-sm">
                   <InfoRow label="Paper status" value={latest.paperStatus || 'Not available'} />
                   <InfoRow label="Paper replay" value={latest.paperReplayStatus || 'Not available'} />
                   <InfoRow label="Last run" value={formatDate(latest.lastRun)} />
@@ -467,10 +467,10 @@ export default function DashboardPage() {
           <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
               <SectionCard className="p-5">
-                <h2 className="text-xl font-semibold text-[#06130c]">Model registry comparison</h2>
+                <h2 className="text-xl font-semibold text-[#09090b]">Model registry comparison</h2>
                 <div className="mt-5 overflow-x-auto">
                   <table className="min-w-[760px] text-left text-sm">
-                    <thead className="bg-[#F5F5F6] text-xs font-bold uppercase tracking-wide text-[#647269]">
+                    <thead className="bg-[#fafafa] text-xs font-bold uppercase tracking-wide text-[#71717a]">
                       <tr>
                         <th className="px-3 py-3">Model</th>
                         <th className="px-3 py-3 text-right">Rows</th>
@@ -479,14 +479,14 @@ export default function DashboardPage() {
                         <th className="px-3 py-3">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#E5E5E7]">
+                    <tbody className="divide-y divide-[#e4e4e7]">
                       {(data?.modelComparison || []).map((model) => (
                         <tr key={model.id || model.name}>
-                          <td className="px-3 py-3 font-semibold text-[#06130c]">{model.name || model.id}</td>
-                          <td className="px-3 py-3 text-right text-[#26352c]">{displayCount(model.dailyRowCount ?? model.rowCount ?? null)}</td>
-                          <td className="px-3 py-3 text-right text-[#26352c]">{displayPct(model.stats?.totalReturn, true)}</td>
-                          <td className="px-3 py-3 text-right text-[#26352c]">{displayNum(model.stats?.sharpe)}</td>
-                          <td className="px-3 py-3 text-[#26352c]">{model.stats?.status || 'Not available'}</td>
+                          <td className="px-3 py-3 font-semibold text-[#09090b]">{model.name || model.id}</td>
+                          <td className="px-3 py-3 text-right text-[#27272a]">{displayCount(model.dailyRowCount ?? model.rowCount ?? null)}</td>
+                          <td className="px-3 py-3 text-right text-[#27272a]">{displayPct(model.stats?.totalReturn, true)}</td>
+                          <td className="px-3 py-3 text-right text-[#27272a]">{displayNum(model.stats?.sharpe)}</td>
+                          <td className="px-3 py-3 text-[#27272a]">{model.stats?.status || 'Not available'}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -498,19 +498,19 @@ export default function DashboardPage() {
               </SectionCard>
 
               <SectionCard className="p-5">
-                <h2 className="text-xl font-semibold text-[#06130c]">Benchmarks</h2>
+                <h2 className="text-xl font-semibold text-[#09090b]">Benchmarks</h2>
                 <div className="mt-5 space-y-3">
                   {(data?.benchmarks || []).length ? (
                     (data?.benchmarks || []).map((benchmark) => (
-                      <div key={benchmark.ticker || benchmark.name} className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-4">
+                      <div key={benchmark.ticker || benchmark.name} className="rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div>
-                            <div className="font-semibold text-[#06130c]">{benchmark.name || benchmark.ticker}</div>
-                            <div className="mt-1 text-xs text-[#647269]">{benchmark.ticker || 'Benchmark'}</div>
+                            <div className="font-semibold text-[#09090b]">{benchmark.name || benchmark.ticker}</div>
+                            <div className="mt-1 text-xs text-[#71717a]">{benchmark.ticker || 'Benchmark'}</div>
                           </div>
                           <div className="text-right">
-                            <div className="font-semibold text-[#06130c]">{displayPct(benchmark.stats?.totalReturn, true)}</div>
-                            <div className="mt-1 text-xs text-[#647269]">{displayCount(benchmark.rowCount ?? null)} rows</div>
+                            <div className="font-semibold text-[#09090b]">{displayPct(benchmark.stats?.totalReturn, true)}</div>
+                            <div className="mt-1 text-xs text-[#71717a]">{displayCount(benchmark.rowCount ?? null)} rows</div>
                           </div>
                         </div>
                       </div>
@@ -523,7 +523,7 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          <section className="relative overflow-hidden border-y border-[#E5E5E7] bg-[#F5F5F6]">
+          <section className="relative overflow-hidden border-y border-[#e4e4e7] bg-[#fafafa]">
             <TechnicalBackdrop className="opacity-60" />
             <div className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6">
               <DataTable title="Decisions" rows={data?.decisions || []} />
@@ -552,8 +552,8 @@ function SegmentedControl({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="flex min-w-0 items-center gap-2 rounded-md border border-[#d7ddf7] bg-[#f2f5ff] p-2">
-      <span className="shrink-0 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a958e]">
+    <div className="flex min-w-0 items-center gap-2 rounded-md border border-[#d4d4d8] bg-[#fafafa] p-2">
+      <span className="shrink-0 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#71717a]">
         {label}
       </span>
       <div className="flex min-w-0 gap-1 overflow-x-auto">
@@ -564,8 +564,8 @@ function SegmentedControl({
             onClick={() => onChange(option.key)}
             className={`shrink-0 rounded px-3 py-1.5 text-xs font-semibold transition ${
               value === option.key
-                ? 'border border-[#0F8F5A] bg-white text-[#0F8F5A]'
-                : 'border border-transparent text-[#68756d] hover:bg-white'
+                ? 'border border-[#18181b] bg-white text-[#18181b]'
+                : 'border border-transparent text-[#71717a] hover:bg-white'
             }`}
           >
             {option.label}
@@ -579,8 +579,8 @@ function SegmentedControl({
 function Fact({ label, value }: { label: string; value: string }) {
   return (
     <SectionCard className="p-4">
-      <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</div>
-      <div className="mt-1 truncate text-sm font-semibold text-[#06130c]">{value}</div>
+      <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{label}</div>
+      <div className="mt-1 truncate text-sm font-semibold text-[#09090b]">{value}</div>
     </SectionCard>
   );
 }
@@ -588,8 +588,8 @@ function Fact({ label, value }: { label: string; value: string }) {
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid gap-1 py-3">
-      <dt className="font-medium text-[#647269]">{label}</dt>
-      <dd className="break-words font-semibold text-[#06130c]">{value}</dd>
+      <dt className="font-medium text-[#71717a]">{label}</dt>
+      <dd className="break-words font-semibold text-[#09090b]">{value}</dd>
     </div>
   );
 }
@@ -603,25 +603,25 @@ function DataTable({ title, rows }: { title: string; rows: Record<string, unknow
 
   return (
     <SectionCard>
-      <div className="flex items-center justify-between gap-4 border-b border-[#E5E5E7] px-5 py-4">
-        <h2 className="text-xl font-semibold text-[#06130c]">{title}</h2>
-        <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">{displayCount(rows.length)} rows</span>
+      <div className="flex items-center justify-between gap-4 border-b border-[#e4e4e7] px-5 py-4">
+        <h2 className="text-xl font-semibold text-[#09090b]">{title}</h2>
+        <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{displayCount(rows.length)} rows</span>
       </div>
       {rows.length && columns.length ? (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="bg-[#F5F5F6] text-xs font-bold uppercase tracking-wide text-[#647269]">
+            <thead className="bg-[#fafafa] text-xs font-bold uppercase tracking-wide text-[#71717a]">
               <tr>
                 {columns.map((column) => (
                   <th key={column} className="px-3 py-3">{prettyColumnName(column)}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5E5E7]">
+            <tbody className="divide-y divide-[#e4e4e7]">
               {rows.slice(0, 50).map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   {columns.map((column) => (
-                    <td key={column} className="max-w-[280px] whitespace-normal break-words px-3 py-3 text-[#26352c]">
+                    <td key={column} className="max-w-[280px] whitespace-normal break-words px-3 py-3 text-[#27272a]">
                       {formatCell(row[column])}
                     </td>
                   ))}
@@ -662,9 +662,9 @@ function formatCell(value: unknown) {
 
 const tooltipStyle = {
   background: '#ffffff',
-  border: '1px solid #E5E5E7',
+  border: '1px solid #e4e4e7',
   borderRadius: '10px',
-  color: '#06130c',
+  color: '#09090b',
   boxShadow: '0 16px 50px rgba(15,31,22,0.12)',
   padding: '10px 12px',
   fontSize: '12px',

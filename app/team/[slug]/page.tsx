@@ -1,29 +1,29 @@
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { ArrowLeft, Mail } from 'lucide-react';
-import { Eyebrow, PageShell, TechnicalBackdrop } from '@/components/PageChrome';
-import { getTeamMember, teamMembers, type TeamRole } from '@/lib/team';
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft, Mail } from "lucide-react";
+import { PageShell } from "@/components/PageChrome";
+import { getTeamMember, teamMembers, type TeamRole } from "@/lib/team";
 
 const roleStyles: Record<
   TeamRole,
   { badge: string; avatar: string; ring: string }
 > = {
-  CEO: {
-    badge: 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white',
-    avatar: 'bg-zinc-950 text-white dark:bg-zinc-800 dark:text-white',
-    ring: 'border-zinc-200 dark:border-zinc-800',
+  Founder: {
+    badge: "border-zinc-300 bg-zinc-50 text-zinc-950 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white",
+    avatar: "bg-zinc-950 text-white dark:bg-white dark:text-black",
+    ring: "border-zinc-300 dark:border-zinc-700",
   },
-  'Quantitative Research': {
-    badge: 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white',
-    avatar: 'bg-zinc-800 text-white',
-    ring: 'border-zinc-200 dark:border-zinc-800',
+  "Quantitative Research": {
+    badge: "border-zinc-300 bg-white text-zinc-700 dark:border-zinc-700 dark:bg-black dark:text-zinc-300",
+    avatar: "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-black",
+    ring: "border-zinc-300 dark:border-zinc-700",
   },
-  'Software Development': {
-    badge: 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white',
-    avatar: 'bg-zinc-200 text-zinc-950 dark:bg-zinc-800 dark:text-white',
-    ring: 'border-zinc-200 dark:border-zinc-800',
+  "Software Development": {
+    badge: "border-zinc-300 bg-white text-zinc-700 dark:border-zinc-700 dark:bg-black dark:text-zinc-300",
+    avatar: "bg-zinc-100 text-zinc-950 dark:bg-zinc-900 dark:text-white",
+    ring: "border-zinc-300 dark:border-zinc-700",
   },
 };
 
@@ -65,34 +65,33 @@ export default async function TeamBioPage({
 
   return (
     <PageShell active="/team">
-      <section className="relative overflow-hidden border-b border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black transition-colors">
-        <TechnicalBackdrop />
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_320px] lg:items-end lg:py-16">
           <div>
             <Link
               href="/team"
-              className="inline-flex items-center gap-2 font-mono text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition"
+              className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-500 transition hover:text-zinc-950 dark:hover:text-white"
             >
-              <ArrowLeft className="h-3.5 w-3.5" />
+              <ArrowLeft className="h-4 w-4" strokeWidth={1.5} />
               Back to team
             </Link>
-            <div className="mt-8">
-              <Eyebrow>Team bio</Eyebrow>
-            </div>
-            <h1 className="mt-6 max-w-4xl font-mono text-3xl sm:text-5xl font-bold uppercase tracking-wider text-zinc-950 dark:text-white">
+            <p className="mt-8 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500">
+              Team bio
+            </p>
+            <h1 className="mt-6 max-w-4xl text-5xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-7xl">
               {member.fullName}
             </h1>
-            <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-550">
+            <p className="mt-6 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-zinc-500">
               {member.designation}
             </p>
             <span
-              className={`mt-5 inline-flex rounded-[4px] border px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider ${style.badge}`}
+              className={`mt-5 inline-flex rounded-none border px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.2em] ${style.badge}`}
             >
-              {member.role}
+              {member.group}
             </span>
           </div>
 
-          <div className="relative flex h-80 items-center justify-center overflow-hidden rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-black/40">
+          <div className="relative flex h-80 items-center justify-center overflow-hidden border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-black">
             {member.imageSrc ? (
               <Image
                 src={member.imageSrc}
@@ -107,10 +106,10 @@ export default async function TeamBioPage({
               <>
                 <div
                   aria-hidden
-                  className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,100,100,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,100,100,0.06)_1px,transparent_1px)] bg-[size:54px_54px]"
+                  className="absolute inset-0 bg-[linear-gradient(to_right,rgba(113,113,122,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(113,113,122,0.12)_1px,transparent_1px)] bg-[size:54px_54px]"
                 />
                 <div
-                  className={`relative z-10 flex h-36 w-36 items-center justify-center rounded-full border-4 bg-white dark:bg-[#1A1A1D] text-5xl font-semibold ${style.ring}`}
+                  className={`relative z-10 flex h-36 w-36 items-center justify-center rounded-full border bg-white text-5xl font-semibold dark:bg-black ${style.ring}`}
                 >
                   <span className={`flex h-28 w-28 items-center justify-center rounded-full ${style.avatar}`}>
                     {member.initials}
@@ -124,7 +123,7 @@ export default async function TeamBioPage({
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <article className="max-w-4xl">
-          <div className="grid gap-7 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
+          <div className="grid gap-7 text-lg leading-9 text-zinc-800 dark:text-zinc-200 md:text-xl">
             {member.biography.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -132,43 +131,41 @@ export default async function TeamBioPage({
         </article>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-6">
-            <p className="font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-550">
+          <div className="border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-500">
               Profile highlights
             </p>
 
             {member.qualifications ? (
-              <div className="mt-6 border-t border-zinc-200 dark:border-zinc-800 pt-5">
-                <h2 className="font-mono text-[10px] uppercase font-bold tracking-wider text-zinc-950 dark:text-white">
+              <div className="mt-6 border-t border-zinc-200 pt-5 dark:border-zinc-800">
+                <h2 className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-950 dark:text-white">
                   Qualifications
                 </h2>
-                <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
+                <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
                   {member.qualifications}
                 </p>
               </div>
             ) : null}
 
             {member.focus ? (
-              <div className="mt-6 border-t border-zinc-200 dark:border-zinc-800 pt-5">
-                <h2 className="font-mono text-[10px] uppercase font-bold tracking-wider text-zinc-955 dark:text-white">
-                  Focus
-                </h2>
-                <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
+              <div className="mt-6 border-t border-zinc-200 pt-5 dark:border-zinc-800">
+                <h2 className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-950 dark:text-white">Focus</h2>
+                <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
                   {member.focus}
                 </p>
               </div>
             ) : null}
 
             {member.emailAddress ? (
-              <div className="mt-6 border-t border-zinc-200 dark:border-zinc-800 pt-5">
-                <h2 className="font-mono text-[10px] uppercase font-bold tracking-wider text-zinc-955 dark:text-white">
+              <div className="mt-6 border-t border-zinc-200 pt-5 dark:border-zinc-800">
+                <h2 className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-950 dark:text-white">
                   Contact
                 </h2>
                 <a
                   href={`mailto:${member.emailAddress}`}
-                  className="mt-3 inline-flex items-center gap-2 font-mono text-xs font-bold text-zinc-950 dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 transition"
+                  className="mt-3 inline-flex items-center gap-2 break-all text-sm font-semibold text-zinc-600 underline-offset-4 transition hover:text-zinc-950 hover:underline dark:text-zinc-400 dark:hover:text-white"
                 >
-                  <Mail className="h-4 w-4 shrink-0" />
+                  <Mail className="h-4 w-4" strokeWidth={1.5} />
                   {member.emailAddress}
                 </a>
               </div>

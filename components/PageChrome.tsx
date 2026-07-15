@@ -230,8 +230,18 @@ export function SiteHeader({
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <ThemeSwitcher />
+          <Link
+            href="/contact"
+            className={`inline-flex h-9 items-center justify-center rounded-full border px-3 text-[11px] font-semibold tracking-wide transition ${
+              dark
+                ? "border-white/20 text-white hover:border-white hover:bg-white/10"
+                : "border-zinc-300 text-zinc-800 hover:border-zinc-950 hover:bg-zinc-50"
+            }`}
+          >
+            Request beta access
+          </Link>
           <AuthSessionMenu />
         </div>
         <button
@@ -294,7 +304,20 @@ export function SiteHeader({
             <div className={`mt-3 border-t pt-3 flex items-center justify-between gap-4 ${
               dark ? "border-zinc-900" : "border-zinc-200"
             }`}>
-              <AuthSessionMenu />
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/contact"
+                  onClick={() => setMenuOpen(false)}
+                  className={`inline-flex h-10 items-center rounded-full border px-3 text-[11px] font-semibold ${
+                    dark
+                      ? "border-white/20 text-white hover:bg-white/10"
+                      : "border-zinc-300 text-zinc-800 hover:bg-zinc-50"
+                  }`}
+                >
+                  Request beta access
+                </Link>
+                <AuthSessionMenu />
+              </div>
               <ThemeSwitcher />
             </div>
           </div>

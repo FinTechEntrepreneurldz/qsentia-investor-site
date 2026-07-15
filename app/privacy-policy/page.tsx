@@ -11,8 +11,9 @@ const sections: readonly PolicySection[] = [
     id: 'scope',
     title: 'Scope and role',
     paragraphs: [
-      'This policy applies to QSentia websites, authenticated dashboards, customer workspaces, APIs, support interactions, recruitment workflows, and related digital services. It explains how QSentia handles digital personal data when acting as the entity that determines the purpose and means of processing.',
-      'Separate contracts, data-processing terms, or institutional onboarding documents may supplement this policy. Where a contractual term provides stronger protection, that term will apply to the relevant relationship.',
+      'This policy applies to QSentia websites, authenticated dashboards, customer workspaces, APIs, support interactions, recruitment workflows, and related digital services operated by QSentia LLC.',
+      'QSentia LLC is the controller or business for personal data collected through the public website and customer-facing service unless a signed customer agreement states otherwise. Separate contracts, data-processing terms, or institutional onboarding documents may supplement this policy.',
+      'Privacy requests are handled through inquiries@qsentia.com and the contact form. QSentia verifies the requester before disclosing, changing, deleting, or exporting account-related data.',
     ],
   },
   {
@@ -21,9 +22,10 @@ const sections: readonly PolicySection[] = [
     paragraphs: ['We collect data that is reasonably necessary to provide, secure, improve, and administer the platform.'],
     bullets: [
       'Account and identity data, including name, email address, organization, authentication provider, account identifiers, and session information.',
-      'Commercial and billing data, including plan, invoice, billing contact, tax-status, and payment-status information. Payment card details should be processed by an approved payment provider rather than stored by QSentia.',
+      'Commercial and billing data, including plan, invoice, billing contact, tax-status, and payment-status information. The current public site does not collect full payment-card numbers, and QSentia does not store full payment-card numbers on its own servers.',
       'Technical data, including IP address, browser and device information, request logs, security events, cookie choices, API usage, and approximate location derived from network data.',
-      'Customer configuration data, including model entitlements, broker-connection status, automation settings, risk controls, support tickets, and audit events.',
+      'Customer configuration data, including model entitlements, broker-connection status, automation settings, risk controls, support tickets, and audit events. QSentia does not collect broker passwords through public website forms. Broker connection tokens or credentials are handled only through an approved account-connection workflow when that workflow is enabled for a customer.',
+      'Financial-profile and account-connection data, including investor type, expected allocation, strategy interest, account-readiness state, broker connection state, and model-access entitlements submitted for diligence, onboarding, or customer support.',
       'Information submitted through contact, recruitment, lead, grievance, and support workflows.',
     ],
   },
@@ -53,21 +55,30 @@ const sections: readonly PolicySection[] = [
     id: 'sharing',
     title: 'Processors, service providers, and disclosure',
     paragraphs: [
-      'QSentia may engage vetted service providers for authentication, cloud hosting, code hosting, communications, payment processing, monitoring, market data, and support. Providers should receive only the information reasonably required for their role and should be bound by appropriate confidentiality, security, and data-protection obligations.',
+      'QSentia uses service providers for authentication, cloud hosting, code hosting, communications, monitoring, market data, and support. Providers receive only the information reasonably required for their role and are bound by confidentiality, security, and data-protection obligations.',
       "Personal data may also be disclosed when required by law, to protect legal rights or platform security, in connection with a corporate transaction subject to safeguards, or with the individual's direction or consent.",
+    ],
+    bullets: [
+      'Hosting and deployment: Vercel-managed infrastructure for the public web application.',
+      'Authentication and database services: Supabase where authentication, sessions, and customer data stores are configured.',
+      'Code hosting and source telemetry: GitHub repositories and logs where QSentia or model-source integrations are configured.',
+      'Identity providers: Google and GitHub OAuth when a user chooses those sign-in methods.',
+      'Payments: no public checkout payment processor is active on this website version. The payment processor will be named before paid checkout is enabled.',
     ],
   },
   {
     id: 'retention',
     title: 'Retention and deletion',
     paragraphs: [
-      'QSentia retains personal data only for as long as reasonably necessary for the stated purpose, contractual obligations, security, dispute resolution, legal compliance, and documented retention schedules. When the purpose ends and no lawful retention need remains, data should be deleted, anonymized, or placed beyond active use.',
+      'QSentia retains personal data for the period needed for the stated purpose, contractual obligations, security, dispute resolution, legal compliance, and the retention schedule below. When the purpose ends and no lawful retention need remains, QSentia deletes, anonymizes, or places the data beyond active use.',
     ],
     bullets: [
-      "Consent records may be retained to demonstrate the user's choices.",
-      'Security and audit logs may be retained for incident investigation and compliance.',
-      'Billing, tax, and contractual records may be retained for legally required periods.',
-      'Backups are deleted or overwritten through controlled lifecycle processes.',
+      "Consent records: retained for up to 12 months after the latest consent choice, or longer where needed to demonstrate the user's choices.",
+      'Account and session records: retained while the account is active and for a reasonable period after closure for security, support, and audit needs.',
+      'Security and audit logs: retained for incident investigation, abuse prevention, and compliance review.',
+      'Billing, tax, and contractual records: retained for the applicable tax, accounting, dispute, and contract limitation periods.',
+      'Recruitment records: retained for the active hiring process and a reasonable follow-up period unless a longer retention period is required or consented to.',
+      'Backups: deleted or overwritten through controlled lifecycle processes.',
     ],
   },
   {
@@ -97,7 +108,7 @@ const sections: readonly PolicySection[] = [
     id: 'transfers',
     title: 'International processing and transfers',
     paragraphs: [
-      'Cloud, authentication, code-hosting, market-data, and support providers may process data in more than one country. QSentia will use contractual, technical, and organizational safeguards and will respect transfer restrictions that apply to the relevant data and jurisdiction.',
+      'Cloud, authentication, code-hosting, market-data, and support providers process data in regions configured by QSentia and its service providers. QSentia uses contractual, technical, and organizational safeguards for cross-border processing. Where GDPR transfer rules apply, QSentia relies on appropriate contractual safeguards such as standard contractual clauses or equivalent lawful mechanisms.',
     ],
   },
   {
@@ -126,7 +137,7 @@ export default function PrivacyPolicyPage() {
       effectiveDate="19 June 2026"
       version="2.1"
       sections={sections}
-      notice="This policy is designed as an operational privacy baseline, including principles reflected in GDPR, US state privacy laws, FTC privacy and security guidance, and applicable customer contracts. It should be reviewed by qualified counsel against QSentia's final corporate structure, data flows, vendors, and launch jurisdictions."
+      notice="This policy describes QSentia LLC's current public website and platform-data practices. It will be updated when new processors, checkout payment flows, broker-connection workflows, or launch jurisdictions are added."
       references={[
         { label: 'European Commission - legal framework of EU data protection', href: 'https://commission.europa.eu/law/law-topic/data-protection/legal-framework-eu-data-protection_en' },
         { label: 'Federal Trade Commission - privacy and security business guidance', href: 'https://www.ftc.gov/business-guidance/privacy-security' },

@@ -75,7 +75,7 @@ function dateLabel(value: string | null | undefined) {
 
 function statusClass(status: AdminGrant['status']) {
   if (status === 'active') return 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]';
-  if (status === 'invited') return 'border-[#c7d2fe] bg-[#D1F1E1] text-[#12B76A]';
+  if (status === 'invited') return 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]';
   return 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
 }
 
@@ -143,7 +143,7 @@ export default function AdminAccessWorkspace() {
       <AccessPanel title="Loading access control" icon={<RefreshCw className="h-4 w-4 animate-spin" />}>
         <div className="grid gap-3 md:grid-cols-3">
           {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="h-28 animate-pulse rounded-md border border-[#dfe5f2] bg-[#F5F5F6]" />
+            <div key={index} className="h-28 animate-pulse rounded-md border border-[#e4e4e7] bg-[#fafafa]" />
           ))}
         </div>
       </AccessPanel>
@@ -181,7 +181,7 @@ export default function AdminAccessWorkspace() {
         <AccessPanel title="Grant admin access" icon={<UserPlus className="h-4 w-4" />}>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="admin-email">
+              <label className="text-xs font-bold uppercase tracking-wide text-[#71717a]" htmlFor="admin-email">
                 Email address
               </label>
               <input
@@ -191,11 +191,11 @@ export default function AdminAccessWorkspace() {
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="admin@qsentia.com"
                 disabled={!data?.currentUser.canGrantAccess || saving}
-                className="rounded-md border border-[#dbe3ff] bg-white px-3 py-2.5 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A] disabled:bg-[#f8fafc]"
+                className="rounded-md border border-[#e4e4e7] bg-white px-3 py-2.5 text-sm text-[#09090b] outline-none focus:border-[#18181b] disabled:bg-[#fafafa]"
               />
             </div>
             <div className="grid gap-2">
-              <label className="text-xs font-bold uppercase tracking-wide text-[#647269]" htmlFor="admin-role">
+              <label className="text-xs font-bold uppercase tracking-wide text-[#71717a]" htmlFor="admin-role">
                 Role
               </label>
               <select
@@ -203,7 +203,7 @@ export default function AdminAccessWorkspace() {
                 value={role}
                 onChange={(event) => setRole(event.target.value as AdminRole)}
                 disabled={!data?.currentUser.canGrantAccess || saving}
-                className="rounded-md border border-[#dbe3ff] bg-white px-3 py-2.5 text-sm font-semibold text-[#06130c] outline-none focus:border-[#0F8F5A] disabled:bg-[#f8fafc]"
+                className="rounded-md border border-[#e4e4e7] bg-white px-3 py-2.5 text-sm font-semibold text-[#09090b] outline-none focus:border-[#18181b] disabled:bg-[#fafafa]"
               >
                 {roles.map((item) => (
                   <option key={item.value} value={item.value}>
@@ -212,14 +212,14 @@ export default function AdminAccessWorkspace() {
                 ))}
               </select>
             </div>
-            <div className="rounded-md border border-[#dfe5f2] bg-[#F5F5F6] p-3 text-xs leading-5 text-[#5a685f]">
+            <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] p-3 text-xs leading-5 text-[#52525b]">
               {roles.find((item) => item.value === role)?.detail}
             </div>
             <button
               type="button"
               onClick={inviteAdmin}
               disabled={!data?.currentUser.canGrantAccess || saving || !email.trim()}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:cursor-not-allowed disabled:opacity-55"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:opacity-55"
             >
               {saving ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Mail className="h-4 w-4" />}
               Send Supabase invite
@@ -236,8 +236,8 @@ export default function AdminAccessWorkspace() {
           {grants.length ? (
             <div className="overflow-x-auto">
               <table className="min-w-full text-left text-sm">
-                <thead className="text-xs uppercase tracking-wide text-[#647269]">
-                  <tr className="border-b border-[#E5E5E7]">
+                <thead className="text-xs uppercase tracking-wide text-[#71717a]">
+                  <tr className="border-b border-[#e4e4e7]">
                     <th className="py-3 pr-4">Email</th>
                     <th className="py-3 pr-4">Role</th>
                     <th className="py-3 pr-4">Status</th>
@@ -249,16 +249,16 @@ export default function AdminAccessWorkspace() {
                   {grants.map((grant) => (
                     <tr key={grant.email}>
                       <td className="py-3 pr-4">
-                        <div className="font-semibold text-[#06130c]">{grant.email}</div>
-                        <div className="mt-1 text-xs text-[#647269]">By {grant.invitedByEmail || 'system'}</div>
+                        <div className="font-semibold text-[#09090b]">{grant.email}</div>
+                        <div className="mt-1 text-xs text-[#71717a]">By {grant.invitedByEmail || 'system'}</div>
                       </td>
-                      <td className="py-3 pr-4 text-[#0F8F5A]">{roleLabel(grant.role)}</td>
+                      <td className="py-3 pr-4 text-[#18181b]">{roleLabel(grant.role)}</td>
                       <td className="py-3 pr-4">
                         <span className={`inline-flex rounded-full border px-2 py-1 text-xs font-bold ${statusClass(grant.status)}`}>
                           {roleLabel(grant.status)}
                         </span>
                       </td>
-                      <td className="py-3 pr-4 text-[#647269]">
+                      <td className="py-3 pr-4 text-[#71717a]">
                         <div>{dateLabel(grant.inviteSentAt)}</div>
                         {grant.lastInviteError ? <div className="mt-1 max-w-[220px] truncate text-xs text-[#be123c]">{grant.lastInviteError}</div> : null}
                       </td>
@@ -279,9 +279,9 @@ export default function AdminAccessWorkspace() {
               </table>
             </div>
           ) : (
-            <div className="rounded-md border border-dashed border-[#E5E5E7] bg-[#F5F5F6] p-6 text-center">
-              <div className="font-semibold text-[#06130c]">No admin grants found</div>
-              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#647269]">
+            <div className="rounded-md border border-dashed border-[#d4d4d8] bg-[#fafafa] p-6 text-center">
+              <div className="font-semibold text-[#09090b]">No admin grants found</div>
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#71717a]">
                 Run the Supabase admin access setup SQL, then grant access from this workspace.
               </p>
             </div>
@@ -294,13 +294,13 @@ export default function AdminAccessWorkspace() {
 
 function Metric({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {
   return (
-    <div className="rounded-[10px] border border-[#dfe5f2] bg-white p-4 shadow-sm">
+    <div className="rounded-[10px] border border-[#e4e4e7] bg-white p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</div>
-          <div className="mt-3 text-2xl font-semibold text-[#0f172a]">{value}</div>
+          <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{label}</div>
+          <div className="mt-3 text-2xl font-semibold text-[#09090b]">{value}</div>
         </div>
-        <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A] [&>svg]:h-4 [&>svg]:w-4">
+        <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b] [&>svg]:h-4 [&>svg]:w-4">
           {icon}
         </span>
       </div>
@@ -310,12 +310,12 @@ function Metric({ label, value, icon }: { label: string; value: string; icon: Re
 
 function AccessPanel({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <section className="rounded-[10px] border border-[#dfe5f2] bg-white shadow-sm">
+    <section className="rounded-[10px] border border-[#e4e4e7] bg-white shadow-sm">
       <header className="flex items-center gap-3 border-b border-[#edf1fb] px-5 py-4">
-        <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
+        <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
           {icon}
         </span>
-        <h2 className="text-base font-semibold text-[#0f172a]">{title}</h2>
+        <h2 className="text-base font-semibold text-[#09090b]">{title}</h2>
       </header>
       <div className="p-5">{children}</div>
     </section>

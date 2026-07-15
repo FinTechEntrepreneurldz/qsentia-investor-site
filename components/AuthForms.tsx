@@ -102,14 +102,14 @@ export function SignInForm() {
       </div>
 
       <div className="flex items-center gap-3">
-        <span className="h-px flex-1 bg-[#E5E5E7]" />
-        <span className="text-xs font-bold uppercase tracking-wide text-[#8a958e]">or use email</span>
-        <span className="h-px flex-1 bg-[#E5E5E7]" />
+        <span className="h-px flex-1 bg-[#e4e4e7]" />
+        <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">or use email</span>
+        <span className="h-px flex-1 bg-[#e4e4e7]" />
       </div>
 
       <form className="grid gap-4" onSubmit={handleSubmit}>
       <label
-        className="text-xs font-bold uppercase tracking-wide text-[#647269]"
+        className="text-xs font-bold uppercase tracking-wide text-[#71717a]"
         htmlFor="email"
       >
         Email
@@ -122,10 +122,10 @@ export function SignInForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@institution.com"
         required
-        className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+        className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
       />
       <label
-        className="text-xs font-bold uppercase tracking-wide text-[#647269]"
+        className="text-xs font-bold uppercase tracking-wide text-[#71717a]"
         htmlFor="password"
       >
         Password
@@ -138,11 +138,11 @@ export function SignInForm() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter your password"
         required
-        className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+        className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
       />
       <a
         href="/contact"
-        className="text-right text-xs font-semibold text-[#0F8F5A] hover:underline"
+        className="text-right text-xs font-semibold text-[#18181b] hover:underline"
       >
         Forgot password?
       </a>
@@ -151,7 +151,7 @@ export function SignInForm() {
         type="submit"
         suppressHydrationWarning
         disabled={loading || Boolean(providerLoading)}
-        className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:opacity-60"
+        className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46] disabled:opacity-60"
       >
         {loading ? "Signing in..." : "Continue to dashboard"}
         <ArrowRight className="h-4 w-4" />
@@ -255,15 +255,15 @@ export function CreateAccountForm() {
       </div>
 
       <div className="flex items-center gap-3">
-        <span className="h-px flex-1 bg-[#E5E5E7]" />
-        <span className="text-xs font-bold uppercase tracking-wide text-[#8a958e]">or create with email</span>
-        <span className="h-px flex-1 bg-[#E5E5E7]" />
+        <span className="h-px flex-1 bg-[#e4e4e7]" />
+        <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">or create with email</span>
+        <span className="h-px flex-1 bg-[#e4e4e7]" />
       </div>
 
       <form className="grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-2">
         <label
-          className="text-xs font-bold uppercase tracking-wide text-[#647269]"
+          className="text-xs font-bold uppercase tracking-wide text-[#71717a]"
           htmlFor="fullName"
         >
           Full name
@@ -276,12 +276,12 @@ export function CreateAccountForm() {
           onChange={(e) => setFullName(e.target.value)}
           placeholder="Your full name"
           required
-          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+          className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
         />
       </div>
       <div className="grid gap-2">
         <label
-          className="text-xs font-bold uppercase tracking-wide text-[#647269]"
+          className="text-xs font-bold uppercase tracking-wide text-[#71717a]"
           htmlFor="workEmail"
         >
           Work email
@@ -294,12 +294,12 @@ export function CreateAccountForm() {
           onChange={(e) => setWorkEmail(e.target.value)}
           placeholder="name@institution.com"
           required
-          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+          className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
         />
       </div>
       <div className="grid gap-2">
         <label
-          className="text-xs font-bold uppercase tracking-wide text-[#647269]"
+          className="text-xs font-bold uppercase tracking-wide text-[#71717a]"
           htmlFor="organization"
         >
           Organization
@@ -311,12 +311,12 @@ export function CreateAccountForm() {
           value={organization}
           onChange={(e) => setOrganization(e.target.value)}
           placeholder="Firm or company name"
-          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+          className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
         />
       </div>
       <div className="grid gap-2">
         <label
-          className="text-xs font-bold uppercase tracking-wide text-[#647269]"
+          className="text-xs font-bold uppercase tracking-wide text-[#71717a]"
           htmlFor="password"
         >
           Password
@@ -329,7 +329,7 @@ export function CreateAccountForm() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Create password"
           required
-          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+          className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
         />
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
@@ -337,7 +337,7 @@ export function CreateAccountForm() {
         type="submit"
         suppressHydrationWarning
         disabled={loading || Boolean(providerLoading)}
-        className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:opacity-60"
+        className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46] disabled:opacity-60"
       >
         {loading ? "Creating account..." : "Create account"}
         <ArrowRight className="h-4 w-4" />
@@ -366,12 +366,12 @@ function ProviderButton({
       suppressHydrationWarning
       onClick={onClick}
       disabled={disabled}
-      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#E5E5E7] bg-white px-4 py-2.5 text-sm font-bold text-[#0F8F5A] transition hover:border-[#0F8F5A] hover:bg-[#F5F5F6] disabled:cursor-not-allowed disabled:opacity-60"
+      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#d4d4d8] bg-white px-4 py-2.5 text-sm font-bold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] disabled:cursor-not-allowed disabled:opacity-60"
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin" />
       ) : (
-        <span className="flex h-4 w-4 items-center justify-center rounded-full text-sm font-black text-[#0F8F5A]">G</span>
+        <span className="flex h-4 w-4 items-center justify-center rounded-full text-sm font-black text-[#18181b]">G</span>
       )}
       {label}
     </button>
