@@ -52,7 +52,7 @@ export default function IntegrationsPage() {
               return (
                 <SectionCard
                   key={item.title}
-                  className="flex flex-col p-6 justify-between h-full bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px]"
+                  className="flex flex-col p-6 justify-between h-full bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-[12px]"
                 >
                   <div>
                     <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">

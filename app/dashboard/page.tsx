@@ -180,7 +180,7 @@ export default function DashboardPage() {
   ];
 
   const tooltipStyle = {
-    background: isDark ? '#1A1A1D' : '#ffffff',
+    background: isDark ? '#09090b' : '#ffffff',
     border: isDark ? '1px solid #27272a' : '1px solid #e4e4e7',
     borderRadius: '8px',
     color: isDark ? '#ffffff' : '#09090b',
@@ -216,7 +216,7 @@ export default function DashboardPage() {
                 Open settings
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
-              <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-4 shadow-sm">
+              <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-4 shadow-sm">
                 <label className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500" htmlFor="model-select">
                   Selected model
                 </label>
@@ -476,7 +476,7 @@ function SegmentedControl({
             onClick={() => onChange(option.key)}
             className={`shrink-0 rounded px-3 py-1.5 text-xs font-semibold transition ${
               value === option.key
-                ? 'border border-zinc-955 dark:border-white bg-white dark:bg-[#1A1A1D] text-zinc-955 dark:text-white'
+                ? 'border border-zinc-955 dark:border-white bg-white dark:bg-[#09090b] text-zinc-955 dark:text-white'
                 : 'border border-transparent text-zinc-500 dark:text-zinc-400 hover:bg-zinc-150 dark:hover:bg-zinc-800'
             }`}
           >

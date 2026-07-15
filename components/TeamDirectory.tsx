@@ -95,7 +95,7 @@ function FounderCard({ member }: { member: TeamMember }) {
   const style = roleStyles[member.role];
 
   return (
-    <article className="flex flex-col md:flex-row overflow-hidden rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] transition duration-200 hover:border-zinc-400 dark:hover:border-zinc-700 min-h-[220px] md:min-h-[240px] w-full">
+    <article className="flex flex-col md:flex-row overflow-hidden rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] transition duration-200 hover:border-zinc-400 dark:hover:border-zinc-700 min-h-[220px] md:min-h-[240px] w-full">
       {/* Photo on Left */}
       <div className="relative w-full md:w-[240px] h-52 md:h-auto shrink-0 bg-zinc-50 dark:bg-black/40 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
         {member.imageSrc ? (
@@ -114,7 +114,7 @@ function FounderCard({ member }: { member: TeamMember }) {
               className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,100,100,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,100,100,0.06)_1px,transparent_1px)] bg-[size:54px_54px]"
             />
             <div
-              className={`relative z-10 flex h-24 w-24 items-center justify-center rounded-full border-4 bg-white dark:bg-[#1A1A1D] text-2xl font-semibold ${style.ring}`}
+              className={`relative z-10 flex h-24 w-24 items-center justify-center rounded-full border-4 bg-white dark:bg-[#09090b] text-2xl font-semibold ${style.ring}`}
             >
               <span className={`flex h-20 w-20 items-center justify-center rounded-full ${style.avatar}`}>
                 {member.initials}
@@ -160,7 +160,7 @@ function TeamProfileCard({ member }: { member: TeamMember }) {
   const style = roleStyles[member.role];
 
   return (
-    <article className="flex h-full w-[250px] flex-col overflow-hidden rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] transition duration-200 hover:border-zinc-400 dark:hover:border-zinc-700 shrink-0">
+    <article className="flex h-full w-[250px] flex-col overflow-hidden rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] transition duration-200 hover:border-zinc-400 dark:hover:border-zinc-700 shrink-0">
       <div className="relative flex h-40 items-center justify-center overflow-hidden bg-zinc-50 dark:bg-black/40 border-b border-zinc-200 dark:border-zinc-800">
         {member.imageSrc ? (
           <Image
@@ -178,7 +178,7 @@ function TeamProfileCard({ member }: { member: TeamMember }) {
               className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,100,100,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,100,100,0.06)_1px,transparent_1px)] bg-[size:54px_54px]"
             />
             <div
-              className={`relative z-10 flex h-20 w-20 items-center justify-center rounded-full border-4 bg-white dark:bg-[#1A1A1D] text-xl font-semibold ${style.ring}`}
+              className={`relative z-10 flex h-20 w-20 items-center justify-center rounded-full border-4 bg-white dark:bg-[#09090b] text-xl font-semibold ${style.ring}`}
             >
               <span className={`flex h-16 w-16 items-center justify-center rounded-full ${style.avatar}`}>
                 {member.initials}
@@ -249,7 +249,7 @@ function ScrollRow({ children }: { children: React.ReactNode }) {
         <button
           type="button"
           onClick={() => scroll('left')}
-          className="absolute left-2 top-[35%] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#1A1A1D]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
+          className="absolute left-2 top-[35%] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#09090b]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -265,7 +265,7 @@ function ScrollRow({ children }: { children: React.ReactNode }) {
         <button
           type="button"
           onClick={() => scroll('right')}
-          className="absolute right-2 top-[35%] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#1A1A1D]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
+          className="absolute right-2 top-[35%] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#09090b]/95 text-zinc-950 dark:text-white shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
         >
           <ChevronRight className="h-5 w-5" />
         </button>

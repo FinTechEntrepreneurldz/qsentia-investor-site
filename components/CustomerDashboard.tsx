@@ -441,7 +441,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
 
         <main className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">
           <div className="mb-6 overflow-hidden rounded-[16px] border border-[#e4e4e7] bg-white shadow-sm">
-            <div className="border-b border-[#e4e4e7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#f4f4f5_100%)] dark:bg-none dark:bg-[#1A1A1D] p-5 md:p-6">
+            <div className="border-b border-[#e4e4e7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#f4f4f5_100%)] dark:bg-none dark:bg-[#09090b] p-5 md:p-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#18181b]">

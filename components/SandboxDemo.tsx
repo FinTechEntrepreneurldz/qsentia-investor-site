@@ -36,7 +36,7 @@ export default function SandboxDemo() {
   return (
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       {/* ── Left Control Panel ── */}
-      <SectionCard className="p-5 flex flex-col justify-between h-full bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px]">
+      <SectionCard className="p-5 flex flex-col justify-between h-full bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-[12px]">
         <div>
           <div className="font-mono text-[9px] font-bold tracking-wider uppercase text-zinc-500">
             Scenario
@@ -86,7 +86,7 @@ export default function SandboxDemo() {
       </SectionCard>
 
       {/* ── Right Simulation Panel ── */}
-      <SectionCard className="overflow-hidden bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px]">
+      <SectionCard className="overflow-hidden bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-[12px]">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-850 px-6 py-4">
           <div>
@@ -139,7 +139,7 @@ export default function SandboxDemo() {
 
 function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="min-h-24 bg-white dark:bg-[#1A1A1D] p-4 transition-colors">
+    <div className="min-h-24 bg-white dark:bg-[#09090b] p-4 transition-colors">
       <span className="block text-zinc-950 dark:text-white [&>svg]:h-4 [&>svg]:w-4">
         {icon}
       </span>

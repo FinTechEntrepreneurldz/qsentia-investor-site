@@ -328,7 +328,7 @@ export default function MleqPage() {
                   {heroStats.map((stat) => (
                     <div
                       key={stat.label}
-                      className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-4"
+                      className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-4"
                     >
                       <div className="font-mono text-sm sm:text-base font-bold text-zinc-950 dark:text-white uppercase leading-none">
                         {isLoading ? "..." : stat.value}
@@ -490,7 +490,7 @@ export default function MleqPage() {
                         className={`w-full rounded-[12px] border p-4 text-left transition ${
                           isActive
                             ? "border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-black"
-                            : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-[#1A1A1D] dark:text-zinc-400 dark:hover:bg-zinc-900"
+                            : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-[#09090b] dark:text-zinc-400 dark:hover:bg-zinc-900"
                         }`}
                       >
                         <div className="flex items-start gap-3">
@@ -689,7 +689,7 @@ function PipelineStageDetail({
             {details.title}
           </h3>
         </div>
-        <div className="rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] px-3 py-2 text-right">
+        <div className="rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] px-3 py-2 text-right">
           <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
             Rows
           </div>
@@ -733,7 +733,7 @@ function TerminalPanel({
   dark: boolean;
 }) {
   return (
-    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-6 shadow-sm">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-6 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <div className="font-mono text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
@@ -870,7 +870,7 @@ function DarkPanel({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-5">
       <h3 className="font-mono text-[10px] font-bold tracking-widest text-zinc-500 uppercase border-b border-zinc-200 dark:border-zinc-850 pb-2">
         {title}
       </h3>
@@ -881,7 +881,7 @@ function DarkPanel({
 
 function MetricBox({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-5">
       <div className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">
         {label}
       </div>
@@ -936,7 +936,7 @@ function Principle({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-5">
       <div className="flex items-center justify-between gap-4">
         <span className="font-mono text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
           {number}
@@ -959,7 +959,7 @@ function Discipline({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] p-5">
+    <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-5">
       <div className="flex gap-4">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">
           <Icon className="h-4 w-4" />
