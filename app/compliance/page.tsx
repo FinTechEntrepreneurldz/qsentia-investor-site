@@ -111,11 +111,29 @@ const programme = [
 export default function CompliancePage() {
   return (
     <PageShell active="/compliance">
+<<<<<<< HEAD
       <PageIntro
         eyebrow="Trust centre"
         title="Compliance centre"
         body="QSentia's public policy set for privacy, security, consent, platform conduct, billing, and digital service delivery."
       />
+=======
+      <section className="relative overflow-hidden border-b border-[#E5E5E7] bg-[#F5F5F6]">
+        <TechnicalBackdrop />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
+            <ShieldCheck className="h-4 w-4" /> Trust centre
+          </div>
+          <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[1.04] text-[#06130c] md:text-7xl">
+            Compliance Centre
+          </h1>
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#46554b] md:text-lg">
+            QSentia&apos;s public policy set for privacy, security, consent,
+            platform conduct, billing, and digital service delivery.
+          </p>
+        </div>
+      </section>
+>>>>>>> origin/main
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -125,9 +143,15 @@ export default function CompliancePage() {
               <Link
                 key={policy.href}
                 href={policy.href}
+<<<<<<< HEAD
                 className="group border border-[#e4e4e7] bg-white p-5 transition hover:border-[#18181b]"
               >
                 <span className="flex h-10 w-10 items-center justify-center bg-[#f4f4f5] text-[#18181b]">
+=======
+                className="group border border-[#dbe3ff] bg-white p-5 transition hover:border-[#0F8F5A]"
+              >
+                <span className="flex h-10 w-10 items-center justify-center bg-[#D1F1E1] text-[#0F8F5A]">
+>>>>>>> origin/main
                   <Icon className="h-5 w-5" />
                 </span>
                 <h2 className="mt-5 text-xl font-semibold text-[#09090b]">
@@ -136,7 +160,11 @@ export default function CompliancePage() {
                 <p className="mt-2 min-h-12 text-sm leading-6 text-[#52525b]">
                   {policy.body}
                 </p>
+<<<<<<< HEAD
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#18181b]">
+=======
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#12B76A]">
+>>>>>>> origin/main
                   Read policy{" "}
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </span>
@@ -146,7 +174,11 @@ export default function CompliancePage() {
         </div>
       </section>
 
+<<<<<<< HEAD
       <section className="border-y border-[#e4e4e7] bg-[#fafafa]">
+=======
+      <section className="border-y border-[#E5E5E7] bg-[#F5F5F6]">
+>>>>>>> origin/main
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
           <div className="max-w-3xl">
             <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
@@ -158,21 +190,33 @@ export default function CompliancePage() {
           </div>
           <div className="mt-7 overflow-x-auto border border-[#e4e4e7] bg-white">
             <table className="w-full min-w-[760px] text-left text-sm">
+<<<<<<< HEAD
               <thead className="border-b border-[#e4e4e7] bg-[#fafafa] text-xs uppercase tracking-wide text-[#71717a]">
+=======
+              <thead className="border-b border-[#E5E5E7] bg-[#F5F5F6] text-xs uppercase tracking-wide text-[#647269]">
+>>>>>>> origin/main
                 <tr>
                   <th className="px-4 py-3">Area</th>
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3">Position</th>
                 </tr>
               </thead>
+<<<<<<< HEAD
               <tbody className="divide-y divide-[#f4f4f5]">
+=======
+              <tbody className="divide-y divide-[#D1F1E1]">
+>>>>>>> origin/main
                 {programme.map(([area, status, position]) => (
                   <tr key={area}>
                     <td className="px-4 py-4 font-semibold text-[#09090b]">
                       {area}
                     </td>
                     <td className="px-4 py-4">
+<<<<<<< HEAD
                       <span className="border border-[#d4d4d8] bg-[#f4f4f5] px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#18181b]">
+=======
+                      <span className="border border-[#c7d2fe] bg-[#D1F1E1] px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
+>>>>>>> origin/main
                         {status}
                       </span>
                     </td>

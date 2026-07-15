@@ -34,7 +34,11 @@ export default function DisclaimerPage() {
 
 function LegalHero({ title, subtitle }: { title: string; subtitle: string }) {
   return (
+<<<<<<< HEAD
     <section className="border-b border-zinc-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
+=======
+    <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
+>>>>>>> origin/main
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500">
           Legal notice
@@ -49,7 +53,11 @@ function LegalHero({ title, subtitle }: { title: string; subtitle: string }) {
 function LegalBody({ sections }: { sections: ReadonlyArray<readonly [string, string]> }) {
   return (
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+<<<<<<< HEAD
       <div className="divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
+=======
+      <SectionCard className="divide-y divide-[#E5E5E7]">
+>>>>>>> origin/main
         {sections.map(([title, body], index) => (
           <section key={title} className="py-7">
             <div className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-500">

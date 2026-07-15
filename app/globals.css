@@ -531,7 +531,7 @@ body {
 }
 
 .admin-input:focus {
-  border-color: #3d52da;
+  border-color: #0F8F5A;
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(61, 82, 218, 0.1);
 }
@@ -558,28 +558,28 @@ body {
 }
 
 .admin-primary-button {
-  border: 1px solid #172554;
-  background: #172554;
+  border: 1px solid #0F8F5A;
+  background: #0F8F5A;
   color: #ffffff;
   padding: 0.75rem 1rem;
 }
 
 .admin-primary-button:hover {
-  background: #2437b5;
+  background: #12B76A;
   box-shadow: 0 10px 24px rgba(23, 37, 84, 0.18);
 }
 
 .admin-secondary-button {
   border: 1px solid #d8e1f2;
   background: #ffffff;
-  color: #172554;
+  color: #0F8F5A;
   padding: 0.625rem 0.875rem;
 }
 
 .admin-secondary-button:hover,
 .admin-icon-button:hover {
-  border-color: #3d52da;
-  color: #3046c8;
+  border-color: #0F8F5A;
+  color: #12B76A;
 }
 
 .admin-danger-button {
@@ -612,7 +612,7 @@ body {
   justify-content: center;
   border: 1px solid #d8e1f2;
   background: #ffffff;
-  color: #172554;
+  color: #0F8F5A;
 }
 
 .admin-primary-button:disabled,
@@ -628,7 +628,7 @@ body {
   border: 1px solid #d8e1f2;
   background: #ffffff;
   padding: 0.5rem 0.625rem;
-  color: #172554;
+  color: #0F8F5A;
   font-size: 0.75rem;
   font-weight: 700;
   outline: none;
@@ -720,11 +720,11 @@ body {
   background-color: #09090b !important;
 }
 
-.dark .bg-\[\#f8faff\] {
+.dark .bg-\[\#F5F5F6\] {
   background-color: #09090b !important;
 }
 
-.dark .bg-\[\#fbfcff\] {
+.dark .bg-\[\#F5F5F6\] {
   background-color: #121214 !important;
 }
 
@@ -732,6 +732,7 @@ body {
   background-color: #18181b !important;
 }
 
+<<<<<<< HEAD
 .dark .bg-\[\#fafafa\],
 .dark .bg-\[\#f4f4f5\],
 .dark .bg-\[\#f3f5f8\],
@@ -774,6 +775,20 @@ body {
 }
 
 .dark .border-\[\#d7ddf7\] {
+=======
+.dark .border-\[\#E5E5E7\],
+.dark .border-\[\#dbe3ff\],
+.dark .border-\[\#d7ddf7\],
+.dark .border-\[\#e2e7fb\],
+.dark .border-\[\#cbd5ff\],
+.dark .border-\[\#eef2ff\],
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-300,
+.dark .border-zinc-100,
+.dark .border-zinc-200,
+.dark .border-zinc-300 {
+>>>>>>> origin/main
   border-color: #27272a !important;
 }
 
@@ -793,6 +808,7 @@ body {
   color: #f8fafc !important;
 }
 
+<<<<<<< HEAD
 .dark .text-\[\#09090b\],
 .dark .text-\[\#18181b\],
 .dark .text-\[\#27272a\] {
@@ -800,6 +816,9 @@ body {
 }
 
 .dark .text-\[\#172554\] {
+=======
+.dark .text-\[\#0F8F5A\] {
+>>>>>>> origin/main
   color: #e4e4e7 !important;
 }
 
@@ -823,6 +842,7 @@ body {
   color: #cbd5e1 !important;
 }
 
+<<<<<<< HEAD
 .dark .text-\[\#52525b\],
 .dark .text-\[\#71717a\],
 .dark .text-\[\#a1a1aa\],
@@ -859,10 +879,13 @@ body {
 }
 
 .dark .hover\:bg-\[\#f8faff\]:hover {
+=======
+.dark .hover\:bg-\[\#F5F5F6\]:hover {
+>>>>>>> origin/main
   background-color: #18181b !important;
 }
 
-.dark .hover\:bg-\[\#eef2ff\]:hover {
+.dark .hover\:bg-\[\#D1F1E1\]:hover {
   background-color: #18181b !important;
 }
 

@@ -354,7 +354,7 @@ export function PageShell({
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <div className="inline-flex items-center rounded-full border border-[#c7d2fe] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#3046c8]">
+    <div className="inline-flex items-center rounded-full border border-[#c7d2fe] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
       {children}
     </div>
   );
@@ -367,11 +367,11 @@ export function TechnicalBackdrop({ className = "" }: { className?: string }) {
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(61,82,218,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(61,82,218,0.07)_1px,transparent_1px)] bg-[size:86px_86px]" />
-      <div className="absolute left-[7%] top-[18%] h-16 w-16 rotate-[31deg] rounded-[5px] border border-[#3d52da]/18" />
-      <div className="absolute left-[16%] top-[11%] h-9 w-9 rotate-[8deg] rounded-[5px] border border-[#3d52da]/18" />
-      <div className="absolute bottom-[21%] left-[5%] h-3 w-3 rounded-full bg-[#3d52da]/12 ring-8 ring-[#3d52da]/5" />
-      <div className="absolute right-[9%] top-[17%] h-20 w-20 -rotate-[16deg] rounded-[6px] border border-[#3d52da]/10" />
-      <div className="absolute bottom-[16%] right-[17%] h-2.5 w-2.5 rounded-full bg-[#3d52da]/10 ring-6 ring-[#3d52da]/5" />
+      <div className="absolute left-[7%] top-[18%] h-16 w-16 rotate-[31deg] rounded-[5px] border border-[#0F8F5A]/18" />
+      <div className="absolute left-[16%] top-[11%] h-9 w-9 rotate-[8deg] rounded-[5px] border border-[#0F8F5A]/18" />
+      <div className="absolute bottom-[21%] left-[5%] h-3 w-3 rounded-full bg-[#0F8F5A]/12 ring-8 ring-[#0F8F5A]/5" />
+      <div className="absolute right-[9%] top-[17%] h-20 w-20 -rotate-[16deg] rounded-[6px] border border-[#0F8F5A]/10" />
+      <div className="absolute bottom-[16%] right-[17%] h-2.5 w-2.5 rounded-full bg-[#0F8F5A]/10 ring-6 ring-[#0F8F5A]/5" />
     </div>
   );
 }
@@ -421,7 +421,7 @@ export function ApiLoadingPanel({
       className={`relative overflow-hidden rounded-[12px] border p-6 shadow-sm sm:p-8 ${
         dark
           ? "border-[#18233f] bg-[#080d1c] text-white"
-          : "border-[#e2e7fb] bg-white text-[#06130c]"
+          : "border-[#E5E5E7] bg-white text-[#06130c]"
       }`}
       role="status"
       aria-live="polite"
@@ -436,11 +436,11 @@ export function ApiLoadingPanel({
       />
       <div
         aria-hidden
-        className={`absolute right-8 top-8 h-14 w-14 rotate-[16deg] rounded-md border ${dark ? "border-[#6f7cff]/16" : "border-[#3d52da]/14"}`}
+        className={`absolute right-8 top-8 h-14 w-14 rotate-[16deg] rounded-md border ${dark ? "border-[#6f7cff]/16" : "border-[#0F8F5A]/14"}`}
       />
       <div
         aria-hidden
-        className={`absolute bottom-8 left-8 h-2.5 w-2.5 rounded-full ${dark ? "bg-[#00d6b8]/25 ring-8 ring-[#00d6b8]/5" : "bg-[#3d52da]/16 ring-8 ring-[#3d52da]/5"}`}
+        className={`absolute bottom-8 left-8 h-2.5 w-2.5 rounded-full ${dark ? "bg-[#00d6b8]/25 ring-8 ring-[#00d6b8]/5" : "bg-[#0F8F5A]/16 ring-8 ring-[#0F8F5A]/5"}`}
       />
 
       <div className="relative z-10">
@@ -449,7 +449,7 @@ export function ApiLoadingPanel({
             className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md ${
               dark
                 ? "border border-[#24304d] bg-[#050714] text-[#00d6b8]"
-                : "bg-[#eef2ff] text-[#3d52da]"
+                : "bg-[#D1F1E1] text-[#0F8F5A]"
             }`}
           >
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -475,7 +475,7 @@ export function ApiLoadingPanel({
               className={`rounded-md border px-3 py-2 text-xs font-semibold ${
                 dark
                   ? "border-[#18233f] bg-[#050714] text-[#cbd5e1]"
-                  : "border-[#e2e7fb] bg-[#fbfcff] text-[#46554b]"
+                  : "border-[#E5E5E7] bg-[#F5F5F6] text-[#46554b]"
               }`}
             >
               {item}
@@ -484,11 +484,11 @@ export function ApiLoadingPanel({
         </div>
 
         <div
-          className={`mt-6 h-1.5 overflow-hidden rounded-full ${dark ? "bg-[#121a2f]" : "bg-[#eef2ff]"}`}
+          className={`mt-6 h-1.5 overflow-hidden rounded-full ${dark ? "bg-[#121a2f]" : "bg-[#D1F1E1]"}`}
         >
           <div
             className={`h-full w-1/3 rounded-full [animation:buffer-slide_1.45s_ease-in-out_infinite] ${
-              dark ? "bg-[#00d6b8]" : "bg-[#3d52da]"
+              dark ? "bg-[#00d6b8]" : "bg-[#0F8F5A]"
             }`}
           />
         </div>

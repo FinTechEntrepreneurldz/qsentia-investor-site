@@ -297,8 +297,13 @@ function SummaryView({ data }: { data: CommerceData }) {
     <section className="border-t border-[#e4e4e7] pt-6">
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
+<<<<<<< HEAD
           <div className="text-xs font-bold uppercase tracking-wide text-[#18181b]">API business</div>
           <h2 className="mt-1 text-xl font-semibold text-[#09090b]">Commercial control plane</h2>
+=======
+          <div className="text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">API business</div>
+          <h2 className="mt-1 text-xl font-semibold text-[#0f172a]">Commercial control plane</h2>
+>>>>>>> origin/main
         </div>
         <span className="text-xs text-[#71717a]">Updated {shortDate(data.updatedAt)}</span>
       </div>
@@ -371,6 +376,7 @@ function CustomersView({ data, form, onCreate, onForm, onStatus, saving }: {
           {data.customers.length ? (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[860px] text-left text-sm">
+<<<<<<< HEAD
                 <thead className="text-xs uppercase tracking-wide text-[#71717a]"><tr><th className="pb-3">Account</th><th className="pb-3">Plan</th><th className="pb-3">Value</th><th className="pb-3">Renewal</th><th className="pb-3">Account</th><th className="pb-3">Billing</th></tr></thead>
                 <tbody className="divide-y divide-[#e4e4e7]">
                   {data.customers.map((customer) => (
@@ -379,6 +385,16 @@ function CustomersView({ data, form, onCreate, onForm, onStatus, saving }: {
                       <td className="py-3 text-[#18181b]">{customer.plan}<div className="mt-1 text-xs text-[#71717a]">{customer.seats} seats</div></td>
                       <td className="py-3 font-semibold text-[#09090b]">{money(customer.monthlyRevenue, customer.currency)}<div className="mt-1 text-xs font-normal text-[#71717a]">per month</div></td>
                       <td className="py-3 text-[#71717a]">{shortDate(customer.renewalAt)}</td>
+=======
+                <thead className="text-xs uppercase tracking-wide text-[#647269]"><tr><th className="pb-3">Account</th><th className="pb-3">Plan</th><th className="pb-3">Value</th><th className="pb-3">Renewal</th><th className="pb-3">Account</th><th className="pb-3">Billing</th></tr></thead>
+                <tbody className="divide-y divide-[#E5E5E7]">
+                  {data.customers.map((customer) => (
+                    <tr key={customer.id}>
+                      <td className="py-3"><div className="font-semibold text-[#0f172a]">{customer.organization}</div><div className="mt-1 text-xs text-[#647269]">{customer.primaryContact} Â· {customer.email}</div></td>
+                      <td className="py-3 text-[#0F8F5A]">{customer.plan}<div className="mt-1 text-xs text-[#647269]">{customer.seats} seats</div></td>
+                      <td className="py-3 font-semibold text-[#0f172a]">{money(customer.monthlyRevenue, customer.currency)}<div className="mt-1 text-xs font-normal text-[#647269]">per month</div></td>
+                      <td className="py-3 text-[#647269]">{shortDate(customer.renewalAt)}</td>
+>>>>>>> origin/main
                       <td className="py-3"><Select compact value={customer.status} options={customerStatuses} onChange={(status) => onStatus(customer, status, customer.billingStatus)} /></td>
                       <td className="py-3"><Select compact value={customer.billingStatus} options={billingStatuses} onChange={(billingStatus) => onStatus(customer, customer.status, billingStatus)} /></td>
                     </tr>
@@ -459,16 +475,26 @@ function ApiAccessView({ data, entitlementForm, issuedSecret, keyForm, models, o
 
       <Panel title="Model entitlements" icon={<ShieldCheck className="h-4 w-4" />}>
         {data.entitlements.length ? (
+<<<<<<< HEAD
           <div className="overflow-x-auto"><table className="w-full min-w-[900px] text-left text-sm"><thead className="text-xs uppercase tracking-wide text-[#71717a]"><tr><th className="pb-3">Customer</th><th className="pb-3">Model</th><th className="pb-3">Environment</th><th className="pb-3">Scope</th><th className="pb-3">Usage</th><th className="pb-3">Expiry</th><th className="pb-3">Status</th></tr></thead><tbody className="divide-y divide-[#e4e4e7]">{data.entitlements.map((entitlement) => (
             <tr key={entitlement.id}><td className="py-3 font-semibold text-[#09090b]">{customerName(data.customers, entitlement.customerId)}</td><td className="max-w-[260px] py-3 text-[#18181b]">{modelName(models, entitlement.modelId)}</td><td className="py-3"><Badge value={entitlement.environment} /></td><td className="py-3 text-[#71717a]">{label(entitlement.scope)}</td><td className="py-3 text-[#71717a]">{entitlement.requestsUsed.toLocaleString()} / {entitlement.requestLimit.toLocaleString()}</td><td className="py-3 text-[#71717a]">{shortDate(entitlement.expiresAt)}</td><td className="py-3"><Select compact value={entitlement.status} options={entitlementStatuses} onChange={(status) => onEntitlementStatus(entitlement, status)} /></td></tr>
+=======
+          <div className="overflow-x-auto"><table className="w-full min-w-[900px] text-left text-sm"><thead className="text-xs uppercase tracking-wide text-[#647269]"><tr><th className="pb-3">Customer</th><th className="pb-3">Model</th><th className="pb-3">Environment</th><th className="pb-3">Scope</th><th className="pb-3">Usage</th><th className="pb-3">Expiry</th><th className="pb-3">Status</th></tr></thead><tbody className="divide-y divide-[#E5E5E7]">{data.entitlements.map((entitlement) => (
+            <tr key={entitlement.id}><td className="py-3 font-semibold text-[#0f172a]">{customerName(data.customers, entitlement.customerId)}</td><td className="max-w-[260px] py-3 text-[#0F8F5A]">{modelName(models, entitlement.modelId)}</td><td className="py-3"><Badge value={entitlement.environment} /></td><td className="py-3 text-[#647269]">{label(entitlement.scope)}</td><td className="py-3 text-[#647269]">{entitlement.requestsUsed.toLocaleString()} / {entitlement.requestLimit.toLocaleString()}</td><td className="py-3 text-[#647269]">{shortDate(entitlement.expiresAt)}</td><td className="py-3"><Select compact value={entitlement.status} options={entitlementStatuses} onChange={(status) => onEntitlementStatus(entitlement, status)} /></td></tr>
+>>>>>>> origin/main
           ))}</tbody></table></div>
         ) : <Empty title="No model entitlements" body="Assign an API customer to a model, environment, scope, and request limit." />}
       </Panel>
 
       <Panel title="API credentials" icon={<LockKeyhole className="h-4 w-4" />}>
         {data.apiKeys.length ? (
+<<<<<<< HEAD
           <div className="overflow-x-auto"><table className="w-full min-w-[800px] text-left text-sm"><thead className="text-xs uppercase tracking-wide text-[#71717a]"><tr><th className="pb-3">Customer</th><th className="pb-3">Credential</th><th className="pb-3">Environment</th><th className="pb-3">Last used</th><th className="pb-3">Expiry</th><th className="pb-3">Status</th><th className="pb-3">Action</th></tr></thead><tbody className="divide-y divide-[#e4e4e7]">{data.apiKeys.map((key) => (
             <tr key={key.id}><td className="py-3 font-semibold text-[#09090b]">{customerName(data.customers, key.customerId)}</td><td className="py-3"><div className="text-[#18181b]">{key.label}</div><code className="mt-1 block text-xs text-[#71717a]">{key.keyPrefix}</code></td><td className="py-3"><Badge value={key.environment} /></td><td className="py-3 text-[#71717a]">{shortDate(key.lastUsedAt)}</td><td className="py-3 text-[#71717a]">{shortDate(key.expiresAt)}</td><td className="py-3"><Badge value={key.status} /></td><td className="py-3">{key.status === 'active' ? <button type="button" onClick={() => onRevoke(key)} disabled={saving} className="admin-danger-button">Revoke</button> : <span className="text-xs text-[#a1a1aa]">No action</span>}</td></tr>
+=======
+          <div className="overflow-x-auto"><table className="w-full min-w-[800px] text-left text-sm"><thead className="text-xs uppercase tracking-wide text-[#647269]"><tr><th className="pb-3">Customer</th><th className="pb-3">Credential</th><th className="pb-3">Environment</th><th className="pb-3">Last used</th><th className="pb-3">Expiry</th><th className="pb-3">Status</th><th className="pb-3">Action</th></tr></thead><tbody className="divide-y divide-[#E5E5E7]">{data.apiKeys.map((key) => (
+            <tr key={key.id}><td className="py-3 font-semibold text-[#0f172a]">{customerName(data.customers, key.customerId)}</td><td className="py-3"><div className="text-[#0F8F5A]">{key.label}</div><code className="mt-1 block text-xs text-[#647269]">{key.keyPrefix}</code></td><td className="py-3"><Badge value={key.environment} /></td><td className="py-3 text-[#647269]">{shortDate(key.lastUsedAt)}</td><td className="py-3 text-[#647269]">{shortDate(key.expiresAt)}</td><td className="py-3"><Badge value={key.status} /></td><td className="py-3">{key.status === 'active' ? <button type="button" onClick={() => onRevoke(key)} disabled={saving} className="admin-danger-button">Revoke</button> : <span className="text-xs text-[#94a3b8]">No action</span>}</td></tr>
+>>>>>>> origin/main
           ))}</tbody></table></div>
         ) : <Empty title="No API credentials" body="Issue a credential only after the customer and model entitlement have been approved." />}
       </Panel>
@@ -489,8 +515,13 @@ function BillingView({ data, onStatus, saving }: { data: CommerceData; onStatus:
       </div>
       <Panel title="Billing portfolio" icon={<CreditCard className="h-4 w-4" />}>
         {data.customers.length ? (
+<<<<<<< HEAD
           <div className="overflow-x-auto"><table className="w-full min-w-[860px] text-left text-sm"><thead className="text-xs uppercase tracking-wide text-[#71717a]"><tr><th className="pb-3">Customer</th><th className="pb-3">Plan</th><th className="pb-3">Cycle</th><th className="pb-3">Monthly value</th><th className="pb-3">Renewal</th><th className="pb-3">Owner</th><th className="pb-3">Billing status</th></tr></thead><tbody className="divide-y divide-[#e4e4e7]">{data.customers.map((customer) => (
             <tr key={customer.id}><td className="py-3"><div className="font-semibold text-[#09090b]">{customer.organization}</div><div className="mt-1 text-xs text-[#71717a]">{customer.email}</div></td><td className="py-3 text-[#18181b]">{customer.plan}</td><td className="py-3 text-[#71717a]">{label(customer.billingCycle)}</td><td className="py-3 font-semibold text-[#09090b]">{money(customer.monthlyRevenue, customer.currency)}</td><td className="py-3 text-[#71717a]">{shortDate(customer.renewalAt)}</td><td className="py-3 text-[#71717a]">{customer.salesOwner}</td><td className="py-3"><Select compact disabled={saving} value={customer.billingStatus} options={billingStatuses} onChange={(status) => onStatus(customer, status)} /></td></tr>
+=======
+          <div className="overflow-x-auto"><table className="w-full min-w-[860px] text-left text-sm"><thead className="text-xs uppercase tracking-wide text-[#647269]"><tr><th className="pb-3">Customer</th><th className="pb-3">Plan</th><th className="pb-3">Cycle</th><th className="pb-3">Monthly value</th><th className="pb-3">Renewal</th><th className="pb-3">Owner</th><th className="pb-3">Billing status</th></tr></thead><tbody className="divide-y divide-[#E5E5E7]">{data.customers.map((customer) => (
+            <tr key={customer.id}><td className="py-3"><div className="font-semibold text-[#0f172a]">{customer.organization}</div><div className="mt-1 text-xs text-[#647269]">{customer.email}</div></td><td className="py-3 text-[#0F8F5A]">{customer.plan}</td><td className="py-3 text-[#647269]">{label(customer.billingCycle)}</td><td className="py-3 font-semibold text-[#0f172a]">{money(customer.monthlyRevenue, customer.currency)}</td><td className="py-3 text-[#647269]">{shortDate(customer.renewalAt)}</td><td className="py-3 text-[#647269]">{customer.salesOwner}</td><td className="py-3"><Select compact disabled={saving} value={customer.billingStatus} options={billingStatuses} onChange={(status) => onStatus(customer, status)} /></td></tr>
+>>>>>>> origin/main
           ))}</tbody></table></div>
         ) : <Empty title="No billing accounts" body="Customer commercial terms will appear here after an account is created." />}
       </Panel>
@@ -501,19 +532,32 @@ function BillingView({ data, onStatus, saving }: { data: CommerceData; onStatus:
 function AuditTrail({ events }: { events: AuditEvent[] }) {
   return (
     <Panel title="Access audit trail" icon={<Activity className="h-4 w-4" />}>
+<<<<<<< HEAD
       {events.length ? <div className="divide-y divide-[#e4e4e7]">{events.slice(0, 12).map((event) => (
         <div key={event.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between"><div><span className="text-sm font-semibold text-[#09090b]">{label(event.action.replace('.', '_'))}</span><span className="ml-2 text-sm text-[#71717a]">{event.detail}</span></div><span className="shrink-0 text-xs text-[#71717a]">{shortDate(event.createdAt)}</span></div>
+=======
+      {events.length ? <div className="divide-y divide-[#E5E5E7]">{events.slice(0, 12).map((event) => (
+        <div key={event.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between"><div><span className="text-sm font-semibold text-[#0f172a]">{label(event.action.replace('.', '_'))}</span><span className="ml-2 text-sm text-[#647269]">{event.detail}</span></div><span className="shrink-0 text-xs text-[#647269]">{shortDate(event.createdAt)}</span></div>
+>>>>>>> origin/main
       ))}</div> : <Empty title="No access events" body="Customer, entitlement, and credential changes will be recorded here." />}
     </Panel>
   );
 }
 
 function Panel({ children, icon, title }: { children: ReactNode; icon: ReactNode; title: string }) {
+<<<<<<< HEAD
   return <section className="rounded-md border border-[#e4e4e7] bg-white p-5 shadow-sm"><div className="mb-5 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">{icon}</span><h2 className="text-lg font-semibold text-[#09090b]">{title}</h2></div>{children}</section>;
 }
 
 function Metric({ detail, icon, label: metricLabel, value }: { detail: string; icon: ReactNode; label: string; value: string }) {
   return <div className="rounded-md border border-[#e4e4e7] bg-white p-5 shadow-sm"><div className="flex items-start justify-between gap-4"><span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">{icon}</span><span className="text-2xl font-semibold text-[#09090b]">{value}</span></div><div className="mt-4 text-xs font-bold uppercase tracking-wide text-[#71717a]">{metricLabel}</div><p className="mt-2 text-sm text-[#71717a]">{detail}</p></div>;
+=======
+  return <section className="rounded-md border border-[#dfe5f2] bg-white p-5 shadow-sm"><div className="mb-5 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">{icon}</span><h2 className="text-lg font-semibold text-[#0f172a]">{title}</h2></div>{children}</section>;
+}
+
+function Metric({ detail, icon, label: metricLabel, value }: { detail: string; icon: ReactNode; label: string; value: string }) {
+  return <div className="rounded-md border border-[#dfe5f2] bg-white p-5 shadow-sm"><div className="flex items-start justify-between gap-4"><span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">{icon}</span><span className="text-2xl font-semibold text-[#0f172a]">{value}</span></div><div className="mt-4 text-xs font-bold uppercase tracking-wide text-[#647269]">{metricLabel}</div><p className="mt-2 text-sm text-[#647269]">{detail}</p></div>;
+>>>>>>> origin/main
 }
 
 function Field({ children, label: fieldLabel }: { children: ReactNode; label: string }) {
@@ -531,7 +575,11 @@ function OptionSelect({ onChange, options, value }: { onChange: (value: string) 
 function Badge({ value }: { value: string }) {
   const positive = ['active', 'current', 'live'].includes(value);
   const caution = ['pending', 'trial', 'paper', 'sandbox'].includes(value);
+<<<<<<< HEAD
   const classes = positive ? 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]' : caution ? 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]' : 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
+=======
+  const classes = positive ? 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]' : caution ? 'border-[#c7d2fe] bg-[#D1F1E1] text-[#12B76A]' : 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
+>>>>>>> origin/main
   return <span className={`inline-flex rounded-md border px-2 py-1 text-[11px] font-bold uppercase tracking-wide ${classes}`}>{label(value)}</span>;
 }
 

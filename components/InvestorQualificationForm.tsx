@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { CheckCircle2, Send } from 'lucide-react';
 
 const initial = { name:'', email:'', organization:'', investorType:'', ticketSize:'', qualification:'', strategyInterest:'', timeline:'' };
+<<<<<<< HEAD
 const field = 'w-full rounded-md border border-[#cfd7eb] bg-white px-3 py-2.5 text-sm text-[#09090b] outline-none transition focus:border-[#18181b] focus:ring-2 focus:ring-[#18181b]/10';
+=======
+const field = 'w-full rounded-md border border-[#cfd7eb] bg-white px-3 py-2.5 text-sm text-[#06130c] outline-none transition focus:border-[#0F8F5A] focus:ring-2 focus:ring-[#0F8F5A]/10';
+>>>>>>> origin/main
 
 export default function InvestorQualificationForm() {
   const [form,setForm]=useState(initial); const [status,setStatus]=useState<'idle'|'sending'|'sent'|'error'>('idle'); const [message,setMessage]=useState('');
@@ -19,7 +23,11 @@ export default function InvestorQualificationForm() {
     <Select label="Investor status" value={form.qualification} onChange={value=>setForm({...form,qualification:value})} options={['Accredited investor','Qualified purchaser','Institutional investor','Not sure']}/>
     <Field label="Strategy interest"><input required maxLength={160} className={field} value={form.strategyInterest} onChange={e=>setForm({...form,strategyInterest:e.target.value})} placeholder="BTC sentiment, ETF, macro..."/></Field>
     <Select label="Timeline" value={form.timeline} onChange={value=>setForm({...form,timeline:value})} options={['Immediate','1-3 months','3-6 months','6+ months']}/>
+<<<<<<< HEAD
     <div className="sm:col-span-2"><p className="mb-4 text-xs leading-5 text-[#71717a]">This form is an access request, not an offer or eligibility determination. QSentia may request supporting information before granting materials.</p>{status==='error'?<p className="mb-3 text-sm font-semibold text-[#be123c]">{message}</p>:null}<button disabled={status==='sending'} className="inline-flex items-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-semibold text-white hover:bg-[#3f3f46] disabled:opacity-60">{status==='sending'?'Submitting...':'Request investor materials'}<Send className="h-4 w-4"/></button></div>
+=======
+    <div className="sm:col-span-2"><p className="mb-4 text-xs leading-5 text-[#647269]">This form is an access request, not an offer or eligibility determination. QSentia may request supporting information before granting materials.</p>{status==='error'?<p className="mb-3 text-sm font-semibold text-[#be123c]">{message}</p>:null}<button disabled={status==='sending'} className="inline-flex items-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-semibold text-white hover:bg-[#12B76A] disabled:opacity-60">{status==='sending'?'Submitting...':'Request investor materials'}<Send className="h-4 w-4"/></button></div>
+>>>>>>> origin/main
   </form>;
 }
 function Field({label,children}:{label:string;children:React.ReactNode}){return <label className="grid gap-2 text-sm font-semibold text-[#27272a]">{label}{children}</label>}

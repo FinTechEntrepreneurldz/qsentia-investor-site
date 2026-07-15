@@ -52,7 +52,11 @@ const outcomes = [
 export default function ProblemSolutionPage() {
   return (
     <PageShell active="/problem-solution">
+<<<<<<< HEAD
       <section className="border-b border-[#e4e4e7] bg-[#fafafa]">
+=======
+      <section className="border-b border-[#E5E5E7] bg-[#F5F5F6]">
+>>>>>>> origin/main
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
           <Eyebrow>Problem & solution</Eyebrow>
           <h1 className="mt-6 max-w-5xl text-5xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-7xl lg:text-[5.5rem]">
@@ -65,14 +69,22 @@ export default function ProblemSolutionPage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/research"
+<<<<<<< HEAD
               className="inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46]"
+=======
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A]"
+>>>>>>> origin/main
             >
               Open research terminal
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/docs"
+<<<<<<< HEAD
               className="inline-flex items-center justify-center gap-2 rounded-md border border-[#d4d4d8] bg-white px-5 py-3 text-sm font-bold text-[#18181b] transition hover:bg-[#fafafa]"
+=======
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-[#E5E5E7] bg-white px-5 py-3 text-sm font-bold text-[#0F8F5A] transition hover:bg-[#f7f8ff]"
+>>>>>>> origin/main
             >
               Review API docs
             </Link>
@@ -82,7 +94,11 @@ export default function ProblemSolutionPage() {
 
       <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr]">
         <SectionCard className="p-6 md:p-8">
+<<<<<<< HEAD
           <div className="flex items-center gap-2 text-[#18181b]">
+=======
+          <div className="flex items-center gap-2 text-[#0F8F5A]">
+>>>>>>> origin/main
             <LineChart className="h-4 w-4" />
             <span className="text-xs font-bold uppercase tracking-wide">Problem statement</span>
           </div>
@@ -104,7 +120,11 @@ export default function ProblemSolutionPage() {
         </div>
       </section>
 
+<<<<<<< HEAD
       <section className="border-y border-[#e4e4e7] bg-[#09090b] text-white">
+=======
+      <section className="border-y border-[#E5E5E7] bg-[#07112a] text-white">
+>>>>>>> origin/main
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#aebcff]">QSentia solution</p>
@@ -120,7 +140,11 @@ export default function ProblemSolutionPage() {
               const Icon = card.icon;
               return (
                 <div key={card.title} className="rounded-[10px] border border-white/12 bg-white/[0.06] p-5">
+<<<<<<< HEAD
                   <span className="flex h-10 w-10 items-center justify-center rounded-md bg-white text-[#18181b]">
+=======
+                  <span className="flex h-10 w-10 items-center justify-center rounded-md bg-white text-[#0F8F5A]">
+>>>>>>> origin/main
                     <Icon className="h-5 w-5" />
                   </span>
                   <h3 className="mt-5 text-xl font-semibold">{card.title}</h3>
@@ -136,6 +160,7 @@ export default function ProblemSolutionPage() {
         <SectionCard className="p-6 md:p-8">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
+<<<<<<< HEAD
               <p className="text-xs font-bold uppercase tracking-wide text-[#18181b]">Operating objectives</p>
               <h2 className="mt-3 text-3xl font-semibold text-[#09090b]">What the solution is designed to improve</h2>
             </div>
@@ -143,6 +168,15 @@ export default function ProblemSolutionPage() {
               {outcomes.map((outcome) => (
                 <li key={outcome} className="flex gap-3 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4 text-sm leading-6 text-[#27272a]">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#18181b]" />
+=======
+              <p className="text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">Operating objectives</p>
+              <h2 className="mt-3 text-3xl font-semibold text-[#06130c]">What the solution is designed to improve</h2>
+            </div>
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {outcomes.map((outcome) => (
+                <li key={outcome} className="flex gap-3 rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-4 text-sm leading-6 text-[#26352c]">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0F8F5A]" />
+>>>>>>> origin/main
                   <span>{outcome}</span>
                 </li>
               ))}

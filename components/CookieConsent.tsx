@@ -99,12 +99,21 @@ export default function CookieConsent() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-[100] px-3 pb-3 sm:px-5 sm:pb-5" role="region" aria-label="Cookie consent">
+<<<<<<< HEAD
       <div className="mx-auto max-w-5xl border border-[#d4d4d8] bg-white shadow-[0_18px_60px_rgba(15,31,22,0.22)]">
         {managing ? (
           <div role="dialog" aria-modal="true" aria-labelledby="cookie-settings-title">
             <div className="flex items-start justify-between gap-4 border-b border-[#e4e4e7] px-5 py-4">
               <div>
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#18181b]">
+=======
+      <div className="mx-auto max-w-5xl border border-[#E5E5E7] bg-white shadow-[0_18px_60px_rgba(15,31,22,0.22)]">
+        {managing ? (
+          <div role="dialog" aria-modal="true" aria-labelledby="cookie-settings-title">
+            <div className="flex items-start justify-between gap-4 border-b border-[#E5E5E7] px-5 py-4">
+              <div>
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
+>>>>>>> origin/main
                   <ShieldCheck className="h-4 w-4" /> Privacy controls
                 </div>
                 <h2 id="cookie-settings-title" className="mt-2 text-xl font-semibold text-[#09090b]">Cookie preferences</h2>
@@ -112,7 +121,11 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={() => setManaging(false)}
+<<<<<<< HEAD
                 className="flex h-9 w-9 items-center justify-center border border-[#d6dded] text-[#52525b] hover:border-[#18181b]"
+=======
+                className="flex h-9 w-9 items-center justify-center border border-[#d6dded] text-[#46554b] hover:border-[#0F8F5A]"
+>>>>>>> origin/main
                 aria-label="Close cookie preferences"
               >
                 <X className="h-4 w-4" />
@@ -147,6 +160,7 @@ export default function CookieConsent() {
               />
             </div>
 
+<<<<<<< HEAD
             <div className="flex flex-col-reverse gap-2 border-t border-[#e4e4e7] px-5 py-4 sm:flex-row sm:justify-end">
               <button type="button" onClick={() => save(essentialOnly)} className="border border-[#d4d4d8] px-4 py-2.5 text-sm font-semibold text-[#18181b] hover:border-[#18181b]">
                 Reject non-essential
@@ -155,6 +169,16 @@ export default function CookieConsent() {
                 Save preferences
               </button>
               <button type="button" onClick={() => save(allCategories)} className="border border-[#18181b] px-4 py-2.5 text-sm font-semibold text-[#18181b] hover:bg-[#f4f4f5]">
+=======
+            <div className="flex flex-col-reverse gap-2 border-t border-[#E5E5E7] px-5 py-4 sm:flex-row sm:justify-end">
+              <button type="button" onClick={() => save(essentialOnly)} className="border border-[#E5E5E7] px-4 py-2.5 text-sm font-semibold text-[#0F8F5A] hover:border-[#0F8F5A]">
+                Reject non-essential
+              </button>
+              <button type="button" onClick={() => save(choices)} className="bg-[#0F8F5A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#12B76A]">
+                Save preferences
+              </button>
+              <button type="button" onClick={() => save(allCategories)} className="border border-[#0F8F5A] px-4 py-2.5 text-sm font-semibold text-[#12B76A] hover:bg-[#D1F1E1]">
+>>>>>>> origin/main
                 Accept all
               </button>
             </div>
@@ -162,6 +186,7 @@ export default function CookieConsent() {
         ) : (
           <div className="flex flex-col gap-5 p-5 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex max-w-2xl gap-3">
+<<<<<<< HEAD
               <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#f4f4f5] text-[#18181b]">
                 <Cookie className="h-5 w-5" />
               </span>
@@ -169,10 +194,20 @@ export default function CookieConsent() {
                 <h2 className="font-semibold text-[#09090b]">Your privacy choices</h2>
                 <p className="mt-1 text-sm leading-6 text-[#52525b]">
                   QSentia uses necessary cookies for authentication, security, and consent storage. Optional categories remain off unless you allow them. Read the <Link href="/cookie-policy" className="font-semibold text-[#18181b] hover:underline">Cookie Policy</Link>.
+=======
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#D1F1E1] text-[#0F8F5A]">
+                <Cookie className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="font-semibold text-[#06130c]">Your privacy choices</h2>
+                <p className="mt-1 text-sm leading-6 text-[#5a685f]">
+                  QSentia uses necessary cookies for authentication, security, and consent storage. Optional categories remain off unless you allow them. Read the <Link href="/cookie-policy" className="font-semibold text-[#12B76A] hover:underline">Cookie Policy</Link>.
+>>>>>>> origin/main
                 </p>
               </div>
             </div>
             <div className="grid shrink-0 gap-2 sm:grid-cols-3">
+<<<<<<< HEAD
               <button type="button" onClick={() => save(essentialOnly)} className="border border-[#d4d4d8] px-4 py-2.5 text-sm font-semibold text-[#18181b] hover:border-[#18181b]">
                 Reject optional
               </button>
@@ -180,6 +215,15 @@ export default function CookieConsent() {
                 Manage
               </button>
               <button type="button" onClick={() => save(allCategories)} className="bg-[#18181b] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#3f3f46]">
+=======
+              <button type="button" onClick={() => save(essentialOnly)} className="border border-[#E5E5E7] px-4 py-2.5 text-sm font-semibold text-[#0F8F5A] hover:border-[#0F8F5A]">
+                Reject optional
+              </button>
+              <button type="button" onClick={() => setManaging(true)} className="border border-[#E5E5E7] px-4 py-2.5 text-sm font-semibold text-[#0F8F5A] hover:border-[#0F8F5A]">
+                Manage
+              </button>
+              <button type="button" onClick={() => save(allCategories)} className="bg-[#0F8F5A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#12B76A]">
+>>>>>>> origin/main
                 Accept all
               </button>
             </div>
@@ -204,7 +248,11 @@ function ConsentOption({
   onChange: (checked: boolean) => void;
 }) {
   return (
+<<<<<<< HEAD
     <label className="flex cursor-pointer items-start justify-between gap-4 border border-[#e4e4e7] bg-[#fafafa] p-4">
+=======
+    <label className="flex cursor-pointer items-start justify-between gap-4 border border-[#E5E5E7] bg-[#F5F5F6] p-4">
+>>>>>>> origin/main
       <span>
         <span className="block text-sm font-semibold text-[#09090b]">{title}</span>
         <span className="mt-1 block text-xs leading-5 text-[#71717a]">{body}</span>
@@ -214,7 +262,11 @@ function ConsentOption({
         checked={checked}
         disabled={disabled}
         onChange={(event) => onChange(event.target.checked)}
+<<<<<<< HEAD
         className="mt-1 h-4 w-4 accent-[#18181b]"
+=======
+        className="mt-1 h-4 w-4 accent-[#0F8F5A]"
+>>>>>>> origin/main
       />
     </label>
   );

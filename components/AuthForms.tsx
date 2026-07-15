@@ -102,9 +102,15 @@ export function SignInForm() {
       </div>
 
       <div className="flex items-center gap-3">
+<<<<<<< HEAD
         <span className="h-px flex-1 bg-[#e4e4e7]" />
         <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">or use email</span>
         <span className="h-px flex-1 bg-[#e4e4e7]" />
+=======
+        <span className="h-px flex-1 bg-[#E5E5E7]" />
+        <span className="text-xs font-bold uppercase tracking-wide text-[#8a958e]">or use email</span>
+        <span className="h-px flex-1 bg-[#E5E5E7]" />
+>>>>>>> origin/main
       </div>
 
       <form className="grid gap-4" onSubmit={handleSubmit}>
@@ -122,7 +128,11 @@ export function SignInForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@institution.com"
         required
+<<<<<<< HEAD
         className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
+=======
+        className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+>>>>>>> origin/main
       />
       <label
         className="text-xs font-bold uppercase tracking-wide text-[#71717a]"
@@ -138,11 +148,19 @@ export function SignInForm() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter your password"
         required
+<<<<<<< HEAD
         className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
       />
       <a
         href="/contact"
         className="text-right text-xs font-semibold text-[#18181b] hover:underline"
+=======
+        className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+      />
+      <a
+        href="/contact"
+        className="text-right text-xs font-semibold text-[#0F8F5A] hover:underline"
+>>>>>>> origin/main
       >
         Forgot password?
       </a>
@@ -151,7 +169,11 @@ export function SignInForm() {
         type="submit"
         suppressHydrationWarning
         disabled={loading || Boolean(providerLoading)}
+<<<<<<< HEAD
         className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46] disabled:opacity-60"
+=======
+        className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:opacity-60"
+>>>>>>> origin/main
       >
         {loading ? "Signing in..." : "Continue to dashboard"}
         <ArrowRight className="h-4 w-4" />
@@ -255,9 +277,15 @@ export function CreateAccountForm() {
       </div>
 
       <div className="flex items-center gap-3">
+<<<<<<< HEAD
         <span className="h-px flex-1 bg-[#e4e4e7]" />
         <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">or create with email</span>
         <span className="h-px flex-1 bg-[#e4e4e7]" />
+=======
+        <span className="h-px flex-1 bg-[#E5E5E7]" />
+        <span className="text-xs font-bold uppercase tracking-wide text-[#8a958e]">or create with email</span>
+        <span className="h-px flex-1 bg-[#E5E5E7]" />
+>>>>>>> origin/main
       </div>
 
       <form className="grid gap-4" onSubmit={handleSubmit}>
@@ -276,7 +304,11 @@ export function CreateAccountForm() {
           onChange={(e) => setFullName(e.target.value)}
           placeholder="Your full name"
           required
+<<<<<<< HEAD
           className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
+=======
+          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+>>>>>>> origin/main
         />
       </div>
       <div className="grid gap-2">
@@ -294,7 +326,11 @@ export function CreateAccountForm() {
           onChange={(e) => setWorkEmail(e.target.value)}
           placeholder="name@institution.com"
           required
+<<<<<<< HEAD
           className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
+=======
+          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+>>>>>>> origin/main
         />
       </div>
       <div className="grid gap-2">
@@ -311,7 +347,11 @@ export function CreateAccountForm() {
           value={organization}
           onChange={(e) => setOrganization(e.target.value)}
           placeholder="Firm or company name"
+<<<<<<< HEAD
           className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
+=======
+          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+>>>>>>> origin/main
         />
       </div>
       <div className="grid gap-2">
@@ -329,7 +369,11 @@ export function CreateAccountForm() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Create password"
           required
+<<<<<<< HEAD
           className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
+=======
+          className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
+>>>>>>> origin/main
         />
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
@@ -337,7 +381,11 @@ export function CreateAccountForm() {
         type="submit"
         suppressHydrationWarning
         disabled={loading || Boolean(providerLoading)}
+<<<<<<< HEAD
         className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46] disabled:opacity-60"
+=======
+        className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:opacity-60"
+>>>>>>> origin/main
       >
         {loading ? "Creating account..." : "Create account"}
         <ArrowRight className="h-4 w-4" />
@@ -366,12 +414,20 @@ function ProviderButton({
       suppressHydrationWarning
       onClick={onClick}
       disabled={disabled}
+<<<<<<< HEAD
       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#d4d4d8] bg-white px-4 py-2.5 text-sm font-bold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] disabled:cursor-not-allowed disabled:opacity-60"
+=======
+      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#E5E5E7] bg-white px-4 py-2.5 text-sm font-bold text-[#0F8F5A] transition hover:border-[#0F8F5A] hover:bg-[#F5F5F6] disabled:cursor-not-allowed disabled:opacity-60"
+>>>>>>> origin/main
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin" />
       ) : (
+<<<<<<< HEAD
         <span className="flex h-4 w-4 items-center justify-center rounded-full text-sm font-black text-[#18181b]">G</span>
+=======
+        <span className="flex h-4 w-4 items-center justify-center rounded-full text-sm font-black text-[#0F8F5A]">G</span>
+>>>>>>> origin/main
       )}
       {label}
     </button>
