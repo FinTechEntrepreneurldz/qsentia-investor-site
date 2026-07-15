@@ -108,19 +108,11 @@ export function LiveApiRibbon({
 
   const frameClass = embedded
     ? dark
-<<<<<<< HEAD
       ? 'rounded-[10px] border border-[#1d2a55] bg-[#09090b]/92'
       : 'rounded-[10px] border border-[#d4d4d8] bg-white/90 shadow-sm backdrop-blur'
     : dark
       ? 'border-b border-[#27272a] bg-[#09090b] text-[#f4f4f5]'
       : 'border-b border-[#e4e4e7] bg-white/92 text-[#18181b] backdrop-blur';
-=======
-      ? 'rounded-[10px] border border-[#1d2a55] bg-[#07112a]/92'
-      : 'rounded-[10px] border border-[#E5E5E7] bg-white/90 shadow-sm backdrop-blur'
-    : dark
-      ? 'border-b border-[#18233f] bg-[#07112a] text-[#dbe4ff]'
-      : 'border-b border-[#E5E5E7] bg-white/92 text-[#0F8F5A] backdrop-blur';
->>>>>>> origin/main
   const innerClass = embedded
     ? 'flex flex-col gap-3 p-3 lg:flex-row lg:items-center lg:justify-between'
     : 'mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between';
@@ -134,23 +126,14 @@ export function LiveApiRibbon({
               hasError
                 ? 'border-red-200 bg-red-50 text-red-700'
                 : dark
-<<<<<<< HEAD
                   ? 'border-[#33449f] bg-[#101a44] text-[#d4d4d8]'
                   : 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]'
-=======
-                  ? 'border-[#33449f] bg-[#101a44] text-[#c7d2fe]'
-                  : 'border-[#E5E5E7] bg-[#D1F1E1] text-[#0F8F5A]'
->>>>>>> origin/main
             }`}
           >
             {hasError ? <AlertCircle className="h-3.5 w-3.5" /> : <Activity className="h-3.5 w-3.5" />}
             {statusText}
           </span>
-<<<<<<< HEAD
           <span className={`truncate text-xs font-semibold ${dark ? 'text-[#f4f4f5]' : 'text-[#18181b]'}`}>
-=======
-          <span className={`truncate text-xs font-semibold ${dark ? 'text-[#dbe4ff]' : 'text-[#0F8F5A]'}`}>
->>>>>>> origin/main
             {selectedModel}
           </span>
         </div>
@@ -165,11 +148,7 @@ export function LiveApiRibbon({
         <Link
           href="/docs"
           className={`shrink-0 text-xs font-bold underline-offset-4 hover:underline ${
-<<<<<<< HEAD
             dark ? 'text-[#d4d4d8]' : 'text-[#18181b]'
-=======
-            dark ? 'text-[#c7d2fe]' : 'text-[#0F8F5A]'
->>>>>>> origin/main
           }`}
         >
           {sourceRepo || '/api/dashboard'}

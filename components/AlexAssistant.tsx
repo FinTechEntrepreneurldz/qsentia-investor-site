@@ -498,13 +498,8 @@ export default function AlexAssistant() {
   return (
     <div className="fixed bottom-4 right-4 z-[80]">
       {open && (
-<<<<<<< HEAD
         <section className="mb-3 flex h-[min(520px,calc(100vh-6.5rem))] w-[min(340px,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[12px] border border-[#e4e4e7] bg-white shadow-[0_18px_55px_rgba(23,37,84,0.2)]">
           <header className="border-b border-[#e4e4e7] bg-[#09090b] px-3.5 py-3 text-white">
-=======
-        <section className="mb-3 flex h-[min(520px,calc(100vh-6.5rem))] w-[min(340px,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[12px] border border-[#E5E5E7] bg-white shadow-[0_18px_55px_rgba(23,37,84,0.2)]">
-          <header className="border-b border-[#E5E5E7] bg-[#07112a] px-3.5 py-3 text-white">
->>>>>>> origin/main
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3">
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#d4d4d8] text-[#09090b]">
@@ -529,35 +524,22 @@ export default function AlexAssistant() {
             </div>
           </header>
 
-<<<<<<< HEAD
           <div className="flex-1 space-y-2.5 overflow-y-auto bg-[#fafafa] px-3 py-3">
-=======
-          <div className="flex-1 space-y-2.5 overflow-y-auto bg-[#F5F5F6] px-3 py-3">
->>>>>>> origin/main
             {visibleMessages.map((message) => (
               <div
                 key={message.id}
                 className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.role === 'alex' && (
-<<<<<<< HEAD
                   <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#f4f4f5] text-[#18181b]">
-=======
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#D1F1E1] text-[#0F8F5A]">
->>>>>>> origin/main
                     <Sparkles className="h-3 w-3" />
                   </span>
                 )}
                 <div
                   className={`max-w-[84%] whitespace-pre-line rounded-[10px] px-2.5 py-2 text-xs leading-5 ${
                     message.role === 'user'
-<<<<<<< HEAD
                       ? 'bg-[#18181b] text-white'
                       : 'border border-[#e4e4e7] bg-white text-[#27272a]'
-=======
-                      ? 'bg-[#0F8F5A] text-white'
-                      : 'border border-[#E5E5E7] bg-white text-[#26352c]'
->>>>>>> origin/main
                   }`}
                 >
                   {message.body}
@@ -567,11 +549,7 @@ export default function AlexAssistant() {
                         <Link
                           key={`${message.id}-${link.href}`}
                           href={link.href}
-<<<<<<< HEAD
                           className="inline-flex items-center gap-1 rounded-md border border-[#d4d4d8] bg-[#fafafa] px-2 py-1 text-xs font-semibold text-[#18181b] hover:bg-[#f4f4f5]"
-=======
-                          className="inline-flex items-center gap-1 rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-2 py-1 text-xs font-semibold text-[#0F8F5A] hover:bg-[#D1F1E1]"
->>>>>>> origin/main
                         >
                           {link.label}
                           <ExternalLink className="h-3 w-3" />
@@ -581,11 +559,7 @@ export default function AlexAssistant() {
                   ) : null}
                 </div>
                 {message.role === 'user' && (
-<<<<<<< HEAD
                   <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#e4e4e7] text-[#27272a]">
-=======
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#E5E5E7] text-[#26352c]">
->>>>>>> origin/main
                     <UserRound className="h-3 w-3" />
                   </span>
                 )}
@@ -594,11 +568,7 @@ export default function AlexAssistant() {
             <div ref={messagesEndRef} />
           </div>
 
-<<<<<<< HEAD
           <div className="border-t border-[#e4e4e7] bg-white p-2.5">
-=======
-          <div className="border-t border-[#E5E5E7] bg-white p-2.5">
->>>>>>> origin/main
             <div className="mb-2.5 flex gap-1.5 overflow-x-auto">
               {quickPrompts.map((prompt) => (
                 <button
@@ -606,11 +576,7 @@ export default function AlexAssistant() {
                   type="button"
                   suppressHydrationWarning
                   onClick={() => submitQuestion(prompt)}
-<<<<<<< HEAD
                   className="shrink-0 rounded-full border border-[#e4e4e7] bg-[#fafafa] px-2.5 py-1 text-[11px] font-semibold text-[#52525b] hover:border-[#18181b] hover:text-[#18181b]"
-=======
-                  className="shrink-0 rounded-full border border-[#E5E5E7] bg-[#F5F5F6] px-2.5 py-1 text-[11px] font-semibold text-[#46554b] hover:border-[#0F8F5A] hover:text-[#0F8F5A]"
->>>>>>> origin/main
                 >
                   {prompt}
                 </button>
@@ -621,24 +587,14 @@ export default function AlexAssistant() {
                 suppressHydrationWarning
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
-<<<<<<< HEAD
                 placeholder="Ask about QSentia..."
                 className="min-w-0 flex-1 rounded-md border border-[#d4d4d8] px-2.5 py-2 text-xs text-[#09090b] outline-none focus:border-[#18181b]"
-=======
-                placeholder="Ask Alex about QSentia..."
-                className="min-w-0 flex-1 rounded-md border border-[#E5E5E7] px-2.5 py-2 text-xs text-[#06130c] outline-none focus:border-[#0F8F5A]"
->>>>>>> origin/main
               />
               <button
                 type="submit"
                 suppressHydrationWarning
-<<<<<<< HEAD
                 className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#18181b] text-white hover:bg-[#3f3f46]"
                 aria-label="Send message to QSentia help"
-=======
-                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#0F8F5A] text-white hover:bg-[#12B76A]"
-                aria-label="Send message to Alex"
->>>>>>> origin/main
               >
                 <Send className="h-3.5 w-3.5" />
               </button>
@@ -651,11 +607,7 @@ export default function AlexAssistant() {
         type="button"
         suppressHydrationWarning
         onClick={() => setOpen((current) => !current)}
-<<<<<<< HEAD
         className="ml-auto flex h-11 items-center gap-2.5 rounded-full bg-[#18181b] px-4 text-xs font-bold text-white shadow-[0_12px_32px_rgba(23,37,84,0.24)] hover:bg-[#3f3f46]"
-=======
-        className="ml-auto flex h-11 items-center gap-2.5 rounded-full bg-[#0F8F5A] px-4 text-xs font-bold text-white shadow-[0_12px_32px_rgba(23,37,84,0.24)] hover:bg-[#12B76A]"
->>>>>>> origin/main
         aria-expanded={open}
         aria-label={open ? 'Close QSentia help' : 'Open QSentia help'}
       >

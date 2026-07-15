@@ -126,27 +126,16 @@ export default function CareersBoard() {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_440px]">
       <SectionCard className="overflow-hidden p-0">
-<<<<<<< HEAD
         <div className="border-b border-[#e4e4e7] p-6">
           <div className="text-xs font-bold uppercase tracking-wide text-[#18181b]">Open roles</div>
           <h2 className="mt-2 text-2xl font-semibold text-[#09090b]">Published from the admin career board</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[#52525b]">
-=======
-        <div className="border-b border-[#E5E5E7] p-6">
-          <div className="text-xs font-bold uppercase tracking-wide text-[#12B76A]">Open roles</div>
-          <h2 className="mt-2 text-2xl font-semibold text-[#06130c]">Published from the admin career board</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-[#5a685f]">
->>>>>>> origin/main
             Choose the role that matches your background. Role titles, departments, status, and
             notes are read from the QSentia careers API.
           </p>
         </div>
 
-<<<<<<< HEAD
         <div className="divide-y divide-[#e4e4e7]">
-=======
-        <div className="divide-y divide-[#E5E5E7]">
->>>>>>> origin/main
           {roles.map((role) => (
             <button
               key={role.id}
@@ -158,22 +147,13 @@ export default function CareersBoard() {
               }}
               className={`w-full bg-white p-6 text-left transition ${
                 selectedRole?.id === role.id
-<<<<<<< HEAD
                   ? 'shadow-[inset_4px_0_0_#18181b]'
                   : 'hover:bg-[#fafafa]'
-=======
-                  ? 'shadow-[inset_4px_0_0_#0F8F5A]'
-                  : 'hover:bg-[#F5F5F6]'
->>>>>>> origin/main
               }`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-<<<<<<< HEAD
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#18181b]">
-=======
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">
->>>>>>> origin/main
                     <BriefcaseBusiness className="h-4 w-4" />
                     {role.department}
                   </div>
@@ -201,7 +181,6 @@ export default function CareersBoard() {
           </h2>
           {selectedRole ? (
             <dl className="mt-5 grid gap-3 text-sm">
-<<<<<<< HEAD
               <div className="flex items-center justify-between gap-4 border-b border-[#e4e4e7] pb-3">
                 <dt className="font-semibold text-[#71717a]">Department</dt>
                 <dd className="text-right font-semibold text-[#09090b]">{selectedRole.department}</dd>
@@ -209,15 +188,6 @@ export default function CareersBoard() {
               <div className="flex items-center justify-between gap-4 border-b border-[#e4e4e7] pb-3">
                 <dt className="font-semibold text-[#71717a]">Location</dt>
                 <dd className="text-right font-semibold text-[#09090b]">{selectedRole.location}</dd>
-=======
-              <div className="flex items-center justify-between gap-4 border-b border-[#E5E5E7] pb-3">
-                <dt className="font-semibold text-[#647269]">Department</dt>
-                <dd className="text-right font-semibold text-[#06130c]">{selectedRole.department}</dd>
-              </div>
-              <div className="flex items-center justify-between gap-4 border-b border-[#E5E5E7] pb-3">
-                <dt className="font-semibold text-[#647269]">Location</dt>
-                <dd className="text-right font-semibold text-[#06130c]">{selectedRole.location}</dd>
->>>>>>> origin/main
               </div>
               <div className="flex items-center justify-between gap-4">
                 <dt className="font-semibold text-[#71717a]">Status</dt>
@@ -242,11 +212,7 @@ export default function CareersBoard() {
               type="text"
               value={candidateName}
               onChange={(event) => setCandidateName(event.target.value)}
-<<<<<<< HEAD
               className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
-=======
-              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
->>>>>>> origin/main
             />
           </label>
           <label className="grid gap-2">
@@ -255,11 +221,7 @@ export default function CareersBoard() {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-<<<<<<< HEAD
               className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
-=======
-              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
->>>>>>> origin/main
             />
           </label>
           <label className="grid gap-2">
@@ -269,11 +231,7 @@ export default function CareersBoard() {
               value={source}
               onChange={(event) => setSource(event.target.value)}
               placeholder="Referral, portfolio, or source (optional)"
-<<<<<<< HEAD
               className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
-=======
-              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
->>>>>>> origin/main
             />
           </label>
           <label className="grid gap-2">
@@ -286,11 +244,7 @@ export default function CareersBoard() {
               value={linkedInUrl}
               onChange={(event) => setLinkedInUrl(event.target.value)}
               placeholder="https://www.linkedin.com/in/..."
-<<<<<<< HEAD
               className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] outline-none focus:border-[#18181b]"
-=======
-              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] outline-none focus:border-[#0F8F5A]"
->>>>>>> origin/main
             />
           </label>
           <label className="grid gap-2">
@@ -303,11 +257,7 @@ export default function CareersBoard() {
               required
               accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
               onChange={(event) => setCvFile(event.target.files?.[0] || null)}
-<<<<<<< HEAD
               className="rounded-md border border-[#d4d4d8] bg-white px-4 py-3 text-sm text-[#09090b] file:mr-3 file:rounded-md file:border-0 file:bg-[#f4f4f5] file:px-3 file:py-2 file:text-xs file:font-bold file:text-[#18181b] focus:border-[#18181b]"
-=======
-              className="rounded-md border border-[#E5E5E7] bg-white px-4 py-3 text-sm text-[#06130c] file:mr-3 file:rounded-md file:border-0 file:bg-[#D1F1E1] file:px-3 file:py-2 file:text-xs file:font-bold file:text-[#0F8F5A] focus:border-[#0F8F5A]"
->>>>>>> origin/main
             />
             {cvFile ? (
               <span className="flex items-center gap-2 text-xs font-semibold text-[#52525b]">
@@ -316,20 +266,12 @@ export default function CareersBoard() {
               </span>
             ) : null}
           </label>
-<<<<<<< HEAD
           <label className="flex items-start gap-3 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-3 text-xs leading-5 text-[#52525b]">
-=======
-          <label className="flex items-start gap-3 rounded-md border border-[#dfe5f2] bg-[#F5F5F6] p-3 text-xs leading-5 text-[#46554b]">
->>>>>>> origin/main
             <input
               type="checkbox"
               checked={profileConsent}
               onChange={(event) => setProfileConsent(event.target.checked)}
-<<<<<<< HEAD
               className="mt-1 h-4 w-4 accent-[#18181b]"
-=======
-              className="mt-1 h-4 w-4 accent-[#0F8F5A]"
->>>>>>> origin/main
             />
             I authorize QSentia to review the LinkedIn profile and CV I provide for recruitment evaluation.
           </label>
@@ -337,11 +279,7 @@ export default function CareersBoard() {
             type="button"
             disabled={!selectedRole || status === 'saving'}
             onClick={submitApplication}
-<<<<<<< HEAD
             className="inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:opacity-60"
-=======
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#12B76A] disabled:cursor-not-allowed disabled:opacity-60"
->>>>>>> origin/main
           >
             {status === 'saving' ? 'Submitting' : 'Submit application'}
             <ArrowRight className="h-4 w-4" />

@@ -328,11 +328,7 @@ function settingForEdit(setting: AdminSetting | undefined): AdminSetting {
 
 function statusClasses(status: string) {
   if (['active', 'won', 'open'].includes(status)) return 'border-[#a7e8cc] bg-[#ecfdf5] text-[#047857]';
-<<<<<<< HEAD
   if (['private', 'proposal', 'in_progress'].includes(status)) return 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]';
-=======
-  if (['private', 'proposal', 'in_progress'].includes(status)) return 'border-[#c7d2fe] bg-[#D1F1E1] text-[#12B76A]';
->>>>>>> origin/main
   if (['waitlist', 'demo', 'waiting', 'paused', 'high'].includes(status)) return 'border-[#fde68a] bg-[#fffbeb] text-[#a16207]';
   if (['retired', 'lost', 'closed', 'resolved', 'urgent'].includes(status)) return 'border-[#fecdd3] bg-[#fff1f2] text-[#be123c]';
   return 'border-[#d9e0ec] bg-[#fafafa] text-[#52525b]';
@@ -632,7 +628,6 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
   return (
     <main className="admin-portal min-h-screen bg-[#f5f7fb] text-[#09090b]">
       <div className="mx-auto min-h-screen max-w-[1760px] md:grid md:grid-cols-[304px_minmax(0,1fr)]">
-<<<<<<< HEAD
         <aside className="flex flex-col border-b border-[#e4e4e7] bg-white/95 p-4 text-[#09090b] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur md:sticky md:top-0 md:max-h-screen md:min-h-screen md:self-start md:overflow-y-auto md:border-b-0 md:border-r">
           <div className="rounded-[16px] border border-[#e4e4e7] bg-[#fafafa] p-4">
             <div className="flex items-center gap-3">
@@ -642,17 +637,6 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
               <div className="min-w-0">
                 <div className="truncate text-sm font-semibold text-[#09090b]">QSentia</div>
                 <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#18181b]">Administration</div>
-=======
-        <aside className="flex flex-col border-b border-[#dfe6f3] bg-white/95 p-4 text-[#0f172a] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur md:sticky md:top-0 md:max-h-screen md:min-h-screen md:self-start md:overflow-y-auto md:border-b-0 md:border-r">
-          <div className="rounded-[16px] border border-[#dfe6f3] bg-[#F5F5F6] p-4">
-            <div className="flex items-center gap-3">
-              <Link href="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-[#E5E5E7] bg-white" aria-label="QSentia home">
-                <Image src="/logo/qsentia-primary.png" alt="QSentia" width={27} height={27} className="h-7 w-7 object-contain" />
-              </Link>
-              <div className="min-w-0">
-                <div className="truncate text-sm font-semibold text-[#0f172a]">QSentia</div>
-                <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0F8F5A]">Administration</div>
->>>>>>> origin/main
               </div>
             </div>
             <p className="mt-4 text-sm leading-6 text-[#52525b]">
@@ -675,19 +659,11 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
                   }}
                   className={`group flex min-h-12 w-full items-start gap-3 rounded-[10px] border px-3 py-3 text-left transition ${
                     active
-<<<<<<< HEAD
                       ? 'border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b] shadow-sm'
                       : 'border-transparent text-[#3f3f46] hover:border-[#e4e4e7] hover:bg-[#fafafa]'
                   }`}
                 >
                   <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${active ? 'bg-white text-[#18181b]' : 'bg-[#f4f4f5] text-[#71717a] group-hover:text-[#18181b]'}`}>
-=======
-                      ? 'border-[#E5E5E7] bg-[#D1F1E1] text-[#0F8F5A] shadow-sm'
-                      : 'border-transparent text-[#334155] hover:border-[#dfe6f3] hover:bg-[#F5F5F6]'
-                  }`}
-                >
-                  <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${active ? 'bg-white text-[#0F8F5A]' : 'bg-[#f1f5ff] text-[#64748b] group-hover:text-[#0F8F5A]'}`}>
->>>>>>> origin/main
                     {section.icon}
                   </span>
                   <span className="min-w-0">
@@ -699,28 +675,17 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
             })}
           </nav>
 
-<<<<<<< HEAD
           <div className="mt-6 grid gap-2 border-t border-[#e4e4e7] pt-4 md:mt-auto">
             <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-3">
               <div className="flex items-center gap-2 text-xs font-semibold text-[#18181b]">
                 <LockKeyhole className="h-4 w-4 text-[#18181b]" />
-=======
-          <div className="mt-6 grid gap-2 border-t border-[#E5E5E7] pt-4 md:mt-auto">
-            <div className="rounded-[12px] border border-[#dfe6f3] bg-[#F5F5F6] p-3">
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#0F8F5A]">
-                <LockKeyhole className="h-4 w-4 text-[#0F8F5A]" />
->>>>>>> origin/main
                 Role-secured workspace
               </div>
               <p className="mt-2 text-xs leading-5 text-[#71717a]">
                 Access follows the signed-in account and server-side admin grants.
               </p>
             </div>
-<<<<<<< HEAD
             <Link href="/" className="inline-flex items-center justify-between rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa]">
-=======
-            <Link href="/" className="inline-flex items-center justify-between rounded-[10px] border border-[#dfe6f3] bg-white px-3 py-3 text-sm font-semibold text-[#0F8F5A] transition hover:border-[#0F8F5A] hover:bg-[#F5F5F6]">
->>>>>>> origin/main
               Public site
               <ArrowUpRight className="h-4 w-4" />
             </Link>
@@ -732,32 +697,20 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
             <div className="px-4 py-4 sm:px-6 xl:px-8">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="min-w-0">
-<<<<<<< HEAD
                   <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#18181b]">Operations workspace</div>
-=======
-                  <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#0F8F5A]">Operations workspace</div>
->>>>>>> origin/main
                   <div className="mt-2">
                     <h1 className="text-2xl font-semibold tracking-[-0.01em] text-[#09090b]">{activeSectionMeta.label}</h1>
                     <p className="mt-1 max-w-3xl text-sm leading-6 text-[#71717a]">{activeSectionMeta.detail}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-<<<<<<< HEAD
                   <span className="hidden rounded-full border border-[#e4e4e7] bg-[#fafafa] px-3 py-1.5 text-xs font-semibold text-[#71717a] lg:block">
-=======
-                  <span className="hidden rounded-full border border-[#dfe6f3] bg-[#F5F5F6] px-3 py-1.5 text-xs font-semibold text-[#647269] lg:block">
->>>>>>> origin/main
                     Updated {shortDate(data?.updatedAt)}
                   </span>
                   <AuthSessionMenu />
                 </div>
               </div>
-<<<<<<< HEAD
               <div className="mt-4 grid gap-px overflow-hidden rounded-[12px] border border-[#e4e4e7] bg-[#e4e4e7] sm:grid-cols-4">
-=======
-              <div className="mt-4 grid gap-px overflow-hidden rounded-[12px] border border-[#E5E5E7] bg-[#E5E5E7] sm:grid-cols-4">
->>>>>>> origin/main
                 <AdminHeaderStat label="Models" value={formatNumber(data?.metrics.models || 0)} />
                 <AdminHeaderStat label="Sold licenses" value={formatNumber(data?.metrics.soldModels || 0)} />
                 <AdminHeaderStat label="Open leads" value={formatNumber(data?.metrics.leads || 0)} />
@@ -778,11 +731,7 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
               <WorkspacePanel title="Loading operations" icon={<RefreshCw className="h-4 w-4 animate-spin" />}>
                 <div className="grid gap-3 md:grid-cols-3">
                   {Array.from({ length: 6 }).map((_, index) => (
-<<<<<<< HEAD
                     <div key={index} className="h-28 animate-pulse rounded-md border border-[#e4e4e7] bg-[#fafafa]" />
-=======
-                    <div key={index} className="h-28 animate-pulse rounded-md border border-[#dfe5f2] bg-[#F5F5F6]" />
->>>>>>> origin/main
                   ))}
                 </div>
               </WorkspacePanel>
@@ -977,7 +926,6 @@ function OverviewSection({ data, onRefresh }: { data: AdminOverview; onRefresh: 
                     <th className="pb-3">Sold</th>
                   </tr>
                 </thead>
-<<<<<<< HEAD
                 <tbody className="divide-y divide-[#e4e4e7]">
                   {data.bestPerforming.map((model) => (
                     <tr key={model.id}>
@@ -986,16 +934,6 @@ function OverviewSection({ data, onRefresh }: { data: AdminOverview; onRefresh: 
                       <td className="py-3 text-[#047857]">{formatPct(model.performance.annualizedReturn, true)}</td>
                       <td className="py-3 text-[#be123c]">{formatPct(model.performance.maxDrawdown, true)}</td>
                       <td className="py-3 text-[#18181b]">{formatNumber(model.sales.soldUnits)}</td>
-=======
-                <tbody className="divide-y divide-[#E5E5E7]">
-                  {data.bestPerforming.map((model) => (
-                    <tr key={model.id}>
-                      <td className="py-3 font-semibold text-[#0f172a]">{model.name}</td>
-                      <td className="py-3 text-[#0F8F5A]">{formatRatio(model.performance.sharpeRatio)}</td>
-                      <td className="py-3 text-[#047857]">{formatPct(model.performance.annualizedReturn, true)}</td>
-                      <td className="py-3 text-[#be123c]">{formatPct(model.performance.maxDrawdown, true)}</td>
-                      <td className="py-3 text-[#0F8F5A]">{formatNumber(model.sales.soldUnits)}</td>
->>>>>>> origin/main
                     </tr>
                   ))}
                 </tbody>
@@ -1082,13 +1020,8 @@ function ModelsSection({
                 onClick={() => onSelectModel(model.id)}
                 className={`mb-2 w-full rounded-md border p-3 text-left transition ${
                   selectedModel?.id === model.id
-<<<<<<< HEAD
                     ? 'border-[#18181b] bg-[#f4f4f5]'
                     : 'border-[#e4e4e7] bg-white hover:border-[#a1a1aa]'
-=======
-                    ? 'border-[#0F8F5A] bg-[#D1F1E1]'
-                    : 'border-[#dfe5f2] bg-white hover:border-[#aab8eb]'
->>>>>>> origin/main
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -1099,11 +1032,7 @@ function ModelsSection({
                   {model.settings.visibility === 'hidden' ? (
                     <EyeOff className="h-4 w-4 shrink-0 text-[#71717a]" />
                   ) : (
-<<<<<<< HEAD
                     <Eye className="h-4 w-4 shrink-0 text-[#18181b]" />
-=======
-                    <Eye className="h-4 w-4 shrink-0 text-[#0F8F5A]" />
->>>>>>> origin/main
                   )}
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -1259,20 +1188,12 @@ function ModelsSection({
             </div>
 
             <div className="mt-6 grid gap-3">
-<<<<<<< HEAD
               <label className="flex items-center gap-3 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-3 text-sm font-semibold text-[#18181b]">
-=======
-              <label className="flex items-center gap-3 rounded-md border border-[#dfe5f2] bg-[#f8fafc] p-3 text-sm font-semibold text-[#0F8F5A]">
->>>>>>> origin/main
                 <input
                   type="checkbox"
                   checked={draft.featured}
                   onChange={(event) => onUpdateDraft('featured', event.target.checked)}
-<<<<<<< HEAD
                   className="h-4 w-4 border-[#cbd5e1] accent-[#18181b]"
-=======
-                  className="h-4 w-4 border-[#cbd5e1] accent-[#0F8F5A]"
->>>>>>> origin/main
                 />
                 Feature this model in marketplace ordering and commercial review.
               </label>
@@ -1465,11 +1386,7 @@ function OffersSection({
                   <th className="pb-3">Status</th>
                 </tr>
               </thead>
-<<<<<<< HEAD
               <tbody className="divide-y divide-[#e4e4e7]">
-=======
-              <tbody className="divide-y divide-[#E5E5E7]">
->>>>>>> origin/main
                 {offers.map((offer) => {
                   const model = models.find((candidate) => candidate.id === offer.modelId);
                   return (
@@ -1479,19 +1396,11 @@ function OffersSection({
                         <div className="font-semibold text-[#09090b]">{offer.title}</div>
                         <div className="mt-1 text-xs text-[#71717a]">Expires: {offer.expiresAt ? shortDate(offer.expiresAt) : 'No expiry'}</div>
                       </td>
-<<<<<<< HEAD
                     <td className="py-3 text-[#18181b]">{model?.name || 'All models'}</td>
                     <td className="py-3 text-[#18181b]">
                         {offer.trialDays} trial days, {labelFromToken(offer.discountType)} {offer.discountValue}
                       </td>
                     <td className="py-3 text-[#18181b]">
-=======
-                    <td className="py-3 text-[#0F8F5A]">{model?.name || 'All models'}</td>
-                    <td className="py-3 text-[#0F8F5A]">
-                        {offer.trialDays} trial days, {labelFromToken(offer.discountType)} {offer.discountValue}
-                      </td>
-                    <td className="py-3 text-[#0F8F5A]">
->>>>>>> origin/main
                         {formatNumber(offer.redemptions)} / {offer.maxRedemptions ?? 'Unlimited'}
                       </td>
                       <td className="py-3">
@@ -1594,11 +1503,7 @@ function LeadsSection({
                     <th className="pb-3">Created</th>
                   </tr>
                 </thead>
-<<<<<<< HEAD
                 <tbody className="divide-y divide-[#e4e4e7]">
-=======
-                <tbody className="divide-y divide-[#E5E5E7]">
->>>>>>> origin/main
                   {leads.map((lead) => (
                     <tr key={lead.id}>
                       <td className="py-3">
@@ -1607,11 +1512,7 @@ function LeadsSection({
                         {lead.organization && <div className="text-xs text-[#71717a]">{lead.organization}</div>}
                       </td>
                       <td className="py-3"><Chip>{labelFromToken(lead.source)}</Chip></td>
-<<<<<<< HEAD
                       <td className="py-3 text-[#18181b]">{compactText(lead.interest)}</td>
-=======
-                      <td className="py-3 text-[#0F8F5A]">{compactText(lead.interest)}</td>
->>>>>>> origin/main
                       <td className="py-3">
                         <select
                           value={lead.stage}
@@ -1771,11 +1672,7 @@ function CareersSection({
                             href={application.linkedInUrl}
                             target="_blank"
                             rel="noreferrer"
-<<<<<<< HEAD
                             className="inline-flex items-center gap-1 rounded-md border border-[#d4d4d8] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#18181b] hover:bg-[#f4f4f5]"
-=======
-                            className="inline-flex items-center gap-1 rounded-md border border-[#E5E5E7] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#12B76A] hover:bg-[#D1F1E1]"
->>>>>>> origin/main
                           >
                             <Link2 className="h-3.5 w-3.5" />
                             LinkedIn
@@ -1786,11 +1683,7 @@ function CareersSection({
                             href={application.cvUrl}
                             target="_blank"
                             rel="noreferrer"
-<<<<<<< HEAD
                             className="inline-flex items-center gap-1 rounded-md border border-[#d4d4d8] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#18181b] hover:bg-[#f4f4f5]"
-=======
-                            className="inline-flex items-center gap-1 rounded-md border border-[#E5E5E7] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#12B76A] hover:bg-[#D1F1E1]"
->>>>>>> origin/main
                           >
                             <ArrowUpRight className="h-3.5 w-3.5" />
                             {application.cvFileName || 'CV'}
@@ -1928,11 +1821,7 @@ function MetricCard({ helper, icon, label, value }: { helper: string; icon: Reac
   return (
     <div className="rounded-[16px] border border-[#e4e4e7] bg-white p-5 shadow-[0_14px_36px_rgba(15,23,42,0.05)]">
       <div className="flex items-start justify-between gap-4">
-<<<<<<< HEAD
         <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#f4f4f5] text-[#18181b]">
-=======
-        <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#D1F1E1] text-[#0F8F5A]">
->>>>>>> origin/main
           {icon}
         </span>
         <span className="text-3xl font-semibold tracking-[-0.02em] text-[#09090b]">{value}</span>
@@ -1958,11 +1847,7 @@ function WorkspacePanel({
     <section className="overflow-hidden rounded-[16px] border border-[#e4e4e7] bg-white p-5 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-<<<<<<< HEAD
           <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#f4f4f5] text-[#18181b]">
-=======
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#D1F1E1] text-[#0F8F5A]">
->>>>>>> origin/main
             {icon}
           </span>
           <h2 className="text-lg font-semibold tracking-[-0.01em] text-[#09090b]">{title}</h2>
@@ -1995,13 +1880,8 @@ function Field({ children, label }: { children: ReactNode; label: string }) {
 function LockedField({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid gap-2">
-<<<<<<< HEAD
       <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{label}</span>
       <div className="rounded-md border border-[#d9e0ec] bg-[#fafafa] px-3 py-2.5 text-sm font-semibold text-[#18181b]">
-=======
-      <span className="text-xs font-bold uppercase tracking-wide text-[#647269]">{label}</span>
-      <div className="rounded-md border border-[#d9e0ec] bg-[#f8fafc] px-3 py-2.5 text-sm font-semibold text-[#0F8F5A]">
->>>>>>> origin/main
         {value}
       </div>
     </div>
@@ -2010,15 +1890,9 @@ function LockedField({ label, value }: { label: string; value: string }) {
 
 function MiniStat({ label, value }: { label: string; value: number }) {
   return (
-<<<<<<< HEAD
     <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
       <div className="text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">{label}</div>
       <div className="mt-2 text-2xl font-semibold text-[#09090b]">{formatNumber(value)}</div>
-=======
-    <div className="rounded-[12px] border border-[#dfe5f2] bg-[#F5F5F6] p-4">
-      <div className="text-xs font-bold uppercase tracking-[0.15em] text-[#647269]">{label}</div>
-      <div className="mt-2 text-2xl font-semibold text-[#0f172a]">{formatNumber(value)}</div>
->>>>>>> origin/main
     </div>
   );
 }
@@ -2033,15 +1907,9 @@ function Chip({ children, tone }: { children: ReactNode; tone?: string }) {
 
 function EmptyPanel({ body, title }: { body: string; title: string }) {
   return (
-<<<<<<< HEAD
     <div className="rounded-[12px] border border-dashed border-[#cbd5e1] bg-[#fafafa] p-6 text-center">
       <div className="font-semibold text-[#09090b]">{title}</div>
       <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#71717a]">{body}</p>
-=======
-    <div className="rounded-[12px] border border-dashed border-[#cbd5e1] bg-[#F5F5F6] p-6 text-center">
-      <div className="font-semibold text-[#0f172a]">{title}</div>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#647269]">{body}</p>
->>>>>>> origin/main
     </div>
   );
 }

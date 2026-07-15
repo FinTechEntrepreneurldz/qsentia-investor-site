@@ -16,7 +16,6 @@ export default function FirmPage() {
         title="Built at the intersection of finance, machine learning, and model governance"
         body="QSentia exists to make machine-learning investing accessible without asking investors to trust a black box."
       />
-<<<<<<< HEAD
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         <SectionCard className="overflow-hidden">
           <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
@@ -55,25 +54,6 @@ export default function FirmPage() {
           <Value icon={<SearchCheck />} title="Research philosophy" body="Treat every result as a claim that needs source data, methodology, and repeatable evidence." />
           <Value icon={<Scale />} title="Operating discipline" body="Separate model research, commercial approval, risk review, and production publication." />
           <Value icon={<Building2 />} title="Institutional objective" body="Make model diligence and execution monitoring legible to investors and platform customers." />
-=======
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-        <div className="grid gap-6 md:grid-cols-3">
-          <Value
-            icon={<SearchCheck />}
-            title="Research philosophy"
-            body="Treat every result as a claim that needs source data, methodology, and repeatable evidence."
-          />
-          <Value
-            icon={<Scale />}
-            title="Operating discipline"
-            body="Separate model research, commercial approval, risk review, and production publication."
-          />
-          <Value
-            icon={<Building2 />}
-            title="Institutional objective"
-            body="Make model diligence and execution monitoring legible to investors and platform customers."
-          />
->>>>>>> origin/main
         </div>
       </section>
     </PageShell>
@@ -82,25 +62,10 @@ export default function FirmPage() {
 
 function Value({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
   return (
-<<<<<<< HEAD
     <SectionCard className="p-6">
       <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b] [&>svg]:h-5 [&>svg]:w-5">{icon}</span>
       <h2 className="mt-5 text-xl font-semibold text-[#09090b]">{title}</h2>
       <p className="mt-3 text-sm leading-6 text-[#52525b]">{body}</p>
-=======
-    <SectionCard className="p-6 bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px] flex flex-col justify-between h-full">
-      <div>
-        <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white [&>svg]:h-4.5 [&>svg]:w-4.5">
-          {icon}
-        </span>
-        <h2 className="mt-5 font-mono text-sm sm:text-base font-bold tracking-wider uppercase text-zinc-955 dark:text-white">
-          {title}
-        </h2>
-      </div>
-      <p className="mt-3 text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
-        {body}
-      </p>
->>>>>>> origin/main
     </SectionCard>
   );
 }

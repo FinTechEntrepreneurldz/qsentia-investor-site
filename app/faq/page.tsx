@@ -8,15 +8,9 @@ import {
   KeyRound,
   Scale,
   ShieldCheck,
-<<<<<<< HEAD
 } from "lucide-react";
 import { PageIntro } from "@/components/InstitutionalShell";
 import { PageShell, SectionCard } from "@/components/PageChrome";
-=======
-} from 'lucide-react';
-import { PageIntro } from '@/components/InstitutionalShell';
-import { PageShell, SectionCard } from '@/components/PageChrome';
->>>>>>> origin/main
 
 export const metadata: Metadata = {
   title: 'FAQ | QSentia',
@@ -36,11 +30,7 @@ const faqGroups = [
       {
         question: 'Is the performance data live or manually entered?',
         answer:
-<<<<<<< HEAD
           "Research and performance surfaces are designed around source-backed telemetry from the platform APIs and configured model records. When source rows are unavailable, the interface shows missing or unavailable states rather than replacing them with unsupported numbers.",
-=======
-          'Research and performance surfaces are designed around source-backed telemetry from the platform APIs and configured model records. When source rows are unavailable, the interface should show missing or unavailable states rather than replacing them with unsupported numbers.',
->>>>>>> origin/main
       },
       {
         question: 'Can investors request diligence materials?',
@@ -61,11 +51,7 @@ const faqGroups = [
       {
         question: 'How are model APIs issued?',
         answer:
-<<<<<<< HEAD
           "API access is tied to approved customer accounts, model entitlements, scoped keys, and usage controls. Production credentials are issued only after commercial approval, security review, and broker or deployment-readiness checks where relevant.",
-=======
-          'API access is tied to approved customer accounts, model entitlements, scoped keys, and usage controls. Production credentials should be issued only after commercial approval, security review, and broker or deployment-readiness checks where relevant.',
->>>>>>> origin/main
       },
       {
         question: 'Can QSentia connect models to brokerage accounts?',
@@ -100,15 +86,9 @@ const faqGroups = [
     icon: ShieldCheck,
     items: [
       {
-<<<<<<< HEAD
         question: "How do users handle broker credentials or API secrets?",
         answer:
           "Users must never place broker credentials, API secrets, private keys, passwords, or payment-card numbers in ordinary forms, support messages, or application materials. Sensitive integrations use approved secure flows only.",
-=======
-        question: 'How should users handle broker credentials or API secrets?',
-        answer:
-          'Users should never place broker credentials, API secrets, private keys, passwords, or payment-card numbers in ordinary forms, support messages, or application materials. Sensitive integrations should use approved secure flows only.',
->>>>>>> origin/main
       },
       {
         question: 'What privacy framework does QSentia reference?',
@@ -118,11 +98,7 @@ const faqGroups = [
       {
         question: 'Does QSentia claim SOC 2 or GDPR certification?',
         answer:
-<<<<<<< HEAD
           "No. Public policy pages describe operating baselines and readiness work. Certification, audit scope, and legal compliance claims are published only after appropriate validation.",
-=======
-          'No. Public policy pages describe operating baselines and readiness work. Certification, audit scope, and legal compliance claims should be published only after appropriate validation.',
->>>>>>> origin/main
       },
     ],
   },
@@ -143,11 +119,7 @@ const faqGroups = [
       {
         question: 'Can candidates apply without sending secrets?',
         answer:
-<<<<<<< HEAD
           "Yes. Candidates must share only professional information needed for recruitment evaluation. They must not include passwords, private keys, API keys, broker credentials, or confidential employer information.",
-=======
-          'Yes. Candidates should share only professional information needed for recruitment evaluation. They should not include passwords, private keys, API keys, broker credentials, or confidential employer information.',
->>>>>>> origin/main
       },
     ],
   },
@@ -163,7 +135,6 @@ export default function FAQPage() {
   return (
     <PageShell active="/faq">
       <PageIntro
-<<<<<<< HEAD
         eyebrow="Help centre"
         title="Frequently asked questions"
         body="Practical answers for investors, platform customers, developers, candidates, and internal teams reviewing QSentia access, telemetry, security, and workflows."
@@ -188,12 +159,6 @@ export default function FAQPage() {
           })}
         </div>
       </section>
-=======
-        eyebrow="Help center"
-        title="Frequently asked questions"
-        body="Practical answers for investors, platform customers, developers, candidates, and internal teams reviewing QSentia access, telemetry, security, and workflows."
-      />
->>>>>>> origin/main
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         {/* Quick Links Row */}
@@ -219,13 +184,8 @@ export default function FAQPage() {
         {/* Sidebar & QA Accordions */}
         <div className="grid gap-8 lg:grid-cols-[280px_minmax(0,1fr)]">
           <aside className="self-start lg:sticky lg:top-24">
-<<<<<<< HEAD
             <div className="border-l-2 border-[#d4d4d8] pl-4">
               <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
-=======
-            <div className="border-l-2 border-zinc-200 dark:border-zinc-800 pl-4">
-              <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-550">
->>>>>>> origin/main
                 Categories
               </div>
               <nav className="mt-4 grid gap-2" aria-label="FAQ categories">
@@ -233,11 +193,7 @@ export default function FAQPage() {
                   <a
                     key={group.title}
                     href={`#${slugify(group.title)}`}
-<<<<<<< HEAD
                     className="text-sm leading-6 text-[#52525b] transition hover:text-[#18181b]"
-=======
-                    className="font-mono text-[10px] uppercase font-bold tracking-wider text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition-colors"
->>>>>>> origin/main
                   >
                     {group.title}
                   </a>
@@ -256,7 +212,6 @@ export default function FAQPage() {
                 >
                   <section id={slugify(group.title)} className="scroll-mt-24">
                     <div className="flex items-center gap-3">
-<<<<<<< HEAD
                       <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
                         <Icon className="h-5 w-5" />
                       </span>
@@ -276,28 +231,6 @@ export default function FAQPage() {
                             </span>
                           </summary>
                           <p className="mt-3 max-w-3xl text-sm leading-7 text-[#52525b]">
-=======
-                      <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white">
-                        <Icon className="h-4.5 w-4.5" />
-                      </span>
-                      <h2 className="font-mono text-sm sm:text-base font-bold tracking-wider uppercase text-zinc-955 dark:text-white">
-                        {group.title}
-                      </h2>
-                    </div>
-
-                    <div className="mt-6 divide-y divide-zinc-200 dark:divide-zinc-800 border-y border-zinc-200 dark:border-zinc-800">
-                      {group.items.map((item) => (
-                        <details key={item.question} className="group py-5">
-                          <summary className="cursor-pointer list-none font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-zinc-955 dark:text-white marker:hidden outline-none">
-                            <span className="flex items-start justify-between gap-4">
-                              {item.question}
-                              <span className="mt-0.5 text-zinc-550 transition-transform group-open:rotate-90">
-                                <ArrowRight className="h-3.5 w-3.5" />
-                              </span>
-                            </span>
-                          </summary>
-                          <p className="mt-3.5 max-w-3xl text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
->>>>>>> origin/main
                             {item.answer}
                           </p>
                         </details>

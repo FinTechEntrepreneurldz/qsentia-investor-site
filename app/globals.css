@@ -732,7 +732,6 @@ body {
   background-color: #18181b !important;
 }
 
-<<<<<<< HEAD
 .dark .bg-\[\#fafafa\],
 .dark .bg-\[\#f4f4f5\],
 .dark .bg-\[\#f3f5f8\],
@@ -775,20 +774,6 @@ body {
 }
 
 .dark .border-\[\#d7ddf7\] {
-=======
-.dark .border-\[\#E5E5E7\],
-.dark .border-\[\#dbe3ff\],
-.dark .border-\[\#d7ddf7\],
-.dark .border-\[\#e2e7fb\],
-.dark .border-\[\#cbd5ff\],
-.dark .border-\[\#eef2ff\],
-.dark .border-slate-100,
-.dark .border-slate-200,
-.dark .border-slate-300,
-.dark .border-zinc-100,
-.dark .border-zinc-200,
-.dark .border-zinc-300 {
->>>>>>> origin/main
   border-color: #27272a !important;
 }
 
@@ -808,7 +793,6 @@ body {
   color: #f8fafc !important;
 }
 
-<<<<<<< HEAD
 .dark .text-\[\#09090b\],
 .dark .text-\[\#18181b\],
 .dark .text-\[\#27272a\] {
@@ -816,9 +800,6 @@ body {
 }
 
 .dark .text-\[\#172554\] {
-=======
-.dark .text-\[\#0F8F5A\] {
->>>>>>> origin/main
   color: #e4e4e7 !important;
 }
 
@@ -842,7 +823,6 @@ body {
   color: #cbd5e1 !important;
 }
 
-<<<<<<< HEAD
 .dark .text-\[\#52525b\],
 .dark .text-\[\#71717a\],
 .dark .text-\[\#a1a1aa\],
@@ -879,9 +859,6 @@ body {
 }
 
 .dark .hover\:bg-\[\#f8faff\]:hover {
-=======
-.dark .hover\:bg-\[\#F5F5F6\]:hover {
->>>>>>> origin/main
   background-color: #18181b !important;
 }
 

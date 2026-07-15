@@ -340,7 +340,6 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
       <div className="mx-auto grid max-w-[1540px] lg:grid-cols-[292px_minmax(0,1fr)]">
         <aside className="border-b border-[#e4e4e7] bg-white/95 text-[#09090b] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur lg:sticky lg:top-16 lg:max-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-b-0 lg:border-r">
           <div className="flex h-full flex-col px-4 py-5">
-<<<<<<< HEAD
             <div className="rounded-[14px] border border-[#e4e4e7] bg-[#fafafa] p-4">
               <div className="flex items-center gap-3">
                 <Link href="/" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-[#d4d4d8] bg-white" aria-label="QSentia home">
@@ -349,16 +348,6 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                 <div>
                   <div className="text-sm font-semibold text-[#09090b]">QSentia</div>
                   <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#18181b]">
-=======
-            <div className="rounded-[14px] border border-[#dfe6f3] bg-[#F5F5F6] p-4">
-              <div className="flex items-center gap-3">
-                <Link href="/" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-[#E5E5E7] bg-white" aria-label="QSentia home">
-                  <Image src="/logo/qsentia-primary.png" alt="QSentia" width={26} height={26} className="h-7 w-7 object-contain" />
-                </Link>
-                <div>
-                  <div className="text-sm font-semibold text-[#0f172a]">QSentia</div>
-                  <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0F8F5A]">
->>>>>>> origin/main
                     Settings
                   </div>
                 </div>
@@ -385,21 +374,12 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                     onClick={() => setActiveSection(item.id)}
                     className={`group flex items-start gap-3 rounded-[10px] border px-3 py-3 text-left text-sm transition ${
                       active
-<<<<<<< HEAD
                         ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b] shadow-sm"
                         : "border-transparent text-[#3f3f46] hover:border-[#e4e4e7] hover:bg-[#fafafa]"
                     }`}
                   >
                     <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
                       active ? "bg-white text-[#18181b]" : "bg-[#f4f4f5] text-[#71717a] group-hover:text-[#18181b]"
-=======
-                        ? "border-[#E5E5E7] bg-[#D1F1E1] text-[#0F8F5A] shadow-sm"
-                        : "border-transparent text-[#334155] hover:border-[#dfe6f3] hover:bg-[#F5F5F6]"
-                    }`}
-                  >
-                    <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
-                      active ? "bg-white text-[#0F8F5A]" : "bg-[#f1f5ff] text-[#64748b] group-hover:text-[#0F8F5A]"
->>>>>>> origin/main
                     }`}>
                       <Icon className="h-4 w-4" />
                     </span>
@@ -416,11 +396,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
 
             <div className="mt-6 rounded-[14px] border border-[#e4e4e7] bg-white p-4 shadow-sm">
               <div className="flex items-start gap-3">
-<<<<<<< HEAD
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#18181b] text-sm font-semibold text-white">
-=======
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0F8F5A] text-sm font-semibold text-white">
->>>>>>> origin/main
                   {sessionUser.name.slice(0, 2).toUpperCase()}
                 </span>
                 <div className="min-w-0">
@@ -433,7 +409,6 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-<<<<<<< HEAD
                 <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-3 py-2">
                   <div className="font-bold uppercase tracking-wide text-[#71717a]">Plan</div>
                   <div className="mt-1 truncate font-semibold text-[#18181b]">{planName}</div>
@@ -441,26 +416,13 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                 <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-3 py-2">
                   <div className="font-bold uppercase tracking-wide text-[#71717a]">Models</div>
                   <div className="mt-1 font-semibold text-[#18181b]">{licensedModels.length}</div>
-=======
-                <div className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-3 py-2">
-                  <div className="font-bold uppercase tracking-wide text-[#647269]">Plan</div>
-                  <div className="mt-1 truncate font-semibold text-[#0F8F5A]">{planName}</div>
-                </div>
-                <div className="rounded-md border border-[#E5E5E7] bg-[#F5F5F6] px-3 py-2">
-                  <div className="font-bold uppercase tracking-wide text-[#647269]">Models</div>
-                  <div className="mt-1 font-semibold text-[#0F8F5A]">{licensedModels.length}</div>
->>>>>>> origin/main
                 </div>
               </div>
               <button
                 type="button"
                 suppressHydrationWarning
                 onClick={logout}
-<<<<<<< HEAD
                 className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#cfd7e6] bg-white px-3 py-2 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa]"
-=======
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#cfd7e6] bg-white px-3 py-2 text-sm font-semibold text-[#0F8F5A] transition hover:border-[#0F8F5A] hover:bg-[#F5F5F6]"
->>>>>>> origin/main
               >
                 <LogOut className="h-4 w-4" />
                 Sign out
@@ -469,11 +431,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
 
             <Link
               href="/contact"
-<<<<<<< HEAD
               className="mt-auto hidden items-center justify-between rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] lg:flex"
-=======
-              className="mt-auto hidden items-center justify-between rounded-[10px] border border-[#dfe6f3] bg-white px-3 py-3 text-sm font-semibold text-[#0F8F5A] transition hover:border-[#0F8F5A] hover:bg-[#F5F5F6] lg:flex"
->>>>>>> origin/main
             >
               Contact support
               <ArrowRight className="h-4 w-4" />
@@ -482,19 +440,11 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
         </aside>
 
         <main className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">
-<<<<<<< HEAD
           <div className="mb-6 overflow-hidden rounded-[16px] border border-[#e4e4e7] bg-white shadow-sm">
             <div className="border-b border-[#e4e4e7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#f4f4f5_100%)] p-5 md:p-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
                   <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#18181b]">
-=======
-          <div className="mb-6 overflow-hidden rounded-[16px] border border-[#dbe3ff] bg-white shadow-sm">
-            <div className="border-b border-[#E5E5E7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#D1F1E1_100%)] p-5 md:p-6">
-              <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#0F8F5A]">
->>>>>>> origin/main
                     Account settings
                   </div>
                   <h1 className="mt-2 text-3xl font-semibold tracking-[-0.01em] text-[#09090b]">
@@ -510,11 +460,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
             <div className="grid gap-px bg-[#e4e4e7] sm:grid-cols-3">
-=======
-            <div className="grid gap-px bg-[#E5E5E7] sm:grid-cols-3">
->>>>>>> origin/main
               <WorkspaceStat label="Workspace" value={workspaceId} />
               <WorkspaceStat label="Billing" value={label(billingStatus)} />
               <WorkspaceStat label="Active section" value={activeNav.detail} />
@@ -652,11 +598,7 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
           {(ctx.billing?.invoices || []).length ? (
             <div className="mt-4 overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
-<<<<<<< HEAD
                 <thead className="border-b border-[#e4e4e7] text-xs uppercase tracking-wide text-[#71717a]">
-=======
-                <thead className="border-b border-[#E5E5E7] text-xs uppercase tracking-wide text-[#647269]">
->>>>>>> origin/main
                   <tr>
                     <th className="pb-3">Invoice</th>
                     <th className="pb-3">Period</th>
@@ -667,11 +609,7 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
                     <th className="pb-3">File</th>
                   </tr>
                 </thead>
-<<<<<<< HEAD
                 <tbody className="divide-y divide-[#f4f4f5]">
-=======
-                <tbody className="divide-y divide-[#D1F1E1]">
->>>>>>> origin/main
                   {(ctx.billing?.invoices || []).map((invoice) => (
                     <tr key={invoice.id}>
                       <td className="py-3 font-semibold text-[#09090b]">{invoice.id}</td>
@@ -696,15 +634,9 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
         <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
           Billing address
         </div>
-<<<<<<< HEAD
         <div className="mt-4 rounded-[10px] border border-[#e4e4e7] bg-[#fafafa] p-4">
           <div className="font-semibold text-[#09090b]">{ctx.billingEntity}</div>
           <div className="mt-3 space-y-1 text-sm leading-6 text-[#52525b]">
-=======
-        <div className="mt-4 rounded-[10px] border border-[#E5E5E7] bg-[#F5F5F6] p-4">
-          <div className="font-semibold text-[#06130c]">{ctx.billingEntity}</div>
-          <div className="mt-3 space-y-1 text-sm leading-6 text-[#5a685f]">
->>>>>>> origin/main
             <div>{ctx.workspace?.billingAddress.contact || ctx.sessionUser.name}</div>
             <div>{ctx.workspace?.billingAddress.line1 || "Address not configured"}</div>
             {ctx.workspace?.billingAddress.line2 ? <div>{ctx.workspace.billingAddress.line2}</div> : null}
@@ -716,11 +648,7 @@ function BillingSection({ ctx }: { ctx: DashboardContext }) {
           <InfoRow icon={<KeyRound className="h-4 w-4" />} label="Billing email" value={ctx.billing?.account.billingEmail || ctx.sessionUser.email} />
           <InfoRow icon={<FileText className="h-4 w-4" />} label="Tax status" value={ctx.billing?.account.taxStatus || "Not configured"} />
         </div>
-<<<<<<< HEAD
         <Link href="/contact" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
-=======
-        <Link href="/contact" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#0F8F5A] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#12B76A]">
->>>>>>> origin/main
           Request billing update
           <ArrowRight className="h-4 w-4" />
         </Link>
@@ -734,20 +662,12 @@ function ModelsSection({ ctx }: { ctx: DashboardContext }) {
     <Panel
       eyebrow="Model access"
       title="Licensed model entitlements"
-<<<<<<< HEAD
       action={<Link href="/marketplace" className="text-sm font-semibold text-[#18181b] hover:underline">Model marketplace</Link>}
-=======
-      action={<Link href="/marketplace" className="text-sm font-semibold text-[#12B76A] hover:underline">Model marketplace</Link>}
->>>>>>> origin/main
     >
       {ctx.licensedModels.length ? (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[820px] text-left text-sm">
-<<<<<<< HEAD
             <thead className="border-b border-[#e4e4e7] text-xs uppercase tracking-wide text-[#71717a]">
-=======
-            <thead className="border-b border-[#E5E5E7] text-xs uppercase tracking-wide text-[#647269]">
->>>>>>> origin/main
               <tr>
                 <th className="pb-3">Model</th>
                 <th className="pb-3">Category</th>
@@ -757,24 +677,15 @@ function ModelsSection({ ctx }: { ctx: DashboardContext }) {
                 <th className="pb-3">Access</th>
               </tr>
             </thead>
-<<<<<<< HEAD
             <tbody className="divide-y divide-[#f4f4f5]">
-=======
-            <tbody className="divide-y divide-[#D1F1E1]">
->>>>>>> origin/main
               {ctx.licensedModels.map((model) => (
                 <tr key={model.id}>
                   <td className="max-w-[320px] py-3">
                     <div className="font-semibold text-[#09090b]">{model.name}</div>
                     <div className="mt-1 text-xs text-[#71717a]">{model.slug}</div>
                   </td>
-<<<<<<< HEAD
                   <td className="py-3 text-[#52525b]">{model.category}</td>
                   <td className="py-3 text-[#18181b]">{cleanMetric(fmtNum(model.performance?.sharpeRatio, 2))}</td>
-=======
-                  <td className="py-3 text-[#5a685f]">{model.category}</td>
-                  <td className="py-3 text-[#0F8F5A]">{cleanMetric(fmtNum(model.performance?.sharpeRatio, 2))}</td>
->>>>>>> origin/main
                   <td className="py-3 text-[#047857]">{cleanMetric(fmtPct(model.performance?.annualizedReturn, true))}</td>
                   <td className="py-3 text-[#be123c]">{cleanMetric(fmtPct(model.performance?.maxDrawdown, true))}</td>
                   <td className="py-3"><StatusPill value={model.accessStatus || "Review"} /></td>
@@ -826,15 +737,9 @@ function ApiSection({ ctx }: { ctx: DashboardContext }) {
           <QuickAction href="/developers" icon={<Code2 />} label="Developer center" />
           <QuickAction href="/api/customer/audit-export" icon={<Download />} label="Download audit CSV" external />
         </div>
-<<<<<<< HEAD
         <div className="mt-6 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
           <div className="text-sm font-semibold text-[#09090b]">API requirements</div>
           <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#52525b]">
-=======
-        <div className="mt-6 rounded-md border border-[#E5E5E7] bg-[#F5F5F6] p-4">
-          <div className="text-sm font-semibold text-[#06130c]">API requirements</div>
-          <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#5a685f]">
->>>>>>> origin/main
             <li>Active model entitlement</li>
             <li>Issued server-side API credential</li>
             <li>Approved environment scope</li>
@@ -856,11 +761,7 @@ function BrokerSection({ ctx }: { ctx: DashboardContext }) {
           <ControlRow label="Credentials vault" value={ctx.workspace?.broker.credentialsVault || "Not configured"} />
           <ControlRow label="Approval mode" value={label(ctx.workspace?.risk.approvalMode)} />
         </div>
-<<<<<<< HEAD
         <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
-=======
-        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#0F8F5A] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#12B76A]">
->>>>>>> origin/main
           Request broker onboarding
           <ArrowRight className="h-4 w-4" />
         </Link>
@@ -937,13 +838,8 @@ function Panel({
     <SectionCard className="overflow-hidden rounded-[16px] border-[#e4e4e7] shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="px-5 pt-5 md:px-6 md:pt-6">
-<<<<<<< HEAD
           <div className="text-xs font-bold uppercase tracking-[0.16em] text-[#18181b]">{eyebrow}</div>
           <h2 className="mt-2 text-xl font-semibold text-[#09090b]">{title}</h2>
-=======
-          <div className="text-xs font-bold uppercase tracking-[0.16em] text-[#0F8F5A]">{eyebrow}</div>
-          <h2 className="mt-2 text-xl font-semibold text-[#06130c]">{title}</h2>
->>>>>>> origin/main
         </div>
         {action ? <div className="shrink-0 px-5 pt-5 md:px-6 md:pt-6">{action}</div> : null}
       </div>
@@ -968,13 +864,8 @@ function SummaryTile({
   return (
     <div className="rounded-[14px] border border-[#e4e4e7] bg-white p-4 shadow-[0_12px_32px_rgba(15,23,42,0.05)]">
       <div className="flex items-start justify-between gap-3">
-<<<<<<< HEAD
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#f4f4f5] text-[#18181b]">{icon}</span>
         <span className="mt-1 h-2 w-2 rounded-full bg-[#18181b]/35" />
-=======
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#D1F1E1] text-[#0F8F5A]">{icon}</span>
-        <span className="mt-1 h-2 w-2 rounded-full bg-[#0F8F5A]/35" />
->>>>>>> origin/main
       </div>
       <div className="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">{labelText}</div>
       <div className="mt-2 truncate text-xl font-semibold text-[#09090b]">{value}</div>
@@ -995,15 +886,9 @@ function FactCard({
   value: string;
 }) {
   return (
-<<<<<<< HEAD
     <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
       <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">
         <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-[#18181b] shadow-sm">{icon}</span>
-=======
-    <div className="rounded-[12px] border border-[#E5E5E7] bg-[#F5F5F6] p-4">
-      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-[#647269]">
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-[#0F8F5A] shadow-sm">{icon}</span>
->>>>>>> origin/main
         {labelText}
       </div>
       <div className="mt-3 truncate text-lg font-semibold text-[#09090b]">{value}</div>
@@ -1022,15 +907,9 @@ function InfoRow({
   value: string;
 }) {
   return (
-<<<<<<< HEAD
     <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-2.5">
       <span className="inline-flex items-center gap-2 text-sm text-[#52525b]">
         <span className="text-[#18181b]">{icon}</span>
-=======
-    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#E5E5E7] bg-white px-3 py-2.5">
-      <span className="inline-flex items-center gap-2 text-sm text-[#5a685f]">
-        <span className="text-[#0F8F5A]">{icon}</span>
->>>>>>> origin/main
         {labelText}
       </span>
       <span className="max-w-[190px] truncate text-right text-sm font-semibold text-[#09090b]">{value}</span>
@@ -1040,15 +919,9 @@ function InfoRow({
 
 function ControlRow({ label: labelText, value }: { label: string; value: string }) {
   return (
-<<<<<<< HEAD
     <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-[#fafafa] px-3 py-2.5">
       <span className="text-sm text-[#52525b]">{labelText}</span>
       <span className="max-w-[240px] truncate rounded-md border border-[#e4e4e7] bg-white px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#18181b]">{value}</span>
-=======
-    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#E5E5E7] bg-[#F5F5F6] px-3 py-2.5">
-      <span className="text-sm text-[#5a685f]">{labelText}</span>
-      <span className="max-w-[240px] truncate rounded-md border border-[#dbe3ff] bg-white px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#12B76A]">{value}</span>
->>>>>>> origin/main
     </div>
   );
 }
@@ -1063,11 +936,7 @@ function ReadinessItem({
   status: string;
 }) {
   return (
-<<<<<<< HEAD
     <div className="rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-2.5">
-=======
-    <div className="rounded-[10px] border border-[#E5E5E7] bg-white px-3 py-2.5">
->>>>>>> origin/main
       <div className="flex items-center justify-between gap-3">
         <span className="text-sm font-semibold text-[#09090b]">{labelText}</span>
         <StatusPill value={status} />
@@ -1089,21 +958,13 @@ function StatusPill({ value }: { value: string }) {
           normalized.includes("open") ||
           normalized.includes("paper") ||
           normalized.includes("refreshing")
-<<<<<<< HEAD
         ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]"
-=======
-        ? "border-[#c7d2fe] bg-[#D1F1E1] text-[#12B76A]"
->>>>>>> origin/main
         : normalized.includes("required") ||
             normalized.includes("pending") ||
             normalized.includes("not") ||
             normalized.includes("past due")
           ? "border-[#fed7aa] bg-[#fff7ed] text-[#c2410c]"
-<<<<<<< HEAD
           : "border-[#e4e4e7] bg-[#fafafa] text-[#52525b]";
-=======
-          : "border-[#E5E5E7] bg-[#F5F5F6] text-[#46554b]";
->>>>>>> origin/main
 
   return (
     <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${tone}`}>
@@ -1125,24 +986,15 @@ function UsageMeter({
   const percent = Math.min(Math.max((used / safeLimit) * 100, 0), 100);
 
   return (
-<<<<<<< HEAD
     <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
-=======
-    <div className="rounded-[12px] border border-[#E5E5E7] bg-[#F5F5F6] p-4">
->>>>>>> origin/main
       <div className="flex items-center justify-between gap-3">
         <span className="text-sm font-semibold text-[#09090b]">{labelText}</span>
         <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
           {used.toLocaleString()} / {limit.toLocaleString()}
         </span>
       </div>
-<<<<<<< HEAD
       <div className="mt-4 h-2 rounded-full bg-[#e4e4e7]">
         <div className="h-full rounded-full bg-[#18181b]" style={{ width: `${percent}%` }} />
-=======
-      <div className="mt-4 h-2 rounded-full bg-[#E5E5E7]">
-        <div className="h-full rounded-full bg-[#0F8F5A]" style={{ width: `${percent}%` }} />
->>>>>>> origin/main
       </div>
     </div>
   );
@@ -1160,11 +1012,7 @@ function QuickAction({
   label: string;
 }) {
   const className =
-<<<<<<< HEAD
     "inline-flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] [&>svg]:h-4 [&>svg]:w-4";
-=======
-    "inline-flex items-center justify-between gap-3 rounded-[10px] border border-[#dbe3ff] bg-white px-3 py-3 text-sm font-semibold text-[#0F8F5A] transition hover:border-[#0F8F5A] hover:bg-[#F5F5F6] [&>svg]:h-4 [&>svg]:w-4";
->>>>>>> origin/main
 
   if (external) {
     return (
@@ -1191,7 +1039,6 @@ function QuickAction({
 
 function SupportCard({ body, title }: { body: string; title: string }) {
   return (
-<<<<<<< HEAD
     <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
       <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-[#18181b] shadow-sm">
         <LifeBuoy className="h-4 w-4" />
@@ -1199,15 +1046,6 @@ function SupportCard({ body, title }: { body: string; title: string }) {
       <h3 className="mt-4 font-semibold text-[#09090b]">{title}</h3>
       <p className="mt-2 text-sm leading-6 text-[#52525b]">{body}</p>
       <Link href="/contact" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#18181b] hover:underline">
-=======
-    <div className="rounded-[12px] border border-[#E5E5E7] bg-[#F5F5F6] p-4">
-      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-[#0F8F5A] shadow-sm">
-        <LifeBuoy className="h-4 w-4" />
-      </span>
-      <h3 className="mt-4 font-semibold text-[#06130c]">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-[#5a685f]">{body}</p>
-      <Link href="/contact" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#12B76A] hover:underline">
->>>>>>> origin/main
         Open request
         <ArrowRight className="h-4 w-4" />
       </Link>
@@ -1226,11 +1064,7 @@ function ActivityItem({
 }) {
   return (
     <div className="flex gap-3">
-<<<<<<< HEAD
       <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
-=======
-      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#D1F1E1] text-[#0F8F5A]">
->>>>>>> origin/main
         <CheckCircle2 className="h-4 w-4" />
       </span>
       <div>
@@ -1246,13 +1080,8 @@ function ActivityItem({
 
 function TableHeader({ title }: { title: string }) {
   return (
-<<<<<<< HEAD
     <div className="flex items-center justify-between border-b border-[#e4e4e7] pb-3">
       <h3 className="font-semibold text-[#09090b]">{title}</h3>
-=======
-    <div className="flex items-center justify-between border-b border-[#E5E5E7] pb-3">
-      <h3 className="font-semibold text-[#06130c]">{title}</h3>
->>>>>>> origin/main
     </div>
   );
 }
@@ -1270,13 +1099,8 @@ function InlineEmpty({
     <div
       className={
         compact
-<<<<<<< HEAD
           ? "rounded-md border border-dashed border-[#d4d4d8] bg-[#fafafa] p-4 text-center"
           : "mt-5 rounded-md border border-dashed border-[#d4d4d8] bg-[#fafafa] p-6 text-center"
-=======
-          ? "rounded-md border border-dashed border-[#E5E5E7] bg-[#F5F5F6] p-4 text-center"
-          : "mt-5 rounded-md border border-dashed border-[#E5E5E7] bg-[#F5F5F6] p-6 text-center"
->>>>>>> origin/main
       }
     >
       <div className="text-sm font-semibold text-[#09090b]">{title}</div>
