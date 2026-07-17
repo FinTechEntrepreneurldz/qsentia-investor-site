@@ -6,6 +6,29 @@ import { authConfigMissingMessage, getSupabaseBrowserClient } from "@/lib/supaba
 
 type OAuthProvider = "google";
 const SHOW_LOCAL_PREVIEW = process.env.NODE_ENV !== "production";
+const DEFAULT_NEXT_PATH = "/user";
+const ALLOWED_NEXT_PATHS = [
+  "/user",
+  "/user/wallet",
+  "/user/orders",
+  "/user/reports",
+  "/marketplace",
+] as const;
+const ALLOWED_MODEL_SLUGS = [
+  "model-c-etf",
+  "crypto-sentiment-mlp-ppo-ibkr",
+  "eth-micro-futures-sentiment-alpha",
+  "br-ppo-crypto-v15",
+  "fixed-income-regime-signal",
+] as const;
+
+function allowedNextPaths() {
+  return [
+    ...ALLOWED_NEXT_PATHS,
+    ...ALLOWED_MODEL_SLUGS.map((slug) => `/user/models/${slug}`),
+    ...ALLOWED_MODEL_SLUGS.map((slug) => `/marketplace/${slug}`),
+  ];
+}
 
 function callbackUrl(nextPath: string) {
   const callback = new URL("/auth/callback", window.location.origin);
@@ -14,8 +37,13 @@ function callbackUrl(nextPath: string) {
 }
 
 function nextPathFromLocation() {
-  if (typeof window === "undefined") return "/user";
-  return new URLSearchParams(window.location.search).get("next") || "/user";
+  if (typeof window === "undefined") return DEFAULT_NEXT_PATH;
+
+  const requestedPath = new URLSearchParams(window.location.search).get("next");
+  if (!requestedPath) return DEFAULT_NEXT_PATH;
+
+  const sanitizedPath = allowedNextPaths().find((path) => path === requestedPath);
+  return sanitizedPath || DEFAULT_NEXT_PATH;
 }
 
 export function SignInForm() {
