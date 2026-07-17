@@ -60,6 +60,14 @@ export default function HomePage() {
             <span className="font-medium text-[#0F8F5A]">risk analytics</span>, attribution, and{' '}
             <span className="font-medium text-[#0F8F5A]">live model telemetry</span> in one place.
           </p>
+          <p className="mt-6 max-w-4xl text-base leading-8 text-[#4b5563] dark:text-zinc-300">
+            <span className="font-semibold text-[#101820] dark:text-white">About us:</span> QSentia is a
+            quantitative research company bringing institutional-grade machine learning models to everyone. We
+            combine advanced predictive models with adaptive reinforcement learning to manage risk, control
+            drawdowns, and respond to changing market conditions. By making every model transparent, measurable,
+            and evidence-backed, QSentia gives investors access to intelligence once reserved for institutional
+            trading desks.
+          </p>
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
             <Link
               href="/marketplace"
