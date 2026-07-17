@@ -210,10 +210,10 @@ export default function DashboardPage() {
 
             <div className="flex min-w-0 flex-col gap-3">
               <Link
-                href="/customer"
+                href="/user"
                 className="inline-flex h-11 items-center justify-center bg-zinc-955 text-white dark:bg-[#eeeeee] dark:text-black px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none"
               >
-                Open settings
+                Open investor workspace
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
               <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-4 shadow-sm">

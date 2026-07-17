@@ -1,291 +1,345 @@
 'use client';
 
-import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import useSWR from 'swr';
-import { ArrowRight, BarChart3, Database, Filter, Search, ShieldCheck } from 'lucide-react';
-import { ApiLoadingPanel, EmptyState, PageShell, SectionCard } from '@/components/PageChrome';
-import { PageIntro } from '@/components/InstitutionalShell';
+import { useEffect, useMemo, useState } from 'react';
+import { ArrowRight, LockKeyhole, ShieldCheck, WalletCards } from 'lucide-react';
+import { SiteHeader } from '@/components/PageChrome';
+import { MOCK_MARKETPLACE_MODELS } from '@/lib/mockMarketplace';
+import type { MarketplaceModel } from '@/lib/modelCatalog';
 
-const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-  return response.json();
-};
+const strategyFilters = ['Momentum', 'Macro', 'Stat Arb', 'Vol Carry', 'CTA / Trend', 'ML / Factor'];
+const riskFilters = ['Low', 'Medium', 'High'];
+const assetFilters = ['Equities', 'Multi-Asset', 'Derivatives', 'Futures', 'Crypto'];
 
-type Model = {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  category: string;
-  performance: {
-    sharpeRatio: number | null;
-    annualizedReturn: number | null;
-    maxDrawdown: number | null;
-    winRate: number | null;
+function pct(value: number | null | undefined, signed = false) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return 'N/A';
+  return `${signed && value > 0 ? '+' : ''}${(value * 100).toFixed(1)}%`;
+}
+
+function strategyName(category: MarketplaceModel['category']) {
+  const map: Record<MarketplaceModel['category'], string> = {
+    crypto: 'HFT',
+    macro: 'Mean Reversion',
+    sentiment: 'Stat Arb',
+    equity: 'Momentum',
+    'multi-strategy': 'Macro',
+    'reinforcement-learning': 'Vol Carry',
   };
-  pricing: string | null;
-  accessStatus?: string;
-  minimumCapital?: string | null;
-  commercialUpdatedAt?: string;
-  tags: string[];
-  repo?: string | null;
-  logsPath?: string | null;
-};
 
-type ModelsResponse = {
-  models?: Model[];
-};
-
-function formatNum(value: number | null | undefined, digits = 2) {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return 'Not available';
-  return value.toFixed(digits);
+  return map[category] || 'ML / Factor';
 }
 
-function formatPct(value: number | null | undefined, signed = false) {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return 'Not available';
-  const prefix = signed && value > 0 ? '+' : '';
-  return `${prefix}${(value * 100).toFixed(2)}%`;
+function assetClass(model: MarketplaceModel) {
+  if (model.category === 'crypto' || model.tags.includes('crypto')) return 'Crypto';
+  if (model.tags.includes('futures') || model.category === 'sentiment') return 'Futures';
+  if (model.category === 'macro') return 'Multi-Asset';
+  if (model.category === 'reinforcement-learning') return 'Derivatives';
+  return 'Equities';
 }
 
-function categoryLabel(value: string) {
-  return value
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+function riskLabel(model: MarketplaceModel) {
+  const drawdown = Math.abs(model.performance.maxDrawdown || 0);
+  if (drawdown < 0.05) return 'Low';
+  if (drawdown < 0.1) return 'Medium';
+  return 'High';
+}
+
+function shortName(model: MarketplaceModel) {
+  const names: Record<string, string> = {
+    model_c_etf: 'QUANT-ALPHA-7',
+    crypto_sentiment_mlp: 'MACRO-SIGNAL-3',
+    qsentia_eth_micro_futures_sentiment_alpha: 'STAT-ARB-EQ',
+    br_ppo_crypto_v15: 'VOL-CARRY-X1',
+    brppo_fixed_income_regime: 'MEAN-REV-INT',
+  };
+
+  return names[model.id] || model.name.toUpperCase().slice(0, 18);
+}
+
+function sparklinePath(model: MarketplaceModel) {
+  const values = model.chart.map((point) => point.value);
+  if (values.length < 2) return '';
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const spread = max - min || 1;
+  return values
+    .map((value, index) => {
+      const x = (index / (values.length - 1)) * 72;
+      const y = 24 - ((value - min) / spread) * 20;
+      return `${index === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`;
+    })
     .join(' ');
 }
 
-function accessLabel(value: string | undefined) {
-  if (!value) return null;
-  return value
-    .split(/[-_]/g)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
-}
+type SessionPayload = {
+  authenticated: boolean;
+  user: null | {
+    name?: string | null;
+    email?: string | null;
+    provider?: string | null;
+  };
+};
 
-function accessBadgeClass(value: string | undefined) {
-  if (value === 'active') {
-    return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400';
-  }
-  if (value === 'private') {
-    return 'border-zinc-200 bg-zinc-50 text-zinc-650 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400';
-  }
-  if (value === 'waitlist') {
-    return 'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400';
-  }
-  if (value === 'retired') {
-    return 'border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400';
-  }
-  return 'border-zinc-200 bg-zinc-50 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400';
+function allocationHref(model: MarketplaceModel, authenticated: boolean, sessionLoaded: boolean) {
+  const modelHref = `/user/models/${model.slug}`;
+  return authenticated || !sessionLoaded ? modelHref : `/signin?next=${encodeURIComponent(modelHref)}`;
 }
 
 export default function MarketplacePage() {
-  const { data, error, isLoading } = useSWR<ModelsResponse>('/api/models', fetcher);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const initialLoading = isLoading && !data;
+  const [selectedStrategy, setSelectedStrategy] = useState<string | null>(null);
+  const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
+  const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
+  const [session, setSession] = useState<SessionPayload | null>(null);
 
-  const models = useMemo(() => data?.models || [], [data?.models]);
-  const categories = useMemo(
-    () => ['all', ...Array.from(new Set(models.map((model) => model.category))).sort()],
-    [models]
-  );
+  useEffect(() => {
+    let mounted = true;
 
-  const filteredModels = models.filter((model) => {
-    const query = searchQuery.toLowerCase().trim();
-    const matchesSearch =
-      !query ||
-      model.name.toLowerCase().includes(query) ||
-      model.description.toLowerCase().includes(query) ||
-      model.tags.some((tag) => tag.toLowerCase().includes(query));
+    fetch('/api/auth/session', { cache: 'no-store' })
+      .then((response) => response.json())
+      .then((payload: SessionPayload) => {
+        if (mounted) setSession(payload);
+      })
+      .catch(() => {
+        if (mounted) setSession({ authenticated: false, user: null });
+      });
 
-    const matchesCategory = selectedCategory === 'all' || model.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const filteredModels = useMemo(() => {
+    return MOCK_MARKETPLACE_MODELS.filter((model) => {
+      if (selectedStrategy && strategyName(model.category) !== selectedStrategy) return false;
+      if (selectedRisk && riskLabel(model) !== selectedRisk) return false;
+      if (selectedAsset && assetClass(model) !== selectedAsset) return false;
+      return true;
+    });
+  }, [selectedAsset, selectedRisk, selectedStrategy]);
+
+  const authenticated = Boolean(session?.authenticated && session.user);
+  const sessionLoaded = session !== null;
+  const hasFilters = Boolean(selectedStrategy || selectedRisk || selectedAsset);
+  const walletHref = authenticated || !sessionLoaded ? '/user/wallet' : '/signin?next=%2Fuser%2Fwallet';
+  const walletCta = session === null ? 'Checking wallet' : authenticated ? 'Open wallet' : 'Sign in to fund wallet';
 
   return (
-    <PageShell active="/marketplace">
-      <PageIntro
-        eyebrow="Model registry"
-        title="Trading model products, sourced from live telemetry"
-        body="Browse registered strategies with source-backed metrics. Missing performance values remain unavailable until repository logs publish the required observations."
-      />
+    <main className="min-h-screen bg-[#F5F5F6] text-zinc-950 transition-colors duration-150 dark:bg-[#09090b] dark:text-zinc-50">
+      <SiteHeader active="/marketplace" />
 
-      {/* ── Search & Filter Panel ── */}
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <SectionCard className="p-4">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="relative min-w-0 flex-1">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-400 dark:text-zinc-500" />
-              <input
-                type="text"
-                placeholder="Filter by model, strategy, tag, or repository..."
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                className="w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black py-3 pl-12 pr-4 font-mono text-xs uppercase tracking-wider text-zinc-950 dark:text-white outline-none focus:border-zinc-400 dark:focus:border-zinc-650 transition"
-              />
-            </div>
-
-            <div className="flex min-w-0 items-center gap-2 overflow-x-auto">
-              <Filter className="h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" />
-              {categories.map((category) => {
-                const isSelected = selectedCategory === category;
-                return (
-                  <button
-                    key={category}
-                    type="button"
-                    onClick={() => setSelectedCategory(category)}
-                    className={`shrink-0 rounded-none border px-3 py-2 font-mono text-[9px] font-bold tracking-widest uppercase transition ${
-                      isSelected
-                        ? 'border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-black'
-                        : 'border-zinc-200 bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-800 dark:bg-black dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white'
-                    }`}
-                  >
-                    {category === 'all' ? 'All models' : categoryLabel(category)}
-                  </button>
-                );
-              })}
+      <section className="border-b border-zinc-100 bg-[#F5F5F6] px-5 py-8 transition-colors dark:border-zinc-900 dark:bg-[#09090b]">
+        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
+          <div>
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#0F8F5A] dark:text-[#8ee0b8]">
+              Model marketplace
+            </p>
+            <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-[-0.035em] text-[#171c24] dark:text-white sm:text-5xl">
+              Explore ML trading models built for allocation.
+            </h1>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-600 dark:text-zinc-400">
+              Compare model health, return history, drawdown, Sharpe, win rate, fees, and minimum
+              allocation before reserving capital from your investor wallet.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3 text-sm">
+              <span className="rounded-full border border-zinc-200 bg-white px-4 py-2 font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-[#111113] dark:text-zinc-300">
+                {MOCK_MARKETPLACE_MODELS.length} live models
+              </span>
+              <span className="rounded-full border border-zinc-200 bg-white px-4 py-2 font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-[#111113] dark:text-zinc-300">
+                Evidence-first review
+              </span>
+              <span className="rounded-full border border-zinc-200 bg-white px-4 py-2 font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-[#111113] dark:text-zinc-300">
+                Wallet allocation flow
+              </span>
             </div>
           </div>
-        </SectionCard>
-      </section>
-
-      {/* ── Models Grid ── */}
-      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6">
-        {initialLoading && (
-          <ApiLoadingPanel
-            title="Loading model marketplace"
-            body="Preparing registered strategies, source metrics, categories, and model access details."
-            items={['Registered models', 'Source metrics', 'Access details']}
-          />
-        )}
-
-        {error && (
-          <EmptyState
-            title="Model registry unavailable"
-            body="The model list API did not respond successfully. Reload the page or check the API connection."
-          />
-        )}
-
-        {!initialLoading && !error && filteredModels.length === 0 && (
-          <EmptyState
-            title="No matching models"
-            body="Try a broader search or choose a different category."
-          />
-        )}
-
-        {!initialLoading && !error && filteredModels.length > 0 && (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredModels.map((model) => (
-              <Link key={model.id} href={`/marketplace/${model.slug}`} className="group flex flex-col h-full">
-                <SectionCard className="flex h-full flex-col p-6 transition group-hover:border-zinc-400 dark:group-hover:border-zinc-650 justify-between">
-                  <div>
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex flex-wrap gap-2">
-                        <span className="rounded-[4px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-500">
-                          {categoryLabel(model.category)}
-                        </span>
-                        {model.commercialUpdatedAt && (
-                          <span
-                            className={`rounded-[4px] border px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide ${accessBadgeClass(
-                              model.accessStatus
-                            )}`}
-                          >
-                            {accessLabel(model.accessStatus)}
-                          </span>
-                        )}
-                      </div>
-                      <ArrowRight className="h-3.5 w-3.5 shrink-0 text-zinc-400 dark:text-zinc-500 transition group-hover:translate-x-1 group-hover:text-zinc-950 dark:group-hover:text-white" />
-                    </div>
-
-                    <h2 className="mt-5 font-mono text-base sm:text-lg font-bold tracking-wider text-zinc-950 dark:text-white uppercase truncate">
-                      {model.name}
-                    </h2>
-                    <p className="mt-3 line-clamp-3 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                      {model.description}
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="mt-5 grid grid-cols-2 gap-3">
-                      <Metric label="Sharpe" value={formatNum(model.performance.sharpeRatio)} />
-                      <Metric label="Annualized" value={formatPct(model.performance.annualizedReturn, true)} />
-                      <Metric label="Drawdown" value={formatPct(model.performance.maxDrawdown, true)} />
-                      <Metric label="Win rate" value={formatPct(model.performance.winRate)} />
-                    </div>
-
-                    <div className="mt-5 flex flex-wrap gap-1.5">
-                      {model.tags.slice(0, 5).map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-[4px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-2 py-0.5 font-mono text-[8px] tracking-wider uppercase text-zinc-500"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="mt-5 border-t border-zinc-200 dark:border-zinc-850 pt-5 flex justify-between items-end">
-                      <div>
-                        <div className="font-mono text-[9px] font-bold tracking-wider uppercase text-zinc-500">
-                          Access
-                        </div>
-                        <div className="mt-1 font-mono text-sm font-bold text-zinc-950 dark:text-white leading-none">
-                          {model.pricing || 'Contact sales'}
-                        </div>
-                      </div>
-                      {model.minimumCapital && (
-                        <div className="font-mono text-[9px] tracking-wide text-zinc-400 dark:text-zinc-500 leading-none">
-                          Min: {model.minimumCapital}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </SectionCard>
-              </Link>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* ── Info Cards Section ── */}
-      <section className="border-y border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-black transition-colors">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 md:grid-cols-3">
-          <InfoCard icon={<Database className="h-5 w-5" />} title="Registry-backed">
-            Names, categories, repositories, and log paths are sourced through the live model API.
-          </InfoCard>
-          <InfoCard icon={<BarChart3 className="h-5 w-5" />} title="No synthetic metrics">
-            Performance values remain unavailable until the model has enough source observations.
-          </InfoCard>
-          <InfoCard icon={<ShieldCheck className="h-5 w-5" />} title="Audit context">
-            Detail pages preserve source, status, and latest telemetry fields for review.
-          </InfoCard>
+          <section className="w-full rounded-[12px] border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-850 dark:bg-black">
+            <div className="flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-[#0F8F5A] ring-1 ring-zinc-200 dark:bg-[#111113] dark:text-[#8ee0b8] dark:ring-zinc-800">
+                <WalletCards className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                  Investor wallet
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#171c24] dark:text-white">
+                  {authenticated ? 'Wallet ready for allocations.' : 'Fund once. Allocate with control.'}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                  {authenticated
+                    ? 'Manage wallet cash, review allocation reserves, and open your investment workspace.'
+                    : 'Wallet balance, allocation reserves, KYC status, and execution activity stay inside the protected investor dashboard after login.'}
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 grid gap-3 border-t border-zinc-200 pt-4 dark:border-zinc-850 sm:grid-cols-2">
+              <div className="rounded-[8px] border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-[#111113]">
+                <LockKeyhole className="h-4 w-4 text-[#0F8F5A] dark:text-[#8ee0b8]" />
+                <div className="mt-2 text-sm font-semibold text-[#171c24] dark:text-white">Protected capital</div>
+                <p className="mt-1 text-xs leading-5 text-zinc-500">Balances and transactions appear only after login.</p>
+              </div>
+              <div className="rounded-[8px] border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-[#111113]">
+                <ShieldCheck className="h-4 w-4 text-[#00A76F]" />
+                <div className="mt-2 text-sm font-semibold text-[#171c24] dark:text-white">Evidence first</div>
+                <p className="mt-1 text-xs leading-5 text-zinc-500">Review model metrics before reserving wallet capital.</p>
+              </div>
+            </div>
+            <Link
+              href={walletHref}
+              className="mt-4 inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#171c24] px-5 text-sm font-semibold text-white transition hover:bg-black dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+            >
+              {walletCta}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </section>
         </div>
       </section>
-    </PageShell>
+
+      <section className="mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[270px_minmax(0,1fr)]">
+        <aside className="rounded-[12px] border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-850 dark:bg-black">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <h2 className="text-sm font-semibold text-[#171c24] dark:text-white">Filters</h2>
+            {hasFilters ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedStrategy(null);
+                  setSelectedRisk(null);
+                  setSelectedAsset(null);
+                }}
+                className="text-xs font-semibold text-[#0F8F5A]"
+              >
+                Clear
+              </button>
+            ) : null}
+          </div>
+          <FilterGroup
+            title="Strategy"
+            items={strategyFilters}
+            selected={selectedStrategy}
+            onSelect={setSelectedStrategy}
+          />
+          <FilterGroup title="Risk level" items={riskFilters} selected={selectedRisk} onSelect={setSelectedRisk} />
+          <FilterGroup title="Asset class" items={assetFilters} selected={selectedAsset} onSelect={setSelectedAsset} />
+        </aside>
+
+        <div className="overflow-hidden rounded-[12px] border border-zinc-200 bg-white shadow-sm dark:border-zinc-850 dark:bg-black">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-100 px-6 py-5 dark:border-zinc-900">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-400">Available strategies</p>
+              <h2 className="mt-1 text-xl font-semibold tracking-[-0.02em]">{filteredModels.length} models</h2>
+            </div>
+            <p className="text-sm text-zinc-500">Click a model to review evidence before allocation.</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[1120px] border-collapse">
+            <thead>
+              <tr className="border-b border-zinc-100 text-left font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-400 dark:border-zinc-900 dark:text-zinc-600">
+                <th className="px-6 py-5 font-normal">Model</th>
+                <th className="px-6 py-5 font-normal">Strategy</th>
+                <th className="px-6 py-5 font-normal">Asset class</th>
+                <th className="px-6 py-5 font-normal">Min inv.</th>
+                <th className="px-6 py-5 font-normal">YTD return</th>
+                <th className="px-6 py-5 font-normal">Sharpe</th>
+                <th className="px-6 py-5 font-normal">Max DD</th>
+                <th className="px-6 py-5 font-normal">Win rate</th>
+                <th className="px-6 py-5 font-normal">Chart</th>
+                <th className="px-6 py-5 font-normal" />
+              </tr>
+            </thead>
+            <tbody>
+              {filteredModels.map((model) => {
+                const positive = (model.performance.totalReturn || 0) >= 0;
+                return (
+                  <tr key={model.id} className="border-b border-zinc-100 transition hover:bg-zinc-50 dark:border-zinc-900 dark:hover:bg-white/[0.03]">
+                    <td className="px-6 py-5">
+                      <Link
+                        href={`/marketplace/${model.slug}`}
+                        className="font-mono text-sm font-bold uppercase tracking-[0.08em] text-[#171c24] transition hover:text-[#0F8F5A] dark:text-white dark:hover:text-[#8ee0b8]"
+                      >
+                        {shortName(model)}
+                      </Link>
+                      <div className="mt-2 flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-[0.12em]">
+                        <span className="text-emerald-600 dark:text-[#31f495]">Live</span>
+                        <span className="text-zinc-400 dark:text-zinc-600">[{model.accessStatus === 'waitlist' ? 'Paper' : 'Live'}]</span>
+                        {model.accessStatus === 'active' ? <span className="text-emerald-600 dark:text-[#31f495]">Allocation-ready</span> : null}
+                      </div>
+                    </td>
+                    <td className="px-6 py-5 text-sm text-zinc-500 dark:text-zinc-500">{strategyName(model.category)}</td>
+                    <td className="px-6 py-5 text-sm text-zinc-500 dark:text-zinc-500">{assetClass(model)}</td>
+                    <td className="px-6 py-5 font-mono text-sm text-zinc-500 dark:text-zinc-500">{model.minimumCapital || '$50,000'}</td>
+                    <td className={`px-6 py-5 font-mono text-sm font-bold ${positive ? 'text-emerald-600 dark:text-[#31f495]' : 'text-rose-600 dark:text-[#ff4b4b]'}`}>
+                      {pct(model.performance.totalReturn, true)}
+                    </td>
+                    <td className="px-6 py-5 font-mono text-sm text-[#171c24] dark:text-white">
+                      {model.performance.sharpeRatio?.toFixed(2) || 'N/A'}
+                    </td>
+                    <td className="px-6 py-5 font-mono text-sm text-rose-600 dark:text-[#ff4b4b]">
+                      {pct(model.performance.maxDrawdown)}
+                    </td>
+                    <td className="px-6 py-5 font-mono text-sm text-zinc-500 dark:text-zinc-500">
+                      {pct(model.performance.winRate)}
+                    </td>
+                    <td className="px-6 py-5">
+                      <svg width="78" height="28" viewBox="0 0 78 28" aria-hidden="true">
+                        <path
+                          d={sparklinePath(model)}
+                          fill="none"
+                          stroke={positive ? '#00d595' : '#ff4b4b'}
+                          strokeWidth="2"
+                        />
+                      </svg>
+                    </td>
+                    <td className="px-6 py-5 text-right">
+                      <Link
+                        href={allocationHref(model, authenticated, sessionLoaded)}
+                        className="inline-flex h-9 items-center justify-center rounded-[6px] border border-zinc-200 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#171c24] transition hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-800 dark:text-white dark:hover:border-zinc-600 dark:hover:bg-white/[0.03]"
+                      >
+                        Allocate
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
 
-function Metric({ label, value }: { label: string; value: string }) {
+function FilterGroup({
+  title,
+  items,
+  selected,
+  onSelect,
+}: {
+  title: string;
+  items: string[];
+  selected: string | null;
+  onSelect: (value: string | null) => void;
+}) {
   return (
-    <div className="rounded-[8px] border border-zinc-200 dark:border-zinc-850 bg-zinc-50 dark:bg-black/40 p-3">
-      <div className="font-mono text-[9px] tracking-wider uppercase text-zinc-500">{label}</div>
-      <div className="mt-1 font-mono text-xs sm:text-sm font-bold text-zinc-950 dark:text-white">{value}</div>
+    <div className="mb-8">
+      <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.28em] text-zinc-400 dark:text-zinc-600">{title}</div>
+      <div className="space-y-3">
+        {items.map((item) => (
+          <button
+            key={item}
+            type="button"
+            onClick={() => onSelect(selected === item ? null : item)}
+            className="flex w-full items-center gap-3 text-left text-sm text-zinc-500 transition hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-white"
+          >
+            <span
+              className={`h-3.5 w-3.5 border ${
+                selected === item ? 'border-[#0F8F5A] bg-[#0F8F5A]' : 'border-zinc-200 dark:border-zinc-800'
+              }`}
+            />
+            {item}
+          </button>
+        ))}
+      </div>
     </div>
-  );
-}
-
-function InfoCard({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
-  return (
-    <SectionCard className="p-6">
-      <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400">
-        {icon}
-      </span>
-      <h2 className="mt-5 font-mono text-sm font-bold tracking-wider text-zinc-950 dark:text-white uppercase">
-        {title}
-      </h2>
-      <p className="mt-3 text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{children}</p>
-    </SectionCard>
   );
 }

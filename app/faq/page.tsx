@@ -128,7 +128,7 @@ const faqGroups = [
 const quickLinks = [
   { href: '/careers', label: 'Careers', icon: BriefcaseBusiness },
   { href: '/data-room', label: 'Investor data room', icon: ShieldCheck },
-  { href: '/developers', label: 'Developer center', icon: KeyRound },
+  { href: '/contact', label: 'Request access', icon: KeyRound },
 ];
 
 export default function FAQPage() {

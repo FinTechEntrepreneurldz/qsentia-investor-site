@@ -11,21 +11,19 @@ type FooterLink = {
 
 const footerColumns: Array<{ title: string; links: FooterLink[] }> = [
   {
-    title: "Investors",
+    title: "Product",
     links: [
-      { href: "/strategies", label: "Strategies" },
-      { href: "/performance", label: "Performance" },
-      { href: "/risk-management", label: "Risk management" },
-      { href: "/data-room", label: "Data room" },
+      { href: "/platform", label: "Overview" },
+      { href: "/methodology", label: "How it works" },
+      { href: "/risk-management", label: "Risk controls" },
     ],
   },
   {
-    title: "Platform",
+    title: "Professionals",
     links: [
-      { href: "/platform", label: "Overview" },
-      { href: "/marketplace", label: "Marketplace" },
-      { href: "/research", label: "Research" },
-      { href: "/methodology", label: "How it works" },
+      { href: "/for-professionals", label: "For professionals" },
+      { href: "/performance", label: "Performance review" },
+      { href: "/data-room", label: "Beta access" },
     ],
   },
   {
@@ -39,22 +37,14 @@ const footerColumns: Array<{ title: string; links: FooterLink[] }> = [
     ],
   },
   {
-    title: "Resources",
+    title: "Trust",
     links: [
-      { href: "/developers", label: "API docs" },
-      { href: "/docs", label: "Technical docs" },
-      { href: "/insights", label: "Research notes" },
+      { href: "/security", label: "Security" },
       { href: "/compliance", label: "Compliance" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
       { href: "/disclaimer", label: "Risk disclaimer" },
       { href: "/privacy-policy", label: "Privacy" },
       { href: "/cookie-policy", label: "Cookies" },
       { href: "/terms-and-conditions", label: "Terms" },
-      { href: "/security", label: "Security" },
     ],
   },
 ];
@@ -76,17 +66,17 @@ export default function SiteFooter() {
           <div className="flex items-center lg:justify-start">
             <Link href="/" className="inline-flex" aria-label="QSentia home">
               <Image
-                src="/logo/qsentia-primary.png"
+                src="/logo/qsentia-navigation.png"
                 alt="QSentia"
-                width={170}
-                height={38}
-                className={`h-9 w-auto ${dark ? "invert" : ""}`}
+                width={1582}
+                height={681}
+                className={`h-11 w-auto ${dark ? "invert" : ""}`}
                 priority={false}
               />
             </Link>
           </div>
 
-          <div className="grid gap-x-12 gap-y-7 sm:grid-cols-2 lg:ml-auto lg:w-[80%] lg:grid-cols-5">
+          <div className="grid gap-x-12 gap-y-7 sm:grid-cols-2 lg:ml-auto lg:w-[80%] lg:grid-cols-4">
             {footerColumns.map((column) => (
               <FooterColumn
                 key={column.title}
@@ -104,8 +94,9 @@ export default function SiteFooter() {
           }`}
         >
           <p className="text-xs leading-relaxed">
-            Copyright 2026 QSentia LLC. Access may include accredited and
-            non-accredited users where permitted.
+            Copyright 2026 QSentia LLC. Hedge fund and trading strategies are
+            subject to market risk; QSentia aims to measure, manage, and reduce
+            that risk through disciplined model oversight.
           </p>
         </div>
       </div>

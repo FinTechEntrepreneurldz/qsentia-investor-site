@@ -146,7 +146,7 @@ export function LiveApiRibbon({
         </div>
 
         <Link
-          href="/docs"
+          href="/platform"
           className={`shrink-0 text-xs font-bold underline-offset-4 hover:underline ${
             dark ? 'text-[#d4d4d8]' : 'text-[#18181b]'
           }`}

@@ -5,6 +5,30 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { authConfigMissingMessage, getSupabaseBrowserClient } from "@/lib/supabaseClient";
 
 type OAuthProvider = "google";
+const SHOW_LOCAL_PREVIEW = process.env.NODE_ENV !== "production";
+const DEFAULT_NEXT_PATH = "/user";
+const ALLOWED_NEXT_PATHS = [
+  "/user",
+  "/user/wallet",
+  "/user/orders",
+  "/user/reports",
+  "/marketplace",
+] as const;
+const ALLOWED_MODEL_SLUGS = [
+  "model-c-etf",
+  "crypto-sentiment-mlp-ppo-ibkr",
+  "eth-micro-futures-sentiment-alpha",
+  "br-ppo-crypto-v15",
+  "fixed-income-regime-signal",
+] as const;
+
+function allowedNextPaths() {
+  return [
+    ...ALLOWED_NEXT_PATHS,
+    ...ALLOWED_MODEL_SLUGS.map((slug) => `/user/models/${slug}`),
+    ...ALLOWED_MODEL_SLUGS.map((slug) => `/marketplace/${slug}`),
+  ];
+}
 
 function callbackUrl(nextPath: string) {
   const callback = new URL("/auth/callback", window.location.origin);
@@ -13,8 +37,13 @@ function callbackUrl(nextPath: string) {
 }
 
 function nextPathFromLocation() {
-  if (typeof window === "undefined") return "/dashboard";
-  return new URLSearchParams(window.location.search).get("next") || "/dashboard";
+  if (typeof window === "undefined") return DEFAULT_NEXT_PATH;
+
+  const requestedPath = new URLSearchParams(window.location.search).get("next");
+  if (!requestedPath) return DEFAULT_NEXT_PATH;
+
+  const sanitizedPath = allowedNextPaths().find((path) => path === requestedPath);
+  return sanitizedPath || DEFAULT_NEXT_PATH;
 }
 
 export function SignInForm() {
@@ -23,9 +52,11 @@ export function SignInForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [providerLoading, setProviderLoading] = useState<OAuthProvider | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("error");
+
     if (!code) return;
 
     const timer = window.setTimeout(() => {
@@ -89,16 +120,48 @@ export function SignInForm() {
     }
   }
 
+  async function handlePreviewAccess() {
+    setPreviewLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/auth/local-preview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null);
+        throw new Error(payload?.error || "Local preview sign-in failed.");
+      }
+
+      window.location.href = nextPathFromLocation();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Local preview sign-in failed.");
+    } finally {
+      setPreviewLoading(false);
+    }
+  }
+
   return (
     <div className="mt-6 grid gap-5">
       <div className="grid gap-3">
         <ProviderButton
-          provider="google"
           label="Continue with Google"
           loading={providerLoading === "google"}
           disabled={Boolean(providerLoading) || loading}
           onClick={() => handleOAuth("google")}
         />
+        {SHOW_LOCAL_PREVIEW ? (
+          <button
+            type="button"
+            onClick={handlePreviewAccess}
+            disabled={previewLoading || Boolean(providerLoading) || loading}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#d4d4d8] bg-[#f8fafc] px-4 py-2.5 text-sm font-bold text-[#18181b] transition hover:border-[#18181b] hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {previewLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {previewLoading ? "Starting local preview..." : "Use localhost preview access"}
+          </button>
+        ) : null}
       </div>
 
       <div className="flex items-center gap-3">
@@ -246,7 +309,6 @@ export function CreateAccountForm() {
     <div className="mt-6 grid gap-5">
       <div className="grid gap-3">
         <ProviderButton
-          provider="google"
           label="Sign up with Google"
           loading={providerLoading === "google"}
           disabled={Boolean(providerLoading) || loading}
@@ -348,13 +410,11 @@ export function CreateAccountForm() {
 }
 
 function ProviderButton({
-  provider,
   label,
   loading,
   disabled,
   onClick,
 }: {
-  provider: OAuthProvider;
   label: string;
   loading: boolean;
   disabled: boolean;

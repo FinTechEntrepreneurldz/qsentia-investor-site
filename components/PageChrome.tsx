@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { Loader2, Menu, X } from "lucide-react";
@@ -12,124 +13,20 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const navItems = [
   {
-    href: "/strategies",
-    label: "MODELS",
-    children: [
-      {
-        href: "/strategies",
-        label: "Investment strategies",
-        description: "Objectives, operating status, and published model evidence.",
-      },
-      {
-        href: "/marketplace",
-        label: "Model marketplace",
-        description: "Published model cards and commercial access.",
-      },
-      {
-        href: "/platform",
-        label: "Platform overview",
-        description: "Telemetry, validation, broker readiness, and audit trails.",
-      },
-      {
-        href: "/demo",
-        label: "Interactive demo",
-        description: "A clearly labeled synthetic product sandbox.",
-      },
-      {
-        href: "/integrations",
-        label: "Integrations",
-        description: "Current connectivity and planned connector status.",
-      },
-    ],
+    href: "/marketplace",
+    label: "Models",
   },
   {
-    href: "/performance",
-    label: "PERFORMANCE",
-    children: [
-      {
-        href: "/performance",
-        label: "Performance center",
-        description: "Returns, benchmarks, rolling risk, and methodology.",
-      },
-      {
-        href: "/risk-management",
-        label: "Risk management",
-        description: "Signal gates, limits, reconciliation, and controls.",
-      },
-      {
-        href: "/methodology",
-        label: "Methodology",
-        description: "The process from inputs through monitored execution.",
-      },
-    ],
+    href: "/methodology",
+    label: "How it works",
   },
   {
-    href: "/research",
-    label: "RESEARCH",
-    children: [
-      {
-        href: "/research",
-        label: "Research terminal",
-        description: "Live fund tickers, filters, and normalized curves.",
-      },
-      {
-        href: "/mleq",
-        label: "MLEQ engine",
-        description: "Machine Learning Equity Quant system overview.",
-      },
-      {
-        href: "/insights",
-        label: "Letters & research",
-        description: "Firm-approved commentary and methodology updates.",
-      },
-    ],
+    href: "/security",
+    label: "Trust",
   },
   {
-    href: "/pricing",
-    label: "PRICING",
-    children: [
-      {
-        href: "/pricing",
-        label: "Plans",
-        description: "Research, marketplace, monitoring, and enterprise packaging.",
-      },
-      {
-        href: "/contact",
-        label: "Contact",
-        description: "Reach out to QSentia for inquiries.",
-      },
-    ],
-  },
-  {
-    href: "/developers",
-    label: "DOCS",
-    children: [
-      {
-        href: "/developers",
-        label: "Developer center",
-        description: "API contracts, keys, schemas, and OpenAPI.",
-      },
-      {
-        href: "/data-room",
-        label: "Investor data room",
-        description: "Qualification and controlled diligence materials.",
-      },
-      {
-        href: "/firm",
-        label: "Firm",
-        description: "Research philosophy and institutional operating model.",
-      },
-      {
-        href: "/team",
-        label: "Team",
-        description: "Leadership, software development, and quantitative research.",
-      },
-      {
-        href: "/faq",
-        label: "FAQ",
-        description: "Frequently asked questions.",
-      },
-    ],
+    href: "/team",
+    label: "Team",
   },
 ];
 
@@ -144,103 +41,67 @@ export function SiteHeader({
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className={`sticky top-0 z-50 border-b transition-colors ${
+    <header className={`sticky top-0 z-50 w-full overflow-x-clip border-b transition-colors ${
       dark
-        ? "border-zinc-900 bg-black/95"
-        : "border-zinc-200 bg-white/95"
-    } backdrop-blur-md`}>
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        ? "border-zinc-900 bg-black/96"
+        : "border-[#d9dcda] bg-[#F5F5F6]/96"
+    } shadow-[0_1px_0_rgba(255,255,255,0.65)_inset] backdrop-blur-xl`}>
+      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-3 px-4 sm:px-6">
         <Link
           href="/"
-          className={`flex items-center font-mono text-[13px] font-bold tracking-[0.4em] transition hover:opacity-90 ${
-            dark ? "text-white" : "text-zinc-950"
-          }`}
-          aria-label="Qsentia home"
+          className="flex h-9 w-[132px] shrink-0 items-center transition hover:opacity-90 sm:w-[154px]"
+          aria-label="QSentia home"
         >
-          QSENTIA
+          <Image
+            src="/logo/qsentia-navigation.png"
+            alt="QSentia"
+            width={1582}
+            height={681}
+            className={`h-full w-full object-contain object-left ${dark ? "invert" : ""}`}
+            priority
+          />
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
+        <nav
+          className={`hidden min-w-0 flex-1 items-center justify-center gap-0.5 rounded-full border px-1.5 py-1 xl:flex ${
+            dark ? "border-zinc-850 bg-zinc-950/70" : "border-[#d9dcda] bg-white/68 shadow-[0_12px_34px_rgba(15,23,42,0.045)]"
+          }`}
+          aria-label="Primary navigation"
+        >
           {navItems.map((item) => {
             const isActive =
-              active === item.href ||
-              item.children?.some((child) => child.href === active);
+              active === item.href;
 
             return (
-              <div key={item.href} className="group relative">
-                <Link
-                  href={item.href}
-                  className={`inline-flex items-center font-mono text-[11px] font-bold tracking-widest uppercase transition ${
-                    isActive
-                      ? dark
-                        ? "text-white"
-                        : "text-zinc-950"
-                      : dark
-                        ? "text-zinc-400 hover:text-white"
-                        : "text-zinc-500 hover:text-zinc-950"
-                  }`}
-                  aria-haspopup="menu"
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <div className="pointer-events-none absolute left-1/2 top-full z-50 w-[340px] -translate-x-1/2 translate-y-2 pt-2 opacity-0 transition group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
-                    <div
-                      className={`rounded-[4px] border p-2 shadow-lg dark:shadow-[0_18px_50px_rgba(0,0,0,0.6)] ${
-                        dark
-                          ? "border-zinc-800 bg-[#09090b]"
-                          : "border-zinc-200 bg-white"
-                      }`}
-                      role="menu"
-                    >
-                      <div className="grid gap-1">
-                        {item.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className={`block rounded px-3 py-2 transition ${
-                              active === child.href
-                                ? dark
-                                  ? "bg-zinc-900 text-white"
-                                  : "bg-zinc-100 text-zinc-900"
-                                : dark
-                                  ? "hover:bg-zinc-900/50 text-zinc-300 hover:text-white"
-                                  : "hover:bg-zinc-50 text-zinc-600 hover:text-zinc-900"
-                            }`}
-                            role="menuitem"
-                          >
-                            <span className={`block text-xs font-semibold font-mono tracking-wider ${
-                              dark ? "text-zinc-200" : "text-zinc-800"
-                            }`}>
-                              {child.label.toUpperCase()}
-                            </span>
-                            <span className={`mt-0.5 block text-[10px] leading-relaxed ${
-                              dark ? "text-zinc-500" : "text-zinc-400"
-                            }`}>
-                              {child.description}
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`inline-flex h-8 items-center whitespace-nowrap rounded-full px-3.5 text-[12px] font-semibold transition ${
+                  isActive
+                    ? dark
+                      ? "bg-white text-black"
+                      : "bg-[#0F8F5A] text-white shadow-[0_10px_24px_rgba(15,143,90,0.18)]"
+                    : dark
+                      ? "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                      : "text-[#59665f] hover:bg-[#dceee6]/70 hover:text-[#0F8F5A]"
+                }`}
+              >
+                {item.label}
+              </Link>
             );
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <ThemeSwitcher />
+        <div className="hidden shrink-0 items-center gap-2 xl:flex">
           <Link
-            href="/contact"
-            className={`inline-flex h-9 items-center justify-center rounded-full border px-3 text-[11px] font-semibold tracking-wide transition ${
+            href="/marketplace"
+            className={`inline-flex h-9 items-center justify-center whitespace-nowrap rounded-full border px-4 text-[11px] font-bold tracking-wide transition ${
               dark
-                ? "border-white/20 text-white hover:border-white hover:bg-white/10"
-                : "border-zinc-300 text-zinc-800 hover:border-zinc-950 hover:bg-zinc-50"
+                ? "border-white bg-white text-black hover:bg-zinc-200"
+                : "border-[#171c24] bg-[#171c24] text-white shadow-[0_10px_26px_rgba(15,23,42,0.12)] hover:bg-black"
             }`}
           >
-            Request beta access
+            Explore Models
           </Link>
           <AuthSessionMenu />
         </div>
@@ -249,10 +110,10 @@ export function SiteHeader({
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((value) => !value)}
-          className={`flex h-10 w-10 items-center justify-center rounded-none border lg:hidden transition ${
+          className={`flex h-10 w-10 items-center justify-center rounded-full border xl:hidden transition ${
             dark
               ? "border-zinc-800 text-white hover:border-zinc-500"
-              : "border-zinc-300 text-zinc-950 hover:border-zinc-400"
+              : "border-[#cfd7d2] text-[#171c24] hover:border-[#0F8F5A]"
           }`}
         >
           {menuOpen ? <X className="h-4 w-4" strokeWidth={1.5} /> : <Menu className="h-4 w-4" strokeWidth={1.5} />}
@@ -260,10 +121,10 @@ export function SiteHeader({
       </div>
       {menuOpen ? (
         <nav
-          className={`border-t px-4 py-4 lg:hidden ${
+          className={`max-h-[calc(100vh-4rem)] overflow-y-auto border-t px-4 py-4 xl:hidden ${
             dark
               ? "border-zinc-900 bg-black"
-              : "border-zinc-200 bg-white"
+              : "border-[#d9dcda] bg-[#F5F5F6]"
           }`}
           aria-label="Mobile navigation"
         >
@@ -273,32 +134,12 @@ export function SiteHeader({
                 <Link
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`block font-mono text-[11px] font-bold tracking-widest uppercase py-1 ${
-                    dark ? "text-zinc-300 hover:text-white" : "text-zinc-600 hover:text-zinc-900"
+                  className={`block rounded-full px-3 py-2 text-sm font-semibold ${
+                    dark ? "text-zinc-300 hover:text-white" : "text-[#68756d] hover:text-[#0F8F5A]"
                   }`}
                 >
                   {item.label}
                 </Link>
-                {item.children ? (
-                  <div className={`ml-3 grid gap-1 border-l pl-3 ${
-                    dark ? "border-zinc-800" : "border-zinc-200"
-                  }`}>
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        onClick={() => setMenuOpen(false)}
-                        className={`rounded px-3 py-1.5 text-xs transition font-mono tracking-wider ${
-                          dark
-                            ? "text-zinc-400 hover:bg-zinc-900/50 hover:text-white"
-                            : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
-                        }`}
-                      >
-                        {child.label.toUpperCase()}
-                      </Link>
-                    ))}
-                  </div>
-                ) : null}
               </div>
             ))}
             <div className={`mt-3 border-t pt-3 flex items-center justify-between gap-4 ${
@@ -306,15 +147,15 @@ export function SiteHeader({
             }`}>
               <div className="flex items-center gap-2">
                 <Link
-                  href="/contact"
+                  href="/marketplace"
                   onClick={() => setMenuOpen(false)}
                   className={`inline-flex h-10 items-center rounded-full border px-3 text-[11px] font-semibold ${
                     dark
-                      ? "border-white/20 text-white hover:bg-white/10"
-                      : "border-zinc-300 text-zinc-800 hover:bg-zinc-50"
+                      ? "border-white bg-white text-black hover:bg-zinc-200"
+                      : "border-[#0F8F5A] bg-[#0F8F5A] text-white hover:bg-[#0b7549]"
                   }`}
                 >
-                  Request beta access
+                  Explore Models
                 </Link>
                 <AuthSessionMenu />
               </div>
@@ -343,7 +184,7 @@ export function PageShell({
 
   return (
     <main
-      className={`min-h-screen ${hasCustomBackground ? "" : "bg-white dark:bg-[#09090b]"} ${hasCustomTextColor ? "" : "text-zinc-950 dark:text-zinc-50"} ${className}`}
+      className={`min-h-screen ${hasCustomBackground ? "" : "bg-[#F5F5F6] dark:bg-[#09090b]"} ${hasCustomTextColor ? "" : "text-zinc-950 dark:text-zinc-50"} ${className}`}
     >
       <SiteHeader active={active} theme={resolvedTheme} />
       {children}
@@ -354,7 +195,7 @@ export function PageShell({
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <div className="inline-flex items-center rounded-full border border-[#c7d2fe] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#12B76A]">
+    <div className="inline-flex items-center rounded-full border border-[#b8ddcb] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#0F8F5A]">
       {children}
     </div>
   );
@@ -366,7 +207,7 @@ export function TechnicalBackdrop({ className = "" }: { className?: string }) {
       aria-hidden
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(61,82,218,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(61,82,218,0.07)_1px,transparent_1px)] bg-[size:86px_86px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,143,90,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,143,90,0.07)_1px,transparent_1px)] bg-[size:86px_86px]" />
       <div className="absolute left-[7%] top-[18%] h-16 w-16 rotate-[31deg] rounded-[5px] border border-[#0F8F5A]/18" />
       <div className="absolute left-[16%] top-[11%] h-9 w-9 rotate-[8deg] rounded-[5px] border border-[#0F8F5A]/18" />
       <div className="absolute bottom-[21%] left-[5%] h-3 w-3 rounded-full bg-[#0F8F5A]/12 ring-8 ring-[#0F8F5A]/5" />
@@ -431,7 +272,7 @@ export function ApiLoadingPanel({
         className={`absolute inset-0 ${
           dark
             ? "bg-[linear-gradient(to_right,rgba(111,124,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(111,124,255,0.08)_1px,transparent_1px)]"
-            : "bg-[linear-gradient(to_right,rgba(61,82,218,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(61,82,218,0.06)_1px,transparent_1px)]"
+            : "bg-[linear-gradient(to_right,rgba(15,143,90,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,143,90,0.06)_1px,transparent_1px)]"
         } bg-[size:64px_64px]`}
       />
       <div

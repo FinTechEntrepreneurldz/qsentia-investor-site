@@ -2,6 +2,8 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { resolveAdminRole } from '@/lib/adminAccess';
 
+const PREVIEW_COOKIE = 'qsentia_local_preview';
+
 function authConfig() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -24,10 +26,37 @@ function displayNameFor(user: {
   return user.email?.split('@')[0] || 'QSentia user';
 }
 
+function isLocalRequest(request: NextRequest) {
+  const forwardedHost = request.headers.get('x-forwarded-host');
+  const hostHeader = forwardedHost || request.headers.get('host') || '';
+  const hostname = hostHeader.split(':')[0].toLowerCase();
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+}
+
+function previewPayload() {
+  return {
+    authenticated: true,
+    authConfigured: false,
+    user: {
+      id: 'local-preview-user',
+      email: 'preview@qsentia.local',
+      name: 'QSentia Preview',
+      avatarUrl: null,
+      provider: 'preview',
+      adminRole: 'super_admin',
+      lastSignInAt: new Date().toISOString(),
+    },
+  };
+}
+
 export async function GET(request: NextRequest) {
   const config = authConfig();
+  const previewEnabled = isLocalRequest(request) && request.cookies.get(PREVIEW_COOKIE)?.value === '1';
 
   if (!config) {
+    if (previewEnabled) {
+      return NextResponse.json(previewPayload(), { headers: { 'Cache-Control': 'no-store' } });
+    }
     return NextResponse.json(
       { authenticated: false, user: null, authConfigured: false },
       { headers: { 'Cache-Control': 'no-store' } }
@@ -46,6 +75,11 @@ export async function GET(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user && previewEnabled) {
+    return NextResponse.json(previewPayload(), { headers: { 'Cache-Control': 'no-store' } });
+  }
+
   const adminRole = user ? await resolveAdminRole(user) : null;
 
   const response = NextResponse.json(
