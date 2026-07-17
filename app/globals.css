@@ -900,3 +900,51 @@ body {
   -webkit-animation-play-state: paused !important;
 }
 
+/* Hide scrollbars but keep functionality */
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Settings and Dashboard dark mode overrides */
+.dark .border-\[\#e4e4e7\],
+.dark .border-\[\#d4d4d8\],
+.dark .border-\[\#cfd7e6\] {
+  border-color: #27272a !important;
+}
+
+.dark .bg-white,
+.dark .bg-white\/95 {
+  background-color: #09090b !important;
+}
+
+.dark .bg-\[\#fafafa\],
+.dark .bg-\[\#f4f4f5\],
+.dark .bg-\[\#f4f4f6\] {
+  background-color: #0b0b0c !important;
+}
+
+.dark .text-\[\#09090b\],
+.dark .text-\[\#18181b\],
+.dark .text-zinc-950 {
+  color: #ffffff !important;
+}
+
+.dark .text-\[\#52525b\],
+.dark .text-\[\#71717a\],
+.dark .text-\[\#3f3f46\] {
+  color: #a1a1aa !important;
+}
+
+.dark .divide-\[\#e4e4e7\] > :not([hidden]) ~ :not([hidden]),
+.dark .divide-\[\#f4f4f5\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #27272a !important;
+}
+
+.dark .bg-white .border-\[\#e4e4e7\] {
+  border-color: #27272a !important;
+  background-color: #09090b !important;
+}

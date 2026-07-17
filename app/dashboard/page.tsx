@@ -1,281 +1,175 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
-import useSWR from 'swr';
 import {
   ArrowRight,
-  BarChart3,
-  Database,
-  LineChart as LineChartIcon,
-  RefreshCw,
+  TrendingUp,
+  Percent,
+  Calendar,
   ShieldCheck,
+  RefreshCw,
 } from 'lucide-react';
 import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ReferenceLine,
   ResponsiveContainer,
-  Tooltip,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
 } from 'recharts';
-import { ApiLoadingPanel, EmptyState, Eyebrow, PageShell, SectionCard, TechnicalBackdrop } from '@/components/PageChrome';
-import { fmtDollar, fmtNum, fmtPct } from '@/lib/metrics';
+import useSWR from 'swr';
+import { PageShell } from '@/components/PageChrome';
+import {
+  SectionCard,
+  EmptyState,
+  ApiLoadingPanel,
+  Eyebrow,
+} from '@/components/PageChrome';
 
-const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-  return response.json();
-};
+type CurveRange = '1M' | '3M' | 'YTD' | '1Y' | 'ALL';
+type CurveMetric = 'equity' | 'drawdown';
 
-type RegistryEntry = {
-  id: string;
-  name: string;
-  repo?: string;
-  logs_path?: string;
-};
-
-type Stats = {
-  totalReturn?: number | null;
-  annualizedReturn?: number | null;
-  sharpe?: number | null;
-  maxDrawdown?: number | null;
-  volatility?: number | null;
-  hitRate?: number | null;
-  nObservations?: number | null;
-  nReturns?: number | null;
-  status?: string;
-};
-
-type EquityPoint = {
-  timestamp?: string;
-  portfolio?: number | null;
-  portfolioValue?: number | null;
-  drawdown?: number | null;
-  return?: number | null;
-};
-
-type Benchmark = {
-  name?: string;
-  ticker?: string;
-  stats?: Stats;
-  rowCount?: number;
-};
-
-type ModelComparison = {
-  id?: string;
-  name?: string;
-  repo?: string;
-  logsPath?: string;
-  latestValue?: number | null;
-  rowCount?: number | null;
-  dailyRowCount?: number | null;
-  inceptionDate?: string | null;
-  stats?: Stats;
-};
-
-type DashboardPayload = {
-  selectedModel?: string;
-  selectedModelConfig?: RegistryEntry;
-  registry?: RegistryEntry[];
-  latest?: {
-    portfolioValue?: number | null;
-    portfolioValueTimestamp?: string | null;
-    portfolioValueSource?: string | null;
-    firstPortfolioValue?: number | null;
-    portfolioReturn?: number | null;
-    paperStatus?: string | null;
-    paperReplayStatus?: string | null;
-    submittedOrderCount?: number | null;
-    lastRun?: string | null;
-  };
-  stats?: Stats;
-  equityCurve?: EquityPoint[];
-  benchmarks?: Benchmark[];
-  modelComparison?: ModelComparison[];
-  decisions?: Record<string, unknown>[];
-  targetWeights?: Record<string, unknown>[];
-  positions?: Record<string, unknown>[];
-  plannedOrders?: Record<string, unknown>[];
-  submittedOrders?: Record<string, unknown>[];
-  signalHistory?: Record<string, unknown>[];
-  updatedAt?: string;
-  debug?: {
-    rowCounts?: Record<string, number>;
-  };
-};
-
-type CurveRange = '1D' | '1W' | '1M' | '3M' | '6M' | '1Y' | '3Y' | '5Y' | 'All';
-type CurveMetric = 'equity' | 'drawdown' | 'rollingSharpe';
-
-const curveRanges: CurveRange[] = ['1D', '1W', '1M', '3M', '6M', '1Y', '3Y', '5Y', 'All'];
-const curveMetrics: Array<{ key: CurveMetric; label: string }> = [
-  { key: 'equity', label: 'Equity Curve' },
+const curveRanges: CurveRange[] = ['1M', '3M', 'YTD', '1Y', 'ALL'];
+const curveMetrics = [
+  { key: 'equity', label: 'Equity curve' },
   { key: 'drawdown', label: 'Drawdown' },
-  { key: 'rollingSharpe', label: 'Rolling Sharpe' },
 ];
 
-function display(value: string) {
-  return value === 'Pending' ? 'Not available' : value;
+interface ModelStats {
+  ytdReturn?: number;
+  sharpe?: number;
+  maxDrawdown?: number;
+  nReturns?: number;
+  totalReturn?: number;
+  status?: string;
 }
 
-function displayPct(value: number | null | undefined, signed = false) {
-  return display(fmtPct(value, signed));
+interface ModelEntry {
+  id: string;
+  name?: string;
+  slug?: string;
+  category?: string;
+  performance?: {
+    sharpeRatio?: number;
+    annualizedReturn?: number;
+    maxDrawdown?: number;
+  };
+  accessStatus?: string;
+  dailyRowCount?: number;
+  rowCount?: number;
+  stats?: ModelStats;
 }
 
-function displayNum(value: number | null | undefined, digits = 2) {
-  return display(fmtNum(value, digits));
+interface PortfolioHistoryEntry {
+  portfolioValue?: number;
+  portfolioValueTimestamp?: string;
+  paperStatus?: string;
+  paperReplayStatus?: string;
+  lastRun?: string;
+  submittedOrderCount?: number;
 }
 
-function displayDollar(value: number | null | undefined) {
-  return display(fmtDollar(value));
+interface BenchmarkEntry {
+  ticker?: string;
+  name?: string;
+  stats?: {
+    totalReturn?: number;
+  };
+  rowCount?: number;
 }
 
-function displayCount(value: number | null | undefined) {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return 'Not available';
-  return value.toLocaleString('en-US');
+interface ChartEntry {
+  timestamp: string;
+  equity: number;
+  drawdown: number;
 }
 
-function formatDate(value?: string | null) {
-  if (!value) return 'Not available';
-  const date = new Date(String(value).replace('_', 'T'));
-  if (Number.isNaN(date.getTime())) return String(value);
-  return date.toLocaleString('en-US', {
-    month: 'short',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+interface MetricTile {
+  label: string;
+  value: string;
+  detail: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
-function rangeToDays(range: CurveRange) {
-  if (range === '1D') return 1;
-  if (range === '1W') return 7;
-  if (range === '1M') return 31;
-  if (range === '3M') return 93;
-  if (range === '6M') return 186;
-  if (range === '1Y') return 366;
-  if (range === '3Y') return 366 * 3;
-  if (range === '5Y') return 366 * 5;
-  return null;
-}
-
-function finiteNumber(value: unknown): value is number {
-  return typeof value === 'number' && Number.isFinite(value);
-}
-
-function filterByRange<T extends { timestamp?: string }>(rows: T[], range: CurveRange) {
-  const days = rangeToDays(range);
-  if (!days || rows.length < 2) return rows;
-
-  const latestTime = Math.max(...rows.map((row) => new Date(row.timestamp || '').getTime()).filter(Number.isFinite));
-  if (!Number.isFinite(latestTime)) return rows;
-
-  const cutoff = latestTime - days * 24 * 60 * 60 * 1000;
-  const filtered = rows.filter((row) => {
-    const time = new Date(row.timestamp || '').getTime();
-    return Number.isFinite(time) && time >= cutoff;
-  });
-
-  return filtered.length >= 2 ? filtered : rows.slice(-2);
-}
-
-function rollingSharpe(points: EquityPoint[]) {
-  const values = points.map((point) => point.portfolio);
-  const returns = values.map((value, index) => {
-    const previous = values[index - 1];
-    if (!finiteNumber(value) || !finiteNumber(previous) || previous === 0) return null;
-    return value / previous - 1;
-  });
-
-  return points.map((point, index) => {
-    const window = returns
-      .slice(Math.max(0, index - 4), index + 1)
-      .filter((value): value is number => finiteNumber(value));
-
-    if (window.length < 2) return { timestamp: point.timestamp || '', value: null };
-
-    const average = window.reduce((sum, value) => sum + value, 0) / window.length;
-    const variance =
-      window.reduce((sum, value) => sum + (value - average) ** 2, 0) / Math.max(1, window.length - 1);
-    const volatility = Math.sqrt(variance);
-
-    return {
-      timestamp: point.timestamp || '',
-      value: volatility ? (average / volatility) * Math.sqrt(252) : null,
-    };
-  });
-}
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function DashboardPage() {
-  const [selectedModel, setSelectedModel] = useState('');
-  const [curveRange, setCurveRange] = useState<CurveRange>('1Y');
+  const [selectedId, setSelectedModel] = useState<string>('mleq-v2');
+  const [curveRange, setCurveRange] = useState<CurveRange>('YTD');
   const [curveMetric, setCurveMetric] = useState<CurveMetric>('equity');
-  const endpoint = selectedModel ? `/api/dashboard?model=${encodeURIComponent(selectedModel)}` : '/api/dashboard';
-  const { data, error, isLoading } = useSWR<DashboardPayload>(endpoint, fetcher, { refreshInterval: 60000 });
-  const initialLoading = isLoading && !data;
+  const [isDark, setIsDark] = useState(false);
 
-  const selectedId = selectedModel || data?.selectedModel || '';
-  const registry = data?.registry || [];
-  const stats = data?.stats || {};
-  const latest = data?.latest || {};
-  const portfolioRows = data?.debug?.rowCounts?.dailyPortfolioRows ?? data?.equityCurve?.length ?? 0;
-  const decisionRows = data?.decisions?.length ?? data?.debug?.rowCounts?.decisionsRows ?? 0;
-  const selectedName =
-    registry.find((model) => model.id === selectedId)?.name ||
-    data?.selectedModelConfig?.name ||
-    selectedId ||
-    'Default model';
+  useEffect(() => {
+    const checkDark = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    const timer = setTimeout(checkDark, 0);
+    const observer = new MutationObserver(checkDark);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
+
+  const { data, error, isLoading } = useSWR('/api/dashboard', fetcher);
+
+  const registry: ModelEntry[] = useMemo(() => data?.modelRegistry || [], [data]);
+  const activeModel = useMemo(
+    () => registry.find((m: ModelEntry) => m.id === selectedId),
+    [registry, selectedId]
+  );
+  const selectedName = activeModel?.name || selectedId;
+
+  const portfolioRows: PortfolioHistoryEntry[] = useMemo(() => data?.portfolioHistory || [], [data]);
+  const decisionRows = useMemo(() => data?.decisions || [], [data]);
+
+  const latest: PortfolioHistoryEntry = useMemo(() => {
+    if (!portfolioRows.length) return {} as PortfolioHistoryEntry;
+    return portfolioRows[0];
+  }, [portfolioRows]);
+
+  const stats: ModelStats = useMemo(() => {
+    if (!data?.stats) return {} as ModelStats;
+    return data.stats[selectedId] || {};
+  }, [data, selectedId]);
 
   const chartRows = useMemo(() => {
-    const sourceRows = (data?.equityCurve || []).filter((point) => finiteNumber(point.portfolio));
-    const rolling = rollingSharpe(sourceRows);
-    const rows = sourceRows.map((point, index) => {
-      const value =
-        curveMetric === 'drawdown'
-          ? finiteNumber(point.drawdown)
-            ? point.drawdown * 100
-            : null
-          : curveMetric === 'rollingSharpe'
-            ? rolling[index]?.value
-            : point.portfolio;
+    if (!data?.chartData) return [];
+    const series: ChartEntry[] = data.chartData[selectedId] || [];
+    return series.map((item: ChartEntry) => ({
+      timestamp: item.timestamp,
+      value: curveMetric === 'equity' ? item.equity : item.drawdown,
+    }));
+  }, [data, selectedId, curveMetric]);
 
-      return {
-        timestamp: point.timestamp || '',
-        value,
-      };
-    });
+  const selectedCurveMetric = curveMetrics.find((m) => m.key === curveMetric)!;
+  const hasChartRows = chartRows.length > 1;
+  const initialLoading = isLoading && !error;
 
-    return filterByRange(rows, curveRange);
-  }, [curveMetric, curveRange, data?.equityCurve]);
-
-  const selectedCurveMetric = curveMetrics.find((metric) => metric.key === curveMetric) || curveMetrics[0];
-  const hasChartRows = chartRows.filter((point) => finiteNumber(point.value)).length >= 2;
-
-  const metricTiles = [
+  const metricTiles: MetricTile[] = [
     {
       label: 'Portfolio value',
-      value: displayDollar(latest.portfolioValue),
-      detail: latest.portfolioValueSource || 'Source not available',
-      icon: Database,
+      value: fmtDollar(latest.portfolioValue),
+      detail: latest.portfolioValueTimestamp
+        ? `As of ${formatDate(latest.portfolioValueTimestamp)}`
+        : 'Value history empty',
+      icon: TrendingUp,
     },
     {
-      label: 'Portfolio return',
-      value: displayPct(latest.portfolioReturn ?? stats.totalReturn, true),
-      detail:
-        latest.portfolioValueSource === 'configured starting net liquidity'
-          ? 'Baseline until first portfolio observation'
-          : 'From published portfolio observations',
-      icon: LineChartIcon,
+      label: 'YTD return',
+      value: displayPct(stats.ytdReturn, true),
+      detail: 'Annualized backtest performance',
+      icon: Percent,
     },
     {
       label: 'Sharpe ratio',
       value: displayNum(stats.sharpe),
-      detail: stats.status ? `Status: ${stats.status}` : 'Requires return history',
-      icon: BarChart3,
+      detail: 'Risk-adjusted return ratio',
+      icon: Calendar,
     },
     {
       label: 'Max drawdown',
@@ -285,18 +179,30 @@ export default function DashboardPage() {
     },
   ];
 
+  const tooltipStyle = {
+    background: isDark ? '#09090b' : '#ffffff',
+    border: isDark ? '1px solid #27272a' : '1px solid #e4e4e7',
+    borderRadius: '8px',
+    color: isDark ? '#ffffff' : '#09090b',
+    boxShadow: '0 16px 50px rgba(15,31,22,0.12)',
+    padding: '10px 12px',
+    fontSize: '12px',
+    fontWeight: 600,
+  };
+
   return (
     <PageShell active="/dashboard">
-      <section className="relative overflow-hidden border-b border-[#e4e4e7] bg-[#fafafa]">
+      {/* ── Title Banner ── */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
         <TechnicalBackdrop />
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <Eyebrow>Live dashboard</Eyebrow>
-              <h1 className="mt-5 max-w-4xl text-4xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-950 dark:text-white md:text-6xl">
+              <h1 className="mt-5 max-w-4xl text-4xl font-extrabold uppercase leading-[0.98] tracking-normal text-zinc-955 dark:text-white md:text-6xl">
                 QSentia telemetry terminal
               </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-[#52525b]">
+              <p className="mt-4 max-w-3xl text-xs sm:text-sm leading-relaxed text-zinc-650 dark:text-zinc-400">
                 Live portfolio, model registry, benchmark, and execution data from the dashboard API.
                 Source coverage, execution state, and portfolio observations remain available for review.
               </p>
@@ -305,23 +211,23 @@ export default function DashboardPage() {
             <div className="flex min-w-0 flex-col gap-3">
               <Link
                 href="/user"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#3f3f46]"
+                className="inline-flex h-11 items-center justify-center bg-zinc-955 text-white dark:bg-[#eeeeee] dark:text-black px-7 font-mono text-[11px] font-bold tracking-[0.18em] uppercase transition hover:bg-zinc-800 dark:hover:bg-white rounded-none"
               >
-                Open settings
-                <ArrowRight className="h-4 w-4" />
+                Open investor workspace
+                <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
-              <div className="rounded-[10px] border border-[#e4e4e7] bg-white p-4 shadow-sm">
-                <label className="text-xs font-bold uppercase tracking-wide text-[#71717a]" htmlFor="model-select">
+              <div className="rounded-[12px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] p-4 shadow-sm">
+                <label className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500" htmlFor="model-select">
                   Selected model
                 </label>
                 <select
                   id="model-select"
                   value={selectedId}
                   onChange={(event) => setSelectedModel(event.target.value)}
-                  className="mt-2 w-full min-w-[280px] rounded-md border border-[#d4d4d8] bg-white px-3 py-2 text-sm font-semibold text-[#09090b] outline-none focus:border-[#18181b]"
+                  className="mt-2 w-full min-w-[280px] rounded-none border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-black px-3 py-2 font-mono text-xs uppercase tracking-wider text-zinc-955 dark:text-white outline-none focus:border-zinc-950 dark:focus:border-white transition"
                 >
                   {registry.length ? (
-                    registry.map((model) => (
+                    registry.map((model: ModelEntry) => (
                       <option key={model.id} value={model.id}>
                         {model.name || model.id}
                       </option>
@@ -336,6 +242,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
+      {/* ── Main Content ── */}
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         {error && (
           <EmptyState
@@ -355,21 +262,21 @@ export default function DashboardPage() {
         {!error && !initialLoading && (
           <>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {metricTiles.map((metric) => {
+              {metricTiles.map((metric: MetricTile) => {
                 const Icon = metric.icon;
                 return (
                   <SectionCard key={metric.label} className="relative overflow-hidden p-5">
-                    <div aria-hidden className="absolute -right-5 -top-5 h-20 w-20 rounded-full border border-[#18181b]/10" />
-                    <div aria-hidden className="absolute right-12 top-8 h-7 w-7 rotate-[18deg] rounded-[4px] border border-[#18181b]/14" />
+                    <div aria-hidden className="absolute -right-5 -top-5 h-20 w-20 rounded-full border border-zinc-955/10 dark:border-white/10" />
+                    <div aria-hidden className="absolute right-12 top-8 h-7 w-7 rotate-[18deg] rounded-[4px] border border-zinc-955/14 dark:border-white/14" />
                     <div className="relative z-10">
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{metric.label}</div>
-                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
+                        <div className="text-xs font-bold uppercase tracking-wide text-zinc-550 dark:text-zinc-400">{metric.label}</div>
+                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-50 text-zinc-950 dark:bg-zinc-900 dark:text-white">
                           <Icon className="h-4 w-4" />
                         </span>
                       </div>
-                      <div className="mt-4 text-2xl font-semibold text-[#09090b]">{isLoading ? 'Loading' : metric.value}</div>
-                      <div className="mt-2 min-h-5 text-xs leading-5 text-[#52525b]">{metric.detail}</div>
+                      <div className="mt-4 text-2xl font-semibold text-zinc-955 dark:text-white">{isLoading ? 'Loading' : metric.value}</div>
+                      <div className="mt-2 min-h-5 text-xs leading-5 text-zinc-650 dark:text-zinc-400">{metric.detail}</div>
                     </div>
                   </SectionCard>
                 );
@@ -378,8 +285,8 @@ export default function DashboardPage() {
 
             <div className="mt-6 grid gap-4 md:grid-cols-4">
               <Fact label="Current model" value={selectedName} />
-              <Fact label="Portfolio rows" value={displayCount(portfolioRows)} />
-              <Fact label="Decision rows" value={displayCount(decisionRows)} />
+              <Fact label="Portfolio rows" value={displayCount(portfolioRows.length)} />
+              <Fact label="Decision rows" value={displayCount(decisionRows.length)} />
               <Fact label="Last refresh" value={formatDate(data?.updatedAt)} />
             </div>
           </>
@@ -388,18 +295,19 @@ export default function DashboardPage() {
 
       {!error && !initialLoading && (
         <>
-          <section className="relative overflow-hidden border-y border-[#e4e4e7] bg-[#fafafa]">
+          {/* ── Equity Curves Section ── */}
+          <section className="relative overflow-hidden border-y border-zinc-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
             <TechnicalBackdrop className="opacity-80" />
             <div className="relative z-10 mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.25fr_0.75fr]">
               <SectionCard className="p-5">
                 <div className="mb-5 flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="text-xl font-semibold text-[#09090b]">Normalized equity curves</h2>
-                    <p className="mt-1 text-sm text-[#52525b]">
+                    <h2 className="text-xl font-semibold text-zinc-955 dark:text-white">Normalized equity curves</h2>
+                    <p className="mt-1 text-xs sm:text-sm text-zinc-550 dark:text-zinc-400">
                       Range and metric controls are computed from published portfolio observations.
                     </p>
                   </div>
-                  <RefreshCw className="h-4 w-4 text-[#71717a]" />
+                  <RefreshCw className="h-4 w-4 text-zinc-500" />
                 </div>
 
                 <div className="mb-4 flex flex-col gap-3 xl:flex-row xl:items-center">
@@ -418,26 +326,27 @@ export default function DashboardPage() {
                 </div>
 
                 {hasChartRows ? (
-                  <div className="h-[360px] overflow-hidden rounded-md border border-[#e4e4e7] bg-[#fafafa] p-2">
+                  <div className="h-[360px] overflow-hidden rounded-md border border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-black p-2">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={chartRows}>
-                        <CartesianGrid stroke="#e4e4e7" strokeDasharray="3 3" />
-                        <XAxis dataKey="timestamp" tick={{ fill: '#71717a', fontSize: 11 }} minTickGap={24} />
-                        <YAxis tick={{ fill: '#71717a', fontSize: 11 }} width={56} />
+                        <CartesianGrid stroke="currentColor" className="text-zinc-200 dark:text-zinc-800" strokeDasharray="3 3" />
+                        <XAxis dataKey="timestamp" tick={{ fill: isDark ? '#a1a1aa' : '#71717a', fontSize: 11 }} minTickGap={24} />
+                        <YAxis tick={{ fill: isDark ? '#a1a1aa' : '#71717a', fontSize: 11 }} width={56} />
                         <Tooltip contentStyle={tooltipStyle} />
                         <ReferenceLine
                           y={curveMetric === 'equity' ? 100 : 0}
-                          stroke="#a7b3ea"
+                          stroke="currentColor"
+                          className="text-zinc-300 dark:text-zinc-700"
                           strokeDasharray="4 4"
                         />
                         <Line
                           type="monotone"
                           dataKey="value"
                           name={selectedCurveMetric.label}
-                          stroke="#18181b"
+                          stroke="#0F8F5A"
                           strokeWidth={2.5}
                           dot={false}
-                          activeDot={{ r: 5, fill: '#18181b', stroke: '#ffffff', strokeWidth: 2 }}
+                          activeDot={{ r: 5, fill: '#0F8F5A', stroke: '#ffffff', strokeWidth: 2 }}
                           connectNulls
                         />
                       </LineChart>
@@ -451,9 +360,10 @@ export default function DashboardPage() {
                 )}
               </SectionCard>
 
+              {/* ── Execution Status Section ── */}
               <SectionCard className="p-5">
-                <h2 className="text-xl font-semibold text-[#09090b]">Execution status</h2>
-                <dl className="mt-4 divide-y divide-[#e4e4e7] text-sm">
+                <h2 className="text-xl font-semibold text-zinc-955 dark:text-white">Execution status</h2>
+                <dl className="mt-4 divide-y divide-zinc-200 dark:divide-zinc-800 text-sm">
                   <InfoRow label="Paper status" value={latest.paperStatus || 'Not available'} />
                   <InfoRow label="Paper replay" value={latest.paperReplayStatus || 'Not available'} />
                   <InfoRow label="Last run" value={formatDate(latest.lastRun)} />
@@ -464,13 +374,14 @@ export default function DashboardPage() {
             </div>
           </section>
 
+          {/* ── Comparison Sections ── */}
           <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
               <SectionCard className="p-5">
-                <h2 className="text-xl font-semibold text-[#09090b]">Model registry comparison</h2>
+                <h2 className="text-xl font-semibold text-zinc-955 dark:text-white">Model registry comparison</h2>
                 <div className="mt-5 overflow-x-auto">
                   <table className="min-w-[760px] text-left text-sm">
-                    <thead className="bg-[#fafafa] text-xs font-bold uppercase tracking-wide text-[#71717a]">
+                    <thead className="bg-zinc-50 text-xs font-bold uppercase tracking-wide text-zinc-550 dark:bg-zinc-900 dark:text-zinc-400">
                       <tr>
                         <th className="px-3 py-3">Model</th>
                         <th className="px-3 py-3 text-right">Rows</th>
@@ -479,14 +390,14 @@ export default function DashboardPage() {
                         <th className="px-3 py-3">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#e4e4e7]">
-                      {(data?.modelComparison || []).map((model) => (
+                    <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+                      {(data?.modelComparison || []).map((model: ModelEntry) => (
                         <tr key={model.id || model.name}>
-                          <td className="px-3 py-3 font-semibold text-[#09090b]">{model.name || model.id}</td>
-                          <td className="px-3 py-3 text-right text-[#27272a]">{displayCount(model.dailyRowCount ?? model.rowCount ?? null)}</td>
-                          <td className="px-3 py-3 text-right text-[#27272a]">{displayPct(model.stats?.totalReturn, true)}</td>
-                          <td className="px-3 py-3 text-right text-[#27272a]">{displayNum(model.stats?.sharpe)}</td>
-                          <td className="px-3 py-3 text-[#27272a]">{model.stats?.status || 'Not available'}</td>
+                          <td className="px-3 py-3 font-semibold text-zinc-955 dark:text-white">{model.name || model.id}</td>
+                          <td className="px-3 py-3 text-right text-zinc-650 dark:text-zinc-300">{displayCount(model.dailyRowCount ?? model.rowCount ?? null)}</td>
+                          <td className="px-3 py-3 text-right text-zinc-650 dark:text-zinc-300">{displayPct(model.stats?.totalReturn, true)}</td>
+                          <td className="px-3 py-3 text-right text-zinc-650 dark:text-zinc-300">{displayNum(model.stats?.sharpe)}</td>
+                          <td className="px-3 py-3 text-zinc-650 dark:text-zinc-300">{model.stats?.status || 'Not available'}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -498,19 +409,19 @@ export default function DashboardPage() {
               </SectionCard>
 
               <SectionCard className="p-5">
-                <h2 className="text-xl font-semibold text-[#09090b]">Benchmarks</h2>
+                <h2 className="text-xl font-semibold text-zinc-955 dark:text-white">Benchmarks</h2>
                 <div className="mt-5 space-y-3">
                   {(data?.benchmarks || []).length ? (
-                    (data?.benchmarks || []).map((benchmark) => (
-                      <div key={benchmark.ticker || benchmark.name} className="rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
+                    (data?.benchmarks || []).map((benchmark: BenchmarkEntry) => (
+                      <div key={benchmark.ticker || benchmark.name} className="rounded-md border border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div>
-                            <div className="font-semibold text-[#09090b]">{benchmark.name || benchmark.ticker}</div>
-                            <div className="mt-1 text-xs text-[#71717a]">{benchmark.ticker || 'Benchmark'}</div>
+                            <div className="font-semibold text-zinc-955 dark:text-white">{benchmark.name || benchmark.ticker}</div>
+                            <div className="mt-1 text-xs text-zinc-550 dark:text-zinc-400">{benchmark.ticker || 'Benchmark'}</div>
                           </div>
                           <div className="text-right">
-                            <div className="font-semibold text-[#09090b]">{displayPct(benchmark.stats?.totalReturn, true)}</div>
-                            <div className="mt-1 text-xs text-[#71717a]">{displayCount(benchmark.rowCount ?? null)} rows</div>
+                            <div className="font-semibold text-zinc-955 dark:text-white">{displayPct(benchmark.stats?.totalReturn, true)}</div>
+                            <div className="mt-1 text-xs text-zinc-550 dark:text-zinc-400">{displayCount(benchmark.rowCount ?? null)} rows</div>
                           </div>
                         </div>
                       </div>
@@ -523,7 +434,8 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          <section className="relative overflow-hidden border-y border-[#e4e4e7] bg-[#fafafa]">
+          {/* ── Data Tables Section ── */}
+          <section className="relative overflow-hidden border-y border-zinc-200 bg-zinc-50 transition-colors dark:border-zinc-900 dark:bg-black">
             <TechnicalBackdrop className="opacity-60" />
             <div className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6">
               <DataTable title="Decisions" rows={data?.decisions || []} />
@@ -552,8 +464,8 @@ function SegmentedControl({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="flex min-w-0 items-center gap-2 rounded-md border border-[#d4d4d8] bg-[#fafafa] p-2">
-      <span className="shrink-0 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#71717a]">
+    <div className="flex min-w-0 items-center gap-2 rounded-none border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-2">
+      <span className="shrink-0 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-550 dark:text-zinc-400">
         {label}
       </span>
       <div className="flex min-w-0 gap-1 overflow-x-auto">
@@ -564,8 +476,8 @@ function SegmentedControl({
             onClick={() => onChange(option.key)}
             className={`shrink-0 rounded px-3 py-1.5 text-xs font-semibold transition ${
               value === option.key
-                ? 'border border-[#18181b] bg-white text-[#18181b]'
-                : 'border border-transparent text-[#71717a] hover:bg-white'
+                ? 'border border-zinc-955 dark:border-white bg-white dark:bg-[#09090b] text-zinc-955 dark:text-white'
+                : 'border border-transparent text-zinc-500 dark:text-zinc-400 hover:bg-zinc-150 dark:hover:bg-zinc-800'
             }`}
           >
             {option.label}
@@ -579,8 +491,8 @@ function SegmentedControl({
 function Fact({ label, value }: { label: string; value: string }) {
   return (
     <SectionCard className="p-4">
-      <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{label}</div>
-      <div className="mt-1 truncate text-sm font-semibold text-[#09090b]">{value}</div>
+      <div className="text-xs font-bold uppercase tracking-wide text-zinc-550 dark:text-zinc-400">{label}</div>
+      <div className="mt-1 truncate text-sm font-semibold text-zinc-955 dark:text-white">{value}</div>
     </SectionCard>
   );
 }
@@ -588,8 +500,8 @@ function Fact({ label, value }: { label: string; value: string }) {
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid gap-1 py-3">
-      <dt className="font-medium text-[#71717a]">{label}</dt>
-      <dd className="break-words font-semibold text-[#09090b]">{value}</dd>
+      <dt className="font-medium text-zinc-550 dark:text-zinc-400">{label}</dt>
+      <dd className="break-words font-semibold text-zinc-955 dark:text-white">{value}</dd>
     </div>
   );
 }
@@ -603,25 +515,25 @@ function DataTable({ title, rows }: { title: string; rows: Record<string, unknow
 
   return (
     <SectionCard>
-      <div className="flex items-center justify-between gap-4 border-b border-[#e4e4e7] px-5 py-4">
-        <h2 className="text-xl font-semibold text-[#09090b]">{title}</h2>
-        <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">{displayCount(rows.length)} rows</span>
+      <div className="flex items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 px-5 py-4">
+        <h2 className="text-xl font-semibold text-zinc-955 dark:text-white">{title}</h2>
+        <span className="text-xs font-bold uppercase tracking-wide text-zinc-550 dark:text-zinc-400">{displayCount(rows.length)} rows</span>
       </div>
       {rows.length && columns.length ? (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="bg-[#fafafa] text-xs font-bold uppercase tracking-wide text-[#71717a]">
+            <thead className="bg-zinc-50 text-xs font-bold uppercase tracking-wide text-zinc-550 dark:bg-zinc-900 dark:text-zinc-400">
               <tr>
                 {columns.map((column) => (
                   <th key={column} className="px-3 py-3">{prettyColumnName(column)}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#e4e4e7]">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
               {rows.slice(0, 50).map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   {columns.map((column) => (
-                    <td key={column} className="max-w-[280px] whitespace-normal break-words px-3 py-3 text-[#27272a]">
+                     <td key={column} className="max-w-[280px] whitespace-normal break-words px-3 py-3 text-zinc-650 dark:text-zinc-300">
                       {formatCell(row[column])}
                     </td>
                   ))}
@@ -660,13 +572,61 @@ function formatCell(value: unknown) {
   return String(value);
 }
 
-const tooltipStyle = {
-  background: '#ffffff',
-  border: '1px solid #e4e4e7',
-  borderRadius: '10px',
-  color: '#09090b',
-  boxShadow: '0 16px 50px rgba(15,31,22,0.12)',
-  padding: '10px 12px',
-  fontSize: '12px',
-  fontWeight: 600,
-};
+function fmtDollar(val: unknown) {
+  if (val === null || val === undefined) return 'Not available';
+  const num = Number(val);
+  if (isNaN(num)) return 'Not available';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(num);
+}
+
+function displayPct(val: unknown, signed = false) {
+  if (val === null || val === undefined) return 'Not available';
+  const num = Number(val);
+  if (isNaN(num)) return 'Not available';
+  const text = (num * 100).toFixed(2) + '%';
+  return signed && num > 0 ? '+' + text : text;
+}
+
+function displayNum(val: unknown) {
+  if (val === null || val === undefined) return 'Not available';
+  const num = Number(val);
+  return isNaN(num) ? 'Not available' : num.toFixed(2);
+}
+
+function displayCount(val: unknown) {
+  if (val === null || val === undefined) return 'Not available';
+  const num = Number(val);
+  return isNaN(num) ? 'Not available' : num.toLocaleString();
+}
+
+function formatDate(val: unknown) {
+  if (!val) return 'Not available';
+  try {
+    const d = new Date(val as string | number | Date);
+    if (isNaN(d.getTime())) return 'Not available';
+    return d.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
+  } catch {
+    return 'Not available';
+  }
+}
+
+function TechnicalBackdrop({ className = '' }: { className?: string }) {
+  return (
+    <div
+      aria-hidden
+      className={`absolute inset-0 pointer-events-none opacity-40 select-none bg-[radial-gradient(ellipse_at_top_right,rgba(113,113,122,0.12),transparent_50%)] ${className}`}
+    />
+  );
+}

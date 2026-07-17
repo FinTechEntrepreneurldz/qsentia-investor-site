@@ -169,7 +169,7 @@ export default function FAQPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="inline-flex min-h-[48px] items-center justify-between gap-3 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1A1A1D] px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-955 dark:text-white transition hover:border-zinc-400 dark:hover:border-zinc-700 rounded-[8px]"
+                className="inline-flex min-h-[48px] items-center justify-between gap-3 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090b] px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-955 dark:text-white transition hover:border-zinc-400 dark:hover:border-zinc-700 rounded-[8px]"
               >
                 <span className="inline-flex items-center gap-2">
                   <Icon className="h-4 w-4 text-zinc-550 shrink-0" />
@@ -208,7 +208,7 @@ export default function FAQPage() {
               return (
                 <SectionCard
                   key={group.title}
-                  className="p-6 md:p-8 bg-white dark:bg-[#1A1A1D] border border-zinc-200 dark:border-zinc-800 rounded-[12px]"
+                  className="p-6 md:p-8 bg-white dark:bg-[#09090b] border border-zinc-200 dark:border-zinc-800 rounded-[12px]"
                 >
                   <section id={slugify(group.title)} className="scroll-mt-24">
                     <div className="flex items-center gap-3">

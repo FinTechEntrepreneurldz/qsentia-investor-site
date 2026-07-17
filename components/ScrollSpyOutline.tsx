@@ -60,8 +60,8 @@ export default function ScrollSpyOutline({ title = 'On this page', items }: Scro
 
   return (
     <div className="sticky top-24">
-      <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-400">{title}</p>
-      <nav className="mt-3 space-y-2 text-xs">
+      <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-500">{title}</p>
+      <nav className="mt-4 space-y-2 text-xs font-mono uppercase tracking-wider">
         {items.map((item, index) => {
           const isActive = activeId === item.id;
           return (
@@ -69,13 +69,13 @@ export default function ScrollSpyOutline({ title = 'On this page', items }: Scro
               key={item.id}
               href={`#${item.id}`}
               aria-current={isActive ? 'location' : undefined}
-              className={`flex items-center gap-2 border-l px-2 py-1.5 transition-all duration-200 ${
+              className={`flex items-center gap-2 border-l px-3 py-1.5 transition-all duration-200 ${
                 isActive
-                  ? 'border-indigo-400 text-indigo-200'
-                  : 'border-transparent text-slate-300 hover:border-slate-600 hover:text-white'
+                  ? 'border-zinc-950 dark:border-white text-zinc-950 dark:text-white font-bold'
+                  : 'border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-zinc-950 dark:hover:text-white'
               }`}
             >
-              <span className="w-6 shrink-0 font-mono text-[10px] text-slate-500">{index + 1}.</span>
+              <span className="w-5 shrink-0 font-mono text-[9px] text-zinc-400">0{index + 1}.</span>
               <span>{item.label}</span>
             </a>
           );

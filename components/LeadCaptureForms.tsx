@@ -42,11 +42,6 @@ export function ContactLeadForm() {
     }
   }
 
-  const inputClass =
-    'w-full rounded-none border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black px-4 py-3 font-mono text-xs uppercase tracking-wider text-zinc-950 dark:text-white outline-none focus:border-zinc-400 dark:focus:border-zinc-650 transition';
-
-  const labelClass = 'font-mono text-[9px] font-bold uppercase tracking-wider text-zinc-550';
-
   return (
     <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-2">
