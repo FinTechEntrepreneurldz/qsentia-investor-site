@@ -64,17 +64,17 @@ export default function ProblemSolutionPage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/research"
+              href="/platform"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-[#18181b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f3f46]"
             >
-              Open research terminal
+              View product overview
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/docs"
+              href="/contact"
               className="inline-flex items-center justify-center gap-2 rounded-md border border-[#d4d4d8] bg-white px-5 py-3 text-sm font-bold text-[#18181b] transition hover:bg-[#fafafa]"
             >
-              Review API docs
+              Request beta access
             </Link>
           </div>
         </div>

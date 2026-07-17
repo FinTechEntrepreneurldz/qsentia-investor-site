@@ -18,6 +18,11 @@ type ModelStats = {
   nReturns?: number | null;
 };
 
+type ModelPoint = {
+  timestamp?: string | null;
+  value?: number | null;
+};
+
 type ModelComparisonEntry = {
   id: string;
   name?: string;
@@ -26,6 +31,13 @@ type ModelComparisonEntry = {
   logsPath?: string;
   color?: string;
   stats?: ModelStats;
+  points?: ModelPoint[];
+  latestValue?: number | null;
+  startingCapital?: number | null;
+  rowCount?: number | null;
+  dailyRowCount?: number | null;
+  inceptionDate?: string | null;
+  benchmarks?: Array<{ name?: string; ticker?: string }>;
 };
 
 type DashboardLatest = {
@@ -67,6 +79,7 @@ export type MarketplaceModel = {
   category: Category;
   performance: {
     sharpeRatio: number | null;
+    totalReturn: number | null;
     annualizedReturn: number | null;
     maxDrawdown: number | null;
     winRate: number | null;
@@ -85,6 +98,13 @@ export type MarketplaceModel = {
   tags: string[];
   repo: string | null;
   logsPath: string | null;
+  chart: Array<{ timestamp: string; value: number }>;
+  latestValue: number | null;
+  startingCapital: number | null;
+  observationCount: number | null;
+  evidenceRowCount: number | null;
+  inceptionDate: string | null;
+  benchmarkLabel: string | null;
 };
 
 const DASHBOARD_LAST_GOOD_CACHE_PATH = path.join(
@@ -178,6 +198,7 @@ function mapModel(entry: ModelComparisonEntry): MarketplaceModel {
     category,
     performance: {
       sharpeRatio: numberOrNull(entry.stats?.sharpe),
+      totalReturn: numberOrNull(entry.stats?.totalReturn),
       annualizedReturn: numberOrNull(entry.stats?.annualizedReturn),
       maxDrawdown: numberOrNull(entry.stats?.maxDrawdown),
       winRate: numberOrNull(entry.stats?.hitRate),
@@ -186,6 +207,23 @@ function mapModel(entry: ModelComparisonEntry): MarketplaceModel {
     tags: buildTags(entry, category),
     repo: entry.repo || null,
     logsPath: entry.logsPath || null,
+    chart: Array.isArray(entry.points)
+      ? entry.points
+          .filter(
+            (point): point is { timestamp: string; value: number } =>
+              typeof point?.timestamp === 'string' && numberOrNull(point?.value) !== null
+          )
+          .map((point) => ({
+            timestamp: point.timestamp,
+            value: numberOrNull(point.value) as number,
+          }))
+      : [],
+    latestValue: numberOrNull(entry.latestValue),
+    startingCapital: numberOrNull(entry.startingCapital),
+    observationCount: numberOrNull(entry.dailyRowCount),
+    evidenceRowCount: numberOrNull(entry.rowCount),
+    inceptionDate: entry.inceptionDate || null,
+    benchmarkLabel: entry.benchmarks?.[0]?.ticker || entry.benchmarks?.[0]?.name || null,
   };
 }
 
@@ -338,6 +376,7 @@ export async function getLiveModelDetails(request: Request, slug: string): Promi
       .join(' '),
     performance: {
       sharpeRatio: numberOrNull(stats.sharpe),
+      totalReturn: numberOrNull(stats.totalReturn),
       annualizedReturn: numberOrNull(stats.annualizedReturn),
       maxDrawdown: numberOrNull(stats.maxDrawdown),
       winRate: numberOrNull(stats.hitRate),

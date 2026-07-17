@@ -304,7 +304,7 @@ export default function DashboardPage() {
 
             <div className="flex min-w-0 flex-col gap-3">
               <Link
-                href="/customer"
+                href="/user"
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#3f3f46]"
               >
                 Open settings

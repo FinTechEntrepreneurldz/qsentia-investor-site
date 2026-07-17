@@ -90,10 +90,10 @@ const sitePages = [
     summary: 'The dashboard is the main operating terminal for portfolio value, equity curves, benchmark data, decisions, positions, orders, and signal tables.',
   },
   {
-    href: '/research',
-    label: 'Research terminal',
+    href: '/platform',
+    label: 'Platform overview',
     keywords: ['research', 'terminal', 'ticker', 'ytd', 'daily', 'benchmarks'],
-    summary: 'The research terminal shows daily and YTD fund tickers, model and benchmark filters, and normalized curve controls.',
+    summary: 'The platform overview explains QSentia model telemetry, risk review, and controlled access workflows.',
   },
   {
     href: '/mleq',
@@ -102,16 +102,16 @@ const sitePages = [
     summary: 'The MLEQ page explains the Machine Learning Equity Quant layer with live metrics, investment thesis, pipeline workflow, and model review.',
   },
   {
-    href: '/marketplace',
+    href: '/contact',
     label: 'Marketplace',
     keywords: ['marketplace', 'models', 'products', 'strategies', 'registry'],
-    summary: 'The marketplace lists live dashboard-backed model products, categories, performance metrics, tags, and model profile links.',
+    summary: 'Model access is currently handled through QSentia beta access and onboarding review.',
   },
   {
-    href: '/docs',
+    href: '/platform',
     label: 'Docs',
     keywords: ['docs', 'api', 'documentation', 'endpoints', 'integration'],
-    summary: 'Docs explain the API flow: /api/dashboard, /api/models, model detail, and controlled demo preview endpoints.',
+    summary: 'The platform overview explains the current product surfaces and access workflow.',
   },
   {
     href: '/contact',
@@ -256,10 +256,10 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: `Hi${name ? ` ${name}` : ''}, I'm the QSentia help assistant. I can help with QSentia pages, MLEQ, dashboards, models, API docs, account access, and live telemetry values.`,
+      body: `Hi${name ? ` ${name}` : ''}, I'm the QSentia help assistant. I can help with QSentia pages, MLEQ, dashboards, model access, account access, and live telemetry values.`,
       links: [
         { href: '/dashboard', label: 'Dashboard' },
-        { href: '/research', label: 'Research terminal' },
+        { href: '/platform', label: 'Platform overview' },
       ],
     };
   }
@@ -287,7 +287,7 @@ function answerQuestion({
       body: `Here is the current live telemetry snapshot:\n\n${liveSummary(dashboard, models)}`,
       links: [
         { href: '/dashboard', label: 'Open dashboard' },
-        { href: '/research', label: 'Research terminal' },
+        { href: '/platform', label: 'Platform overview' },
       ],
     };
   }
@@ -296,10 +296,10 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: `The marketplace is the model registry. Current visible models include:\n\n${formatModelList(models?.models)}`,
+      body: `Model access is currently handled through beta review. Current dashboard-visible models include:\n\n${formatModelList(models?.models)}`,
       links: [
-        { href: '/marketplace', label: 'View marketplace' },
-        { href: '/docs', label: 'API docs' },
+        { href: '/contact', label: 'Request access' },
+        { href: '/platform', label: 'Platform overview' },
       ],
     };
   }
@@ -320,9 +320,9 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: 'The Research terminal contains daily and YTD fund tickers, best/weakest badges, model and benchmark filters, plus normalized equity curve controls.',
+      body: 'The public research terminal is temporarily hidden while QSentia narrows the launch surface. Platform and access questions should route through the product overview or contact page.',
       links: [
-        { href: '/research', label: 'Open research terminal' },
+        { href: '/platform', label: 'Open platform overview' },
         { href: '/mleq', label: 'MLEQ engine' },
       ],
     };
@@ -332,8 +332,8 @@ function answerQuestion({
     return {
       id: crypto.randomUUID(),
       role: 'alex',
-      body: 'The Docs page explains the main API surface: GET /api/dashboard for telemetry, GET /api/models for the registry, GET /api/models/{slug} for details, and POST /api/models/{slug}/demo for controlled previews.',
-      links: [{ href: '/docs', label: 'Open docs' }],
+      body: 'Public API and technical documentation are temporarily hidden while QSentia narrows the launch surface. Use the Contact page for access and integration questions.',
+      links: [{ href: '/contact', label: 'Request access' }],
     };
   }
 
@@ -388,11 +388,11 @@ function answerQuestion({
   return {
     id: crypto.randomUUID(),
     role: 'alex',
-    body: 'I can help with the QSentia website, live dashboard values, model registry, Research terminal, MLEQ engine, API docs, account access, and risk/legal pages. Try asking "summarize live performance" or "where is MLEQ?"',
+    body: 'I can help with the QSentia website, live dashboard values, model access, the MLEQ engine, account access, and risk/legal pages. Try asking "summarize live performance" or "where is MLEQ?"',
     links: [
       { href: '/dashboard', label: 'Dashboard' },
-      { href: '/marketplace', label: 'Marketplace' },
-      { href: '/docs', label: 'Docs' },
+      { href: '/contact', label: 'Request access' },
+      { href: '/platform', label: 'Platform' },
     ],
   };
 }

@@ -1,37 +1,34 @@
 "use client";
 
-import type { ComponentType, ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import useSWR from "swr";
+import { useSearchParams } from "next/navigation";
 import {
-  Activity,
   ArrowRight,
-  Bot,
-  Building2,
-  CalendarDays,
-  CheckCircle2,
+  Bell,
+  ChevronDown,
+  ChevronRight,
   CircleDollarSign,
-  Clock3,
-  Code2,
-  CreditCard,
-  Database,
-  Download,
-  FileText,
-  KeyRound,
-  LifeBuoy,
-  Link2,
-  LogOut,
-  PlugZap,
+  Landmark,
+  LineChart as LineChartIcon,
+  Plus,
   ReceiptText,
+  Search,
   ShieldCheck,
-  UserRound,
+  WalletCards,
 } from "lucide-react";
-import CustomerControlCenter from "@/components/CustomerControlCenter";
-import { SectionCard } from "@/components/PageChrome";
-import { fmtNum, fmtPct } from "@/lib/metrics";
-import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { MOCK_MARKETPLACE_MODELS } from "@/lib/mockMarketplace";
+import type { MarketplaceModel } from "@/lib/modelCatalog";
 
 type CustomerUser = {
   name: string;
@@ -39,1072 +36,511 @@ type CustomerUser = {
   organization: string;
 };
 
-type Model = {
-  id: string;
-  slug: string;
-  name: string;
-  category: string;
-  accessStatus?: string;
-  performance?: {
-    sharpeRatio?: number | null;
-    annualizedReturn?: number | null;
-    maxDrawdown?: number | null;
-    winRate?: number | null;
-  };
+type HoldingSeed = {
+  modelId: string;
+  invested: number;
+  investedAt: string;
+  risk: "Low" | "Medium" | "High";
 };
 
-type ModelsResponse = {
-  models?: Model[];
+type Holding = HoldingSeed & {
+  model: MarketplaceModel;
+  current: number;
+  dayReturn: number;
+  totalReturn: number;
 };
 
-type BillingResponse = {
-  account: {
-    id: string | null;
-    billingStatus: string;
-    billingEmail: string;
-    billingEntity: string | null;
-    taxStatus: string | null;
-  };
-  subscription: {
-    plan: string | null;
-    status: string;
-    interval: string | null;
-    currency: string;
-    monthlyAmount: number | null;
-    trialEndsAt: string | null;
-    nextInvoiceAt: string | null;
-    activeSeats: number;
-    includedModels: number;
-    modelIds: string[];
-  };
-  paymentMethod: {
-    status: string | null;
-    brand: string | null;
-    last4: string | null;
-    autopay: boolean;
-  };
-  usage: Array<{ label: string; used: number; limit: number }>;
-  invoices: Array<{
-    id: string;
-    period: string;
-    issuedAt: string;
-    dueAt: string;
-    amount: number;
-    status: string;
-  }>;
-  checklist: Array<{ label: string; status: string }>;
-};
+const WALLET_BALANCE = 47850;
 
-type WorkspaceResponse = {
-  account: {
-    workspaceId: string | null;
-    stage: string;
-    environment: string;
-    onboardingOwner: string | null;
-  };
-  billingAddress: {
-    company: string | null;
-    contact: string;
-    line1: string | null;
-    line2: string | null;
-    city: string | null;
-    region: string | null;
-    postalCode: string | null;
-    country: string | null;
-  };
-  broker: {
-    status: string;
-    provider: string | null;
-    accountMode: string | null;
-    credentialsVault: string | null;
-  };
-  apiAccess: {
-    keyStatus: string;
-    keyScope: string | null;
-    webhookStatus: string;
-    environment: string;
-    lastRotation: string | null;
-  };
-  automation: {
-    status: string;
-    scheduler: string | null;
-    workerRuntime: string | null;
-    cronExpression: string | null;
-    cadence: string | null;
-    timezone: string | null;
-    nextRunAt: string | null;
-    approvalPolicy: string | null;
-  };
-  risk: {
-    capitalLimit: string | null;
-    maxDailyLoss: string | null;
-    orderType: string | null;
-    approvalMode: string | null;
-  };
-  readiness: Array<{ label: string; status: string; owner: string }>;
-  activity: Array<{ title: string; body: string; timestamp: string }>;
-};
-
-type SectionId =
-  | "overview"
-  | "billing"
-  | "models"
-  | "api"
-  | "broker"
-  | "deployment"
-  | "support";
-
-type NavItem = {
-  id: SectionId;
-  label: string;
-  detail: string;
-  icon: ComponentType<{ className?: string }>;
-};
-
-type DashboardContext = {
-  billing?: BillingResponse;
-  billingAmount: string;
-  billingEntity: string;
-  billingStatus: string;
-  environment: string;
-  licensedModels: Model[];
-  loading: boolean;
-  paymentMethod: string;
-  planName: string;
-  renewalDate: string | null;
-  sessionUser: CustomerUser;
-  workspace?: WorkspaceResponse;
-  workspaceId: string;
-};
-
-const navItems: NavItem[] = [
-  { id: "overview", label: "Overview", detail: "Account health", icon: Activity },
-  { id: "billing", label: "Billing", detail: "Plan, invoices, address", icon: CreditCard },
-  { id: "models", label: "Model access", detail: "Entitlements", icon: Database },
-  { id: "api", label: "API & usage", detail: "Keys, limits, calls", icon: KeyRound },
-  { id: "broker", label: "Broker setup", detail: "Authorization", icon: PlugZap },
-  { id: "deployment", label: "Deployment", detail: "Scheduler and controls", icon: Bot },
-  { id: "support", label: "Support", detail: "Requests and audit", icon: LifeBuoy },
+const HOLDING_SEEDS: HoldingSeed[] = [
+  { modelId: "model_c_etf", invested: 42000, investedAt: "2026-02-14", risk: "Medium" },
+  { modelId: "crypto_sentiment_mlp", invested: 17500, investedAt: "2026-03-05", risk: "High" },
+  { modelId: "qsentia_eth_micro_futures_sentiment_alpha", invested: 15260, investedAt: "2026-03-28", risk: "High" },
+  { modelId: "brppo_fixed_income_regime", invested: 15000, investedAt: "2026-04-12", risk: "Low" },
 ];
 
-const fetcher = async (url: string) => {
-  const response = await fetch(url, { cache: "no-store" });
-  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-  return response.json();
-};
+const QUICK_AMOUNTS = [10000, 25000, 50000];
 
-function label(value?: string | null) {
-  if (!value) return "Not configured";
-  return String(value)
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-}
-
-function cleanMetric(value: string) {
-  return value === "Pending" ? "Not reported" : value;
-}
-
-function dateLabel(value?: string | null) {
-  if (!value) return "Not scheduled";
-  const datePart = String(value).replace("_", "T").split("T")[0];
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(datePart)) return "Not scheduled";
-  return datePart;
-}
-
-function currency(amount: number | null | undefined, currencyCode = "USD") {
-  if (typeof amount !== "number" || !Number.isFinite(amount)) return "Not configured";
+function money(value: number) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: currencyCode,
-    maximumFractionDigits: amount % 1 ? 2 : 0,
-  }).format(amount);
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function pct(value: number | null | undefined) {
+  if (value === null || value === undefined) return "n/a";
+  return `${value >= 0 ? "+" : ""}${(value * 100).toFixed(1)}%`;
+}
+
+function compactDate(value: string) {
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(new Date(`${value}T00:00:00`));
+}
+
+function modelCategory(value: string) {
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function buildHoldings(): Holding[] {
+  return HOLDING_SEEDS.map((seed) => {
+    const model = MOCK_MARKETPLACE_MODELS.find((item) => item.id === seed.modelId) || MOCK_MARKETPLACE_MODELS[0];
+    const modelReturn = model.performance.totalReturn || 0;
+    const current = Math.round(seed.invested * (1 + modelReturn * 0.68));
+    const dayReturn = Math.round(seed.invested * (modelReturn >= 0 ? 0.0026 : -0.0038));
+
+    return {
+      ...seed,
+      model,
+      current,
+      dayReturn,
+      totalReturn: current - seed.invested,
+    };
+  });
+}
+
+function buildChart(selected: Holding) {
+  const start = selected.invested;
+  const modelTotal = selected.model.performance.totalReturn || 0;
+  const benchmarkTotal = modelTotal * 0.58;
+  const points = selected.model.chart.length ? selected.model.chart : [{ timestamp: "2026-01-01", value: 100 }];
+
+  return points.map((point, index) => {
+    const progress = points.length === 1 ? 1 : index / (points.length - 1);
+    const modelValue = Math.round(start * (point.value / 100));
+    const benchmarkNoise = Math.sin(index * 0.8) * 0.008;
+    const benchmarkValue = Math.round(start * (1 + benchmarkTotal * progress + benchmarkNoise));
+    return {
+      date: compactDate(point.timestamp),
+      fullDate: point.timestamp,
+      modelValue,
+      benchmarkValue,
+      investedValue: start,
+    };
+  });
+}
+
+function sparklinePath(points: Array<{ value: number }>) {
+  if (points.length < 2) return "";
+  const values = points.map((point) => point.value);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+
+  return values
+    .map((value, index) => {
+      const x = (index / (values.length - 1)) * 92;
+      const y = 28 - ((value - min) / range) * 24;
+      return `${index === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
+    })
+    .join(" ");
+}
+
+function StatBlock({
+  label,
+  value,
+  tone = "neutral",
+}: {
+  label: string;
+  value: string;
+  tone?: "neutral" | "positive" | "negative";
+}) {
+  const color =
+    tone === "positive" ? "text-[#0F8F5A]" : tone === "negative" ? "text-[#c2413a]" : "text-[#171c24]";
+
+  return (
+    <div>
+      <p className="text-[12px] font-medium text-[#7b8493]">{label}</p>
+      <p className={`mt-1 text-[18px] font-semibold ${color}`}>{value}</p>
+    </div>
+  );
+}
+
+function DashboardTab({ active, children }: { active?: boolean; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      className={`border-b-2 px-1 pb-3 text-[13px] font-semibold transition ${
+        active ? "border-[#0F8F5A] text-[#171c24]" : "border-transparent text-[#697386] hover:text-[#171c24]"
+      }`}
+    >
+      {children}
+    </button>
+  );
 }
 
 export default function CustomerDashboard({ user }: { user: CustomerUser }) {
-  const [activeSection, setActiveSection] = useState<SectionId>("overview");
-  const [sessionUser, setSessionUser] = useState<CustomerUser>(user);
-  const { data: modelData, isLoading: loadingModels } = useSWR<ModelsResponse>(
-    "/api/models",
-    fetcher,
-    { refreshInterval: 60000 },
-  );
-  const { data: billing, isLoading: loadingBilling } =
-    useSWR<BillingResponse>("/api/customer/billing", fetcher, {
-      refreshInterval: 60000,
-    });
-  const { data: workspace, isLoading: loadingWorkspace } =
-    useSWR<WorkspaceResponse>("/api/customer/workspace", fetcher, {
-      refreshInterval: 60000,
-    });
+  const searchParams = useSearchParams();
+  const queryModel = searchParams.get("model");
+  const holdings = useMemo(() => buildHoldings(), []);
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
-  const loading = loadingModels || loadingBilling || loadingWorkspace;
-  const licensedModelIds = useMemo(
-    () => new Set(billing?.subscription.modelIds || []),
-    [billing?.subscription.modelIds],
-  );
-  const licensedModels = (modelData?.models || []).filter((model) =>
-    licensedModelIds.has(model.id),
-  );
-  const billingStatus = billing?.account.billingStatus || "Not configured";
-  const planName = billing?.subscription.plan || "Not configured";
-  const renewalDate =
-    billing?.subscription.trialEndsAt || billing?.subscription.nextInvoiceAt || null;
-  const billingAmount = currency(
-    billing?.subscription.monthlyAmount ?? null,
-    billing?.subscription.currency || "USD",
-  );
-  const paymentMethod =
-    billing?.paymentMethod.brand && billing.paymentMethod.last4
-      ? `${billing.paymentMethod.brand} ${billing.paymentMethod.last4}`
-      : "Not added";
-  const workspaceId = workspace?.account.workspaceId || "Not configured";
-  const environment = workspace?.account.environment || "Not configured";
-  const billingEntity =
-    workspace?.billingAddress.company ||
-    billing?.account.billingEntity ||
-    sessionUser.organization ||
-    "Not configured";
+  const selected =
+    holdings.find((holding) => holding.model.slug === (selectedSlug || queryModel)) ||
+    holdings[0];
 
-  useEffect(() => {
-    let active = true;
-    const supabaseClient = getSupabaseBrowserClient();
-    if (!supabaseClient) return;
-    const authClient = supabaseClient;
-
-    async function updateProfile() {
-      const {
-        data: { user: authUser },
-      } = await authClient.auth.getUser();
-
-      if (!active || !authUser) return;
-
-      const metadata = authUser.user_metadata || {};
-      const name =
-        typeof metadata.full_name === "string" && metadata.full_name.trim()
-          ? metadata.full_name.trim()
-          : typeof metadata.name === "string" && metadata.name.trim()
-            ? metadata.name.trim()
-            : authUser.email?.split("@")[0] || user.name;
-      const organization =
-        typeof metadata.organization === "string" && metadata.organization.trim()
-          ? metadata.organization.trim()
-          : user.organization;
-
-      setSessionUser({
-        name,
-        email: authUser.email || user.email,
-        organization,
-      });
-    }
-
-    updateProfile();
-    const {
-      data: { subscription },
-    } = authClient.auth.onAuthStateChange(() => {
-      updateProfile();
-    });
-
-    return () => {
-      active = false;
-      subscription.unsubscribe();
-    };
-  }, [user]);
-
-  async function logout() {
-    const supabase = getSupabaseBrowserClient();
-    if (supabase) await supabase.auth.signOut();
-    await fetch("/api/auth/logout", { method: "POST" }).catch(() => null);
-    window.localStorage.removeItem("qsentia_user_session");
-    window.location.href = "/signin";
-  }
-
-  const context: DashboardContext = {
-    billing,
-    billingAmount,
-    billingEntity,
-    billingStatus,
-    environment,
-    licensedModels,
-    loading,
-    paymentMethod,
-    planName,
-    renewalDate,
-    sessionUser,
-    workspace,
-    workspaceId,
-  };
-  const activeNav = navItems.find((item) => item.id === activeSection) || navItems[0];
+  const chartData = useMemo(() => buildChart(selected), [selected]);
+  const investedValue = holdings.reduce((sum, holding) => sum + holding.invested, 0);
+  const currentValue = holdings.reduce((sum, holding) => sum + holding.current, 0);
+  const dayReturn = holdings.reduce((sum, holding) => sum + holding.dayReturn, 0);
+  const totalReturn = currentValue - investedValue;
+  const totalReturnPct = totalReturn / investedValue;
+  const allocationPct = selected.current / currentValue;
+  const modelTone = (selected.model.performance.totalReturn || 0) >= 0 ? "positive" : "negative";
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb] text-[#09090b]">
-      <div className="mx-auto grid max-w-[1540px] lg:grid-cols-[292px_minmax(0,1fr)]">
-        <aside className="border-b border-[#e4e4e7] bg-white/95 text-[#09090b] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur lg:sticky lg:top-16 lg:max-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-b-0 lg:border-r">
-          <div className="flex h-full flex-col px-4 py-5">
-            <div className="rounded-[14px] border border-[#e4e4e7] bg-[#fafafa] p-4">
-              <div className="flex items-center gap-3">
-                <Link href="/" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-[#d4d4d8] bg-white" aria-label="QSentia home">
-                  <Image src="/logo/qsentia-primary.png" alt="QSentia" width={26} height={26} className="h-7 w-7 object-contain" />
-                </Link>
-                <div>
-                  <div className="text-sm font-semibold text-[#09090b]">QSentia</div>
-                  <div className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#18181b]">
-                    Settings
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm leading-6 text-[#52525b]">
-                Manage model entitlements, API usage, billing, broker readiness,
-                and deployment controls from one account workspace.
-              </p>
+    <div className="min-h-screen bg-[#F5F5F6] text-[#171c24]">
+      <section className="border-b border-[#dfe4e1] bg-white">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-5 lg:px-0">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#0F8F5A]">Investor workspace</p>
+              <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[#171c24]">
+                Capital, models, and performance in one place
+              </h1>
             </div>
-
-            <div className="mt-6 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#71717a]">
-              Workspace
-            </div>
-            <nav className="mt-2 grid gap-1" aria-label="Settings navigation">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const active = item.id === activeSection;
-
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    suppressHydrationWarning
-                    onClick={() => setActiveSection(item.id)}
-                    className={`group flex items-start gap-3 rounded-[10px] border px-3 py-3 text-left text-sm transition ${
-                      active
-                        ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b] shadow-sm"
-                        : "border-transparent text-[#3f3f46] hover:border-[#e4e4e7] hover:bg-[#fafafa]"
-                    }`}
-                  >
-                    <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
-                      active ? "bg-white text-[#18181b]" : "bg-[#f4f4f5] text-[#71717a] group-hover:text-[#18181b]"
-                    }`}>
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block font-semibold">{item.label}</span>
-                      <span className={`mt-0.5 block truncate text-xs ${active ? "text-[#52525b]" : "text-[#71717a]"}`}>
-                        {item.detail}
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </nav>
-
-            <div className="mt-6 rounded-[14px] border border-[#e4e4e7] bg-white p-4 shadow-sm">
-              <div className="flex items-start gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#18181b] text-sm font-semibold text-white">
-                  {sessionUser.name.slice(0, 2).toUpperCase()}
-                </span>
-                <div className="min-w-0">
-                  <div className="truncate text-sm font-semibold text-[#09090b]">
-                    {sessionUser.name}
-                  </div>
-                  <div className="mt-1 truncate text-xs text-[#71717a]">
-                    {sessionUser.email}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-3 py-2">
-                  <div className="font-bold uppercase tracking-wide text-[#71717a]">Plan</div>
-                  <div className="mt-1 truncate font-semibold text-[#18181b]">{planName}</div>
-                </div>
-                <div className="rounded-md border border-[#e4e4e7] bg-[#fafafa] px-3 py-2">
-                  <div className="font-bold uppercase tracking-wide text-[#71717a]">Models</div>
-                  <div className="mt-1 font-semibold text-[#18181b]">{licensedModels.length}</div>
-                </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex h-10 min-w-[260px] items-center gap-2 rounded-lg border border-[#dfe4e1] bg-[#fafafa] px-3 text-[#7b8493]">
+                <Search className="h-4 w-4" />
+                <span className="text-[13px]">Search models, orders, reports</span>
+                <span className="ml-auto text-[10px] font-semibold text-[#9aa1ad]">Ctrl+K</span>
               </div>
               <button
                 type="button"
-                suppressHydrationWarning
-                onClick={logout}
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-[#cfd7e6] bg-white px-3 py-2 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa]"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#dfe4e1] bg-white text-[#5a6270] transition hover:border-[#0F8F5A] hover:text-[#0F8F5A]"
+                aria-label="Notifications"
               >
-                <LogOut className="h-4 w-4" />
-                Sign out
+                <Bell className="h-4 w-4" />
               </button>
             </div>
-
-            <Link
-              href="/contact"
-              className="mt-auto hidden items-center justify-between rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] lg:flex"
-            >
-              Contact support
-              <ArrowRight className="h-4 w-4" />
-            </Link>
           </div>
-        </aside>
 
-        <main className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">
-          <div className="mb-6 overflow-hidden rounded-[16px] border border-[#e4e4e7] bg-white shadow-sm">
-            <div className="border-b border-[#e4e4e7] bg-[linear-gradient(135deg,#ffffff_0%,#f4f7ff_55%,#f4f4f5_100%)] p-5 md:p-6">
-              <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#18181b]">
-                    Account settings
-                  </div>
-                  <h1 className="mt-2 text-3xl font-semibold tracking-[-0.01em] text-[#09090b]">
-                    {sectionTitle(activeSection)}
-                  </h1>
-                  <p className="mt-2 max-w-3xl text-sm leading-6 text-[#52525b]">
-                    {sectionDescription(activeSection)}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <StatusPill value={environment} />
-                  <StatusPill value={loading ? "Refreshing" : "Current"} />
+          <div className="flex items-center gap-7 overflow-x-auto">
+            <DashboardTab active>Holdings</DashboardTab>
+            <DashboardTab>Explore models</DashboardTab>
+            <DashboardTab>Wallet</DashboardTab>
+            <DashboardTab>Orders</DashboardTab>
+            <DashboardTab>Reports</DashboardTab>
+          </div>
+        </div>
+      </section>
+
+      <div className="mx-auto grid max-w-6xl gap-6 px-5 py-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-0">
+        <section className="grid gap-5">
+          <div className="rounded-lg border border-[#dfe4e1] bg-white">
+            <div className="flex flex-col gap-6 border-b border-[#eef0ef] p-5 md:flex-row md:items-start md:justify-between">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7b8493]">Portfolio value</p>
+                <div className="mt-2 flex items-end gap-3">
+                  <h2 className="text-3xl font-semibold tracking-tight">{money(currentValue)}</h2>
+                  <span className="pb-1 text-[13px] font-semibold text-[#0F8F5A]">{pct(totalReturnPct)}</span>
                 </div>
               </div>
-            </div>
-            <div className="grid gap-px bg-[#e4e4e7] sm:grid-cols-3">
-              <WorkspaceStat label="Workspace" value={workspaceId} />
-              <WorkspaceStat label="Billing" value={label(billingStatus)} />
-              <WorkspaceStat label="Active section" value={activeNav.detail} />
-            </div>
-          </div>
-
-          {activeSection === "overview" ? <OverviewSection ctx={context} /> : null}
-          {activeSection === "billing" ? <BillingSection ctx={context} /> : null}
-          {activeSection === "models" ? <ModelsSection ctx={context} /> : null}
-          {activeSection === "api" ? <ApiSection ctx={context} /> : null}
-          {activeSection === "broker" ? <BrokerSection ctx={context} /> : null}
-          {activeSection === "deployment" ? <DeploymentSection ctx={context} /> : null}
-          {activeSection === "support" ? <SupportSection ctx={context} /> : null}
-        </main>
-      </div>
-    </div>
-  );
-}
-
-function sectionTitle(section: SectionId) {
-  const titles: Record<SectionId, string> = {
-    overview: "Customer control center",
-    billing: "Billing and subscription",
-    models: "Licensed model access",
-    api: "API usage and limits",
-    broker: "Broker authorization",
-    deployment: "Deployment controls",
-    support: "Support and audit trail",
-  };
-  return titles[section];
-}
-
-function sectionDescription(section: SectionId) {
-  const descriptions: Record<SectionId, string> = {
-    overview: "Review account health, go-live readiness, and core customer configuration.",
-    billing: "Manage subscription terms, billing address, payment status, invoices, and renewals.",
-    models: "See which QSentia models are licensed to this customer workspace.",
-    api: "Track API key status, scopes, monthly call quotas, usage, webhooks, and developer actions.",
-    broker: "Review broker provider state, account mode, credentials handling, and approval gates.",
-    deployment: "Configure scheduler, execution mode, kill switch, risk limits, and audit export.",
-    support: "Open billing, access, and technical requests, and review customer activity.",
-  };
-  return descriptions[section];
-}
-
-function WorkspaceStat({ label: labelText, value }: { label: string; value: string }) {
-  return (
-    <div className="min-w-0 bg-white px-5 py-3">
-      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#71717a]">{labelText}</div>
-      <div className="mt-1 truncate text-sm font-semibold text-[#09090b]">{value}</div>
-    </div>
-  );
-}
-
-function OverviewSection({ ctx }: { ctx: DashboardContext }) {
-  return (
-    <div className="grid gap-6">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <SummaryTile
-          icon={<ReceiptText className="h-5 w-5" />}
-          label="Subscription"
-          value={label(ctx.billingStatus)}
-          helper={ctx.planName}
-        />
-        <SummaryTile
-          icon={<Database className="h-5 w-5" />}
-          label="Model entitlements"
-          value={String(ctx.billing?.subscription.includedModels ?? 0)}
-          helper={`${ctx.licensedModels.length} linked from model registry`}
-        />
-        <SummaryTile
-          icon={<KeyRound className="h-5 w-5" />}
-          label="API access"
-          value={ctx.workspace?.apiAccess.keyStatus || "Not issued"}
-          helper={ctx.workspace?.apiAccess.keyScope || "No approved scope"}
-        />
-        <SummaryTile
-          icon={<PlugZap className="h-5 w-5" />}
-          label="Broker"
-          value={ctx.workspace?.broker.status || "Not configured"}
-          helper={ctx.workspace?.broker.provider || "No provider connected"}
-        />
-      </div>
-
-      <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
-        <Panel eyebrow="Readiness" title="Go-live checklist">
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {(ctx.workspace?.readiness || []).length ? (
-              ctx.workspace?.readiness.map((item) => (
-                <ReadinessItem
-                  key={`${item.label}-${item.owner}`}
-                  label={item.label}
-                  owner={item.owner}
-                  status={item.status}
+              <div className="grid grid-cols-2 gap-7 md:grid-cols-3">
+                <StatBlock label="Invested" value={money(investedValue)} />
+                <StatBlock
+                  label="1D returns"
+                  value={`${dayReturn >= 0 ? "+" : ""}${money(dayReturn)}`}
+                  tone={dayReturn >= 0 ? "positive" : "negative"}
                 />
-              ))
-            ) : (
-              <InlineEmpty
-                compact
-                title="No readiness state"
-                body="Workspace readiness appears after a customer account is linked."
-              />
-            )}
-          </div>
-        </Panel>
+                <StatBlock
+                  label="Total returns"
+                  value={`${totalReturn >= 0 ? "+" : ""}${money(totalReturn)}`}
+                  tone={totalReturn >= 0 ? "positive" : "negative"}
+                />
+              </div>
+            </div>
 
-        <SectionCard className="p-5 md:p-6">
-          <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
-            Account identity
-          </div>
-          <div className="mt-4 grid gap-3">
-            <InfoRow icon={<UserRound className="h-4 w-4" />} label="User" value={ctx.sessionUser.name} />
-            <InfoRow icon={<Building2 className="h-4 w-4" />} label="Entity" value={ctx.billingEntity} />
-            <InfoRow icon={<ShieldCheck className="h-4 w-4" />} label="Workspace" value={ctx.workspaceId} />
-            <InfoRow icon={<Activity className="h-4 w-4" />} label="Stage" value={label(ctx.workspace?.account.stage)} />
-          </div>
-        </SectionCard>
-      </div>
-    </div>
-  );
-}
-
-function BillingSection({ ctx }: { ctx: DashboardContext }) {
-  return (
-    <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
-      <Panel eyebrow="Billing" title="Subscription and invoices" action={<StatusPill value={ctx.billingStatus} />}>
-        <div className="grid gap-4 md:grid-cols-3">
-          <FactCard icon={<CircleDollarSign className="h-4 w-4" />} label="Plan" value={ctx.planName} detail={`${ctx.billingAmount} / ${ctx.billing?.subscription.interval || "Not configured"}`} />
-          <FactCard icon={<CalendarDays className="h-4 w-4" />} label={ctx.billing?.subscription.status === "trial" ? "Trial end" : "Next renewal"} value={dateLabel(ctx.renewalDate)} detail={label(ctx.billing?.subscription.status)} />
-          <FactCard icon={<CreditCard className="h-4 w-4" />} label="Payment method" value={ctx.paymentMethod} detail={ctx.billing?.paymentMethod.status || "Payment method not added"} />
-        </div>
-
-        <div className="mt-6">
-          <TableHeader title="Invoices" />
-          {(ctx.billing?.invoices || []).length ? (
-            <div className="mt-4 overflow-x-auto">
-              <table className="w-full min-w-[760px] text-left text-sm">
-                <thead className="border-b border-[#e4e4e7] text-xs uppercase tracking-wide text-[#71717a]">
-                  <tr>
-                    <th className="pb-3">Invoice</th>
-                    <th className="pb-3">Period</th>
-                    <th className="pb-3">Issued</th>
-                    <th className="pb-3">Due</th>
-                    <th className="pb-3">Amount</th>
-                    <th className="pb-3">Status</th>
-                    <th className="pb-3">File</th>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[760px] border-collapse">
+                <thead>
+                  <tr className="border-b border-[#eef0ef] text-left text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8a93a1]">
+                    <th className="px-5 py-4">Model</th>
+                    <th className="px-5 py-4">Strategy</th>
+                    <th className="px-5 py-4">Health</th>
+                    <th className="px-5 py-4">Performance</th>
+                    <th className="px-5 py-4 text-right">Current</th>
+                    <th className="px-5 py-4 text-right">Return</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#f4f4f5]">
-                  {(ctx.billing?.invoices || []).map((invoice) => (
-                    <tr key={invoice.id}>
-                      <td className="py-3 font-semibold text-[#09090b]">{invoice.id}</td>
-                      <td className="py-3 text-[#52525b]">{invoice.period}</td>
-                      <td className="py-3 text-[#52525b]">{dateLabel(invoice.issuedAt)}</td>
-                      <td className="py-3 text-[#52525b]">{dateLabel(invoice.dueAt)}</td>
-                      <td className="py-3 font-semibold text-[#09090b]">{currency(invoice.amount, ctx.billing?.subscription.currency)}</td>
-                      <td className="py-3"><StatusPill value={invoice.status} /></td>
-                      <td className="py-3 text-xs font-semibold text-[#71717a]">PDF pending</td>
-                    </tr>
-                  ))}
+                <tbody>
+                  {holdings.map((holding) => {
+                    const isSelected = holding.model.slug === selected.model.slug;
+                    const positive = holding.totalReturn >= 0;
+                    return (
+                      <tr
+                        key={holding.model.id}
+                        className={`cursor-pointer border-b border-[#eef0ef] transition hover:bg-[#fbfcfb] ${
+                          isSelected ? "bg-[#f1f8f5]" : "bg-white"
+                        }`}
+                        onClick={() => setSelectedSlug(holding.model.slug)}
+                      >
+                        <td className="px-5 py-4">
+                          <button type="button" className="text-left">
+                            <span className="block max-w-[220px] text-[14px] font-semibold text-[#171c24]">
+                              {holding.model.name}
+                            </span>
+                            <span className="mt-1 block text-[12px] text-[#697386]">
+                              Allocated {compactDate(holding.investedAt)}
+                            </span>
+                          </button>
+                        </td>
+                        <td className="px-5 py-4 text-[13px] text-[#3a414b]">{modelCategory(holding.model.category)}</td>
+                        <td className="px-5 py-4">
+                          <span
+                            className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                              holding.risk === "Low"
+                                ? "bg-[#e8f6ef] text-[#0F8F5A]"
+                                : holding.risk === "Medium"
+                                  ? "bg-[#fff8e5] text-[#8a6112]"
+                                  : "bg-[#fff0ed] text-[#bd4238]"
+                            }`}
+                          >
+                            {holding.risk} risk
+                          </span>
+                        </td>
+                        <td className="px-5 py-4">
+                          <svg viewBox="0 0 96 32" className="h-8 w-24" aria-hidden="true">
+                            <path d={sparklinePath(holding.model.chart)} fill="none" stroke={positive ? "#0F8F5A" : "#c2413a"} strokeWidth="2.2" />
+                          </svg>
+                        </td>
+                        <td className="px-5 py-4 text-right">
+                          <span className="block text-[14px] font-semibold">{money(holding.current)}</span>
+                          <span className="text-[12px] text-[#7b8493]">of {money(holding.invested)}</span>
+                        </td>
+                        <td className={`px-5 py-4 text-right text-[13px] font-semibold ${positive ? "text-[#0F8F5A]" : "text-[#c2413a]"}`}>
+                          {positive ? "+" : ""}
+                          {money(holding.totalReturn)}
+                          <span className="block text-[12px] font-medium">{pct(holding.totalReturn / holding.invested)}</span>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
-          ) : (
-            <InlineEmpty title="No invoices" body="Invoices will appear after billing is connected to the customer account." />
-          )}
-        </div>
-      </Panel>
-
-      <SectionCard className="p-5 md:p-6">
-        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
-          Billing address
-        </div>
-        <div className="mt-4 rounded-[10px] border border-[#e4e4e7] bg-[#fafafa] p-4">
-          <div className="font-semibold text-[#09090b]">{ctx.billingEntity}</div>
-          <div className="mt-3 space-y-1 text-sm leading-6 text-[#52525b]">
-            <div>{ctx.workspace?.billingAddress.contact || ctx.sessionUser.name}</div>
-            <div>{ctx.workspace?.billingAddress.line1 || "Address not configured"}</div>
-            {ctx.workspace?.billingAddress.line2 ? <div>{ctx.workspace.billingAddress.line2}</div> : null}
-            <div>{[ctx.workspace?.billingAddress.city, ctx.workspace?.billingAddress.region, ctx.workspace?.billingAddress.postalCode].filter(Boolean).join(", ") || "City not configured"}</div>
-            <div>{ctx.workspace?.billingAddress.country || "Country not configured"}</div>
           </div>
-        </div>
-        <div className="mt-4 grid gap-3">
-          <InfoRow icon={<KeyRound className="h-4 w-4" />} label="Billing email" value={ctx.billing?.account.billingEmail || ctx.sessionUser.email} />
-          <InfoRow icon={<FileText className="h-4 w-4" />} label="Tax status" value={ctx.billing?.account.taxStatus || "Not configured"} />
-        </div>
-        <Link href="/contact" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
-          Request billing update
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </SectionCard>
-    </div>
-  );
-}
 
-function ModelsSection({ ctx }: { ctx: DashboardContext }) {
-  return (
-    <Panel
-      eyebrow="Model access"
-      title="Licensed model entitlements"
-      action={<Link href="/marketplace" className="text-sm font-semibold text-[#18181b] hover:underline">Model marketplace</Link>}
-    >
-      {ctx.licensedModels.length ? (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[820px] text-left text-sm">
-            <thead className="border-b border-[#e4e4e7] text-xs uppercase tracking-wide text-[#71717a]">
-              <tr>
-                <th className="pb-3">Model</th>
-                <th className="pb-3">Category</th>
-                <th className="pb-3">Sharpe</th>
-                <th className="pb-3">Annual return</th>
-                <th className="pb-3">Drawdown</th>
-                <th className="pb-3">Access</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#f4f4f5]">
-              {ctx.licensedModels.map((model) => (
-                <tr key={model.id}>
-                  <td className="max-w-[320px] py-3">
-                    <div className="font-semibold text-[#09090b]">{model.name}</div>
-                    <div className="mt-1 text-xs text-[#71717a]">{model.slug}</div>
-                  </td>
-                  <td className="py-3 text-[#52525b]">{model.category}</td>
-                  <td className="py-3 text-[#18181b]">{cleanMetric(fmtNum(model.performance?.sharpeRatio, 2))}</td>
-                  <td className="py-3 text-[#047857]">{cleanMetric(fmtPct(model.performance?.annualizedReturn, true))}</td>
-                  <td className="py-3 text-[#be123c]">{cleanMetric(fmtPct(model.performance?.maxDrawdown, true))}</td>
-                  <td className="py-3"><StatusPill value={model.accessStatus || "Review"} /></td>
-                </tr>
+          <div className="rounded-lg border border-[#dfe4e1] bg-white p-5">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7b8493]">Model vs benchmark</p>
+                <h2 className="mt-2 text-xl font-semibold">{selected.model.name}</h2>
+                <p className="mt-1 max-w-2xl text-[13px] leading-6 text-[#697386]">
+                  Shows your allocation path from the investment date against {selected.model.benchmarkLabel || "benchmark"}.
+                </p>
+              </div>
+              <div className="flex gap-4 text-[12px] text-[#697386]">
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#0F8F5A]" />
+                  QSentia model
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#9aa1ad]" />
+                  {selected.model.benchmarkLabel || "Benchmark"}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6 h-[340px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={chartData} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
+                  <CartesianGrid stroke="#eef0ef" vertical={false} />
+                  <XAxis dataKey="date" tickLine={false} axisLine={false} tick={{ fill: "#7b8493", fontSize: 12 }} />
+                  <YAxis
+                    width={74}
+                    tickLine={false}
+                    axisLine={false}
+                    tick={{ fill: "#7b8493", fontSize: 12 }}
+                    tickFormatter={(value) => money(Number(value))}
+                  />
+                  <Tooltip
+                    cursor={{ stroke: "#dfe4e1", strokeWidth: 1 }}
+                    contentStyle={{
+                      border: "1px solid #dfe4e1",
+                      borderRadius: 8,
+                      boxShadow: "0 14px 40px rgba(20,28,24,0.12)",
+                    }}
+                    formatter={(value, name) => [
+                      money(Number(value)),
+                      name === "modelValue" ? "QSentia model" : name === "benchmarkValue" ? selected.model.benchmarkLabel || "Benchmark" : "Invested",
+                    ]}
+                  />
+                  <ReferenceLine y={selected.invested} stroke="#cfd7d2" strokeDasharray="4 4" />
+                  <Line type="monotone" dataKey="benchmarkValue" stroke="#9aa1ad" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="modelValue" stroke="#0F8F5A" strokeWidth={3} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </section>
+
+        <aside className="grid content-start gap-5">
+          <div className="rounded-lg border border-[#dfe4e1] bg-white p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7b8493]">Selected model</p>
+                <h2 className="mt-2 text-xl font-semibold leading-tight">{selected.model.name}</h2>
+              </div>
+              <Link
+                href={`/marketplace/${selected.model.slug}`}
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#dfe4e1] text-[#5a6270] transition hover:border-[#0F8F5A] hover:text-[#0F8F5A]"
+                aria-label="Open model page"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <p className="mt-3 text-[13px] leading-6 text-[#697386]">{selected.model.description}</p>
+
+            <div className="mt-5 grid grid-cols-2 gap-4 border-y border-[#eef0ef] py-4">
+              <StatBlock label="Allocation" value={money(selected.current)} />
+              <StatBlock label="Weight" value={`${(allocationPct * 100).toFixed(1)}%`} />
+              <StatBlock label="Sharpe" value={String(selected.model.performance.sharpeRatio ?? "n/a")} />
+              <StatBlock label="Model return" value={pct(selected.model.performance.totalReturn)} tone={modelTone} />
+              <StatBlock label="Max drawdown" value={pct(selected.model.performance.maxDrawdown)} tone="negative" />
+              <StatBlock label="Win rate" value={pct(selected.model.performance.winRate)} tone="positive" />
+            </div>
+
+            <div className="mt-5 grid gap-3">
+              <button
+                type="button"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#0F8F5A] px-4 text-[13px] font-semibold text-white transition hover:bg-[#0b7549]"
+              >
+                <Plus className="h-4 w-4" />
+                Add allocation
+              </button>
+              <Link
+                href={`/marketplace/${selected.model.slug}`}
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-[#dfe4e1] bg-white px-4 text-[13px] font-semibold text-[#171c24] transition hover:border-[#0F8F5A] hover:text-[#0F8F5A]"
+              >
+                View evidence and trade log
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+
+          <div id="wallet" className="rounded-lg border border-[#dfe4e1] bg-white">
+            <div className="flex border-b border-[#dfe4e1]">
+              <button type="button" className="flex-1 border-b-2 border-[#0F8F5A] py-4 text-[13px] font-semibold text-[#0F8F5A]">
+                Add money
+              </button>
+              <button type="button" className="flex-1 py-4 text-[13px] font-semibold text-[#697386]">Withdraw</button>
+            </div>
+            <div className="p-5 text-center">
+              <p className="text-[12px] font-medium text-[#7b8493]">Available wallet balance</p>
+              <div className="mt-2 text-4xl font-semibold tracking-tight">{money(WALLET_BALANCE)}</div>
+              <div className="mt-5 flex justify-center gap-2">
+                {QUICK_AMOUNTS.map((amount) => (
+                  <button
+                    key={amount}
+                    type="button"
+                    className="rounded-full border border-[#dfe4e1] px-3 py-2 text-[11px] font-semibold text-[#3a414b] transition hover:border-[#0F8F5A] hover:text-[#0F8F5A]"
+                  >
+                    +{money(amount)}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="border-y border-[#eef0ef] px-5 py-4">
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e2f4ec] text-[#0F8F5A]">
+                  <Landmark className="h-4 w-4" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13px] font-semibold">Verified bank transfer</p>
+                  <p className="truncate text-[11px] text-[#7b8493]">HDFC Bank ending 6252</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-[#9aa1ad]" />
+              </div>
+            </div>
+            <div className="p-5">
+              <button
+                type="button"
+                className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[#0F8F5A] text-[13px] font-semibold text-white transition hover:bg-[#0b7549]"
+              >
+                Add money
+              </button>
+            </div>
+          </div>
+
+          <div id="orders" className="rounded-lg border border-[#dfe4e1] bg-white p-5">
+            <div className="flex items-center justify-between">
+              <h2 className="text-[15px] font-semibold">Recent activity</h2>
+              <Link href="#reports" className="text-[12px] font-semibold text-[#0F8F5A]">View all</Link>
+            </div>
+            <div className="mt-4 grid gap-4">
+              {[
+                ["Allocated to Model C ETF Regime Alpha", "-$12,000", "Today, 10:32 AM"],
+                ["Wallet deposit settled", "+$25,000", "Yesterday"],
+                ["Rebalanced ETH Micro Futures sleeve", "$0", "Jul 15"],
+              ].map(([label, amount, date]) => (
+                <div key={label} className="flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F6] text-[#5a6270]">
+                    <ReceiptText className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[13px] font-semibold">{label}</p>
+                    <p className="text-[11px] text-[#7b8493]">{date}</p>
+                  </div>
+                  <span className={`text-[13px] font-semibold ${amount.startsWith("+") ? "text-[#0F8F5A]" : "text-[#3a414b]"}`}>
+                    {amount}
+                  </span>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <InlineEmpty title="No licensed models" body="Approved model entitlements from the admin portal will appear here." />
-      )}
-    </Panel>
-  );
-}
+            </div>
+          </div>
 
-function ApiSection({ ctx }: { ctx: DashboardContext }) {
-  const totalUsed = (ctx.billing?.usage || []).reduce((sum, item) => sum + item.used, 0);
-  const totalLimit = (ctx.billing?.usage || []).reduce((sum, item) => sum + item.limit, 0);
-  const remaining = totalLimit ? Math.max(totalLimit - totalUsed, 0) : null;
+          <div id="reports" className="rounded-lg border border-[#dfe4e1] bg-white p-5">
+            <div className="grid gap-3">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="h-5 w-5 text-[#0F8F5A]" />
+                <div>
+                  <p className="text-[13px] font-semibold">Execution control active</p>
+                  <p className="text-[11px] text-[#7b8493]">Trades execute from wallet-funded allocations after model approval.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <LineChartIcon className="h-5 w-5 text-[#0F8F5A]" />
+                <div>
+                  <p className="text-[13px] font-semibold">Daily reports ready</p>
+                  <p className="text-[11px] text-[#7b8493]">Returns, benchmark, trades, and model health are grouped per allocation.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <CircleDollarSign className="h-5 w-5 text-[#0F8F5A]" />
+                <div>
+                  <p className="text-[13px] font-semibold">Cash is not auto-allocated</p>
+                  <p className="text-[11px] text-[#7b8493]">Investor chooses model and amount before capital goes live.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
 
-  return (
-    <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
-      <Panel eyebrow="API access" title="Keys, scopes, webhooks, and usage" action={<StatusPill value={ctx.workspace?.apiAccess.keyStatus || "Not issued"} />}>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <FactCard icon={<KeyRound className="h-4 w-4" />} label="Key status" value={ctx.workspace?.apiAccess.keyStatus || "Not issued"} detail={`Last rotation: ${dateLabel(ctx.workspace?.apiAccess.lastRotation)}`} />
-          <FactCard icon={<ShieldCheck className="h-4 w-4" />} label="Scope" value={ctx.workspace?.apiAccess.keyScope || "Not configured"} detail="Granted by QSentia admin" />
-          <FactCard icon={<Database className="h-4 w-4" />} label="Monthly calls" value={totalLimit ? totalLimit.toLocaleString() : "Not configured"} detail={remaining === null ? "No limit assigned" : `${remaining.toLocaleString()} remaining`} />
-          <FactCard icon={<Link2 className="h-4 w-4" />} label="Webhook" value={ctx.workspace?.apiAccess.webhookStatus || "Not configured"} detail="Delivery endpoint" />
-        </div>
-
-        <div className="mt-6">
-          <TableHeader title="Usage this billing period" />
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            {(ctx.billing?.usage || []).length ? (
-              ctx.billing?.usage.map((item) => (
-                <UsageMeter key={item.label} label={item.label} used={item.used} limit={item.limit} />
-              ))
-            ) : (
-              <InlineEmpty compact title="No API usage" body="Usage appears after an active credential sends requests." />
-            )}
+      <section className="mx-auto max-w-6xl px-5 pb-10 lg:px-0">
+        <div className="rounded-lg border border-[#dfe4e1] bg-white p-5">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-3">
+              <WalletCards className="h-5 w-5 text-[#0F8F5A]" />
+              <div>
+                <p className="text-[13px] font-semibold">Signed in as {user.name}</p>
+                <p className="text-[11px] text-[#7b8493]">{user.email} | {user.organization}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[#dfe4e1] px-4 text-[12px] font-semibold text-[#3a414b] transition hover:border-[#0F8F5A] hover:text-[#0F8F5A]"
+            >
+              Account controls
+              <ChevronDown className="h-3.5 w-3.5" />
+            </button>
           </div>
         </div>
-      </Panel>
-
-      <SectionCard className="p-5 md:p-6">
-        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">Developer actions</div>
-        <div className="mt-4 grid gap-3">
-          <QuickAction href="/docs" icon={<FileText />} label="Read API docs" />
-          <QuickAction href="/developers" icon={<Code2 />} label="Developer center" />
-          <QuickAction href="/api/customer/audit-export" icon={<Download />} label="Download audit CSV" external />
-        </div>
-        <div className="mt-6 rounded-md border border-[#e4e4e7] bg-[#fafafa] p-4">
-          <div className="text-sm font-semibold text-[#09090b]">API requirements</div>
-          <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#52525b]">
-            <li>Active model entitlement</li>
-            <li>Issued server-side API credential</li>
-            <li>Approved environment scope</li>
-            <li>Usage limit assigned by QSentia</li>
-          </ul>
-        </div>
-      </SectionCard>
-    </div>
-  );
-}
-
-function BrokerSection({ ctx }: { ctx: DashboardContext }) {
-  return (
-    <div className="grid gap-6 xl:grid-cols-2">
-      <Panel eyebrow="Broker setup" title="Broker authorization" action={<StatusPill value={ctx.workspace?.broker.status || "Not configured"} />}>
-        <div className="grid gap-3">
-          <ControlRow label="Provider" value={ctx.workspace?.broker.provider || "Not configured"} />
-          <ControlRow label="Account mode" value={label(ctx.workspace?.broker.accountMode)} />
-          <ControlRow label="Credentials vault" value={ctx.workspace?.broker.credentialsVault || "Not configured"} />
-          <ControlRow label="Approval mode" value={label(ctx.workspace?.risk.approvalMode)} />
-        </div>
-        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#3f3f46]">
-          Request broker onboarding
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </Panel>
-
-      <Panel eyebrow="Risk gates" title="Pre-trade limits">
-        <div className="grid gap-3">
-          <ControlRow label="Capital limit" value={ctx.workspace?.risk.capitalLimit || "Not configured"} />
-          <ControlRow label="Max daily loss" value={ctx.workspace?.risk.maxDailyLoss || "Not configured"} />
-          <ControlRow label="Order type" value={ctx.workspace?.risk.orderType || "Not configured"} />
-          <ControlRow label="Approval mode" value={label(ctx.workspace?.risk.approvalMode)} />
-        </div>
-      </Panel>
-    </div>
-  );
-}
-
-function DeploymentSection({ ctx }: { ctx: DashboardContext }) {
-  return (
-    <div className="grid gap-6">
-      <Panel eyebrow="Execution scheduler" title="Automation and CRON" action={<StatusPill value={ctx.workspace?.automation.status || "Not configured"} />}>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <FactCard icon={<Clock3 className="h-4 w-4" />} label="Cadence" value={label(ctx.workspace?.automation.cadence)} detail={ctx.workspace?.automation.timezone || "No timezone"} />
-          <FactCard icon={<Bot className="h-4 w-4" />} label="Worker" value={ctx.workspace?.automation.workerRuntime || "Not configured"} detail={ctx.workspace?.automation.scheduler || "No scheduler"} />
-          <FactCard icon={<FileText className="h-4 w-4" />} label="CRON" value={ctx.workspace?.automation.cronExpression || "Not configured"} detail="Stored from customer controls" />
-          <FactCard icon={<CalendarDays className="h-4 w-4" />} label="Next run" value={dateLabel(ctx.workspace?.automation.nextRunAt)} detail={label(ctx.workspace?.automation.approvalPolicy)} />
-        </div>
-      </Panel>
-      <CustomerControlCenter />
-    </div>
-  );
-}
-
-function SupportSection({ ctx }: { ctx: DashboardContext }) {
-  return (
-    <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
-      <Panel eyebrow="Support" title="Requests and service desk">
-        <div className="grid gap-4 md:grid-cols-3">
-          <SupportCard title="Billing request" body="Update billing address, entity name, tax details, renewal, or cancellation questions." />
-          <SupportCard title="Access request" body="Request a model entitlement, API scope, credential review, or broker onboarding." />
-          <SupportCard title="Technical support" body="Report API errors, webhook issues, scheduler problems, or audit export questions." />
-        </div>
-      </Panel>
-
-      <SectionCard className="p-5 md:p-6">
-        <div className="text-xs font-bold uppercase tracking-wide text-[#71717a]">Activity</div>
-        <div className="mt-4 grid gap-4">
-          {(ctx.workspace?.activity || []).length ? (
-            ctx.workspace?.activity.slice(0, 5).map((item) => (
-              <ActivityItem key={`${item.title}-${item.timestamp}`} title={item.title} body={item.body} timestamp={item.timestamp} />
-            ))
-          ) : (
-            <InlineEmpty compact title="No activity yet" body="Customer, entitlement, and credential events will appear here." />
-          )}
-          <ActivityItem title="Authenticated session" body={`${ctx.sessionUser.email} is signed in.`} timestamp={null} />
-        </div>
-      </SectionCard>
-    </div>
-  );
-}
-
-function Panel({
-  action,
-  children,
-  eyebrow,
-  title,
-}: {
-  action?: ReactNode;
-  children: ReactNode;
-  eyebrow: string;
-  title: string;
-}) {
-  return (
-    <SectionCard className="overflow-hidden rounded-[16px] border-[#e4e4e7] shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="px-5 pt-5 md:px-6 md:pt-6">
-          <div className="text-xs font-bold uppercase tracking-[0.16em] text-[#18181b]">{eyebrow}</div>
-          <h2 className="mt-2 text-xl font-semibold text-[#09090b]">{title}</h2>
-        </div>
-        {action ? <div className="shrink-0 px-5 pt-5 md:px-6 md:pt-6">{action}</div> : null}
-      </div>
-      <div className="px-5 pb-5 md:px-6 md:pb-6">
-        {children}
-      </div>
-    </SectionCard>
-  );
-}
-
-function SummaryTile({
-  helper,
-  icon,
-  label: labelText,
-  value,
-}: {
-  helper: string;
-  icon: ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="rounded-[14px] border border-[#e4e4e7] bg-white p-4 shadow-[0_12px_32px_rgba(15,23,42,0.05)]">
-      <div className="flex items-start justify-between gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#f4f4f5] text-[#18181b]">{icon}</span>
-        <span className="mt-1 h-2 w-2 rounded-full bg-[#18181b]/35" />
-      </div>
-      <div className="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">{labelText}</div>
-      <div className="mt-2 truncate text-xl font-semibold text-[#09090b]">{value}</div>
-      <p className="mt-1 truncate text-sm text-[#52525b]">{helper}</p>
-    </div>
-  );
-}
-
-function FactCard({
-  detail,
-  icon,
-  label: labelText,
-  value,
-}: {
-  detail: string;
-  icon: ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
-      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-[#71717a]">
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-[#18181b] shadow-sm">{icon}</span>
-        {labelText}
-      </div>
-      <div className="mt-3 truncate text-lg font-semibold text-[#09090b]">{value}</div>
-      <p className="mt-1 truncate text-sm text-[#52525b]">{detail}</p>
-    </div>
-  );
-}
-
-function InfoRow({
-  icon,
-  label: labelText,
-  value,
-}: {
-  icon: ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-2.5">
-      <span className="inline-flex items-center gap-2 text-sm text-[#52525b]">
-        <span className="text-[#18181b]">{icon}</span>
-        {labelText}
-      </span>
-      <span className="max-w-[190px] truncate text-right text-sm font-semibold text-[#09090b]">{value}</span>
-    </div>
-  );
-}
-
-function ControlRow({ label: labelText, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-[#fafafa] px-3 py-2.5">
-      <span className="text-sm text-[#52525b]">{labelText}</span>
-      <span className="max-w-[240px] truncate rounded-md border border-[#e4e4e7] bg-white px-2 py-1 text-xs font-bold uppercase tracking-wide text-[#18181b]">{value}</span>
-    </div>
-  );
-}
-
-function ReadinessItem({
-  label: labelText,
-  owner,
-  status,
-}: {
-  label: string;
-  owner: string;
-  status: string;
-}) {
-  return (
-    <div className="rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-2.5">
-      <div className="flex items-center justify-between gap-3">
-        <span className="text-sm font-semibold text-[#09090b]">{labelText}</span>
-        <StatusPill value={status} />
-      </div>
-      <div className="mt-1 text-xs uppercase tracking-wide text-[#71717a]">{owner}</div>
-    </div>
-  );
-}
-
-function StatusPill({ value }: { value: string }) {
-  const normalized = value.toLowerCase();
-  const tone =
-    normalized.includes("active") ||
-    normalized.includes("approved") ||
-    normalized.includes("complete") ||
-    normalized.includes("current")
-      ? "border-[#bbf7d0] bg-[#f0fdf4] text-[#047857]"
-      : normalized.includes("trial") ||
-          normalized.includes("open") ||
-          normalized.includes("paper") ||
-          normalized.includes("refreshing")
-        ? "border-[#d4d4d8] bg-[#f4f4f5] text-[#18181b]"
-        : normalized.includes("required") ||
-            normalized.includes("pending") ||
-            normalized.includes("not") ||
-            normalized.includes("past due")
-          ? "border-[#fed7aa] bg-[#fff7ed] text-[#c2410c]"
-          : "border-[#e4e4e7] bg-[#fafafa] text-[#52525b]";
-
-  return (
-    <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${tone}`}>
-      {label(value)}
-    </span>
-  );
-}
-
-function UsageMeter({
-  label: labelText,
-  limit,
-  used,
-}: {
-  label: string;
-  limit: number;
-  used: number;
-}) {
-  const safeLimit = Math.max(limit, 1);
-  const percent = Math.min(Math.max((used / safeLimit) * 100, 0), 100);
-
-  return (
-    <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
-      <div className="flex items-center justify-between gap-3">
-        <span className="text-sm font-semibold text-[#09090b]">{labelText}</span>
-        <span className="text-xs font-bold uppercase tracking-wide text-[#71717a]">
-          {used.toLocaleString()} / {limit.toLocaleString()}
-        </span>
-      </div>
-      <div className="mt-4 h-2 rounded-full bg-[#e4e4e7]">
-        <div className="h-full rounded-full bg-[#18181b]" style={{ width: `${percent}%` }} />
-      </div>
-    </div>
-  );
-}
-
-function QuickAction({
-  external,
-  href,
-  icon,
-  label: labelText,
-}: {
-  external?: boolean;
-  href: string;
-  icon: ReactNode;
-  label: string;
-}) {
-  const className =
-    "inline-flex items-center justify-between gap-3 rounded-[10px] border border-[#e4e4e7] bg-white px-3 py-3 text-sm font-semibold text-[#18181b] transition hover:border-[#18181b] hover:bg-[#fafafa] [&>svg]:h-4 [&>svg]:w-4";
-
-  if (external) {
-    return (
-      <a href={href} className={className}>
-        <span className="inline-flex items-center gap-2">
-          {icon}
-          {labelText}
-        </span>
-        <ArrowRight className="h-4 w-4" />
-      </a>
-    );
-  }
-
-  return (
-    <Link href={href} className={className}>
-      <span className="inline-flex items-center gap-2">
-        {icon}
-        {labelText}
-      </span>
-      <ArrowRight className="h-4 w-4" />
-    </Link>
-  );
-}
-
-function SupportCard({ body, title }: { body: string; title: string }) {
-  return (
-    <div className="rounded-[12px] border border-[#e4e4e7] bg-[#fafafa] p-4">
-      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-[#18181b] shadow-sm">
-        <LifeBuoy className="h-4 w-4" />
-      </span>
-      <h3 className="mt-4 font-semibold text-[#09090b]">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-[#52525b]">{body}</p>
-      <Link href="/contact" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#18181b] hover:underline">
-        Open request
-        <ArrowRight className="h-4 w-4" />
-      </Link>
-    </div>
-  );
-}
-
-function ActivityItem({
-  body,
-  timestamp,
-  title,
-}: {
-  body: string;
-  timestamp: string | null;
-  title: string;
-}) {
-  return (
-    <div className="flex gap-3">
-      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#f4f4f5] text-[#18181b]">
-        <CheckCircle2 className="h-4 w-4" />
-      </span>
-      <div>
-        <div className="font-semibold text-[#09090b]">{title}</div>
-        <p className="mt-1 text-sm leading-6 text-[#52525b]">{body}</p>
-        <div className="mt-1 text-xs uppercase tracking-wide text-[#71717a]">
-          {timestamp ? dateLabel(timestamp) : "Current session"}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TableHeader({ title }: { title: string }) {
-  return (
-    <div className="flex items-center justify-between border-b border-[#e4e4e7] pb-3">
-      <h3 className="font-semibold text-[#09090b]">{title}</h3>
-    </div>
-  );
-}
-
-function InlineEmpty({
-  body,
-  compact,
-  title,
-}: {
-  body: string;
-  compact?: boolean;
-  title: string;
-}) {
-  return (
-    <div
-      className={
-        compact
-          ? "rounded-md border border-dashed border-[#d4d4d8] bg-[#fafafa] p-4 text-center"
-          : "mt-5 rounded-md border border-dashed border-[#d4d4d8] bg-[#fafafa] p-6 text-center"
-      }
-    >
-      <div className="text-sm font-semibold text-[#09090b]">{title}</div>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#52525b]">{body}</p>
+      </section>
     </div>
   );
 }

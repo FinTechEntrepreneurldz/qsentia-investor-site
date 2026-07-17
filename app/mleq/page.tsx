@@ -596,10 +596,10 @@ export default function MleqPage() {
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
                 <Link
-                  href="/research"
+                  href="/platform"
                   className="inline-flex items-center justify-center rounded-md border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-bold text-[#09090b] hover:border-[#00d6b8]"
                 >
-                  View research terminal
+                  View platform overview
                 </Link>
               </div>
 

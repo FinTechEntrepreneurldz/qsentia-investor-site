@@ -631,8 +631,8 @@ export default function AdminConsole({ initialData = null }: { initialData?: Adm
         <aside className="flex flex-col border-b border-[#e4e4e7] bg-white/95 p-4 text-[#09090b] shadow-[1px_0_0_rgba(15,23,42,0.04)] backdrop-blur md:sticky md:top-0 md:max-h-screen md:min-h-screen md:self-start md:overflow-y-auto md:border-b-0 md:border-r">
           <div className="rounded-[16px] border border-[#e4e4e7] bg-[#fafafa] p-4">
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-[#d4d4d8] bg-white" aria-label="QSentia home">
-                <Image src="/logo/qsentia-primary.png" alt="QSentia" width={27} height={27} className="h-7 w-7 object-contain" />
+              <Link href="/" className="flex h-11 w-28 shrink-0 items-center justify-center rounded-[10px] border border-[#d4d4d8] bg-white px-3" aria-label="QSentia home">
+                <Image src="/logo/qsentia-navigation.png" alt="QSentia" width={1582} height={681} className="h-8 w-auto object-contain" />
               </Link>
               <div className="min-w-0">
                 <div className="truncate text-sm font-semibold text-[#09090b]">QSentia</div>

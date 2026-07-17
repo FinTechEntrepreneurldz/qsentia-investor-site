@@ -30,7 +30,7 @@ const inquiryTracks = [
 
 const prepItems = [
   'Organization name and professional email',
-  'Area of interest: dashboard, marketplace, research, or integration',
+  'Area of interest: beta access, platform review, model access, or partnerships',
   'Models or workflows you want to review',
   'Target evaluation or deployment timeline',
   'Relevant compliance or operational constraints',
@@ -82,7 +82,7 @@ export default function ContactPage() {
               <ArrowRight className="h-4 w-4 ml-2" />
             </a>
             <Link
-              href="/marketplace"
+              href="/platform"
               className="inline-flex items-center justify-center rounded-none border border-zinc-300 bg-transparent px-5 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-zinc-600 transition hover:border-zinc-950 hover:text-zinc-950 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-white dark:hover:text-white"
             >
               Review models first
