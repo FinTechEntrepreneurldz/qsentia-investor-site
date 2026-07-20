@@ -60,14 +60,6 @@ export default function HomePage() {
             <span className="font-medium text-[#0F8F5A]">risk analytics</span>, attribution, and{' '}
             <span className="font-medium text-[#0F8F5A]">live model telemetry</span> in one place.
           </p>
-          <p className="mt-6 max-w-4xl text-base leading-8 text-[#4b5563] dark:text-zinc-300">
-            <span className="font-semibold text-[#101820] dark:text-white">About us:</span> QSentia is a
-            quantitative research company bringing institutional-grade machine learning models to everyone. We
-            combine advanced predictive models with adaptive reinforcement learning to manage risk, control
-            drawdowns, and respond to changing market conditions. By making every model transparent, measurable,
-            and evidence-backed, QSentia gives investors access to intelligence once reserved for institutional
-            trading desks.
-          </p>
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
             <Link
               href="/marketplace"
@@ -88,6 +80,43 @@ export default function HomePage() {
           <p className="mt-5 max-w-4xl text-[11px] font-semibold uppercase leading-6 tracking-[0.22em] text-zinc-500 dark:text-zinc-500">
             Public model diligence before login. Wallet, allocation, execution, and monitoring after login.
           </p>
+        </div>
+      </section>
+
+      <section className="border-b border-[#dedfdf] bg-white py-16 transition-colors dark:border-zinc-900 dark:bg-black sm:py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div className="relative min-h-[280px] overflow-hidden rounded-[8px] border border-[#d9dcda] bg-[#F5F5F6] p-6 shadow-[0_18px_54px_rgba(15,23,42,0.045)] dark:border-zinc-800 dark:bg-[#111113]">
+            <div className="absolute inset-x-6 top-8 h-px bg-[#d9dcda] dark:bg-zinc-800" />
+            <div className="absolute inset-y-6 left-10 w-px bg-[#d9dcda] dark:bg-zinc-800" />
+            <div className="absolute bottom-8 right-8 h-28 w-28 rounded-full border border-[#0F8F5A]/35" />
+            <div className="absolute bottom-14 right-14 h-16 w-16 rounded-full bg-[#0F8F5A]" />
+            <div className="absolute left-10 top-8 flex h-14 w-14 items-center justify-center rounded-[6px] border border-[#0F8F5A]/30 bg-white text-lg font-semibold text-[#0F8F5A] dark:bg-black">
+              Q
+            </div>
+            <div className="relative mt-24 grid gap-3 sm:grid-cols-3">
+              <AboutSignal label="Predictive models" value="ML" />
+              <AboutSignal label="Adaptive control" value="RL" />
+              <AboutSignal label="Evidence-backed" value="01" />
+            </div>
+          </div>
+
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0F8F5A] dark:text-[#8ee0b8]">
+              About QSentia
+            </p>
+            <h2 className="mt-4 text-4xl font-medium tracking-[-0.035em] text-[#101820] sm:text-5xl dark:text-white">
+              Quantitative research built for transparent model allocation.
+            </h2>
+            <p className="mt-6 text-base leading-8 text-zinc-600 dark:text-zinc-400">
+              QSentia is a quantitative research company bringing institutional-grade machine learning models to
+              everyone. We combine advanced predictive models with adaptive reinforcement learning to manage risk,
+              control drawdowns, and respond to changing market conditions.
+            </p>
+            <p className="mt-5 text-base leading-8 text-zinc-600 dark:text-zinc-400">
+              By making every model transparent, measurable, and evidence-backed, QSentia gives investors access to
+              intelligence once reserved for institutional trading desks.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -229,6 +258,17 @@ function InvestorCard({
         {body}
       </p>
     </article>
+  );
+}
+
+function AboutSignal({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-[6px] border border-[#d9dcda] bg-white/85 p-4 shadow-[0_12px_32px_rgba(15,23,42,0.035)] backdrop-blur dark:border-zinc-800 dark:bg-black/70">
+      <div className="font-mono text-lg font-bold text-[#101820] dark:text-white">{value}</div>
+      <div className="mt-2 text-[11px] font-semibold uppercase leading-5 tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
+        {label}
+      </div>
+    </div>
   );
 }
 

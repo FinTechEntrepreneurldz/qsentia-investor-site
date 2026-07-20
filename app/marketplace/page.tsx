@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowRight, LockKeyhole, ShieldCheck, WalletCards } from 'lucide-react';
+import { ArrowRight, ChevronRight, LockKeyhole, ShieldCheck, WalletCards } from 'lucide-react';
 import { SiteHeader } from '@/components/PageChrome';
 import { MOCK_MARKETPLACE_MODELS } from '@/lib/mockMarketplace';
 import type { MarketplaceModel } from '@/lib/modelCatalog';
 
-const strategyFilters = ['Momentum', 'Macro', 'Stat Arb', 'Vol Carry', 'CTA / Trend', 'ML / Factor'];
+const strategyFilters = ['Momentum', 'Macro', 'Stat Arb', 'Vol Carry', 'CTA / Trend', 'ML / Factor', 'HFT', 'Mean Reversion'];
 const riskFilters = ['Low', 'Medium', 'High'];
 const assetFilters = ['Equities', 'Multi-Asset', 'Derivatives', 'Futures', 'Crypto'];
 
@@ -54,6 +54,17 @@ function shortName(model: MarketplaceModel) {
   };
 
   return names[model.id] || model.name.toUpperCase().slice(0, 18);
+}
+
+function operatingMode(model: MarketplaceModel) {
+  if (model.accessStatus === 'waitlist') return 'Paper';
+  return 'Live';
+}
+
+function modelStatus(model: MarketplaceModel) {
+  if (model.accessStatus === 'active') return 'Allocation-ready';
+  if (model.accessStatus === 'waitlist') return 'Waitlist';
+  return 'Review';
 }
 
 function sparklinePath(model: MarketplaceModel) {
@@ -127,7 +138,7 @@ export default function MarketplacePage() {
     <main className="min-h-screen bg-[#F5F5F6] text-zinc-950 transition-colors duration-150 dark:bg-[#09090b] dark:text-zinc-50">
       <SiteHeader active="/marketplace" />
 
-      <section className="border-b border-zinc-100 bg-[#F5F5F6] px-5 py-8 transition-colors dark:border-zinc-900 dark:bg-[#09090b]">
+      <section className="border-b border-zinc-100 bg-[#F5F5F6] px-5 py-8 transition-colors dark:border-zinc-900 dark:bg-[#09090b] sm:py-10">
         <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
           <div>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-[#0F8F5A] dark:text-[#8ee0b8]">
@@ -194,8 +205,8 @@ export default function MarketplacePage() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[270px_minmax(0,1fr)]">
-        <aside className="rounded-[12px] border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-850 dark:bg-black">
+      <section className="mx-auto grid w-full max-w-[1500px] gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)]">
+        <aside className="rounded-[12px] border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-850 dark:bg-black lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
           <div className="mb-5 flex items-center justify-between gap-3">
             <h2 className="text-sm font-semibold text-[#171c24] dark:text-white">Filters</h2>
             {hasFilters ? (
@@ -230,8 +241,20 @@ export default function MarketplacePage() {
             </div>
             <p className="text-sm text-zinc-500">Click a model to review evidence before allocation.</p>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[1120px] border-collapse">
+
+          <div className="grid gap-3 p-4 lg:hidden">
+            {filteredModels.map((model) => (
+              <ModelMobileCard
+                key={model.id}
+                model={model}
+                authenticated={authenticated}
+                sessionLoaded={sessionLoaded}
+              />
+            ))}
+          </div>
+
+          <div className="hidden overflow-x-auto lg:block">
+            <table className="w-full min-w-[1040px] border-collapse">
             <thead>
               <tr className="border-b border-zinc-100 text-left font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-400 dark:border-zinc-900 dark:text-zinc-600">
                 <th className="px-6 py-5 font-normal">Model</th>
@@ -250,18 +273,19 @@ export default function MarketplacePage() {
               {filteredModels.map((model) => {
                 const positive = (model.performance.totalReturn || 0) >= 0;
                 return (
-                  <tr key={model.id} className="border-b border-zinc-100 transition hover:bg-zinc-50 dark:border-zinc-900 dark:hover:bg-white/[0.03]">
+                  <tr key={model.id} className="group border-b border-zinc-100 transition hover:bg-zinc-50 dark:border-zinc-900 dark:hover:bg-white/[0.03]">
                     <td className="px-6 py-5">
                       <Link
                         href={`/marketplace/${model.slug}`}
-                        className="font-mono text-sm font-bold uppercase tracking-[0.08em] text-[#171c24] transition hover:text-[#0F8F5A] dark:text-white dark:hover:text-[#8ee0b8]"
+                        className="inline-flex items-center gap-2 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[#171c24] transition hover:text-[#0F8F5A] dark:text-white dark:hover:text-[#8ee0b8]"
                       >
                         {shortName(model)}
+                        <ChevronRight className="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100" />
                       </Link>
                       <div className="mt-2 flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-[0.12em]">
                         <span className="text-emerald-600 dark:text-[#31f495]">Live</span>
-                        <span className="text-zinc-400 dark:text-zinc-600">[{model.accessStatus === 'waitlist' ? 'Paper' : 'Live'}]</span>
-                        {model.accessStatus === 'active' ? <span className="text-emerald-600 dark:text-[#31f495]">Allocation-ready</span> : null}
+                        <span className="text-zinc-400 dark:text-zinc-600">[{operatingMode(model)}]</span>
+                        <span className="text-emerald-600 dark:text-[#31f495]">{modelStatus(model)}</span>
                       </div>
                     </td>
                     <td className="px-6 py-5 text-sm text-zinc-500 dark:text-zinc-500">{strategyName(model.category)}</td>
@@ -291,10 +315,10 @@ export default function MarketplacePage() {
                     </td>
                     <td className="px-6 py-5 text-right">
                       <Link
-                        href={allocationHref(model, authenticated, sessionLoaded)}
+                        href={`/marketplace/${model.slug}`}
                         className="inline-flex h-9 items-center justify-center rounded-[6px] border border-zinc-200 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#171c24] transition hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-800 dark:text-white dark:hover:border-zinc-600 dark:hover:bg-white/[0.03]"
                       >
-                        Allocate
+                        Review
                       </Link>
                     </td>
                   </tr>
@@ -306,6 +330,81 @@ export default function MarketplacePage() {
         </div>
       </section>
     </main>
+  );
+}
+
+function ModelMobileCard({
+  model,
+  authenticated,
+  sessionLoaded,
+}: {
+  model: MarketplaceModel;
+  authenticated: boolean;
+  sessionLoaded: boolean;
+}) {
+  const positive = (model.performance.totalReturn || 0) >= 0;
+
+  return (
+    <article className="rounded-[10px] border border-zinc-200 bg-white p-4 dark:border-zinc-850 dark:bg-[#050507]">
+      <Link href={`/marketplace/${model.slug}`} className="block">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="font-mono text-sm font-bold uppercase tracking-[0.08em] text-[#171c24] dark:text-white">
+              {shortName(model)}
+            </p>
+            <p className="mt-1 text-sm text-zinc-500">{model.name}</p>
+          </div>
+          <span className="rounded-full bg-[#ECFDF3] px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[#027A48] dark:bg-[#052E1B] dark:text-[#7CE3B1]">
+            {modelStatus(model)}
+          </span>
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+          <Metric label="Strategy" value={strategyName(model.category)} />
+          <Metric label="Asset" value={assetClass(model)} />
+          <Metric label="Min inv." value={model.minimumCapital || '$50,000'} />
+          <Metric label="Sharpe" value={model.performance.sharpeRatio?.toFixed(2) || 'N/A'} />
+          <Metric
+            label="YTD return"
+            value={pct(model.performance.totalReturn, true)}
+            tone={positive ? 'positive' : 'negative'}
+          />
+          <Metric label="Max DD" value={pct(model.performance.maxDrawdown)} tone="negative" />
+        </div>
+      </Link>
+      <div className="mt-4 flex gap-2">
+        <Link
+          href={`/marketplace/${model.slug}`}
+          className="inline-flex h-10 flex-1 items-center justify-center rounded-full bg-[#171c24] px-4 text-sm font-semibold text-white"
+        >
+          Review model
+        </Link>
+        <Link
+          href={allocationHref(model, authenticated, sessionLoaded)}
+          className="inline-flex h-10 flex-1 items-center justify-center rounded-full border border-zinc-200 px-4 text-sm font-semibold text-[#171c24] dark:border-zinc-800 dark:text-white"
+        >
+          Allocate
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function Metric({ label, value, tone = 'neutral' }: { label: string; value: string; tone?: 'positive' | 'negative' | 'neutral' }) {
+  return (
+    <div>
+      <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-400">{label}</div>
+      <div
+        className={`mt-1 font-mono text-sm font-bold ${
+          tone === 'positive'
+            ? 'text-[#00A76F]'
+            : tone === 'negative'
+              ? 'text-[#D92D20]'
+              : 'text-[#171c24] dark:text-white'
+        }`}
+      >
+        {value}
+      </div>
+    </div>
   );
 }
 
