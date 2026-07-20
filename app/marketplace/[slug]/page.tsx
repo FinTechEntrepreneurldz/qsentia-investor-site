@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import {
@@ -15,7 +16,7 @@ import {
 import { MarketplaceAllocationCta } from "@/components/MarketplaceAllocationCta";
 import { SiteHeader } from "@/components/PageChrome";
 import { MOCK_MARKETPLACE_MODELS, getMockMarketplaceModel } from "@/lib/mockMarketplace";
-import type { ModelDetails } from "@/lib/modelCatalog";
+import { getLiveModelDetails, type ModelDetails } from "@/lib/modelCatalog";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -25,6 +26,8 @@ type ChartPoint = {
   timestamp: string;
   value: number;
 };
+
+type SourceRow = Record<string, unknown>;
 
 const categoryLabels: Record<ModelDetails["category"], string> = {
   crypto: "Crypto",
@@ -67,6 +70,45 @@ function formatDate(value: string | null | undefined) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+
+function formatUnknown(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "N/A";
+  if (typeof value === "number") return Number.isFinite(value) ? value.toLocaleString("en-US", { maximumFractionDigits: 4 }) : "N/A";
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (Array.isArray(value)) return value.map(formatUnknown).join(", ");
+  if (typeof value === "object") return JSON.stringify(value);
+  return String(value).replace(/_/g, " ").trim();
+}
+
+function pickField(row: SourceRow | undefined, keys: string[]) {
+  if (!row) return null;
+  const key = keys.find((candidate) => row[candidate] !== null && row[candidate] !== undefined && row[candidate] !== "");
+  return key ? row[key] : null;
+}
+
+function latestRows(rows: SourceRow[] | undefined, count = 8) {
+  return (rows || []).slice(-count).reverse();
+}
+
+function compactRows(rows: SourceRow[] | undefined, mappings: Array<[string, string[]]>, count = 8) {
+  return latestRows(rows, count).map((row) =>
+    Object.fromEntries(mappings.map(([label, keys]) => [label, formatUnknown(pickField(row, keys))]))
+  );
+}
+
+async function getModelForPage(slug: string) {
+  try {
+    const headerStore = await headers();
+    const host = headerStore.get("host") || "localhost:3000";
+    const proto = headerStore.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
+    const liveModel = await getLiveModelDetails(new Request(`${proto}://${host}/marketplace/${slug}`), slug);
+    if (liveModel) return liveModel;
+  } catch {
+    // Fall back to the static preview when live telemetry is unavailable.
+  }
+
+  return getMockMarketplaceModel(slug);
 }
 
 function healthScore(model: ModelDetails) {
@@ -141,29 +183,120 @@ function benchmarkPath(model: ModelDetails, width = 760, height = 250) {
   return `M 0 ${y.toFixed(2)} L ${width} ${y.toFixed(2)}`;
 }
 
-function recentEvidenceRows(model: ModelDetails) {
-  const points = model.chart.slice(-7);
-  return points.slice(1).map((point, index) => {
-    const previous = points[index];
-    const dailyReturn = previous ? point.value / previous.value - 1 : 0;
-    const actions = ["Hold", "Rebalance", "Monitor", "Hold", "Risk check", "Hold"];
-    const notes = [
-      "Signal stayed inside approved exposure band.",
-      "Position change reviewed against drawdown limits.",
-      "Telemetry and portfolio value reconciled.",
-      "No abnormal model drift detected.",
-      "Risk surface reviewed before broker readiness.",
-      "Evidence row accepted for allocation review.",
-    ];
+function recentEvidenceRows(model: ModelDetails): SourceRow[] {
+  const decisionRows = compactRows(
+    model.traces?.decisions,
+    [
+      ["Timestamp", ["timestamp_utc", "timestamp", "date"]],
+      ["Decision", ["action", "decision", "signal", "trade_action"]],
+      ["Selected assets", ["selected_assets", "asset", "symbol", "symbols"]],
+      ["Orders", ["n_submitted_orders", "submitted_order_count", "orders_submitted", "submit_orders"]],
+      ["Portfolio value", ["portfolio_value", "net_liquidation", "account_value", "equity"]],
+      ["Source", ["source", "method", "account_status"]],
+    ],
+    6
+  );
 
-    return {
-      date: formatDate(point.timestamp),
-      value: point.value,
-      dailyReturn,
-      action: actions[index % actions.length],
-      note: notes[index % notes.length],
-    };
-  });
+  if (decisionRows.length) return decisionRows;
+
+  const curveRows = model.backtest?.equityCurve?.length
+    ? model.backtest.equityCurve
+    : model.chart.map((point) => ({ timestamp: point.timestamp, portfolio: point.value, portfolioValue: point.value }));
+
+  return latestRows(curveRows, 6).map((row) => ({
+    Timestamp: formatUnknown(pickField(row, ["timestamp", "date"])),
+    Decision: "Backtest observation",
+    "Selected assets": "N/A",
+    Orders: "N/A",
+    "Portfolio value": formatUnknown(pickField(row, ["portfolioValue", "portfolio_value", "portfolio"])),
+    Source: "Return curve",
+  }));
+}
+
+function backtestRows(model: ModelDetails) {
+  const curveRows = model.backtest?.equityCurve?.length
+    ? model.backtest.equityCurve
+    : model.chart.map((point) => ({ timestamp: point.timestamp, portfolio: point.value, portfolioValue: point.value }));
+
+  return compactRows(
+    curveRows,
+    [
+      ["Date", ["timestamp", "date"]],
+      ["Normalized value", ["portfolio", "value"]],
+      ["Portfolio value", ["portfolioValue", "portfolio_value", "net_liquidation"]],
+      ["Drawdown", ["drawdown"]],
+      ["Return", ["return"]],
+    ],
+    8
+  );
+}
+
+function traceCounts(model: ModelDetails) {
+  const rowCounts = model.diagnostics?.rowCounts || {};
+  return [
+    ["Backtest curve", model.backtest?.equityCurve?.length || model.chart.length],
+    ["Return rows", model.backtest?.returns?.length || 0],
+    ["Drawdown rows", model.backtest?.drawdowns?.length || 0],
+    ["Decision rows", model.traces?.decisions?.length || rowCounts.decisionsRows || 0],
+    ["Signal rows", model.traces?.signalHistory?.length || rowCounts.signalHistoryRows || 0],
+    ["Position rows", model.traces?.positions?.length || rowCounts.positionsRows || 0],
+    ["Submitted orders", model.traces?.submittedOrders?.length || rowCounts.submittedOrdersRows || 0],
+    ["Readiness checks", model.traces?.readinessChecks?.length || rowCounts.readinessChecksRows || 0],
+  ];
+}
+
+function diagnosticRows(record: SourceRow | null | undefined, count = 10) {
+  if (!record) return [];
+  return Object.entries(record)
+    .slice(0, count)
+    .map(([key, value]) => ({ Metric: key.replace(/_/g, " "), Value: formatUnknown(value) }));
+}
+
+function SourceTable({
+  columns,
+  rows,
+  title,
+}: {
+  columns: string[];
+  rows: SourceRow[];
+  title: string;
+}) {
+  return (
+    <div className="overflow-hidden rounded-[8px] border border-zinc-200 bg-white dark:border-zinc-850 dark:bg-black">
+      <div className="border-b border-zinc-200 bg-zinc-50 px-4 py-3 dark:border-zinc-850 dark:bg-[#050507]">
+        <h3 className="text-sm font-semibold text-zinc-950 dark:text-white">{title}</h3>
+        <p className="mt-1 text-xs text-zinc-500">{rows.length ? `${rows.length} source rows shown` : "No source rows available"}</p>
+      </div>
+      {rows.length ? (
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left text-xs">
+            <thead className="font-mono uppercase tracking-[0.14em] text-zinc-400">
+              <tr>
+                {columns.map((column) => (
+                  <th key={column} className="whitespace-nowrap px-4 py-3 font-bold">
+                    {column}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
+              {rows.map((row, index) => (
+                <tr key={`${title}-${index}`}>
+                  {columns.map((column) => (
+                    <td key={`${title}-${index}-${column}`} className="max-w-[260px] truncate px-4 py-3 font-medium text-zinc-700 dark:text-zinc-300">
+                      {formatUnknown(row[column])}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="px-4 py-5 text-sm text-zinc-500">This source file has not published rows for the selected model yet.</div>
+      )}
+    </div>
+  );
 }
 
 function StatCard({
@@ -222,7 +355,7 @@ function DetailPanel({
 
 export default async function MarketplaceModelPage({ params }: PageProps) {
   const { slug } = await params;
-  const model = getMockMarketplaceModel(slug);
+  const model = await getModelForPage(slug);
 
   if (!model) notFound();
 
@@ -236,12 +369,64 @@ export default async function MarketplaceModelPage({ params }: PageProps) {
   const confidence =
     typeof model.latest?.decision?.confidence === "number" ? pct(model.latest.decision.confidence) : "N/A";
   const rows = recentEvidenceRows(model);
+  const traceCountRows = traceCounts(model);
+  const backtestTableRows = backtestRows(model);
+  const signalRows = compactRows(
+    model.traces?.signalHistory,
+    [
+      ["Timestamp", ["timestamp_utc", "timestamp", "date"]],
+      ["Signal", ["signal", "action", "decision"]],
+      ["Selected assets", ["selected_assets", "asset", "symbol", "symbols"]],
+      ["Predicted vol", ["predicted_vol", "volatility", "risk"]],
+      ["Portfolio value", ["portfolio_value", "net_liquidation", "account_value"]],
+      ["Regime", ["regime", "market_regime", "state"]],
+    ],
+    8
+  );
+  const orderRows = compactRows(
+    model.traces?.submittedOrders?.length ? model.traces.submittedOrders : model.traces?.plannedOrders,
+    [
+      ["Timestamp", ["timestamp_utc", "timestamp", "created_at", "date"]],
+      ["Symbol", ["symbol", "asset", "ticker"]],
+      ["Side", ["side", "action"]],
+      ["Quantity", ["qty", "quantity", "target_qty"]],
+      ["Status", ["status", "order_status"]],
+      ["Source", ["source", "broker", "method"]],
+    ],
+    8
+  );
+  const positionRows = compactRows(
+    model.traces?.positions,
+    [
+      ["Symbol", ["symbol", "asset", "ticker"]],
+      ["Quantity", ["qty", "quantity"]],
+      ["Market value", ["market_value", "value", "position_value"]],
+      ["Unrealized P/L", ["unrealized_pl", "unrealized_pnl", "pnl"]],
+      ["Weight", ["weight", "target_weight", "allocation_weight"]],
+      ["Timestamp", ["timestamp_utc", "timestamp", "date"]],
+    ],
+    8
+  );
+  const readinessRows = compactRows(
+    model.traces?.readinessChecks,
+    [
+      ["Check", ["check", "name", "metric"]],
+      ["Status", ["status", "result", "passed"]],
+      ["Severity", ["severity", "level"]],
+      ["Detail", ["detail", "message", "notes"]],
+      ["Timestamp", ["timestamp_utc", "timestamp", "date"]],
+    ],
+    8
+  );
+  const healthRows = diagnosticRows(model.diagnostics?.healthStatus);
+  const realismRows = diagnosticRows(model.diagnostics?.executionRealism);
   const dataVisibilityRows = [
     ["Public model profile", "Visible before sign-in"],
-    ["Return curve", `${model.observationCount ?? model.chart.length} observations`],
+    ["Backtesting curve", `${model.backtest?.equityCurve?.length || model.observationCount || model.chart.length} observations`],
     ["Evidence rows", String(model.evidenceRowCount ?? "N/A")],
     ["Latest telemetry", formatDate(model.latest.lastRun)],
     ["Benchmark", model.benchmarkLabel || "N/A"],
+    ["Trace logs", `${traceCountRows.reduce((sum, [, value]) => sum + Number(value || 0), 0)} available rows`],
     ["Allocation action", "Requires login and wallet"],
   ];
 
@@ -386,30 +571,24 @@ export default async function MarketplaceModelPage({ params }: PageProps) {
           </div>
         </DetailPanel>
 
-        <DetailPanel title="Recent Model Evidence" icon={<BarChart3 className="h-4 w-4" />}>
+        <DetailPanel title="Source Trace And Decision Evidence" icon={<BarChart3 className="h-4 w-4" />}>
           <div className="mt-6 overflow-x-auto">
             <table className="w-full min-w-[720px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-zinc-200 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400 dark:border-zinc-850">
-                  <th className="py-3 pr-5">Date</th>
-                  <th className="py-3 pr-5">Portfolio</th>
-                  <th className="py-3 pr-5">Daily return</th>
-                  <th className="py-3 pr-5">Signal</th>
-                  <th className="py-3 pr-5">Review note</th>
+                  {["Timestamp", "Decision", "Selected assets", "Orders", "Portfolio value", "Source"].map((column) => (
+                    <th key={column} className="py-3 pr-5">{column}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-100 text-sm dark:divide-zinc-900">
-                {rows.map((row) => (
-                  <tr key={`${row.date}-${row.action}`}>
-                    <td className="py-4 pr-5 text-zinc-500">{row.date}</td>
-                    <td className="py-4 pr-5 font-mono text-zinc-950 dark:text-white">{num(row.value, 1)}</td>
-                    <td className={`py-4 pr-5 font-mono font-bold ${row.dailyReturn >= 0 ? "text-[#00A76F]" : "text-[#D92D20]"}`}>
-                      {pct(row.dailyReturn, true)}
-                    </td>
-                    <td className="py-4 pr-5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-zinc-950 dark:text-white">
-                      {row.action}
-                    </td>
-                    <td className="py-4 pr-5 text-zinc-500">{row.note}</td>
+                {rows.map((row, index) => (
+                  <tr key={`trace-${index}`}>
+                    {["Timestamp", "Decision", "Selected assets", "Orders", "Portfolio value", "Source"].map((column) => (
+                      <td key={`${column}-${index}`} className="max-w-[260px] truncate py-4 pr-5 text-zinc-600 dark:text-zinc-300">
+                        {formatUnknown(row[column])}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
@@ -425,6 +604,48 @@ export default async function MarketplaceModelPage({ params }: PageProps) {
                 <div className="mt-2 text-sm font-semibold text-zinc-950 dark:text-white">{value}</div>
               </div>
             ))}
+          </div>
+        </DetailPanel>
+
+        <DetailPanel title="Backtesting Results" icon={<LineChart className="h-4 w-4" />}>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              ["CAGR", pct(model.performance.annualizedReturn, true)],
+              ["Total return", pct(model.performance.totalReturn, true)],
+              ["Sharpe", num(model.performance.sharpeRatio)],
+              ["Max drawdown", pct(model.performance.maxDrawdown)],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-[8px] border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-850 dark:bg-[#050507]">
+                <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">{label}</div>
+                <div className="mt-2 text-2xl font-semibold text-zinc-950 dark:text-white">{value}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5">
+            <SourceTable
+              title="Backtest curve observations"
+              rows={backtestTableRows}
+              columns={["Date", "Normalized value", "Portfolio value", "Drawdown", "Return"]}
+            />
+          </div>
+        </DetailPanel>
+
+        <DetailPanel title="Complete Trace Availability" icon={<RadioTower className="h-4 w-4" />}>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {traceCountRows.map(([label, value]) => (
+              <div key={label} className="rounded-[8px] border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-850 dark:bg-[#050507]">
+                <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">{label}</div>
+                <div className="mt-2 text-2xl font-semibold text-zinc-950 dark:text-white">{String(value)}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 grid gap-5 xl:grid-cols-2">
+            <SourceTable title="Signal history" rows={signalRows} columns={["Timestamp", "Signal", "Selected assets", "Predicted vol", "Portfolio value", "Regime"]} />
+            <SourceTable title="Orders" rows={orderRows} columns={["Timestamp", "Symbol", "Side", "Quantity", "Status", "Source"]} />
+            <SourceTable title="Positions" rows={positionRows} columns={["Symbol", "Quantity", "Market value", "Unrealized P/L", "Weight", "Timestamp"]} />
+            <SourceTable title="Readiness checks" rows={readinessRows} columns={["Check", "Status", "Severity", "Detail", "Timestamp"]} />
+            <SourceTable title="Health status payload" rows={healthRows} columns={["Metric", "Value"]} />
+            <SourceTable title="Execution realism payload" rows={realismRows} columns={["Metric", "Value"]} />
           </div>
         </DetailPanel>
 

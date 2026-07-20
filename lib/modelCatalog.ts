@@ -54,13 +54,29 @@ type DashboardPayload = {
   modelComparison?: ModelComparisonEntry[];
   selectedModel?: string;
   latest?: DashboardLatest;
+  stats?: ModelStats;
+  equityCurve?: Array<Record<string, unknown>>;
+  returns?: Array<Record<string, unknown>>;
+  drawdowns?: Array<Record<string, unknown>>;
+  decisions?: Array<Record<string, unknown>>;
   actionCounts?: Array<{ action?: string; count?: number }>;
+  targetWeights?: Array<Record<string, unknown>>;
+  targetWeightHistory?: Array<Record<string, unknown>>;
+  positions?: Array<Record<string, unknown>>;
+  plannedOrders?: Array<Record<string, unknown>>;
+  submittedOrders?: Array<Record<string, unknown>>;
+  ordersHistory?: Array<Record<string, unknown>>;
+  signalHistory?: Array<Record<string, unknown>>;
+  healthStatus?: Record<string, unknown> | null;
+  executionRealism?: Record<string, unknown> | null;
+  readinessChecks?: Array<Record<string, unknown>>;
   debug?: {
-    rowCounts?: {
-      dailyPortfolioRows?: number;
-      decisionsRows?: number;
-    };
+    rowCounts?: Record<string, number | null | undefined>;
+    modelComparisonRows?: Array<Record<string, unknown>>;
+    resetScope?: Record<string, unknown>;
+    dataSource?: Record<string, unknown>;
   };
+  updatedAt?: string;
 };
 
 type Category =
@@ -134,6 +150,32 @@ export type ModelDetails = MarketplaceModel & {
   compatibleBrokers?: string[];
   useCases?: string[];
   latest: DashboardLatest;
+  backtest: {
+    equityCurve: Array<Record<string, unknown>>;
+    returns: Array<Record<string, unknown>>;
+    drawdowns: Array<Record<string, unknown>>;
+    stats: ModelStats;
+  };
+  traces: {
+    decisions: Array<Record<string, unknown>>;
+    actionCounts: Array<{ action?: string; count?: number }>;
+    targetWeights: Array<Record<string, unknown>>;
+    targetWeightHistory: Array<Record<string, unknown>>;
+    positions: Array<Record<string, unknown>>;
+    plannedOrders: Array<Record<string, unknown>>;
+    submittedOrders: Array<Record<string, unknown>>;
+    ordersHistory: Array<Record<string, unknown>>;
+    signalHistory: Array<Record<string, unknown>>;
+    readinessChecks: Array<Record<string, unknown>>;
+  };
+  diagnostics: {
+    healthStatus: Record<string, unknown> | null;
+    executionRealism: Record<string, unknown> | null;
+    rowCounts: Record<string, number | null | undefined>;
+    resetScope: Record<string, unknown> | null;
+    dataSource: Record<string, unknown> | null;
+    updatedAt: string | null;
+  };
 };
 
 function toSlug(value: string) {
@@ -386,6 +428,32 @@ export async function getLiveModelDetails(request: Request, slug: string): Promi
     pricing: summary.pricing,
     features,
     latest: detailPayload?.latest || {},
+    backtest: {
+      equityCurve: detailPayload?.equityCurve || [],
+      returns: detailPayload?.returns || [],
+      drawdowns: detailPayload?.drawdowns || [],
+      stats: detailPayload?.stats || stats,
+    },
+    traces: {
+      decisions: detailPayload?.decisions || [],
+      actionCounts: detailPayload?.actionCounts || [],
+      targetWeights: detailPayload?.targetWeights || [],
+      targetWeightHistory: detailPayload?.targetWeightHistory || [],
+      positions: detailPayload?.positions || [],
+      plannedOrders: detailPayload?.plannedOrders || [],
+      submittedOrders: detailPayload?.submittedOrders || [],
+      ordersHistory: detailPayload?.ordersHistory || [],
+      signalHistory: detailPayload?.signalHistory || [],
+      readinessChecks: detailPayload?.readinessChecks || [],
+    },
+    diagnostics: {
+      healthStatus: detailPayload?.healthStatus || null,
+      executionRealism: detailPayload?.executionRealism || null,
+      rowCounts: detailPayload?.debug?.rowCounts || {},
+      resetScope: detailPayload?.debug?.resetScope || null,
+      dataSource: detailPayload?.debug?.dataSource || null,
+      updatedAt: detailPayload?.updatedAt || null,
+    },
   };
 }
 

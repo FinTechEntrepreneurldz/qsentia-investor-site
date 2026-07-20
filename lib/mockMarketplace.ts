@@ -225,5 +225,42 @@ export function getMockMarketplaceModel(slug: string): ModelDetails | null {
       paperStatus: 'Published',
       paperReplayStatus: 'Ready',
     },
+    backtest: {
+      equityCurve: summary.chart.map((point) => ({
+        timestamp: point.timestamp,
+        portfolio: point.value,
+        portfolioValue: point.value,
+      })),
+      returns: [],
+      drawdowns: [],
+      stats: {
+        sharpe: summary.performance.sharpeRatio,
+        totalReturn: summary.performance.totalReturn,
+        annualizedReturn: summary.performance.annualizedReturn,
+        maxDrawdown: summary.performance.maxDrawdown,
+        hitRate: summary.performance.winRate,
+        nReturns: summary.observationCount,
+      },
+    },
+    traces: {
+      decisions: [],
+      actionCounts: [],
+      targetWeights: [],
+      targetWeightHistory: [],
+      positions: [],
+      plannedOrders: [],
+      submittedOrders: [],
+      ordersHistory: [],
+      signalHistory: [],
+      readinessChecks: [],
+    },
+    diagnostics: {
+      healthStatus: null,
+      executionRealism: null,
+      rowCounts: {},
+      resetScope: null,
+      dataSource: null,
+      updatedAt: MOCK_BASE_TIMESTAMP,
+    },
   };
 }
