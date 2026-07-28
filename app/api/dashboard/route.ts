@@ -27,6 +27,7 @@ const REPO_READ_TOKEN = ACTIVE_REPO_READ_TOKEN?.value || '';
 const REPO_READ_TOKEN_ENV_NAME = ACTIVE_REPO_READ_TOKEN?.name || null;
 const CRYPTO_SENTIMENT_MLP_MODEL_ID = 'crypto_sentiment_mlp';
 const ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID = 'qsentia_eth_micro_futures_sentiment_alpha';
+const ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID = 'eth-futures-sentiment-daily';
 const ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID = 'qsentia_eth_leveraged_etf_sentiment_alpha';
 const BTC_ETF_SENTIMENT_MODEL_ID = 'qsentia_btc_etf_sentiment_alpha';
 const BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID = 'qsentia_btc_leveraged_etf_sentiment_alpha';
@@ -42,6 +43,7 @@ const DEFAULT_MODEL_ID = process.env.NEXT_PUBLIC_QSENTIA_DEFAULT_MODEL_ID || CRY
 const ACTIVE_MODEL_IDS = new Set([
   CRYPTO_SENTIMENT_MLP_MODEL_ID,
   ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
+  ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
   ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   MODEL_C_ETF_MODEL_ID,
@@ -72,6 +74,7 @@ const RETIRED_MODEL_IDS = new Set([
 ]);
 const ACCOUNT_BASELINE_MODEL_IDS = new Set<string>([
   ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
+  ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
   ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   MODEL_C_ETF_MODEL_ID,
@@ -82,6 +85,7 @@ const ACCOUNT_BASELINE_MODEL_IDS = new Set<string>([
 ]);
 const RESET_SCOPED_ACCOUNT_MODEL_IDS = new Set<string>([
   ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
+  ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
   ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   MODEL_C_ETF_MODEL_ID,
@@ -101,11 +105,27 @@ const UPSTREAM_API_BASE_URL = (
 const UPSTREAM_DASHBOARD_BASE_URLS = Array.from(
   new Set([UPSTREAM_API_BASE_URL, 'https://www.qsentia.com', 'https://qsentia.com'])
 );
+const QSENTIA_BACKEND_BASE_URL = (
+  process.env.QSENTIA_BACKEND_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_QSENTIA_BACKEND_API_BASE_URL ||
+  'http://qsentia-dev-qsentia-backend-alb-745879561.us-east-2.elb.amazonaws.com'
+).replace(/\/+$/, '');
 const DASHBOARD_CACHE_DIR = path.join(process.cwd(), '.qsentia-cache');
 const DASHBOARD_LAST_GOOD_CACHE_PATH = path.join(DASHBOARD_CACHE_DIR, 'dashboard-last-good.json');
 let lastUsableUpstreamDashboardPayload: Record<string, unknown> | null = null;
 let lastUsableUpstreamDashboardAt: string | null = null;
 let lastUpstreamDashboardFetchReport: Record<string, unknown> | null = null;
+
+const METRICS_V2_MODEL_ACCOUNTS: Record<
+  string,
+  { environment: string; accountId: string; brokerInstanceId: string }
+> = {
+  [ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID]: {
+    environment: 'dev',
+    accountId: 'DUM113937',
+    brokerInstanceId: 'broker-eth-daily',
+  },
+};
 
 const BENCHMARKS = [
   { name: 'S&P 500', ticker: 'SPY', color: '#111111' },
@@ -129,15 +149,27 @@ const REQUIRED_MODELS: ModelConfig[] = [
   },
   {
     id: ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
-    name: 'ETH Micro Futures Sentiment Alpha - IBKR',
+    name: 'ETH Futures Sentiment - Hourly',
     description:
-      'Live ETH micro futures sentiment ensemble using CryptoBERT-scored market text, MLP/PPO signal blending, TBL research diagnostics, IBKR CME Micro Ether futures paper execution, and a fresh $1,017,539 paper-account baseline.',
+      'Hourly ETH micro futures sentiment ensemble using CryptoBERT-scored market text, MLP/PPO signal blending, TBL research diagnostics, IBKR CME Micro Ether futures execution, and live account telemetry.',
     repo: 'QSentia-com/qsentia-eth-micro-futures-sentiment-alpha',
     logs_path: 'logs',
     branch: 'main',
     enabled: true,
     color: '#627eea',
     starting_capital: 1017539,
+  },
+  {
+    id: ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
+    name: 'ETH Futures Sentiment - Daily',
+    description:
+      'Daily ETH micro futures sentiment model using the same ETH backtest evidence and artifact lineage as the hourly model, with separate once-daily execution, dedicated IBKR account routing, and a pre-trade broker baseline.',
+    repo: 'QSentia-com/qsentia-eth-micro-futures-sentiment-alpha',
+    logs_path: 'logs',
+    branch: 'main',
+    enabled: true,
+    color: '#22c55e',
+    starting_capital: 1089062.38,
   },
   {
   id: ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
@@ -609,6 +641,21 @@ function performanceValues(values: number[], baseline: number | null) {
   return values[0] === baseline ? values : [baseline, ...values];
 }
 
+function performanceTimestampForIndex(
+  daily: DailyPoint[],
+  values: number[],
+  baseline: number | null,
+  index: number
+) {
+  if (!values.length) return '';
+
+  if (baseline !== null && values[0] !== baseline) {
+    return index === 0 ? previousDateKey(daily[0]?.timestamp) : daily[index - 1]?.timestamp || '';
+  }
+
+  return daily[index]?.timestamp || '';
+}
+
 function isResetScopedAccountModel(model: ModelConfig) {
   return RESET_SCOPED_ACCOUNT_MODEL_IDS.has(model.id);
 }
@@ -886,6 +933,49 @@ function healthStatusObservation(healthStatus: AccountHealthStatus): PortfolioPo
       raw,
     },
   ];
+}
+
+async function fetchMetricsV2PortfolioPoints(model: ModelConfig): Promise<PortfolioPoint[]> {
+  const config = METRICS_V2_MODEL_ACCOUNTS[model.id];
+  if (!config) return [];
+
+  try {
+    const url = new URL('/api/metrics-v2/equity-snapshots', QSENTIA_BACKEND_BASE_URL);
+    url.searchParams.set('environment', config.environment);
+    url.searchParams.set('account_id', config.accountId);
+    url.searchParams.set('broker_instance_id', config.brokerInstanceId);
+    url.searchParams.set('limit', '5000');
+
+    const response = await fetch(url, {
+      cache: 'no-store',
+      headers: {
+        Accept: 'application/json',
+        'Cache-Control': 'no-cache',
+      },
+    });
+
+    if (!response.ok) return [];
+
+    const rows = (await response.json()) as Array<Record<string, unknown>>;
+    if (!Array.isArray(rows)) return [];
+
+    return rows
+      .map((row) => {
+        const timestamp = String(row.observed_at || row.timestamp_utc || row.created_at || '');
+        const value = num(row.net_liquidation) ?? num(row.portfolio_value);
+        const raw = objectToCsvRow({
+          ...row,
+          account_id: row.account_id || config.accountId,
+          broker_instance_id: row.broker_instance_id || config.brokerInstanceId,
+          source: 'metrics_v2_equity_snapshots',
+        });
+
+        return { timestamp, value, raw };
+      })
+      .filter((row): row is PortfolioPoint => Boolean(row.timestamp) && row.value !== null);
+  } catch {
+    return [];
+  }
 }
 
 function submittedOrderCount(rows: CsvRow[]) {
@@ -1364,6 +1454,14 @@ export async function GET(request: Request) {
   const selectedModel = selectedModelConfig.id;
 
   if (summaryOnly) {
+    const summaryMetricsRows = new Map(
+      await Promise.all(
+        registry.map(async (model) => {
+          const points = await fetchMetricsV2PortfolioPoints(model);
+          return [model.id, toResetScopedDailyPortfolio(model, points).daily] as const;
+        })
+      )
+    );
     const summaryStats = {
       totalReturn: null,
       annualizedReturn: null,
@@ -1397,19 +1495,32 @@ export async function GET(request: Request) {
           ...benchmark,
           rowCount: null,
         })),
-        modelComparison: registry.map((model) => ({
-          id: model.id,
-          name: model.name,
-          description: model.description,
-          repo: model.repo,
-          logsPath: model.logs_path,
-          color: model.color,
-          stats: { ...summaryStats },
-          latestValue: null,
-          rowCount: null,
-          dailyRowCount: null,
-          inceptionDate: null,
-        })),
+        modelComparison: registry.map((model) => {
+          const daily = summaryMetricsRows.get(model.id) || [];
+          const values = daily.map((point) => point.value);
+          const baseline = startingCapitalForModel(model);
+          const performance = values.length ? performanceValues(values, baseline) : [];
+          const curve = normalizeTo100(performance);
+
+          return {
+            id: model.id,
+            name: model.name,
+            description: model.description,
+            repo: model.repo,
+            logsPath: model.logs_path,
+            color: model.color,
+            stats: values.length ? computeStats(performance) : { ...summaryStats },
+            latestValue: values.length ? values[values.length - 1] : null,
+            startingCapital: baseline,
+            rowCount: daily.length || null,
+            dailyRowCount: daily.length || null,
+            inceptionDate: daily[0]?.timestamp || null,
+            points: performance.map((_, i) => ({
+              timestamp: performanceTimestampForIndex(daily, values, baseline, i),
+              value: curve[i],
+            })),
+          };
+        }),
         debug: {
           summaryOnly: true,
           dataSource: {
@@ -1452,6 +1563,7 @@ export async function GET(request: Request) {
     executionRealism,
     readinessChecksRows,
     benchmarkStartDate,
+    metricsV2PortfolioPoints,
   ] = await Promise.all([
     fetchCsvFromModel(selectedModelConfig, 'portfolio/portfolio.csv'),
     fetchCsvFromModel(selectedModelConfig, 'portfolio/latest_ibkr_account.csv'),
@@ -1481,6 +1593,7 @@ export async function GET(request: Request) {
       'execution_realism_gate_results/readiness_checks.csv'
     ),
     benchmarkStartDateFromFirstModel(registry),
+    fetchMetricsV2PortfolioPoints(selectedModelConfig),
   ]);
 
   const rawSubmittedOrdersRows = submittedOrdersPrimaryRows.length
@@ -1514,6 +1627,7 @@ export async function GET(request: Request) {
     latest(signalRows)?.timestamp_utc ||
     latest(latestIbkrAccountRows)?.timestamp_utc ||
     latest(portfolioRows)?.timestamp_utc ||
+    latest(metricsV2PortfolioPoints)?.timestamp ||
     null;
   const portfolio = [
     ...accountValueObservations([
@@ -1524,14 +1638,18 @@ export async function GET(request: Request) {
       displayedSignalHistoryRows,
     ]),
     ...healthStatusObservation(healthStatus),
+    ...metricsV2PortfolioPoints,
   ];
   const { daily: dailyPortfolio, resetTimestamp: selectedResetTimestamp } =
     toResetScopedDailyPortfolio(selectedModelConfig, portfolio);
   const submittedOrdersRows = filterRowsAtOrAfter(rawSubmittedOrdersRows, selectedResetTimestamp);
   const paperStatus = inferPaperStatus(positionsRows, submittedOrdersRows);
+  const metricsV2PaperActive = metricsV2PortfolioPoints.length > 0;
   const latestPaperStatus = paperStatus.isLivePaperActive
     ? paperStatus.paperStatus
-    : healthPaperStatus || paperStatus.paperStatus;
+    : metricsV2PaperActive
+      ? 'Metrics Active'
+      : healthPaperStatus || paperStatus.paperStatus;
   const values = dailyPortfolio.map((p) => p.value);
   const accountBaseline = startingCapitalForModel(selectedModelConfig);
   const latestPortfolioValue = values.length ? values[values.length - 1] : accountBaseline;
@@ -1549,9 +1667,9 @@ export async function GET(request: Request) {
     : accountBaseline !== null
       ? [accountBaseline]
       : [];
-  const normalizedValues = normalizeTo100(values);
-  const returns = pctChange(values);
-  const drawdowns = calculateDrawdown(values);
+  const normalizedValues = normalizeTo100(selectedPerformanceValues);
+  const returns = pctChange(selectedPerformanceValues);
+  const drawdowns = calculateDrawdown(selectedPerformanceValues);
   const resetScopedStatsSuppressed = shouldSuppressResetScopedStats(
     selectedModelConfig,
     selectedResetTimestamp,
@@ -1563,10 +1681,10 @@ export async function GET(request: Request) {
     ? computeStats([])
     : computeStats(selectedPerformanceValues);
 
-  const equityCurve = dailyPortfolio.map((p, i) => ({
-    timestamp: p.timestamp,
+  const equityCurve = selectedPerformanceValues.map((value, i) => ({
+    timestamp: performanceTimestampForIndex(dailyPortfolio, values, accountBaseline, i),
     portfolio: normalizedValues[i],
-    portfolioValue: p.value,
+    portfolioValue: value,
     drawdown: drawdowns[i],
     return: i === 0 ? 0 : returns[i - 1] ?? 0,
   }));
@@ -1585,6 +1703,7 @@ export async function GET(request: Request) {
       signalRowsForModel,
       signalHistoryRowsForModel,
       modelHealthStatus,
+      metricsV2ModelPortfolioPoints,
     ] = await Promise.all([
       fetchCsvFromModel(model, 'portfolio/portfolio.csv'),
       fetchCsvFromModel(model, 'portfolio/latest_ibkr_account.csv'),
@@ -1597,6 +1716,7 @@ export async function GET(request: Request) {
         model,
         'health/health_status.json'
       ),
+      fetchMetricsV2PortfolioPoints(model),
     ]);
     const displayedDecisionsRowsForModel = decisionsRowsForModel.length
       ? decisionsRowsForModel
@@ -1615,6 +1735,7 @@ export async function GET(request: Request) {
         displayedSignalHistoryRowsForModel,
       ]),
       ...healthStatusObservation(modelHealthStatus),
+      ...metricsV2ModelPortfolioPoints,
     ];
     const { daily, resetTimestamp: modelResetTimestamp } =
       toResetScopedDailyPortfolio(model, modelPortfolio);
@@ -1661,7 +1782,8 @@ export async function GET(request: Request) {
         latestDecisionRowsForModel.length +
         displayedDecisionsRowsForModel.length +
         latestSignalRowsForModel.length +
-        displayedSignalHistoryRowsForModel.length,
+        displayedSignalHistoryRowsForModel.length +
+        metricsV2ModelPortfolioPoints.length,
       dailyRowCount: daily.length,
       inceptionDate: modelInceptionDate || null,
       benchmarks: modelBenchmarks,
@@ -1704,7 +1826,7 @@ export async function GET(request: Request) {
             : accountBaseline !== null
               ? 'broker_account_value_minus_starting_capital'
               : 'portfolio_csv_net_liquidation',
-        isLivePaperActive: paperStatus.isLivePaperActive,
+        isLivePaperActive: paperStatus.isLivePaperActive || metricsV2PaperActive,
         paperStatus: latestPaperStatus,
         submittedOrderCount: paperStatus.submittedOrderCount,
         hasLivePositions: paperStatus.hasLivePositions,
@@ -1720,7 +1842,7 @@ export async function GET(request: Request) {
     equityCurve,
     benchmarks,
     returns: returns.map((r, i) => ({
-      timestamp: dailyPortfolio[i + 1]?.timestamp,
+      timestamp: equityCurve[i + 1]?.timestamp,
       return: r,
     })),
     drawdowns: equityCurve.map((p) => ({
@@ -1788,6 +1910,7 @@ export async function GET(request: Request) {
         decisionsRows: displayedDecisionRows.length,
         latestSignalRows: latestSignalRows.length,
         signalRows: signalRows.length,
+        metricsV2SnapshotRows: metricsV2PortfolioPoints.length,
         targetWeightsRows: targetWeightsRows.length,
         targetWeightHistoryRows: targetWeightHistoryRows.length,
         positionsRows: positionsRows.length,
