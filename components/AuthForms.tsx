@@ -17,6 +17,8 @@ const ALLOWED_NEXT_PATHS = [
 const ALLOWED_MODEL_SLUGS = [
   "model-c-etf",
   "crypto-sentiment-mlp-ppo-ibkr",
+  "eth-futures-sentiment",
+  "eth-futures-sentiment-daily",
   "eth-micro-futures-sentiment-alpha",
   "br-ppo-crypto-v15",
   "fixed-income-regime-signal",

@@ -48,7 +48,9 @@ function shortName(model: MarketplaceModel) {
   const names: Record<string, string> = {
     model_c_etf: 'QUANT-ALPHA-7',
     crypto_sentiment_mlp: 'MACRO-SIGNAL-3',
-    qsentia_eth_micro_futures_sentiment_alpha: 'STAT-ARB-EQ',
+    qsentia_eth_micro_futures_sentiment_alpha: 'ETH-SENT-HR',
+    'eth-futures-sentiment': 'ETH-SENT-HR',
+    'eth-futures-sentiment-daily': 'ETH-SENT-DY',
     br_ppo_crypto_v15: 'VOL-CARRY-X1',
     brppo_fixed_income_regime: 'MEAN-REV-INT',
   };

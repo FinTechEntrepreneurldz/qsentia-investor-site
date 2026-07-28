@@ -27,6 +27,7 @@ const REPO_READ_TOKEN = ACTIVE_REPO_READ_TOKEN?.value || '';
 const REPO_READ_TOKEN_ENV_NAME = ACTIVE_REPO_READ_TOKEN?.name || null;
 const CRYPTO_SENTIMENT_MLP_MODEL_ID = 'crypto_sentiment_mlp';
 const ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID = 'qsentia_eth_micro_futures_sentiment_alpha';
+const ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID = 'eth-futures-sentiment-daily';
 const ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID = 'qsentia_eth_leveraged_etf_sentiment_alpha';
 const BTC_ETF_SENTIMENT_MODEL_ID = 'qsentia_btc_etf_sentiment_alpha';
 const BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID = 'qsentia_btc_leveraged_etf_sentiment_alpha';
@@ -42,6 +43,7 @@ const DEFAULT_MODEL_ID = process.env.NEXT_PUBLIC_QSENTIA_DEFAULT_MODEL_ID || CRY
 const ACTIVE_MODEL_IDS = new Set([
   CRYPTO_SENTIMENT_MLP_MODEL_ID,
   ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
+  ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
   ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   MODEL_C_ETF_MODEL_ID,
@@ -72,6 +74,7 @@ const RETIRED_MODEL_IDS = new Set([
 ]);
 const ACCOUNT_BASELINE_MODEL_IDS = new Set<string>([
   ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
+  ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
   ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   MODEL_C_ETF_MODEL_ID,
@@ -82,6 +85,7 @@ const ACCOUNT_BASELINE_MODEL_IDS = new Set<string>([
 ]);
 const RESET_SCOPED_ACCOUNT_MODEL_IDS = new Set<string>([
   ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
+  ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
   ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   BTC_LEVERAGED_ETF_SENTIMENT_MODEL_ID,
   MODEL_C_ETF_MODEL_ID,
@@ -129,15 +133,27 @@ const REQUIRED_MODELS: ModelConfig[] = [
   },
   {
     id: ETH_MICRO_FUTURES_SENTIMENT_MODEL_ID,
-    name: 'ETH Micro Futures Sentiment Alpha - IBKR',
+    name: 'ETH Futures Sentiment - Hourly',
     description:
-      'Live ETH micro futures sentiment ensemble using CryptoBERT-scored market text, MLP/PPO signal blending, TBL research diagnostics, IBKR CME Micro Ether futures paper execution, and a fresh $1,017,539 paper-account baseline.',
+      'Hourly ETH micro futures sentiment ensemble using CryptoBERT-scored market text, MLP/PPO signal blending, TBL research diagnostics, IBKR CME Micro Ether futures execution, and live account telemetry.',
     repo: 'QSentia-com/qsentia-eth-micro-futures-sentiment-alpha',
     logs_path: 'logs',
     branch: 'main',
     enabled: true,
     color: '#627eea',
     starting_capital: 1017539,
+  },
+  {
+    id: ETH_FUTURES_SENTIMENT_DAILY_MODEL_ID,
+    name: 'ETH Futures Sentiment - Daily',
+    description:
+      'Daily ETH micro futures sentiment model using the same ETH backtest evidence and artifact lineage as the hourly model, with separate once-daily execution and dedicated IBKR account routing.',
+    repo: 'QSentia-com/qsentia-eth-micro-futures-sentiment-alpha',
+    logs_path: 'logs',
+    branch: 'main',
+    enabled: true,
+    color: '#22c55e',
+    starting_capital: 1000000,
   },
   {
   id: ETH_LEVERAGED_ETF_SENTIMENT_MODEL_ID,

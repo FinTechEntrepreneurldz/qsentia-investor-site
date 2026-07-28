@@ -475,7 +475,7 @@ export default function CustomerDashboard({ user }: { user: CustomerUser }) {
               {[
                 ["Allocated to Model C ETF Regime Alpha", "-$12,000", "Today, 10:32 AM"],
                 ["Wallet deposit settled", "+$25,000", "Yesterday"],
-                ["Rebalanced ETH Micro Futures sleeve", "$0", "Jul 15"],
+                ["Rebalanced ETH Futures Sentiment - Hourly sleeve", "$0", "Jul 15"],
               ].map(([label, amount, date]) => (
                 <div key={label} className="flex items-center gap-3">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F6] text-[#5a6270]">
